@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(string areaName, AreaRegistrationContext context)
+        {
+            context.MapRoute(
+                areaName + "_Default",
+                "LiveCasinoSetting/{controller}/{action}/{id}",
+                new
+                {
+                    controller = "Match",
+                    action = "GetEnableCharts",
+                    id = UrlParameter.Optional
+                },
+                new[] 
+                    {
+                        typeof (Fanex.LiveCasino.Site.Controllers.SettingController).Namespace
+                    });
+        }
+    }
+}

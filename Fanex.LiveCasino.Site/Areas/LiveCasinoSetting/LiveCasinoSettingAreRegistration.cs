@@ -1,0 +1,33 @@
+﻿
+
+namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start;
+    using System.Web.Optimization;
+
+    public class LiveCasinoSettingAreRegistration : AreaRegistration
+    {
+        public override string AreaName
+        {
+            get
+            {
+                return "LiveCasinoSetting";
+            }
+        }
+
+        /// <summary>
+        /// Register admin area.
+        /// </summary>
+        /// <param name="context">Current context.</param>
+        public override void RegisterArea(AreaRegistrationContext context)
+        {
+            RouteConfig.RegisterRoutes(this.AreaName, context);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+    }
+}
