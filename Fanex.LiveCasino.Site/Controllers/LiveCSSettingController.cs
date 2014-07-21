@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Fanex.LiveCasino.Site.Controllers
 {
-    public class SettingController : Controller
+    public class LiveCSSettingController : Controller
     {
         //
         // GET: /Setting/

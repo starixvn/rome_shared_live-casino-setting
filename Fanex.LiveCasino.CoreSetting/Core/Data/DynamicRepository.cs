@@ -1,0 +1,198 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="DynamicRepository.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.LiveCasino.CoreSetting.Core.Data
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Fanex.Common.Helper;
+    using Fanex.Data;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class DynamicRepository : IDynamicRepository
+    {
+        public T Get<T>(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get object information.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Returned object.</returns>
+        public T Get<T>(ICriteria criteria)
+        {
+            try
+            {
+                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    T entity = objectDb.QueryEntity<T>(criteria.GetSpParams());
+                    return entity;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetch object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <returns>List of object.</returns>
+        public IEnumerable<T> Fetch<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Fetch object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>List of object.</returns>
+        public virtual IEnumerable<T> Fetch<T>(ICriteria criteria)
+        {
+            try
+            {
+                using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    IEnumerable<T> entityList = objectDb.Query<T>(criteria.GetSpParams());
+
+                    return entityList;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query object.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>List of object.</returns>
+        public virtual IEnumerable<T> Query<T>(dynamic parameters)
+        {
+            try
+            {
+                var hash = this.ConvertDynamicParamsToHashtable(parameters);
+                var settingKey = this.GetSettingKeyFromDynamicParam(parameters);
+
+                using (var objectDb = new ObjectDb(settingKey))
+                {
+                    var entityList = objectDb.Query<T>(null, hash);
+                    return entityList;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update database with specific criteria.
+        /// </summary>
+        /// <param name="criteria">Information for updating.</param>
+        /// <returns>Updated result.</returns>
+        public virtual Result Update(ICriteria criteria)
+        {
+            //// Will implement later
+            return new Result();
+        }
+
+        /// <summary>
+        /// Check setting key whether exist in the parameter collection or not.
+        /// </summary>
+        /// <param name="parameters">Input parameters.</param>
+        protected void CheckSettingKeyExist(dynamic parameters)
+        {
+            Check.Argument.IsNotNull(parameters, "parameters");
+
+            Type type = parameters.GetType();
+            var propInfo = type.GetProperty("SettingKey");
+
+            if (propInfo == null)
+            {
+                throw new NullReferenceException("Input paramater does not contain the expected property SettingKey");
+            }
+        }
+
+        /// <summary>
+        /// Convert dynamic parameter to hash table.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Returned hash table.</returns>
+        protected Hashtable ConvertDynamicParamsToHashtable(dynamic parameters)
+        {
+            this.CheckSettingKeyExist(parameters);
+
+            Type type = parameters.GetType();
+            var hash = new Hashtable();
+
+            foreach (PropertyInfo propertyInfo in type.GetProperties())
+            {
+                if (!propertyInfo.Name.Equals("SettingKey"))
+                {
+                    hash.Add(propertyInfo.Name.ToLower(), propertyInfo.GetValue(parameters, null));
+                }
+            }
+
+            return hash;
+        }
+
+        /// <summary>
+        /// Add dynamic parameter to hash table.
+        /// </summary>
+        /// <param name="hash">Input hash table.</param>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Returned hash table.</returns>
+        protected Hashtable AddDynamicParamsToHashtable(Hashtable hash, dynamic parameters)
+        {
+            Type type = parameters.GetType();
+
+            foreach (PropertyInfo propertyInfo in type.GetProperties())
+            {
+                if (!propertyInfo.Name.Equals("SettingKey"))
+                {
+                    hash.Add(propertyInfo.Name.ToLower(), propertyInfo.GetValue(parameters, null));
+                }
+            }
+
+            return hash;
+        }
+
+        /// <summary>
+        /// Get setting key from dynamic parameter.
+        /// </summary>
+        /// <param name="parameters">Dynamic parameters.</param>
+        /// <returns>Setting key.</returns>
+        protected string GetSettingKeyFromDynamicParam(dynamic parameters)
+        {
+            Type type = parameters.GetType();
+
+            foreach (PropertyInfo propertyInfo in type.GetProperties())
+            {
+                if (propertyInfo.Name.Equals("SettingKey"))
+                {
+                    return propertyInfo.GetValue(parameters, null);
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+}

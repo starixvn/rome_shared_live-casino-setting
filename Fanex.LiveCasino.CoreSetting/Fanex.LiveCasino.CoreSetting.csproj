@@ -31,8 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\Dependencies\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Data\CriteriaBase.cs" />
+    <Compile Include="Core\Data\DynamicRepository.cs" />
+    <Compile Include="Core\Data\ICriteria.cs" />
+    <Compile Include="Core\Data\IDynamicRepository.cs" />
+    <Compile Include="Core\Data\Result.cs" />
+    <Compile Include="Core\Data\ResultCriteria.cs" />
+    <Compile Include="Core\Data\SpParamAttribute.cs" />
+    <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\UpdateDisableLiveCSCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Models\Commission.cs" />
@@ -51,19 +68,18 @@
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ISettingRepository.cs" />
+    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Resources\LiveCasinoLang.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Criteria\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\LiveCasinoLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -22,6 +22,8 @@ namespace Fanex.LiveCasino.Site
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         }
     }
 }
