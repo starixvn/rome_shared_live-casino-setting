@@ -11,11 +11,13 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
     using System.Linq;
     using System.Text;
     using Fanex.LiveCasino.CoreSetting.Core.Data;
+    using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public interface ISettingRepository : IDynamicRepository
     {
+        CustInfo GetCustomerInfo(ICriteria criteria);
     }
 }

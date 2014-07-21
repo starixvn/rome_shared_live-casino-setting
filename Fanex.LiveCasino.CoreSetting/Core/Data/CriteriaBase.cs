@@ -19,7 +19,7 @@ namespace Fanex.LiveCasino.CoreSetting.Core.Data
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CriteriaBase
+    public class CriteriaBase : ICriteria
     {
         /// <summary>
         /// Get store procedure call parameter.

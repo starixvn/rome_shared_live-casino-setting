@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Live Casino - GET PT Setting">
-    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBAGE.bodb02.bodbAdminNet">
+      <Mapping DataField="mobilephone" ObjectProperty="Mobile" />
+      <Mapping DataField="currency" ObjectProperty="CurrencyId" />
+      <Mapping DataField="SyncLiveCasino" ObjectProperty="IsSyncLiveCasino" />
+      <Mapping DataField="isAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
+      <Mapping DataField="MaxWinLiveCasino" ObjectProperty="Max" />
+      <Mapping DataField="UplineIsAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
+      <Mapping DataField="UplineMaxWinLiveCasino" ObjectProperty="Max" />
+    </Setting>
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />

@@ -17,6 +17,8 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
     /// </summary>
     public class CustSettingViewModel
     {
+        public SettingContext settingContext { get; set; }
+
         public CustInfo CustInfo { get; set; }
 
         public Commission Commission { get; set; }
@@ -24,7 +26,5 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
         public IList<GameType> GameSetting { get; set; }
 
         public PositionTaking PositionTaking { get; set; }
-
-        public MemberWinLimit MemberWinLimit { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services
         /// <returns>Customer information.</returns>
         public CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria)
         {
-            throw new NotImplementedException();
+            return _settingRepository.GetCustomerInfo(criteria);
         }
     }
 }

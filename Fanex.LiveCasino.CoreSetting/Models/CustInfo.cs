@@ -36,12 +36,14 @@ namespace Fanex.LiveCasino.CoreSetting.Models
 
         public bool IsSyncLiveCasino { get; set; }
 
-        public int ExChangeId { get; set; }
+        public byte CurrencyId { get; set; }
 
         public string Site { get; set; }
 
         public bool DisableLiveCasino { get; set; }
 
         public bool UplineDisableLiveCasino { get; set; }
+
+        public MemberWinLimit MemberWinLimit { get; set; }
     }
 }
