@@ -1,5 +1,70 @@
 ﻿@{
     Layout = null;
 }
-
-<h2>CustomerInfo</h2>
+@model SettingContext
+<table data-ng-controller="CustomerInfoController">
+    <tr class="title1">
+        <td colspan="5" class="c">
+            Customer Information
+        </td>
+    </tr>
+    <tr>
+        <td width="120px" class="r b">
+            Username:
+        </td>
+        <td width="120px" class="l">
+            {{custInfo.UserName}}
+        </td>
+        <td width="120px" class="r b">
+            Nick name:
+        </td>
+        <td width="240px" class="l" colspan="2">
+            {{custInfo.NickName}}
+        </td>
+    </tr>
+    <tr>
+        <td class="r b">
+            First Name:
+        </td>
+        <td class="l">
+            {{custInfo.FirstName}}
+        </td>
+        <td class="r b">
+            Last Name:
+        </td>
+        <td class="l" colspan="2">
+            {{custInfo.LastName}}
+        </td>
+    </tr>
+    <tr>
+        <td class="r b">
+            Phone:
+        </td>
+        <td class="l">
+            {{custInfo.Phone}}
+        </td>
+        <td class="r b">
+            Mobile Phone:
+        </td>
+        <td class="l" colspan="2">
+            {{custInfo.Mobile}}
+        </td>
+    </tr>
+    <tr>
+        <td class="r b">
+            Fax:
+        </td>
+        <td class="l">
+            {{custInfo.Fax}}
+        </td>
+        @if (Model.TargetRoleId == (int)CustRole.Member)
+        {
+            <td class="r b">
+                Enable:
+            </td>
+            <td class="l" colspan="2">
+                <input type="checkbox" data-ng-model="isEnableLiveCasino" />
+            </td>
+        }
+    </tr>
+</table>

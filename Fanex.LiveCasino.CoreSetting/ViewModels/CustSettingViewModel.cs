@@ -17,7 +17,7 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
     /// </summary>
     public class CustSettingViewModel
     {
-        public SettingContext settingContext { get; set; }
+        public SettingContext SettingContext { get; set; }
 
         public CustInfo CustInfo { get; set; }
 

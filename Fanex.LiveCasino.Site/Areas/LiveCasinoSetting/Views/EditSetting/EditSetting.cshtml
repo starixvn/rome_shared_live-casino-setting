@@ -1,14 +1,26 @@
-﻿@{
+﻿@model SettingContext
+@{
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
+    var editQueryString = string.Format(
+        "custId={0}&roleId={1}&targetCustId={2}&targetRoleId={3}",
+        Model.CustId,
+        Model.RoleId,
+        Model.TargetCustId,
+        Model.TargetRoleId);
 }
+@section modeldata
+{
+    <script type="text/javascript" src="~/LiveCasinoSetting/LiveCSSetting/GetSettingForUpdate?@(editQueryString)"></script>
+}
+<div id="tblSetting" data-ng-controller="CustSettingController">
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)
+      @*  @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndComm.cshtml")
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")*@
+</div>
 
-<h2>EditSetting</h2>
-
-@Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml")
-
-@Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndComm.cshtml")
-
-@Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
-
-@Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
+@section scripts
+{
+    
+}
