@@ -9,7 +9,7 @@
     /// </summary>
     public interface ISettingService
     {
-        ICommandResult UpdateLiveCasinoStatus();
+        ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria);
 
         CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
     }

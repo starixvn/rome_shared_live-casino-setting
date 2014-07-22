@@ -1,19 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="UpdateDisableLiveCSCriteria.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.7.21">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Criteria
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.LiveCasino.CoreSetting.Core.Data;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.

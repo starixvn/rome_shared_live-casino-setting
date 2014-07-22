@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
-    using System;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -20,9 +19,9 @@
             _settingRepository = settingRepository ?? new SettingRepository();
         }
 
-        public ICommandResult UpdateLiveCasinoStatus()
+        public ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
         {
-            throw new NotImplementedException();
+            return _settingRepository.Update(criteria);
         }
 
         /// <summary>

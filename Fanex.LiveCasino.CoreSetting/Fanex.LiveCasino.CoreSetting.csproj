@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Controllers\LiveCSSettingController.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\ResultCriteria.cs" />
     <Compile Include="Criteria\UpdateLiveCasinoStatusCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
