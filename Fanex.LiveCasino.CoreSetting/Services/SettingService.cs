@@ -1,19 +1,10 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SettingService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.7.21">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Services
+﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System;
-    using Fanex.LiveCasino.CoreSetting.Core.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -29,15 +20,15 @@ namespace Fanex.LiveCasino.CoreSetting.Services
             _settingRepository = settingRepository ?? new SettingRepository();
         }
 
-        public Result UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
+        public ICommandResult UpdateLiveCasinoStatus()
         {
-            return _settingRepository.Update(criteria);
+            throw new NotImplementedException();
         }
 
         /// <summary>
         /// Get customer information with customer id.
         /// </summary>
-        /// <param name="criteria">Get criateria information.</param>
+        /// <param name="criteria">Get criteria information.</param>
         /// <returns>Customer information.</returns>
         public CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria)
         {

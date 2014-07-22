@@ -1,16 +1,6 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="GetCustomerInfoCriteria.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Criteria
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.LiveCasino.CoreSetting.Core.Data;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
