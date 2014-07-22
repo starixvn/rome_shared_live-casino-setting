@@ -12,5 +12,7 @@
         ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria);
 
         CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
+
+
     }
 }

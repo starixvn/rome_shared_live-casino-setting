@@ -57,5 +57,11 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         public decimal? L3 { get; set; }
 
         public decimal? L2 { get; set; }
+
+        public decimal? N4 { get; set; }
+
+        public decimal? N3 { get; set; }
+
+        public decimal? N2 { get; set; }
     }
 }
