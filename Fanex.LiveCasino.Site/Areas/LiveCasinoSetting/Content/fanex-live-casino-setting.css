@@ -1,4 +1,46 @@
 ﻿/* File Created: July 18, 2014 */
-.main-content {
+body {
+	font-family: Tahoma;
+	font-size: 12px;
+}
+
+.edit-setting-livecs {
+	width: 700px;
+}
+
+.edit-setting-livecs .left {
+	text-align: left;
+}
+
+.edit-setting-livecs .right {
+	text-align: right;
+}
+
+.edit-setting-livecs .bold {
+	font-weight: bold;
+}
+
+.edit-setting-livecs .center {
+	text-align: center;
+}
+
+.edit-setting-livecs .title {
+	font-weight: bold;
+    color: White;
+    background-color: Gray;
 	
+}
+
+.edit-setting-livecs table, .edit-setting-livecs table tr, .edit-setting-livecs table td {
+	border: 1px solid gray;
+	border-collapse: collapse;
+	
+}
+
+.edit-setting-livecs .cust-info {
+	width: 100%;
+}
+
+.edit-setting-livecs .cust-info td {
+	width: 25%;
 }

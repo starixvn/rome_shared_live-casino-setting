@@ -2,68 +2,75 @@
     Layout = null;
 }
 @model SettingContext
-<table data-ng-controller="CustomerInfoController">
-    <tr class="title1">
-        <td colspan="5" class="c">
+<table data-ng-controller="CustomerInfoController" class="cust-info">
+    <tr class="title">
+        <td colspan="4" class="center">
             Customer Information
         </td>
     </tr>
     <tr>
-        <td width="120px" class="r b">
+        <td class="right bold">
             Username:
         </td>
-        <td width="120px" class="l">
+        <td class="left">
             {{custInfo.UserName}}
         </td>
-        <td width="120px" class="r b">
+        <td class="right bold">
             Nick name:
         </td>
-        <td width="240px" class="l" colspan="2">
+        <td class="left">
             {{custInfo.NickName}}
         </td>
     </tr>
     <tr>
-        <td class="r b">
+        <td class="right bold">
             First Name:
         </td>
-        <td class="l">
+        <td class="left">
             {{custInfo.FirstName}}
         </td>
-        <td class="r b">
+        <td class="right bold">
             Last Name:
         </td>
-        <td class="l" colspan="2">
+        <td class="left">
             {{custInfo.LastName}}
         </td>
     </tr>
     <tr>
-        <td class="r b">
+        <td class="right bold">
             Phone:
         </td>
-        <td class="l">
+        <td class="left">
             {{custInfo.Phone}}
         </td>
-        <td class="r b">
+        <td class="right bold">
             Mobile Phone:
         </td>
-        <td class="l" colspan="2">
+        <td class="left">
             {{custInfo.Mobile}}
         </td>
     </tr>
     <tr>
-        <td class="r b">
+        <td class="right bold">
             Fax:
         </td>
-        <td class="l">
+        <td class="left">
             {{custInfo.Fax}}
         </td>
         @if (Model.TargetRoleId == (int)CustRole.Member)
         {
-            <td class="r b">
+            <td class="right bold">
                 Enable:
             </td>
-            <td class="l" colspan="2">
+            <td class="left">
                 <input type="checkbox" data-ng-model="enableLiveCasino" data-ng-change="updateStatus()" data-ng-disabled="disableCheckBoxLiveCasino" />
+            </td>
+        }
+        else
+        {
+            <td class="right bold">
+            </td>
+            <td class="left">
             </td>
         }
     </tr>
