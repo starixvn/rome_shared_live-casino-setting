@@ -136,10 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LiveCasinoSetting.xml" />
-    <Content Include="Areas\LiveCasinoSetting\Content\fanex.livecasino.setting.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -155,10 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\LiveCasinoSetting\Content\Images\" />
-    <Folder Include="Areas\LiveCasinoSetting\Scripts\core\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\" />
-    <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\" />
     <Folder Include="Content\" />
     <Folder Include="Models\" />

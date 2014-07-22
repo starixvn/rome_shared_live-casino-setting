@@ -13,14 +13,19 @@
 {
     <script type="text/javascript" src="~/LiveCasinoSetting/LiveCSSetting/GetSettingForUpdate?@(editQueryString)"></script>
 }
-<div id="tblSetting" data-ng-controller="CustSettingController">
+<div id="tblSetting" data-ng-app="fanex.liveCasinoSetting" data-ng-controller="CustomerSettingController" 
+    data-updated-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")" style="display:none;">
         @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)
       @*  @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndComm.cshtml")
         @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
         @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")*@
+
+        <div class="update-setting">
+            <input type="button" data-ng-click="updateSetting()" value="Update" />
+        </div>
 </div>
 
 @section scripts
 {
-    
+    @Scripts.Render("~/areasjs/livecasino/setting")
 }

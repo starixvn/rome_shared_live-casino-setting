@@ -21,7 +21,7 @@ namespace Fanex.LiveCasino.CoreSetting.Core.Data
         public Result(string errCode, string errMsg)
         {
             ErrCode = errCode;
-            ErrMsg = ErrMsg;
+            ErrMsg = errMsg;
         }
 
         public string ErrCode { get; set; }

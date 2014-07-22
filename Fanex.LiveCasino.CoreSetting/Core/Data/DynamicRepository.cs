@@ -104,17 +104,6 @@ namespace Fanex.LiveCasino.CoreSetting.Core.Data
         }
 
         /// <summary>
-        /// Update database with specific criteria.
-        /// </summary>
-        /// <param name="criteria">Information for updating.</param>
-        /// <returns>Updated result.</returns>
-        public virtual Result Update(ICriteria criteria)
-        {
-            //// Will implement later
-            return new Result();
-        }
-
-        /// <summary>
         /// Check setting key whether exist in the parameter collection or not.
         /// </summary>
         /// <param name="parameters">Input parameters.</param>

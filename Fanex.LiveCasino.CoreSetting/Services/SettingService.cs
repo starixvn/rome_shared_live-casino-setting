@@ -29,9 +29,9 @@ namespace Fanex.LiveCasino.CoreSetting.Services
             _settingRepository = settingRepository ?? new SettingRepository();
         }
 
-        public Result UpdateLiveCasinoStatus()
+        public Result UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
         {
-            throw new NotImplementedException();
+            return _settingRepository.Update(criteria);
         }
 
         /// <summary>

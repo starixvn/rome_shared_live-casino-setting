@@ -18,13 +18,21 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
         private static void RegisterJavascriptBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/core")
+                .Include("~/areas/LiveCasinoSetting/scripts/libs/jquery-2.1.1.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/angular.js"));
+
+            bundles.Add(new ScriptBundle("~/areasjs/livecasino/setting")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-info-controller.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js"));
+
         }
 
         private static void RegisterStyleSheetBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/areascss/livecasino/css")
-                .Include("~/areas/LiveCasinoSetting/content/fanex.livecasino.setting.css"));
+                .Include("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css"));
         }
     }
 }

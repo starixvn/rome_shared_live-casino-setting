@@ -20,6 +20,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Newtonsoft.Json;
+    using Fanex.LiveCasino.CoreSetting.Core.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -46,18 +47,23 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             int custId = 0,
             int roleId = 0,
             int targetCustId = 0,
-            int targetRoleId = 0
+            int targetRoleId = 0,
+            int adminId = 0
             )
         {
             //// temp customer for update
-            targetCustId = 1176083;
+            //targetCustId = 1176083;
+            targetCustId = 14657007;
+            targetRoleId = (int)CustRole.Member;
+            adminId = 8;
             var settingContext = new SettingContext
                 {
                     CustId = custId,
                     RoleId = roleId,
                     TargetCustId = targetCustId,
                     TargetRoleId = targetRoleId,
-                    FormType = FormType.Edit
+                    FormType = FormType.Edit,
+                    AdminId = adminId
                 };
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
@@ -77,6 +83,25 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             };
 
             return JavaScript(FormatJavascript(custSetting, "custSetting"));
+        }
+
+        [HttpPost]
+        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
+        {
+            //// Check what setting will be update
+            List<Result> results = new List<Result>();
+            if (custSetting.CustInfo != null)
+            {
+                results.Add(_settingService.UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria { 
+                    Custid = settingContext.TargetCustId,
+                    UserID = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
+                    DisabledLiveCS = custSetting.CustInfo.DisableLiveCasino,
+                    IP = HttpContext.Request.UserHostAddress,
+                    Language = "E"
+                }));
+            }
+            
+            return Json(results);
         }
 
         private string FormatJavascript(object obj, string name)

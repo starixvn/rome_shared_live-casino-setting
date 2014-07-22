@@ -23,7 +23,5 @@ namespace Fanex.LiveCasino.CoreSetting.Core.Data
         IEnumerable<T> Fetch<T>();
 
         IEnumerable<T> Fetch<T>(ICriteria criteria);
-
-        Result Update(ICriteria criteria);
     }
 }

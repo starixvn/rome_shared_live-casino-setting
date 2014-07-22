@@ -16,7 +16,7 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public interface ISettingRepository : IDynamicRepository
+    public interface ISettingRepository : IBaseRepository
     {
         CustInfo GetCustomerInfo(ICriteria criteria);
     }

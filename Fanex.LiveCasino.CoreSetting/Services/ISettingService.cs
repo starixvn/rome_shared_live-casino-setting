@@ -22,7 +22,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services
     /// </summary>
     public interface ISettingService
     {
-        Result UpdateLiveCasinoStatus();
+        Result UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria);
 
         CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
     }

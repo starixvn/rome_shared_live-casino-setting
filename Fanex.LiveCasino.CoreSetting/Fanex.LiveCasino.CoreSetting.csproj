@@ -60,7 +60,7 @@
     <Compile Include="Core\Data\ResultCriteria.cs" />
     <Compile Include="Core\Data\SpParamAttribute.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
-    <Compile Include="Criteria\UpdateDisableLiveCSCriteria.cs" />
+    <Compile Include="Criteria\UpdateLiveCasinoStatusCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Models\Commission.cs" />
@@ -72,6 +72,8 @@
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\ISettingRepository.cs" />
     <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Resources\LiveCasinoLang.Designer.cs">
