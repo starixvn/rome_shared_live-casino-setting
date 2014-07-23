@@ -26,23 +26,23 @@
             }
         }
 
-        protected CustSettingViewModel GetCommonSettingForEdit(
+        protected PtAndComSettingViewModel GetCommonSettingForEdit(
             ICriteria criteria,
-            Action<IDataReader, CustSettingViewModel> mapSetting)
+            Action<IDataReader, PtAndComSettingViewModel> mapSetting)
         {
-            CustSettingViewModel custSetting = new CustSettingViewModel();
+            PtAndComSettingViewModel ptAndComSetting = new PtAndComSettingViewModel();
             using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        mapSetting(reader, custSetting);
+                        mapSetting(reader, ptAndComSetting);
                     }
                 }
             }
 
-            return custSetting;
+            return ptAndComSetting;
         }
     }
 }

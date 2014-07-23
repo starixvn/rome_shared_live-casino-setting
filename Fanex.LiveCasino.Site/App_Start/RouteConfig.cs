@@ -16,7 +16,7 @@ namespace Fanex.LiveCasino.Site
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { area = "LiveCasinoSetting", controller = "LiveCSSetting", action = "EditSetting", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

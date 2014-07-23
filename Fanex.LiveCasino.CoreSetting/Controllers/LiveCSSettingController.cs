@@ -24,11 +24,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     /// </summary>
     public class LiveCSSettingController : Controller
     {
-        private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented
-        };
+        
 
         private readonly ISettingService _settingService;
         public LiveCSSettingController() : this(null) { }
@@ -48,11 +44,6 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             int adminId = 0
             )
         {
-            //// temp customer for update
-            //targetCustId = 1176083;
-            targetCustId = 14657007;
-            targetRoleId = (int)CustRole.Member;
-            adminId = 8;
             var settingContext = new SettingContext
                 {
                     CustId = custId,
@@ -68,18 +59,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         [HttpGet]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
-            var custInfo = _settingService.GetCustomerInfo(new GetCustomerInfoCriteria
-            {
-                Custid = settingContext.TargetCustId
-            });
-
-            var custSetting = new CustSettingViewModel
-            {
-                CustInfo = custInfo,
-                SettingContext = settingContext
-            };
-
-            return JavaScript(FormatJavascript(custSetting, "custSetting"));
+            return JavaScript(_settingService.GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
         [HttpPost]
@@ -102,14 +82,6 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             return Json(results);
         }
 
-        private string FormatJavascript(object obj, string name)
-        {
-            if (obj != null)
-            {
-                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, jsonSerializeSettings));
-            }
-
-            return string.Empty;
-        }
+        
     }
 }

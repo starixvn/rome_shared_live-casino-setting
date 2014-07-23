@@ -57,7 +57,7 @@
         <td class="left">
             {{custInfo.Fax}}
         </td>
-        @if (Model.TargetRoleId == (int)CustRole.Member)
+        @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
         {
             <td class="right bold">
                 Enable:

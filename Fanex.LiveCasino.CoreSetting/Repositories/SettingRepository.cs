@@ -1,19 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SettingRepository.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Repositories
+﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
-    using System;
-    using Fanex.Data;
-    using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.Common.Extensions;
-    using System.Data;
+    using Fanex.Data;
+    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -33,13 +25,12 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
             }
         }
 
-
-        public CustSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
         {
-            return GetCommonSettingForEdit(criteria, (reader, settingViewModel)
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
                 {
-                    settingViewModel.Commission = new Commission
+                    ptAndComSetting.Commission = new Commission
                     {
                         Value = reader.ToDecimal("v162sdiscount_1101"),
                         Upline = new Commission
@@ -48,37 +39,130 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
                         }
                     };
 
-                    settingViewModel.PositionTaking = new PositionTaking
+                    ptAndComSetting.PositionTaking = new PositionTaking
                     {
-                        S4 = reader.To<decimal?>("v162spositiontaking_1101"),
-                        L4 = reader.To<decimal?>("v162spositiontaking_1101_max")
+                        S4 = reader.To<decimal>("v162spositiontaking_1101"),
+                        L4 = reader.To<decimal>("v162spositiontaking_1101_max"),
+                        N4 = reader.To<decimal>("v162spositiontaking_1101_min")
                     };
                 });
         }
 
-        public CustSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
         {
-            throw new System.NotImplementedException();
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
+                =>
+            {
+                ptAndComSetting.Commission = new Commission
+                {
+                    Value = reader.ToDecimal("v162discount_1101"),
+                    Upline = new Commission
+                    {
+                        Value = reader.ToDecimal("v162discount_1101_max")
+                    }
+                };
+
+                ptAndComSetting.PositionTaking = new PositionTaking
+                {
+                    S4 = reader.To<decimal>("v162spositiontaking_1101_max"),
+                    N3 = reader.To<decimal>("v162mpositiontaking_1101_min"),
+                    //Us3Max = reader.To<decimal?>("auto_v162spositiontaking_1101_max"),
+                    Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
+                    Us3 = reader.To<decimal>("auto_v162spostiontaking_1101"),
+                    S3 = reader.To<decimal>("v162spositiontaking_1101"),
+                    M3 = reader.To<decimal>("v162mpositiontaking_1101")
+                };
+            });
         }
 
-        public CustSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
         {
-            throw new System.NotImplementedException();
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
+                =>
+            {
+                ptAndComSetting.Commission = new Commission
+                {
+                    Value = reader.ToDecimal("v162discount_1101"),
+                    Upline = new Commission
+                    {
+                        Value = reader.ToDecimal("v162discount_1101_max")
+                    }
+                };
+
+                ptAndComSetting.PositionTaking = new PositionTaking
+                {
+                    IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
+                    M2 = reader.To<decimal>("v162mpositiontaking_1101"),
+                    Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
+                    Um2 = reader.To<decimal>("auto_v162mpositiontaking_1101"),
+                    A2 = reader.To<decimal>("v162apositiontaking_1101"),
+                    M3 = reader.To<decimal>("v162mpositiontaking_1101_max"),
+                    N2 = reader.To<decimal>("v162apositiontaking_1101_min")
+                };
+            });
         }
 
-        public CustSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
         {
-            throw new System.NotImplementedException();
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
+                =>
+            {
+                ptAndComSetting.Commission = new Commission
+                {
+                    Value = reader.ToDecimal("v162playerdiscount_1101"),
+                    Upline = new Commission
+                    {
+                        Value = reader.ToDecimal("v162playerdiscount_1101_max")
+                    }
+                };
+
+                ptAndComSetting.PositionTaking = new PositionTaking
+                {
+                    A1 = reader.To<decimal>("v162apositiontaking_1101"),
+                    A2 = reader.To<decimal>("v162apositiontaking_1101_max"),
+                    N2 = reader.To<decimal>("v162apositiontaking_1101_min"),
+                };
+            });
         }
 
-        public CustSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
         {
-            throw new System.NotImplementedException();
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
+                =>
+            {
+                ptAndComSetting.PositionTaking = new PositionTaking
+                {
+                    S1 = reader.To<decimal>("v162spositiontaking_1101"),
+                    S1Max = reader.To<decimal>("v162spositiontaking_1101_max"),
+                    S1Min = reader.To<decimal>("v162spositiontaking_1101_min"),
+                    M1 = reader.To<decimal>("v162mpositiontaking_1101"),
+                    A1 = reader.To<decimal>("v162apositiontaking_1101"),
+                    Us1 = reader.To<decimal>("auto_v162spositiontaking_1101_mem"),
+                    Is1 = reader.To<bool>("isauto_v162spositiontaking_1101_mem"),
+                    Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
+                    S4 = reader.To<decimal>("auto_v162spositiontaking_1101_max")
+                };
+            });
         }
 
-        public CustSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        public PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
         {
-            throw new System.NotImplementedException();
+            return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
+                =>
+            {
+                ptAndComSetting.PositionTaking = new PositionTaking
+                {
+                    IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
+                    M1 = reader.To<decimal>("v162mpositiontaking_1101"),
+                    A1 = reader.To<decimal>("V162apositiontaking_1101"),
+                    Um1 = reader.To<decimal>("auto_v162mpositiontaking_1101_mem"),
+                    Im1 = reader.To<bool>("isauto_v162mpositiontaking_1101_mem"),
+                    M1Max = reader.To<decimal>("v162mpositiontaking_1101_max"),
+                    M1Min = reader.To<decimal>("v162mpositiontaking_1101_min"),
+                    Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
+                    M3 = reader.To<decimal>("auto_v162mpositiontaking_1101_max")
+                };
+            });
         }
     }
 }

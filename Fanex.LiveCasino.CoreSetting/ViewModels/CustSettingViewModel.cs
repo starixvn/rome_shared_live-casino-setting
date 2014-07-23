@@ -21,10 +21,10 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
 
         public CustInfo CustInfo { get; set; }
 
-        public Commission Commission { get; set; }
+        public PtAndComSettingViewModel PtAndComSetting { get; set; }
 
         public IList<GameType> GameSetting { get; set; }
 
-        public PositionTaking PositionTaking { get; set; }
+        
     }
 }

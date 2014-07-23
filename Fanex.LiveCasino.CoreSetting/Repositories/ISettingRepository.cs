@@ -14,17 +14,17 @@
 
         #region Get Setting
 
-        CustSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
+        PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
 
-        CustSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria);
+        PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria);
 
-        CustSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria);
+        PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria);
 
-        CustSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria);
+        PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria);
 
-        CustSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
+        PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
 
-        CustSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
+        PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
         
         #endregion
     }

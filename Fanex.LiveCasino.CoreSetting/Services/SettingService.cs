@@ -4,12 +4,21 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.NAP.Framework.Command;
+    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Newtonsoft.Json;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class SettingService : ISettingService
     {
+        private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
         private readonly ISettingRepository _settingRepository;
 
         public SettingService() : this(null) { }
@@ -33,5 +42,112 @@
         {
             return _settingRepository.GetCustomerInfo(criteria);
         }
+
+        public string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
+        {
+            var custSetting = new CustSettingViewModel
+            {
+                SettingContext = settingContext,
+                CustInfo = GetCustomerInfo(new GetCustomerInfoCriteria
+                {
+                    Custid = settingContext.TargetCustId
+                }),
+                PtAndComSetting = GetPtAndComSetting(settingContext)
+            };
+
+            return FormatJavascript(custSetting, objectName);
+        }
+
+        #region Pt and Com
+
+        public PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditSuper(criteria);
+        }
+
+        public PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditMaster(criteria);
+        }
+
+        public PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditAgent(criteria);
+        }
+
+        public PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditMember(criteria);
+        }
+
+        public PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForSuperEditMember(criteria);
+        }
+
+        public PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForMasterEditMember(criteria);
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
+        private PtAndComSettingViewModel GetPtAndComSetting(SettingContext settingContext)
+        {
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Super:
+                    return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
+                    {
+                        Custid = settingContext.TargetCustId
+                    });
+                case CustRole.Master:
+                    return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
+                        {
+                            CustId = settingContext.TargetCustId,
+                            SRecommend = settingContext.CustId
+                        });
+                case CustRole.Agent:
+                    return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
+                        {
+                            CustId = settingContext.TargetCustId,
+                            MRecommend = settingContext.CustId
+                        });
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria { 
+                                CustId = settingContext.TargetCustId
+                            });
+                        case CustRole.Master:
+                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria { 
+                                CustId = settingContext.TargetCustId
+                            });
+                        default:
+                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria { 
+                                CustId = settingContext.TargetCustId,
+                                Recommend = settingContext.CustId
+                            });
+                    }
+            }
+
+            return null;
+        }
+
+        private string FormatJavascript(object obj, string name)
+        {
+            if (obj != null)
+            {
+                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, jsonSerializeSettings));
+            }
+
+            return string.Empty;
+        }
+
+        #endregion
     }
 }
