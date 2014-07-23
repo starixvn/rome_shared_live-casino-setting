@@ -1,0 +1,15 @@
+﻿@model SettingContext
+@{
+    Layout = null;
+}
+<div class="pt-container" data-ng-controller="PtAndComSettingController">
+    <div class="pt-title">
+        Position Taking/Commission
+    </div>
+    @switch ((CustRole)Model.TargetRoleId)
+    {
+        case CustRole.Super:
+            <edit-super-pt-and-com></edit-super-pt-and-com>
+            break;
+    }
+</div>

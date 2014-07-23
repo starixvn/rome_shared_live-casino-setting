@@ -19,9 +19,10 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")" 
     style="display:none;"
     class="edit-setting-livecs">
+
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)
-    @*  @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndComm.cshtml")*@
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @* @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @*@Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")*@
     <div class="update-setting">
         <input type="button" data-ng-click="updateSetting()" value="Update" />

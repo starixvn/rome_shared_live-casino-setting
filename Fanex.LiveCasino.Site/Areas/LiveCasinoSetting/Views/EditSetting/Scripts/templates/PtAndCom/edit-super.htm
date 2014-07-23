@@ -1,0 +1,27 @@
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th>
+                Super Max Position
+            </th>
+            <th>
+                Super Min Position
+            </th>
+            <th>
+                Super Commission
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.S4" data-ng-options="item.id as item.value for item in superMaxOptions" data-ng-change="updateSuperMax()"></select>
+            </td>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.N4" data-ng-options="item.id as item.value for item in superMinOptions"></select>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </tbody>
+</table>

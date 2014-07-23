@@ -19,6 +19,32 @@ fanex.cloneObject = function (obj) {
     return newObj;
 };
 
+
+fanex.roundNumber = function (number, decimals) {
+    'use strict';
+    var newnumber = Number(number + '').toFixed(parseInt(decimals));
+    return parseFloat(newnumber); // Output the result to the form field (change for your purposes)
+};
+
+fanex.createOptionsFromRange = function (from, to, gap, decimals) {
+    var options = [];
+    decimals = decimals || 2;
+    to += gap;
+    for (var i = from; i < to; i += gap) {
+        var value = fanex.roundNumber(i, decimals);
+        options.push(
+        {
+            id: value,
+            value: value
+        });
+
+    }
+
+    return options.reverse();
+}
+
+
+
 //// live casino setting app
 
 fanex.liveCasinoSetting = angular.module('fanex.liveCasinoSetting', []);

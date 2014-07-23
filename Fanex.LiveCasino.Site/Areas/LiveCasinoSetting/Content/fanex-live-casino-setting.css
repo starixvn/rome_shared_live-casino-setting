@@ -5,7 +5,7 @@ body
     font-size: 12px;
 }
 
-.edit-setting-livecs
+.edit-setting-livecs, .pt-setting {
 {
     width: 700px;
 }
@@ -35,6 +35,7 @@ body
     font-weight: bold;
     color: White;
     background-color: Gray;
+	
 }
 
 .edit-setting-livecs table, .edit-setting-livecs table tr, .edit-setting-livecs table td
@@ -61,6 +62,13 @@ body
 .edit-setting-livecs .cust-win-limit td
 {
     width: 25%;
+}
+
+
+/*PT Style*/
+.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th {
+	border: 1px solid gray;
+	border-collapse: collapse;
 }
 
 .edit-setting-livecs .cust-win-limit .reset-limit
