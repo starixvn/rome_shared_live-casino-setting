@@ -30,7 +30,19 @@
         PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
 
         PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
-        
+
+        ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
+        ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
+        ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
+        ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
+        ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
+        ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+
         #endregion
     }
 }

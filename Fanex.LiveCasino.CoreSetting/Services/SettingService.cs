@@ -91,6 +91,36 @@
             return _settingRepository.GetSettingForMasterEditMember(criteria);
         }
 
+        public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
 
 
@@ -175,5 +205,6 @@
         }
 
         #endregion
+
     }
 }
