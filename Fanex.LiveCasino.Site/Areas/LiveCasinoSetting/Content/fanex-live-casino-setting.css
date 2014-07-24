@@ -71,6 +71,9 @@ body
 	border-collapse: collapse;
 }
 
+.pt-setting tbody td {
+	text-align: center;
+}
 .edit-setting-livecs .cust-win-limit .reset-limit
 {
     width: 50%;

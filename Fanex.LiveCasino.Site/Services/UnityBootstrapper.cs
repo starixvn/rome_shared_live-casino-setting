@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Microsoft.Practices.Unity;
+using Fanex.LiveCasino.CoreSetting.Services;
+
+namespace Fanex.LiveCasino.Site.Services
+{
+    public class UnityBootstrapper
+    {
+        private readonly IUnityContainer container = new UnityContainer();
+
+        public IUnityContainer ContainerInstance
+        {
+            get { return this.container; }
+        }
+
+        public void RegisterTypes()
+        {
+            container.RegisterType<IAuthenticationService, AuthenticationService>();
+        }
+    }
+}

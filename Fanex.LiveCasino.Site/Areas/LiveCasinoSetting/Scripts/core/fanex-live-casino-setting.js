@@ -26,18 +26,31 @@ fanex.roundNumber = function (number, decimals) {
     return parseFloat(newnumber); // Output the result to the form field (change for your purposes)
 };
 
-fanex.createOptionsFromRange = function (from, to, gap, decimals) {
+fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
     var options = [];
     decimals = decimals || 2;
     to += gap;
+
+    if (current < from) {
+        options.push({
+            id: current,
+            value: current
+        });
+    }
+
     for (var i = from; i < to; i += gap) {
         var value = fanex.roundNumber(i, decimals);
-        options.push(
-        {
+        options.push({
             id: value,
             value: value
         });
+    }
 
+    if (current > to) {
+        options.push({
+            id: current,
+            value: current
+        });
     }
 
     return options.reverse();
@@ -60,4 +73,8 @@ fanex.liveCasinoSetting.custRole = {
     Agent: 2,
     Member: 1
 };
+//// Constant
+fanex.liveCasinoSetting.PT_INTERVAL = 0.01;
+fanex.liveCasinoSetting.COM_INTERVAL = 0.0005;
+fanex.liveCasinoSetting.COM_DECIMAL = 4; 
 

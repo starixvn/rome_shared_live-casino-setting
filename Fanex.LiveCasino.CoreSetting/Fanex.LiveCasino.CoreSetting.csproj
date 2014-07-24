@@ -40,6 +40,10 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependencies\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Fanex\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -84,10 +88,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="ViewModels\PtAndComSettingViewModel.cs" />
+    <Compile Include="Web\Filters\InjectedFilterAttribute.cs" />
+    <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

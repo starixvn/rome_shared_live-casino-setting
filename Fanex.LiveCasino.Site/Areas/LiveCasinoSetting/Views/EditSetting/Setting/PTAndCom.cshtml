@@ -5,6 +5,7 @@
 <div class="pt-container" data-ng-controller="PtAndComSettingController">
     <div class="pt-title">
         Position Taking/Commission
+        <input type="button"  data-ng-disabled="isNotAllowUpdate" value="Update Partial" data-ng-click="updatePtAndComSetting()"/>
     </div>
     @switch ((CustRole)Model.TargetRoleId)
     {

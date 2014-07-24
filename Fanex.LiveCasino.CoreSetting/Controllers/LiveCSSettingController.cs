@@ -18,6 +18,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Newtonsoft.Json;
     using Fanex.NAP.Framework.Command;
+    using Fanex.LiveCasino.CoreSetting.Web.Filters;
 
     /// <summary>
     /// TODO: Update summary.
@@ -35,7 +36,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         }
         //
         // GET: /Setting/
-
+        //[InjectedFilter]
         public ActionResult EditSetting(
             int custId = 0,
             int roleId = 0,
@@ -62,6 +63,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             return JavaScript(_settingService.GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
+        //[InjectedFilter]
         [HttpPost]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
@@ -82,6 +84,9 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             return Json(results);
         }
 
-        
+        public ActionResult UnAuthorized()
+        {
+            return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
+        }
     }
 }

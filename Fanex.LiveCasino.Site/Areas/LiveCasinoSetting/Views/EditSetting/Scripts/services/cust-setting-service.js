@@ -5,14 +5,14 @@ if (fanex.liveCasinoSetting) {
         'use strict';
         var me = this;
 
-
+        me.custSetting = custSetting;
         me.updateSetting = function () {
             var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
             var custSettingForUpdate = {
                 settingContext: custSetting.SettingContext,
                 custInfo: custInfoScope.getCustInfo()
             };
-           
+
             $http({
                 method: 'POST',
                 url: $('#tblSetting').data('update-href'),
@@ -24,6 +24,10 @@ if (fanex.liveCasinoSetting) {
             error(function (data) {
                 //// loging error
             });
+        };
+
+        me.updatePtAndComSetting = function (ptAndComSetting) {
+            var demo = ptAndComSetting;
         };
     } ]);
 }

@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.Practices.Unity;
+using Fanex.LiveCasino.CoreSetting.Web.Filters;
+using Fanex.LiveCasino.Site.Services;
 
 namespace Fanex.LiveCasino.Site
 {
@@ -24,6 +27,16 @@ namespace Fanex.LiveCasino.Site
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+
+            //var oldProvider = FilterProviders.Providers.Single(
+            //       f => f is FilterAttributeFilterProvider
+            //   );
+            //FilterProviders.Providers.Remove(oldProvider);
+
+            //var unityBootstrapper = new UnityBootstrapper();
+            //unityBootstrapper.RegisterTypes();
+            //var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
+            //FilterProviders.Providers.Add(provider);
         }
     }
 }
