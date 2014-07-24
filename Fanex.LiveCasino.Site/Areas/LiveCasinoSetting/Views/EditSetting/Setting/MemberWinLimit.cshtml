@@ -1,5 +1,53 @@
-﻿@{
-    Layout = null;
-}
-
-<h2>MemberWinLimit</h2>
+﻿<table data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
+    <tbody>
+        <tr class="title">
+            <td colspan="3" class="center">
+                Member Win Limit
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Maximum Win
+            </td>
+            <td class="left ng-binding">
+                <select id="maximumWinLimit" style="width: 80px">
+                    <option value="3">3X</option>
+                    <option value="5">5X</option>
+                    <option value="10">10X</option>
+                    <option value="0" selected="selected">Unlimited</option>
+                </select>
+                <span>&nbsp;on given credit</span>
+            </td>
+            <td class="reset-limit">
+                <input type="checkbox" id="dailyAutoReset" style="vertical-align: middle; margin-bottom: 3px;"
+                    checked="checked">
+                <label for="dailyAutoReset">
+                    Daily auto reset limit (at 12 noon GMT+8)</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Current Win Limit
+            </td>
+            <td class="left ng-binding">
+                <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit">
+                    Unlimited</div>
+                <span id="ofMaxCredit"></span>
+            </td>
+            <td class="reset-limit">
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Current Win Limit
+            </td>
+            <td class="left ng-binding">
+                <div id="showWinLimit" style="cursor: pointer; color: Blue" onclick="Fanex.ExtAcc.Customer.LiveCasino.ShowCurrentWinLimit()">
+                    Click to view Current Win Limit
+                </div>
+            </td>
+            <td class="reset-limit">
+            </td>
+        </tr>
+    </tbody>
+</table>
