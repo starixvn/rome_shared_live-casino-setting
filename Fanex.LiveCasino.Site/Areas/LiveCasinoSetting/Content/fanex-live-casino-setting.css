@@ -5,7 +5,7 @@ body
     font-size: 12px;
 }
 
-.edit-setting-livecs, .pt-setting {
+.edit-setting-livecs, .pt-setting
 {
     width: 700px;
 }
