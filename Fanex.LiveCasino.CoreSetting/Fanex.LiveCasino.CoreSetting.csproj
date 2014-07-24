@@ -60,12 +60,18 @@
   <ItemGroup>
     <Compile Include="Controllers\LiveCSSettingController.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditAgentCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMasterCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMemberCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditSuperCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForMasterEditMemberCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForSuperEditMemberCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\MasterUpdateMemberSettingCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\SuperUpdateMemberSettingCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\UpdateAgentSettingCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\UpdateMasterSettingCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\UpdateSuperSettingCriteria.cs" />
     <Compile Include="Criteria\ResultCriteria.cs" />
     <Compile Include="Criteria\UpdateLiveCasinoStatusCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />

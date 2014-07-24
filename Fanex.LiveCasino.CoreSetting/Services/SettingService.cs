@@ -8,6 +8,7 @@
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Newtonsoft.Json;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -132,6 +133,31 @@
                                 CustId = settingContext.TargetCustId,
                                 Recommend = settingContext.CustId
                             });
+                    }
+            }
+
+            return null;
+        }
+
+        private ICriteria GetCriteriaForUpdatePtAndCom(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        {
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Super:
+                    return new UpdateSuperSettingCriteria();
+                case CustRole.Master:
+                    return new UpdateMasterSettingCriteria();
+                case CustRole.Agent:
+                    return new UpdateAgentSettingCriteria();
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            return new SuperUpdateMemberSettingCriteria();
+                        case CustRole.Master:
+                            return new MasterUpdateMemberSettingCriteria();
+                        default:
+                            return new AgentUpdateMemberSettingCriteria();
                     }
             }
 

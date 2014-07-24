@@ -84,6 +84,8 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             return Json(results);
         }
 
+        
+
         public ActionResult UnAuthorized()
         {
             return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
