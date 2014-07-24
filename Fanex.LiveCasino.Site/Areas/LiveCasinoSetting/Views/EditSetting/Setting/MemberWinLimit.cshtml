@@ -1,4 +1,5 @@
-﻿<table data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
+﻿@model SettingContext
+<table data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
     <tbody>
         <tr class="title">
             <td colspan="3" class="center">
@@ -10,22 +11,19 @@
                 Maximum Win
             </td>
             <td class="left ng-binding">
-                <select id="maximumWinLimit" style="width: 80px">
-                    <option value="3">3X</option>
-                    <option value="5">5X</option>
-                    <option value="10">10X</option>
-                    <option value="0" selected="selected">Unlimited</option>
+                <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
+                    data-ng-model="maxWinLimitModel.maxWinLimit" style="width: 80px">
                 </select>
                 <span>&nbsp;on given credit</span>
             </td>
             <td class="reset-limit">
-                <input type="checkbox" id="dailyAutoReset" style="vertical-align: middle; margin-bottom: 3px;"
-                    checked="checked">
+                <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.isDailyAutoReset"
+                    style="vertical-align: middle; margin-bottom: 3px;" checked="checked">
                 <label for="dailyAutoReset">
                     Daily auto reset limit (at 12 noon GMT+8)</label>
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="right bold">
                 Current Win Limit
             </td>
@@ -36,18 +34,21 @@
             </td>
             <td class="reset-limit">
             </td>
-        </tr>
-        <tr>
-            <td class="right bold">
-                Current Win Limit
-            </td>
-            <td class="left ng-binding">
-                <div id="showWinLimit" style="cursor: pointer; color: Blue" onclick="Fanex.ExtAcc.Customer.LiveCasino.ShowCurrentWinLimit()">
-                    Click to view Current Win Limit
-                </div>
-            </td>
-            <td class="reset-limit">
-            </td>
-        </tr>
+        </tr>*@
+        @if (Model.TargetRoleId == (int)CustRole.Member)
+        { 
+            <tr>
+                <td class="right bold">
+                    Current Win Limit
+                </td>
+                <td class="left ng-binding">
+                    <div id="showWinLimit" style="cursor: pointer; color: Blue" onclick="Fanex.ExtAcc.Customer.LiveCasino.ShowCurrentWinLimit()">
+                        Click to view Current Win Limit
+                    </div>
+                </td>
+                <td class="reset-limit">
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
