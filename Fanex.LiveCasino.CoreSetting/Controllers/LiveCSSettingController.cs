@@ -8,7 +8,6 @@
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Command;
-    using Fanex.LiveCasino.CoreSetting.Web.Filters;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
 
     /// <summary>
@@ -80,7 +79,7 @@
 
         #region Win Limit
 
-        [HttpGet]
+ 	[HttpGet]
         public ActionResult GetCurrentMemberWinLimit(int custId)
         {
             CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(custId);
@@ -104,6 +103,33 @@
         }
 
         #endregion
+        [HttpPost]
+        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            ICommandResult updateResult = new CommandResult();
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Super:
+                    updateResult = _settingService.UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
+                //case CustRole.Master:
+                //    return new UpdateMasterSettingCriteria();
+                //case CustRole.Agent:
+                //    return new UpdateAgentSettingCriteria();
+                //case CustRole.Member:
+                //    switch ((CustRole)settingContext.RoleId)
+                //    {
+                //        case CustRole.Super:
+                //            return new SuperUpdateMemberSettingCriteria();
+                //        case CustRole.Master:
+                //            return new MasterUpdateMemberSettingCriteria();
+                //        default:
+                //            return new AgentUpdateMemberSettingCriteria();
+                //    }
+            }
+
+            return Json(updateResult);
+        }
 
         public ActionResult UnAuthorized()
         {

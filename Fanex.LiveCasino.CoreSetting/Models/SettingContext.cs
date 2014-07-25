@@ -115,24 +115,9 @@ namespace Fanex.LiveCasino.CoreSetting.Models
             FormType = formType;
         }
 
-        public bool IsEditSuper()
+        public int GetUserIdDoAction()
         {
-            return FormType == FormType.Edit && TargetRoleId == (int)CustRole.Super;
-        }
-
-        public bool IsEditMaster()
-        {
-            return FormType == FormType.Edit && TargetRoleId == (int)CustRole.Master;
-        }
-
-        public bool IsEditAgent()
-        {
-            return FormType == FormType.Edit && TargetRoleId == (int)CustRole.Agent;
-        }
-
-        public bool IsEditMember()
-        {
-            return FormType == FormType.Edit && TargetRoleId == (int)CustRole.Member;
+            return AdminId > 0 ? AdminId : CustId;
         }
     }
 }

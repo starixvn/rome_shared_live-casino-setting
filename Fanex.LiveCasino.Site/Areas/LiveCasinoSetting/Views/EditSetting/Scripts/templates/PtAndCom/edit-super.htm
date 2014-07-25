@@ -16,20 +16,17 @@
         <tr>
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.S4" 
-                data-ng-options="item.id as item.value for item in superMaxOptions" 
-                data-ng-change="updateSuperMax()"></select>
+                data-ng-options="item.id as item.value for item in superMaxOptions" ></select>
             </td>
             <td>
                 <select 
                 data-ng-model="ptAndComSetting.PositionTaking.N4" 
-                data-ng-options="item.id as item.value for item in superMinOptions" 
-                data-ng-change="whenChange()"></select>
+                data-ng-options="item.id as item.value for item in superMinOptions" ></select>
             </td>
             <td>
                 <select 
                 data-ng-model="ptAndComSetting.Commission.Value" 
-                data-ng-options="item.id as item.value for item in superCommissionOptions" 
-                data-ng-change="whenChange()"></select>
+                data-ng-options="item.id as item.value for item in superCommissionOptions" ></select>
             </td>
         </tr>
     </tbody>

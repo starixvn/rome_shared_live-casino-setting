@@ -1,7 +1,7 @@
 ﻿/* File Created: July 23, 2014 */
 
 if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.directive('editSuperPtAndCom', [ 'CustomerSettingService',
+    fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
         function (settingService) {
             return {
                 restrict: 'E',
@@ -18,18 +18,8 @@ if (fanex.liveCasinoSetting) {
                         if (currentPt.N4 > currentPt.S4) {
                             currentPt.N4 = currentPt.S4;
                         }
-
                         $scope.superMinOptions = fanex.createOptionsFromRange(currentPt.N4, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                        $scope.whenChange();
                     };
-
-                    $scope.whenChange = function () {
-                        var pt = settingService.custSetting.PtAndComSetting.PositionTaking,
-                            com = settingService.custSetting.PtAndComSetting.Commission;
-                        $scope.isNotAllowUpdate = (pt.S4 === currentPt.S4 
-                                                    && pt.N4 === currentPt.N4
-                                                    && com.Value === currentCom.Value);
-                    }
                 }
             };
         }

@@ -25,9 +25,5 @@ if (fanex.liveCasinoSetting) {
                 //// loging error
             });
         };
-
-        me.updatePtAndComSetting = function (ptAndComSetting) {
-            var demo = ptAndComSetting;
-        };
     } ]);
 }

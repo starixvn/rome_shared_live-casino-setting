@@ -95,7 +95,18 @@
 
         public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new UpdateSuperSettingCriteria { 
+                Custid = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserID = settingContext.GetUserIdDoAction(),
+                v162discount_1101 = ptAndComSetting.Commission.Value,
+                v162UpdateCommission_1101 = true,
+                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
+                v162UpdatePositiontaking_1101 = true,
+                v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
+                v162UpdateMinPositiontaking_1101 = true
+            });
         }
 
         public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -190,30 +201,6 @@
             return null;
         }
 
-        private ICriteria GetCriteriaForUpdatePtAndCom(SettingContext settingContext, PtAndComSetting ptAndComSetting)
-        {
-            switch ((CustRole)settingContext.TargetRoleId)
-            {
-                case CustRole.Super:
-                    return new UpdateSuperSettingCriteria();
-                case CustRole.Master:
-                    return new UpdateMasterSettingCriteria();
-                case CustRole.Agent:
-                    return new UpdateAgentSettingCriteria();
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
-                    {
-                        case CustRole.Super:
-                            return new SuperUpdateMemberSettingCriteria();
-                        case CustRole.Master:
-                            return new MasterUpdateMemberSettingCriteria();
-                        default:
-                            return new AgentUpdateMemberSettingCriteria();
-                    }
-            }
-
-            return null;
-        }
 
         private string FormatJavascript(object obj, string name)
         {

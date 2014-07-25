@@ -3,13 +3,12 @@ if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('PtAndComSettingController',
     [
         '$scope',
-        'CustomerSettingService',
-        function ($scope, settingService) {
-            $scope.ptAndComSetting = fanex.cloneObject(settingService.custSetting.PtAndComSetting);
-            $scope.isNotAllowUpdate = true;
+        'PtAndComSettingService',
+        function ($scope, ptAndComSettingService) {
+            $scope.ptAndComSetting = fanex.cloneObject(ptAndComSettingService.ptAndComSetting);
 
             $scope.updatePtAndComSetting = function () {
-                settingService.updatePtAndComSetting($scope.ptAndComSetting);
+                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting);
             };
         }
         ]);
