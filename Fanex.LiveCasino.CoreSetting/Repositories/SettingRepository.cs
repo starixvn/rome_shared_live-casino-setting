@@ -67,7 +67,6 @@
                 {
                     S4 = reader.To<decimal>("v162spositiontaking_1101_max"),
                     N3 = reader.To<decimal>("v162mpositiontaking_1101_min"),
-                    //Us3Max = reader.To<decimal?>("auto_v162spositiontaking_1101_max"),
                     Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
                     Us3 = reader.To<decimal>("auto_v162spostiontaking_1101"),
                     S3 = reader.To<decimal>("v162spositiontaking_1101"),

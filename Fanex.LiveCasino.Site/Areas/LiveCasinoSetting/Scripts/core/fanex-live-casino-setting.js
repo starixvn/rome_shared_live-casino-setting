@@ -76,5 +76,6 @@ fanex.liveCasinoSetting.custRole = {
 //// Constant
 fanex.liveCasinoSetting.PT_INTERVAL = 0.01;
 fanex.liveCasinoSetting.COM_INTERVAL = 0.0005;
-fanex.liveCasinoSetting.COM_DECIMAL = 4; 
+fanex.liveCasinoSetting.COM_DECIMAL = 4;
+fanex.liveCasinoSetting.PT_DECIMAL = 2; 
 
