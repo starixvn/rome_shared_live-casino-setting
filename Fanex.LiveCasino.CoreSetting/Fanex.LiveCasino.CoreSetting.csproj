@@ -98,7 +98,7 @@
     <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
-    <Compile Include="ViewModels\PtAndComSettingViewModel.cs" />
+    <Compile Include="Models\PtAndComSetting.cs" />
     <Compile Include="Web\Filters\InjectedFilterAttribute.cs" />
     <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
   </ItemGroup>

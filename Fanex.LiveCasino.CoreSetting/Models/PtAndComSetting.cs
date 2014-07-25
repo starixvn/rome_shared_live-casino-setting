@@ -1,11 +1,9 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.ViewModels
+﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
-    using Fanex.LiveCasino.CoreSetting.Models;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class PtAndComSettingViewModel
+    public class PtAndComSetting
     {
         public Commission Commission { get; set; }
 

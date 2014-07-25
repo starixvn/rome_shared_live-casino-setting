@@ -25,7 +25,7 @@
             }
         }
 
-        public PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
@@ -48,7 +48,7 @@
                 });
         }
 
-        public PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        public PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
@@ -75,7 +75,7 @@
             });
         }
 
-        public PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        public PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
@@ -102,7 +102,7 @@
             });
         }
 
-        public PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
@@ -125,7 +125,7 @@
             });
         }
 
-        public PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>
@@ -145,7 +145,7 @@
             });
         }
 
-        public PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(criteria, (reader, ptAndComSetting)
                 =>

@@ -19,29 +19,29 @@
 
         #region PT and Com
 
-        PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
+        PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
 
-        PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria);
+        PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria);
 
-        PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria);
+        PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria);
 
-        PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria);
+        PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria);
 
-        PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
+        PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
 
-        PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
+        PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
 
-        ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting);
+        ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
         #endregion
     }

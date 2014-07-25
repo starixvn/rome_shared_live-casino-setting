@@ -21,7 +21,7 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
 
         public CustInfo CustInfo { get; set; }
 
-        public PtAndComSettingViewModel PtAndComSetting { get; set; }
+        public PtAndComSetting PtAndComSetting { get; set; }
 
         public IList<GameType> GameSetting { get; set; }
 

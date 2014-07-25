@@ -61,62 +61,62 @@
 
         #region Pt and Com
 
-        public PtAndComSettingViewModel GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
         {
             return _settingRepository.GetSettingForEditSuper(criteria);
         }
 
-        public PtAndComSettingViewModel GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        public PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
         {
             return _settingRepository.GetSettingForEditMaster(criteria);
         }
 
-        public PtAndComSettingViewModel GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        public PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
         {
             return _settingRepository.GetSettingForEditAgent(criteria);
         }
 
-        public PtAndComSettingViewModel GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
         {
             return _settingRepository.GetSettingForEditMember(criteria);
         }
 
-        public PtAndComSettingViewModel GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
         {
             return _settingRepository.GetSettingForSuperEditMember(criteria);
         }
 
-        public PtAndComSettingViewModel GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
         {
             return _settingRepository.GetSettingForMasterEditMember(criteria);
         }
 
-        public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
 
-        public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
 
-        public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
 
-        public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
 
-        public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
 
-        public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             throw new System.NotImplementedException();
         }
@@ -126,7 +126,7 @@
 
         #region Private Methods
 
-        private PtAndComSettingViewModel GetPtAndComSetting(SettingContext settingContext)
+        private PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
         {
             switch ((CustRole)settingContext.TargetRoleId)
             {
@@ -169,7 +169,7 @@
             return null;
         }
 
-        private ICriteria GetCriteriaForUpdatePtAndCom(SettingContext settingContext, PtAndComSettingViewModel ptAndComSetting)
+        private ICriteria GetCriteriaForUpdatePtAndCom(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             switch ((CustRole)settingContext.TargetRoleId)
             {

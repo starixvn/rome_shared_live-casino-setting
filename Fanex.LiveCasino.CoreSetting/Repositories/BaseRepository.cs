@@ -4,7 +4,7 @@
     using System.Data;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
@@ -26,11 +26,11 @@
             }
         }
 
-        protected PtAndComSettingViewModel GetCommonSettingForEdit(
+        protected PtAndComSetting GetCommonSettingForEdit(
             ICriteria criteria,
-            Action<IDataReader, PtAndComSettingViewModel> mapSetting)
+            Action<IDataReader, PtAndComSetting> mapSetting)
         {
-            PtAndComSettingViewModel ptAndComSetting = new PtAndComSettingViewModel();
+            PtAndComSetting ptAndComSetting = new PtAndComSetting();
             using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
