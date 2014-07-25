@@ -3,9 +3,10 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&targetCustId={2}&targetRoleId={3}",
+        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}",
         Model.CustId,
         Model.RoleId,
+        Model.AdminId,
         Model.TargetCustId,
         Model.TargetRoleId);
 }

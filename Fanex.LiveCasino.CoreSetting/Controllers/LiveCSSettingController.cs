@@ -107,6 +107,9 @@
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult updateResult = new CommandResult();
+            settingContext.Language = "E";
+            settingContext.AdminId = 8;
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             switch ((CustRole)settingContext.TargetRoleId)
             {
                 case CustRole.Super:

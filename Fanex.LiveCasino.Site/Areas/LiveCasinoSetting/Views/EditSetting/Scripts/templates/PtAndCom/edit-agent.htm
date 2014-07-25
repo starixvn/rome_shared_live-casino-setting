@@ -1,1 +1,50 @@
-﻿
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th>
+                Super Preset PT
+            </th>
+            <th>
+                Super Auto Preset PT
+            </th>
+            <th>
+                Master Max PT
+            </th>
+            <th>
+                Master Min PT
+            </th>
+            <th>
+                Master Comm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.S3" 
+                data-ng-options="item.id as item.value for item in superPresetOptions" 
+                data-ng-disabled="!ptAndComSetting.PositionTaking.Im3"></select>
+            </td>
+            <td>
+                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im3" />
+                <select 
+                data-ng-model="ptAndComSetting.PositionTaking.Us3" 
+                data-ng-options="item.id as item.value for item in superAutoPresetOptions"
+                data-ng-disabled="ptAndComSetting.PositionTaking.Im3"></select>
+            </td>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.M3" 
+                data-ng-options="item.id as item.value for item in masterMaxOptions" ></select>
+            </td>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.N3" 
+                data-ng-options="item.id as item.value for item in masterMinOptions" ></select>
+            </td>
+            <td>
+                <select 
+                data-ng-model="ptAndComSetting.Commission.Value" 
+                data-ng-options="item.id as item.value for item in masterCommissionOptions" ></select>
+            </td>
+        </tr>
+    </tbody>
+</table>

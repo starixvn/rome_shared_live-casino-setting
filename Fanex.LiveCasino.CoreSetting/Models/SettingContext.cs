@@ -96,25 +96,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         {
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="custId">Current login customer id or customer that is performing</param>
-        /// <param name="userId">Administrator id, using in Accounting or internal agent</param>
-        /// <param name="subAccId">Sub-Account id using in Agency</param>
-        /// <param name="roleId">Current role id of customer that is performing</param>
-        /// <param name="targetRoleId">Role id of edited customer</param>
-        /// <param name="formId">Form type of edit: Edit Min/Max PT, Edit MinPT or Edit PT</param>
-        public SettingContext(int custId, int userId, int subAccId, int roleId, int targetRoleId, FormType formType)
-        {
-            CustId = custId;
-            AdminId = userId;
-            SubAccId = subAccId;
-            RoleId = roleId;
-            TargetRoleId = targetRoleId;
-            FormType = formType;
-        }
-
         public int GetUserIdDoAction()
         {
             return AdminId > 0 ? AdminId : CustId;
