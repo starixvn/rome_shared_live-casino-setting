@@ -85,13 +85,6 @@
             {
                 CustId = custId
             });
-	[HttpGet]
-        public ActionResult GetCurrentMemberWinLimit(int custId)
-        {
-            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(new GetCustomerWinLimitLiveCSCriteria
-            {
-                CustId = custId
-            });
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
