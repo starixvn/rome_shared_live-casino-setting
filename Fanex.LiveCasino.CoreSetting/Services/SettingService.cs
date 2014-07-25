@@ -146,9 +146,19 @@
             });
         }
 
-        public ICommandResult UpdateWinLimit(UpdateCustomerWinLimitCriteria criteria)
+        public ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            return _settingRepository.Update(criteria);
+            ICommandResult result = _settingRepository.Update(new UpdateCustomerWinLimitCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                MaxWinLimit = memberWinLimit.Max,
+                IsAutoDailyReset = memberWinLimit.IsAutoReset,
+                UserId = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
+                Ip = settingContext.IP,
+                Language = settingContext.Language
+            });
+
+            return result;
         }
 
         #endregion

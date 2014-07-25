@@ -51,7 +51,7 @@
 
         CurrentMemberWin GetCurrentMemberWinLimit(int custId);
 
-        ICommandResult UpdateWinLimit(UpdateCustomerWinLimitCriteria criteria);
+        ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
 
         #endregion
     }

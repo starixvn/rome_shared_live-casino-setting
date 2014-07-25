@@ -90,14 +90,7 @@
         [HttpPost]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            ICommandResult result = _settingService.UpdateWinLimit(new UpdateCustomerWinLimitCriteria
-            {
-                CustId = settingContext.TargetCustId,
-
-                UserId = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
-                Ip = settingContext.IP,
-                Language = settingContext.Language
-            });
+            ICommandResult result = _settingService.UpdateWinLimit(settingContext, model);
 
             return Json(result);
         }
