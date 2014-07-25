@@ -3,6 +3,7 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Data;

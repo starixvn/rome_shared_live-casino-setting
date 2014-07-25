@@ -1,10 +1,11 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using Fanex.LiveCasino.CoreSetting.Criteria;
-    using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.NAP.Framework.Command;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
+    using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -42,6 +43,12 @@
         ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
         ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        #endregion
+
+        #region Win Limit
+
+        CurrentMemberWin GetCurrentMemberWinLimit(GetCustomerWinLimitLiveCSCriteria criteria);
 
         #endregion
     }

@@ -159,6 +159,7 @@
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

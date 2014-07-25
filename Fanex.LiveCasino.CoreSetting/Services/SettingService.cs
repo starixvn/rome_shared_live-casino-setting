@@ -1,11 +1,13 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using Fanex.LiveCasino.CoreSetting.Criteria;
+    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
-    using Fanex.NAP.Framework.Command;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.NAP.Framework.Command;
     using Newtonsoft.Json;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.NAP.Framework.Data;
@@ -123,6 +125,14 @@
 
         #endregion
 
+        #region Win Limit
+
+        public CurrentMemberWin GetCurrentMemberWinLimit(GetCustomerWinLimitLiveCSCriteria criteria)
+        {
+            return _settingRepository.Get<CurrentMemberWin>(criteria);
+        }
+
+        #endregion
 
         #region Private Methods
 
@@ -151,15 +161,18 @@
                     switch ((CustRole)settingContext.RoleId)
                     {
                         case CustRole.Super:
-                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria { 
+                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
+                            {
                                 CustId = settingContext.TargetCustId
                             });
                         case CustRole.Master:
-                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria { 
+                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria
+                            {
                                 CustId = settingContext.TargetCustId
                             });
                         default:
-                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria { 
+                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria
+                            {
                                 CustId = settingContext.TargetCustId,
                                 Recommend = settingContext.CustId
                             });
@@ -205,6 +218,7 @@
         }
 
         #endregion
+
 
     }
 }

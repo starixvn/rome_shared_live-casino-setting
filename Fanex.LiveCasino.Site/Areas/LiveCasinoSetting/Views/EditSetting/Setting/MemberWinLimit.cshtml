@@ -1,5 +1,5 @@
 ﻿@model SettingContext
-<table data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
+<table id="tblMaxWinLimit" data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
     <tbody>
         <tr class="title">
             <td colspan="3" class="center">
@@ -23,18 +23,6 @@
                     Daily auto reset limit (at 12 noon GMT+8)</label>
             </td>
         </tr>
-        @*<tr>
-            <td class="right bold">
-                Current Win Limit
-            </td>
-            <td class="left ng-binding">
-                <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit">
-                    Unlimited</div>
-                <span id="ofMaxCredit"></span>
-            </td>
-            <td class="reset-limit">
-            </td>
-        </tr>*@
         @if (Model.TargetRoleId == (int)CustRole.Member)
         { 
             <tr>
@@ -42,9 +30,14 @@
                     Current Win Limit
                 </td>
                 <td class="left ng-binding">
-                    <div id="showWinLimit" style="cursor: pointer; color: Blue" onclick="Fanex.ExtAcc.Customer.LiveCasino.ShowCurrentWinLimit()">
+                    <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
                         Click to view Current Win Limit
                     </div>
+                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit >= 0">
+                        {{percent}} %</div>
+                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit < 0">
+                        Unlimited</div>
+                    <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit >= 0">of {{winLimit}}</span>
                 </td>
                 <td class="reset-limit">
                 </td>
@@ -52,3 +45,4 @@
         }
     </tbody>
 </table>
+@Html.Hidden("memberWinLimitLink", Url.Content("~/LiveCasinoSetting/LiveCSSetting/GetCurrentMemberWinLimit"))

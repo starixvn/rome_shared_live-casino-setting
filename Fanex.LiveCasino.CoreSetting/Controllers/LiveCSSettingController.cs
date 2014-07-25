@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LiveCSSettingController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.7.21">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Controllers
+﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -16,24 +7,27 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
-    using Newtonsoft.Json;
     using Fanex.NAP.Framework.Command;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
+    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class LiveCSSettingController : Controller
     {
-        
-
         private readonly ISettingService _settingService;
-        public LiveCSSettingController() : this(null) { }
+
+        public LiveCSSettingController()
+            : this(null)
+        {
+        }
 
         public LiveCSSettingController(ISettingService settingService)
         {
             _settingService = settingService ?? new SettingService();
         }
+
         //
         // GET: /Setting/
         //[InjectedFilter]
@@ -84,7 +78,24 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             return Json(results);
         }
 
-        
+        [HttpGet]
+        public ActionResult GetCurrentMemberWinLimit(int custId)
+        {
+            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(new GetCustomerWinLimitLiveCSCriteria
+            {
+                CustId = custId
+            });
+	[HttpGet]
+        public ActionResult GetCurrentMemberWinLimit(int custId)
+        {
+            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(new GetCustomerWinLimitLiveCSCriteria
+            {
+                CustId = custId
+            });
+
+            return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult UnAuthorized()
         {

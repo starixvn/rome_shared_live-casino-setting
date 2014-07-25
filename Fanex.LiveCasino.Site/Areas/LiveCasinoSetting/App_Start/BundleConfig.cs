@@ -28,7 +28,9 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-win-limit-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js"));
+  		.Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-win-limit-service.js"));
+
         }
 
         private static void RegisterStyleSheetBundles(BundleCollection bundles)

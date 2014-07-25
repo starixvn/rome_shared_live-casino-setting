@@ -4,10 +4,11 @@ if (fanex.liveCasinoSetting) {
     [
         '$scope',
         '$http',
-        function ($scope, $http) {
+        'CustomerWinLimitService',
+        function ($scope, $http, customerWinLimitService) {
             $scope.custInfo = fanex.cloneObject(custSetting.CustInfo);
             $scope.memberWinLimit = fanex.cloneObject(custSetting.CustInfo.MemberWinLimit);
-
+            $scope.isShowCurrentWinLimit = false;
             $scope.maxWinLimits = [{ lable: "3X", value: 3 }, { lable: "5X", value: 5 }, { lable: "10X", value: 10 }, { lable: "Unlimited", value: 0}];
 
             switch ($scope.memberWinLimit.Upline.Max) {
@@ -43,6 +44,20 @@ if (fanex.liveCasinoSetting) {
             $scope.maxWinLimitModel = {
                 maxWinLimit: $scope.maxWinLimits[index],
                 isDailyAutoReset: $scope.memberWinLimit.IsAutoReset
+            };
+
+            $scope.showCurrentWinLimit = function (custId) {
+                customerWinLimitService.getCurrentMemberWinLimit(custId).success(function (data) {
+                    if (data.MaxWinLiveCasino === 0) {
+                        $scope.winLimit = -1;
+                    }
+                    else {
+                        $scope.winLimit = data.MaxWinCredit;
+                        $scope.percent = data.WinPercent;
+                    }
+
+                    $scope.isShowCurrentWinLimit = true;
+                });
             };
         }
         ]);
