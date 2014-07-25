@@ -1,5 +1,12 @@
 ﻿@model SettingContext
-<table id="tblMaxWinLimit" data-ng-controller="CustomerWinLimitController" class="cust-win-limit ng-scope">
+<div class="pt-title">
+    Maximum Win Limit
+    <input type="button" data-ng-disabled="isNotAllowUpdate" value="Update Partial" data-ng-click="updateWinLimitSetting()" />
+</div>
+<table id="tblMaxWinLimit" 
+    data-ng-controller="CustomerWinLimitController"
+    data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")"  
+    class="cust-win-limit ng-scope">
     <tbody>
         <tr class="title">
             <td colspan="3" class="center">
@@ -33,11 +40,11 @@
                     <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
                         Click to view Current Win Limit
                     </div>
-                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit >= 0">
+                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
                         {{percent}} %</div>
-                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit < 0">
+                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
                         Unlimited</div>
-                    <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit >= 0">of {{winLimit}}</span>
+                    <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">of {{winLimit}}</span>
                 </td>
                 <td class="reset-limit">
                 </td>

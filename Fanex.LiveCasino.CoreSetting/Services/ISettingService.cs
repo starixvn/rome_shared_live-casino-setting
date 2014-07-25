@@ -6,6 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Command;
+    using System.Collections.Generic;
 
     /// <summary>
     /// TODO: Update summary.
@@ -48,7 +49,9 @@
 
         #region Win Limit
 
-        CurrentMemberWin GetCurrentMemberWinLimit(GetCustomerWinLimitLiveCSCriteria criteria);
+        CurrentMemberWin GetCurrentMemberWinLimit(int custId);
+
+        ICommandResult UpdateWinLimit(UpdateCustomerWinLimitCriteria criteria);
 
         #endregion
     }

@@ -12,5 +12,13 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' }
             });
         };
+
+        $this.updateWinLimitSetting = function (winLimitModel) {
+            return $http({
+                method: 'POST',
+                url: $('#memberWinLimitLink').val() + '?custId=' + custId,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        };
     } ]);
 }

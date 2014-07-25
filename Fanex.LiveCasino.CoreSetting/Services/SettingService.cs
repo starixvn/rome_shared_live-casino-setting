@@ -127,9 +127,17 @@
 
         #region Win Limit
 
-        public CurrentMemberWin GetCurrentMemberWinLimit(GetCustomerWinLimitLiveCSCriteria criteria)
+        public CurrentMemberWin GetCurrentMemberWinLimit(int custId)
         {
-            return _settingRepository.Get<CurrentMemberWin>(criteria);
+            return _settingRepository.Get<CurrentMemberWin>(new GetCustomerWinLimitCriteria
+            {
+                CustId = custId
+            });
+        }
+
+        public ICommandResult UpdateWinLimit(UpdateCustomerWinLimitCriteria criteria)
+        {
+            return _settingRepository.Update(criteria);
         }
 
         #endregion
@@ -218,7 +226,5 @@
         }
 
         #endregion
-
-
     }
 }

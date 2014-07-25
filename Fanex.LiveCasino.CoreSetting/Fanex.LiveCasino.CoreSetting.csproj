@@ -74,7 +74,8 @@
     <Compile Include="Criteria\PtAndCom\UpdateSuperSettingCriteria.cs" />
     <Compile Include="Criteria\ResultCriteria.cs" />
     <Compile Include="Criteria\UpdateLiveCasinoStatusCriteria.cs" />
-    <Compile Include="Criteria\WinLimit\GetCustomerWinLimitLiveCSCriteria.cs" />
+    <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
+    <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Models\Commission.cs" />

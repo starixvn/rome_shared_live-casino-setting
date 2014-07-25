@@ -78,17 +78,32 @@
             return Json(results);
         }
 
+        #region Win Limit
+
         [HttpGet]
         public ActionResult GetCurrentMemberWinLimit(int custId)
         {
-            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(new GetCustomerWinLimitLiveCSCriteria
-            {
-                CustId = custId
-            });
+            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
+        {
+            ICommandResult result = _settingService.UpdateWinLimit(new UpdateCustomerWinLimitCriteria
+            {
+                CustId = settingContext.TargetCustId,
+
+                UserId = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
+                Ip = settingContext.IP,
+                Language = settingContext.Language
+            });
+
+            return Json(result);
+        }
+
+        #endregion
 
         public ActionResult UnAuthorized()
         {

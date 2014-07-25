@@ -52,13 +52,17 @@ if (fanex.liveCasinoSetting) {
                         $scope.winLimit = -1;
                     }
                     else {
-                        $scope.winLimit = data.MaxWinCredit;
+                        $scope.winLimit = numeral(data.MaxWinCredit).format('0,0');
                         $scope.percent = data.WinPercent;
                     }
 
                     $scope.isShowCurrentWinLimit = true;
                 });
             };
+
+            $scope.updateWinLimitSetting = function () {
+
+            }
         }
         ]);
 }
