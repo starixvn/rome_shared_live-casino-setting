@@ -95,11 +95,12 @@
 
         public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new UpdateSuperSettingCriteria { 
+            return _settingRepository.Update(new UpdateSuperSettingCriteria
+            {
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserID = settingContext.GetUserIdDoAction(),
+                UserID = settingContext.UserIdDoAction,
                 v162discount_1101 = ptAndComSetting.Commission.Value,
                 v162UpdateCommission_1101 = true,
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
@@ -138,7 +139,7 @@
 
         #region Win Limit
 
-        public CurrentMemberWin GetCurrentMemberWinLimit(int custId)
+        public CurrentMemberWin GetCurrentWinLimit(int custId)
         {
             return _settingRepository.Get<CurrentMemberWin>(new GetCustomerWinLimitCriteria
             {
@@ -153,7 +154,7 @@
                 CustId = settingContext.TargetCustId,
                 MaxWinLimit = memberWinLimit.Max,
                 IsAutoDailyReset = memberWinLimit.IsAutoReset,
-                UserId = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
+                UserId = settingContext.UserIdDoAction,
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             });

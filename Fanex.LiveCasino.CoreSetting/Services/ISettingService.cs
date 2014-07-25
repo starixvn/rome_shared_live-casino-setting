@@ -49,7 +49,7 @@
 
         #region Win Limit
 
-        CurrentMemberWin GetCurrentMemberWinLimit(int custId);
+        CurrentMemberWin GetCurrentWinLimit(int custId);
 
         ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
 

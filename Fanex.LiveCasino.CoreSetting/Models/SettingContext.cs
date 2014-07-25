@@ -17,7 +17,7 @@ namespace Fanex.LiveCasino.CoreSetting.Models
     /// </summary>
     public class SettingContext
     {
-         /// <summary>
+        /// <summary>
         /// Current login customer id or customer that is performing
         /// </summary>
         public int CustId { get; set; }
@@ -96,9 +96,12 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         {
         }
 
-        public int GetUserIdDoAction()
+        public int UserIdDoAction
         {
-            return AdminId > 0 ? AdminId : CustId;
+            get
+            {
+                return AdminId > 0 ? AdminId : CustId;
+            }
         }
     }
 }

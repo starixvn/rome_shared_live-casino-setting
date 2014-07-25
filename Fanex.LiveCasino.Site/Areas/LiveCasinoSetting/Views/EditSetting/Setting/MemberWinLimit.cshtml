@@ -1,55 +1,56 @@
 ﻿@model SettingContext
-<div class="pt-title">
-    Maximum Win Limit
-    <input type="button" data-ng-disabled="isNotAllowUpdate" value="Update Partial" data-ng-click="updateWinLimitSetting()" />
-</div>
-<table id="tblMaxWinLimit" 
+<div id="tblMaxWinLimit" 
     data-ng-controller="CustomerWinLimitController"
-    data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")"  
-    class="cust-win-limit ng-scope">
-    <tbody>
-        <tr class="title">
-            <td colspan="3" class="center">
-                Member Win Limit
-            </td>
-        </tr>
-        <tr>
-            <td class="right bold">
-                Maximum Win
-            </td>
-            <td class="left ng-binding">
-                <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
-                    data-ng-model="maxWinLimitModel.maxWinLimit" style="width: 80px">
-                </select>
-                <span>&nbsp;on given credit</span>
-            </td>
-            <td class="reset-limit">
-                <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.isDailyAutoReset"
-                    style="vertical-align: middle; margin-bottom: 3px;" checked="checked">
-                <label for="dailyAutoReset">
-                    Daily auto reset limit (at 12 noon GMT+8)</label>
-            </td>
-        </tr>
-        @if (Model.TargetRoleId == (int)CustRole.Member)
-        { 
-            <tr>
-                <td class="right bold">
-                    Current Win Limit
-                </td>
-                <td class="left ng-binding">
-                    <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
-                        Click to view Current Win Limit
-                    </div>
-                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
-                        {{percent}} %</div>
-                    <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
-                        Unlimited</div>
-                    <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">of {{winLimit}}</span>
-                </td>
-                <td class="reset-limit">
+    data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit")">
+    <div class="pt-title">
+        Maximum Win Limit
+        <input type="button" data-ng-disabled="isNotAllowUpdate" value="Update Partial" data-ng-click="updateWinLimitSetting()" />
+    </div>
+    <table class="cust-win-limit ng-scope">
+        <tbody>
+            <tr class="title">
+                <td colspan="3" class="center">
+                    Member Win Limit
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
-@Html.Hidden("memberWinLimitLink", Url.Content("~/LiveCasinoSetting/LiveCSSetting/GetCurrentMemberWinLimit"))
+            <tr>
+                <td class="right bold">
+                    Maximum Win
+                </td>
+                <td class="left ng-binding">
+                    <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
+                        data-ng-model="maxWinLimitModel.Max" style="width: 80px">
+                    </select>
+                    <span>&nbsp;on given credit</span>
+                </td>
+                <td class="reset-limit">
+                    <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset"
+                        style="vertical-align: middle; margin-bottom: 3px;" checked="checked">
+                    <label for="dailyAutoReset">
+                        Daily auto reset limit (at 12 noon GMT+8)</label>
+                </td>
+            </tr>
+            @if (Model.TargetRoleId == (int)CustRole.Member)
+            { 
+                <tr>
+                    <td class="right bold">
+                        Current Win Limit
+                    </td>
+                    <td class="left ng-binding">
+                        <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
+                            Click to view Current Win Limit
+                        </div>
+                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
+                            {{percent}} %</div>
+                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
+                            Unlimited</div>
+                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">of {{winLimit}}</span>
+                    </td>
+                    <td class="reset-limit">
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.Hidden("memberWinLimitLink", Url.Content("~/LiveCasinoSetting/LiveCSSetting/GetCurrentWinLimit"))
+</div>

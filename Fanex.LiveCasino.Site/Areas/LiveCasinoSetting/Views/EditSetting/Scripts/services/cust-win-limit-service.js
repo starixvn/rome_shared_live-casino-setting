@@ -14,10 +14,19 @@ if (fanex.liveCasinoSetting) {
         };
 
         $this.updateWinLimitSetting = function (winLimitModel) {
+            var winLimitUpdate = {
+                settingContext: custSetting.SettingContext,
+                model: {
+                    Max: winLimitModel.Max.value,
+                    IsAutoReset: winLimitModel.IsAutoReset
+                }
+            };
+
             return $http({
                 method: 'POST',
-                url: $('#memberWinLimitLink').val() + '?custId=' + custId,
-                headers: { 'Content-Type': 'application/json' }
+                url: $('#tblMaxWinLimit').data('update-href'),
+                headers: { 'Content-Type': 'application/json' },
+                data: winLimitUpdate
             });
         };
     } ]);

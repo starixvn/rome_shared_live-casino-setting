@@ -80,9 +80,9 @@
         #region Win Limit
 
  	[HttpGet]
-        public ActionResult GetCurrentMemberWinLimit(int custId)
+        public ActionResult GetCurrentWinLimit(int custId)
         {
-            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentMemberWinLimit(custId);
+            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
