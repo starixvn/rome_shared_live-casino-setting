@@ -108,8 +108,9 @@
                 case CustRole.Super:
                     updateResult = _settingService.UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
                     break;
-                //case CustRole.Master:
-                //    return new UpdateMasterSettingCriteria();
+                case CustRole.Master:
+                    updateResult = _settingService.UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
                 //case CustRole.Agent:
                 //    return new UpdateAgentSettingCriteria();
                 //case CustRole.Member:

@@ -15,9 +15,21 @@
 
         public decimal auto_v162spositiontaking_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101 { get; set; }
+        public bool v162UpdatePositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateAutoPositiontaking_1101 { get; set; }
+        public bool v162UpdateAutoPositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public int SubAccID { get; set; }
 

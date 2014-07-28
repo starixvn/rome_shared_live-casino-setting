@@ -78,6 +78,7 @@
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
+    <Compile Include="Models\PositionTakingMatrix.cs" />
     <Compile Include="Models\Commission.cs" />
     <Compile Include="Models\CurrentMemberWin.cs" />
     <Compile Include="Models\CustInfo.cs" />

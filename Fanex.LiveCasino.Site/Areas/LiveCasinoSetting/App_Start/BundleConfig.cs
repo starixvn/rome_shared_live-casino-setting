@@ -20,7 +20,8 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/core")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/jquery-2.1.1.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/numeral.js")
-                .Include("~/areas/LiveCasinoSetting/scripts/libs/angular.js"));
+                .Include("~/areas/LiveCasinoSetting/scripts/libs/angular.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/libs/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/setting")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")
@@ -29,7 +30,7 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-win-limit-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")
-  		.Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")
+  		        .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-win-limit-service.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js"));
 
@@ -38,6 +39,7 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
         private static void RegisterStyleSheetBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/areascss/livecasino/css")
+                .Include("~/areas/LiveCasinoSetting/content/bootstrap.css")
                 .Include("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css"));
         }
     }

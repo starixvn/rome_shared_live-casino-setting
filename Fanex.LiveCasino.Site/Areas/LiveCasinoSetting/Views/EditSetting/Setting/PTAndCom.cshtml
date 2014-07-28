@@ -7,12 +7,45 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtAndComSetting")">
     <div class="pt-title">
         Position Taking/Commission
-        <input type="button" value="Update Partial" data-ng-click="updatePtAndComSetting()"/>
+        <input type="button" value="Update Partial" data-ng-click="updatePtAndComSetting()" />
     </div>
     @switch ((CustRole)Model.TargetRoleId)
     {
         case CustRole.Super:
-            <edit-super-pt-and-com></edit-super-pt-and-com>
+        <edit-super-pt-and-com></edit-super-pt-and-com>
+            break;
+        case CustRole.Master:
+        <edit-master-pt-and-com></edit-master-pt-and-com>
             break;
     }
+
+    <div id="presetOnMemberModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        Confirm Update Member's PT</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You have changed this Master not to take auto position taking.</p>
+                    <p>Do you want to update all member's position taking to:</p>
+                     <select 
+                        data-ng-model="ptAndComSetting.PositionTaking.NewPresetOnMember" 
+                        data-ng-options="item.id as item.value for item in presetOnMemberOptions">
+                        </select>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(true)"  data-dismiss="modal">
+                        Yes</button>
+                    <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(false)" data-dismiss="modal">
+                        No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 </div>

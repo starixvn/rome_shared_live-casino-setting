@@ -23,18 +23,21 @@
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.S3" 
                 data-ng-options="item.id as item.value for item in superPresetOptions" 
-                data-ng-disabled="!ptAndComSetting.PositionTaking.Im3"></select>
+                data-ng-disabled="ptAndComSetting.PositionTaking.Is3"
+                data-ng-change="updateSuperPreset()"></select>
             </td>
             <td>
-                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im3" />
+                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is3" />
                 <select 
                 data-ng-model="ptAndComSetting.PositionTaking.Us3" 
                 data-ng-options="item.id as item.value for item in superAutoPresetOptions"
-                data-ng-disabled="ptAndComSetting.PositionTaking.Im3"></select>
+                data-ng-disabled="!ptAndComSetting.PositionTaking.Is3"
+                data-ng-change="updateSuperPreset()"></select>
             </td>
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.M3" 
-                data-ng-options="item.id as item.value for item in masterMaxOptions" ></select>
+                data-ng-options="item.id as item.value for item in masterMaxOptions"
+                data-ng-change="updateMasterMax()"></select>
             </td>
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.N3" 

@@ -143,9 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LiveCasinoSetting.xml" />
+    <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
+    <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
@@ -155,6 +158,7 @@
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-info-service.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\confim-member-pt.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
@@ -221,6 +225,12 @@
   <ItemGroup>
     <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -236,7 +246,7 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>56782</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>

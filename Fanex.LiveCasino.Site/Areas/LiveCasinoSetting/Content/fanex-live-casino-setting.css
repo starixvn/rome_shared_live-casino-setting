@@ -71,7 +71,7 @@ body
 	border-collapse: collapse;
 }
 
-.pt-setting tbody td {
+.pt-setting tbody td, .pt-setting th {
 	text-align: center;
 }
 .edit-setting-livecs .cust-win-limit .reset-limit

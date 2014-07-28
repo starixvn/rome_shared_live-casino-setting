@@ -22,6 +22,7 @@ fanex.cloneObject = function (obj) {
 
 fanex.roundNumber = function (number, decimals) {
     'use strict';
+    decimals = decimals || 2;
     var newnumber = Number(number + '').toFixed(parseInt(decimals));
     return parseFloat(newnumber); // Output the result to the form field (change for your purposes)
 };
@@ -38,11 +39,10 @@ fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
         });
     }
 
-    for (var i = from; i < to; i += gap) {
-        var value = fanex.roundNumber(i, decimals);
+    for (var i = from; i < to; i = fanex.roundNumber(i + gap, decimals)) {
         options.push({
-            id: value,
-            value: value
+            id: i,
+            value: i
         });
     }
 

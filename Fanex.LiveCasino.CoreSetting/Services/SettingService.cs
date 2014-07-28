@@ -102,17 +102,30 @@
                 Language = settingContext.Language,
                 UserID = settingContext.UserIdDoAction,
                 v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162UpdateCommission_1101 = true,
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
-                v162UpdatePositiontaking_1101 = true,
                 v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
-                v162UpdateMinPositiontaking_1101 = true
             });
         }
 
         public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new UpdateMasterSettingCriteria
+            {
+                Custid = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                SRecommend = settingContext.CustId,
+                Userid = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162discount_1101 = ptAndComSetting.Commission.Value,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
+                v162mpositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N3,
+                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is3,
+                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us3,
+                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
+                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
+                NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
+            });
         }
 
         public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)

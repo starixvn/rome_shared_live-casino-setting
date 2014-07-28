@@ -23,17 +23,41 @@
 
         public decimal v162discount_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101 { get; set; }
+        public bool v162UpdatePositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateMinPositiontaking_1101 { get; set; }
+        public bool v162UpdateMinPositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateAutoPositiontaking_1101 { get; set; }
+        public bool v162UpdateAutoPositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateCommission_1101 { get; set; }
+        public bool v162UpdateCommission_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool updateallmembers { get; set; }
+        public bool UpdateAllMembers { get; set; }
 
-        public decimal newspositiontaking { get; set; }
+        public decimal NewSPositionTaking { get; set; }
 
         public int SubAccID { get; set; }
 

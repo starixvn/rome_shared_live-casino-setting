@@ -70,7 +70,9 @@
                     Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
                     Us3 = reader.To<decimal>("auto_v162spostiontaking_1101"),
                     S3 = reader.To<decimal>("v162spositiontaking_1101"),
-                    M3 = reader.To<decimal>("v162mpositiontaking_1101")
+                    M3 = reader.To<decimal>("v162mpositiontaking_1101"),
+                    NewPresetOnMember = 0,
+                    UpdateAllMembers = false
                 };
             });
         }
@@ -97,7 +99,9 @@
                     Um2 = reader.To<decimal>("auto_v162mpositiontaking_1101"),
                     A2 = reader.To<decimal>("v162apositiontaking_1101"),
                     M3 = reader.To<decimal>("v162mpositiontaking_1101_max"),
-                    N2 = reader.To<decimal>("v162apositiontaking_1101_min")
+                    N2 = reader.To<decimal>("v162apositiontaking_1101_min"),
+                    NewPresetOnMember = 0,
+                    UpdateAllMembers = false
                 };
             });
         }

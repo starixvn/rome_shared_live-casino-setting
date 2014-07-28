@@ -15,11 +15,29 @@
 
         public decimal v162discount_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101 { get; set; }
+        public bool v162UpdatePositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateMinPositiontaking_1101 { get; set; }
+        public bool v162UpdateMinPositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateCommission_1101 { get; set; }
+        public bool v162UpdateCommission_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public string IP { get; set; }
 

@@ -17,9 +17,21 @@
 
         public bool isauto_v162mpositiontaking_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101 { get; set; }
+        public bool v162UpdatePositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateAutoPositiontaking_1101 { get; set; }
+        public bool v162UpdateAutoPositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public int UserId { get; set; }
 
