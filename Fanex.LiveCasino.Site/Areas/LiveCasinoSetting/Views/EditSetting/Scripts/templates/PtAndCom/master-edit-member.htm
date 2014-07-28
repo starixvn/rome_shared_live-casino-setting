@@ -1,1 +1,34 @@
-﻿
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th>
+                Master PT
+            </th>
+            <th>
+                Master Auto PT
+            </th>
+            <th>
+                Agent PT
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.M1" 
+                data-ng-options="item.id as item.value for item in masterPTOptions" 
+                data-ng-disabled="ptAndComSetting.PositionTaking.Im1"></select>
+            </td>
+            <td>
+                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
+                <select 
+                data-ng-model="ptAndComSetting.PositionTaking.Um1" 
+                data-ng-options="item.id as item.value for item in masterAutoPTOptions"
+                data-ng-disabled="!ptAndComSetting.PositionTaking.Im1"></select>
+            </td>
+            <td>
+                {{ptAndComSetting.PositionTaking.A1}}
+            </td>
+        </tr>
+    </tbody>
+</table>

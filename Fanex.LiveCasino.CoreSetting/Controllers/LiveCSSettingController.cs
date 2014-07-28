@@ -114,16 +114,20 @@
                 case CustRole.Agent:
                     updateResult = _settingService.UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
                     break;
-                //case CustRole.Member:
-                //    switch ((CustRole)settingContext.RoleId)
-                //    {
-                //        case CustRole.Super:
-                //            return new SuperUpdateMemberSettingCriteria();
-                //        case CustRole.Master:
-                //            return new MasterUpdateMemberSettingCriteria();
-                //        default:
-                //            return new AgentUpdateMemberSettingCriteria();
-                //    }
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            updateResult = _settingService.SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
+                        case CustRole.Master:
+                             updateResult = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
+                        default:
+                             updateResult = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                             break;
+                    }
+                    break;
             }
 
             return Json(updateResult);

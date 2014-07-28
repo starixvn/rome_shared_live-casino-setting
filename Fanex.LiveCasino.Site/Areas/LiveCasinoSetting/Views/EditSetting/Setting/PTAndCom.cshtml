@@ -20,6 +20,20 @@
         case CustRole.Agent:
             <edit-agent-pt-and-com></edit-agent-pt-and-com>
             break;
+        case CustRole.Member:
+            switch ((CustRole)Model.RoleId)
+            {
+                case CustRole.Super:
+                    <super-edit-member-pt></super-edit-member-pt>
+                    break;
+                case CustRole.Master:
+                    <master-edit-member-pt></master-edit-member-pt>
+                    break;
+                default:
+                    <agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>
+                    break;
+            }
+            break;
     }
 
 

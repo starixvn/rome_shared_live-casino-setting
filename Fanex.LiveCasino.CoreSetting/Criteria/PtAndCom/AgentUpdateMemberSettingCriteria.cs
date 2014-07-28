@@ -15,9 +15,21 @@
 
         public decimal v162playerdiscount_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101 { get; set; }
+        public bool v162UpdatePositiontaking_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
-        public bool v162UpdateCommission_1101 { get; set; }
+        public bool v162UpdateCommission_1101
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public int SubAccID { get; set; }
 
@@ -26,10 +38,6 @@
         public int UserID { get; set; }
 
         public string Language { get; set; }
-
-        public string ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

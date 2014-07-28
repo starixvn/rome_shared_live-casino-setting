@@ -158,7 +158,6 @@
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-info-service.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\confim-member-pt.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />

@@ -142,6 +142,55 @@ if (fanex.liveCasinoSetting) {
             };
         }
     ]);
+
+    fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
+        function (settingService) {
+            return {
+                restrict: 'E',
+                replace: true,
+                controller: 'PtAndComSettingController',
+                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm',
+                link: function ($scope, $element) {
+                    var currentPt = $scope.ptAndComSetting.PositionTaking,
+                        currentCom = $scope.ptAndComSetting.Commission;
+                    $scope.agentPresetOptions = fanex.createOptionsFromRange(currentPt.A1, currentPt.N2, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.memberCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
+                }
+            };
+        }
+    ]);
+
+    fanex.liveCasinoSetting.directive('superEditMemberPt', [
+        function (settingService) {
+            return {
+                restrict: 'E',
+                replace: true,
+                controller: 'PtAndComSettingController',
+                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm',
+                link: function ($scope, $element) {
+                    var currentPt = $scope.ptAndComSetting.PositionTaking;
+                    $scope.superPTOptions = fanex.createOptionsFromRange(currentPt.S1, currentPt.S1Min, currentPt.S1Max, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.superAutoPTOptions = fanex.createOptionsFromRange(currentPt.S1, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
+                }
+            };
+        }
+    ]);
+
+    fanex.liveCasinoSetting.directive('masterEditMemberPt', [
+        function (settingService) {
+            return {
+                restrict: 'E',
+                replace: true,
+                controller: 'PtAndComSettingController',
+                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm',
+                link: function ($scope, $element) {
+                    var currentPt = $scope.ptAndComSetting.PositionTaking;
+                    $scope.masterPTOptions = fanex.createOptionsFromRange(currentPt.M1, currentPt.M1Min, currentPt.M1Max, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.masterAutoPTOptions = fanex.createOptionsFromRange(currentPt.M1, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
+                }
+            };
+        }
+    ]);
 }
 else {
     alert('Missing fanex.liveCasinoSetting in directive declare!');

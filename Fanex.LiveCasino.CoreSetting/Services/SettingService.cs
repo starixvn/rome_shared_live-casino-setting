@@ -151,17 +151,47 @@
 
         public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new AgentUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                Recommend = settingContext.CustId,
+                UserID = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
+                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
+            });
         }
 
         public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new SuperUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserID = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
+                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
+                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
+            });
         }
 
         public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new MasterUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserId = settingContext.UserIdDoAction,
+                SubAccID = settingContext.SubAccId,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M1,
+                isauto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
+                auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
+            });
         }
 
         #endregion
