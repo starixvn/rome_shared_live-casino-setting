@@ -1,5 +1,29 @@
-﻿@{
-    Layout = null;
-}
-
-<h2>GameSetting</h2>
+﻿@model SettingContext
+<div id="tblGameSetting" data-ng-controller="CustGameSettingController">
+    <table class="cust-game-setting ng-scope">
+        <tr class="title">
+            <td colspan="4" class="center">
+                Game Setting
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Game Type
+            </td>
+            <td class="left bold bet-limit">
+                Betting Limit
+            </td>
+        </tr>
+        <tr data-ng-repeat="item in gameSettingViewModel">
+            <td class="right">
+                {{item.Name}}
+            </td>
+            <td class="bet-limit">
+                <label data-ng-repeat="betLimitItem in item.BettingLimit">
+                    <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                    <input type="checkbox" data-ng-show="betLimitItem.IsChecked" checked="checked" />
+                    <input type="checkbox" data-ng-show="!betLimitItem.IsChecked" />{{betLimitItem.Range}}</label>
+            </td>
+        </tr>
+    </table>
+</div>

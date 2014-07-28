@@ -1,0 +1,21 @@
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.GameSetting
+{
+    using Fanex.NAP.Framework.Data;
+
+    public class GetGameSettingByExchangeCriteria : CriteriaBase
+    {
+        public int ExchangeId { get; set; }
+
+        public string Site { get; set; }
+
+        public override bool IsValid()
+        {
+            return ExchangeId > -1 && !string.IsNullOrWhiteSpace(Site);
+        }
+
+        public override string GetSettingKey()
+        {
+            return "TP_Admin_StakeLevel_GetGameTypeStakeLevel";
+        }
+    }
+}

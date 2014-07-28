@@ -46,6 +46,8 @@ if (fanex.liveCasinoSetting) {
                 IsAutoReset: memberWinLimit.IsAutoReset
             };
 
+            $scope.maxWinLimits = $scope.maxWinLimits.reverse();
+
             $scope.showCurrentWinLimit = function (custId) {
                 customerWinLimitService.getCurrentMemberWinLimit(custId).success(function (data) {
                     if (data.MaxWinLiveCasino === 0) {

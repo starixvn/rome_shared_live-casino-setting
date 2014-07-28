@@ -1,11 +1,10 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
+    using System.Collections.Generic;
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
-    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -167,6 +166,29 @@
                     M3 = reader.To<decimal>("auto_v162mpositiontaking_1101_max")
                 };
             });
+        }
+
+        public List<GameType> GetGameSetting(ICriteria criteria)
+        {
+            var gameTypes = new List<GameType>();
+            GameType current = null;
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.Query<GameType, StakeLevel, GameType>((g, s) =>
+                {
+                    if (current == null || current.Id != g.Id)
+                    {
+                        gameTypes.Add(g);
+                        current = g;
+                        current.BettingLimit = new List<StakeLevel>();
+                    }
+                    current.BettingLimit.Add(s);
+                    return current;
+                }, "StakeLevelID", criteria.GetSpParams());
+            }
+
+            return gameTypes;
         }
     }
 }

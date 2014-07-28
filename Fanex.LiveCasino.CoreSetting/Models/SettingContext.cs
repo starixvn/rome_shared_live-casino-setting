@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SettingContext.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
     using System;
     using System.Collections.Generic;
@@ -21,11 +15,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         /// Current login customer id or customer that is performing
         /// </summary>
         public int CustId { get; set; }
-
-        /// <summary>
-        /// Current agent of member
-        /// </summary>
-        public int AgentId { get; set; }
 
         /// <summary>
         /// Current login customer user name
@@ -53,11 +42,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         public int RoleId { get; set; }
 
         /// <summary>
-        /// Currency id
-        /// </summary>
-        public int CurrencyId { get; set; }
-
-        /// <summary>
         /// Site name
         /// </summary>
         public string SiteName { get; set; }
@@ -66,11 +50,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         /// Role id of edited customer
         /// </summary>
         public int TargetRoleId { get; set; }
-
-        /// <summary>
-        /// Indicate this is neutral site, need to hide other 3rd products...
-        /// </summary>
-        public bool IsNeutralSite { get; set; }
 
         /// <summary>
         /// Form type of edit: Edit Min/Max PT, Edit MinPT or Edit PT
@@ -101,6 +80,38 @@ namespace Fanex.LiveCasino.CoreSetting.Models
             get
             {
                 return AdminId > 0 ? AdminId : CustId;
+            }
+        }
+
+        public bool IsEdittingSuper
+        {
+            get
+            {
+                return TargetRoleId == (int)CustRole.Super;
+            }
+        }
+
+        public bool IsEdittingMaster
+        {
+            get
+            {
+                return TargetRoleId == (int)CustRole.Master;
+            }
+        }
+
+        public bool IsEdittingAgent
+        {
+            get
+            {
+                return TargetRoleId == (int)CustRole.Agent;
+            }
+        }
+
+        public bool IsEdittingMember
+        {
+            get
+            {
+                return TargetRoleId == (int)CustRole.Member;
             }
         }
     }

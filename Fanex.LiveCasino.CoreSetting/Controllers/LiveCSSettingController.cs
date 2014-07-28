@@ -47,6 +47,7 @@
                     FormType = FormType.Edit,
                     AdminId = adminId
                 };
+
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
@@ -79,7 +80,7 @@
 
         #region Win Limit
 
- 	[HttpGet]
+        [HttpGet]
         public ActionResult GetCurrentWinLimit(int custId)
         {
             CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);

@@ -19,6 +19,8 @@
 
         CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
 
+        string GetCustomerSiteByUsername(string username);
+
         #region PT and Com
 
         PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
@@ -52,6 +54,14 @@
         CurrentMemberWin GetCurrentWinLimit(int custId);
 
         ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
+
+        #endregion
+
+        #region Game Setting
+
+        List<GameType> GetGameSettingByExchange(int exchangeId, string site);
+
+        List<GameType> GetGameSettingByCustomerId(int custId);
 
         #endregion
     }

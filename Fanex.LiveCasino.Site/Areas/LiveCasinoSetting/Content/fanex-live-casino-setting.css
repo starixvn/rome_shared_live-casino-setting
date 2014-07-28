@@ -54,6 +54,8 @@ body
     width: 25%;
 }
 
+
+/*Win Limit*/
 .edit-setting-livecs .cust-win-limit
 {
     width: 100%;
@@ -62,6 +64,27 @@ body
 .edit-setting-livecs .cust-win-limit td
 {
     width: 25%;
+}
+
+.edit-setting-livecs .cust-win-limit .reset-limit
+{
+    width: 50%;
+}
+
+/*Game Setting*/
+.edit-setting-livecs .cust-game-setting
+{
+    width: 100%;
+}
+
+.edit-setting-livecs .cust-game-setting td
+{
+    width: 25%;
+}
+
+.edit-setting-livecs .cust-game-setting .bet-limit
+{
+    width: 75%;
 }
 
 
@@ -73,8 +96,4 @@ body
 
 .pt-setting tbody td, .pt-setting th {
 	text-align: center;
-}
-.edit-setting-livecs .cust-win-limit .reset-limit
-{
-    width: 50%;
 }

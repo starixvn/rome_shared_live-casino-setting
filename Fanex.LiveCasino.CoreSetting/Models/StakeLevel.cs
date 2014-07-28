@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="StakeLevel.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +12,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
     {
         public int Id { get; set; }
         public string Range { get; set; }
-        public bool IsSelected { get; set; }
+        public bool IsChecked { get; set; }
     }
 }

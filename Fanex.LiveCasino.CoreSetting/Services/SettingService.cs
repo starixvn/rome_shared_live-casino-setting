@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
@@ -9,8 +10,8 @@
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Command;
     using Newtonsoft.Json;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -48,17 +49,30 @@
 
         public string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
+            CustInfo custInfo = GetCustomerInfo(new GetCustomerInfoCriteria
+                {
+                    Custid = settingContext.TargetCustId
+                });
+
             var custSetting = new CustSettingViewModel
             {
                 SettingContext = settingContext,
-                CustInfo = GetCustomerInfo(new GetCustomerInfoCriteria
-                {
-                    Custid = settingContext.TargetCustId
-                }),
-                PtAndComSetting = GetPtAndComSetting(settingContext)
+                CustInfo = custInfo,
+                PtAndComSetting = GetPtAndComSetting(settingContext),
+                GameSetting = GetGameSetting(settingContext, custInfo)
             };
 
             return FormatJavascript(custSetting, objectName);
+        }
+
+        public string GetCustomerSiteByUsername(string username)
+        {
+            var userInfo = _settingRepository.Get<CustInfo>(new GetCustomerSiteByUsernameCriteria
+            {
+                Username = username
+            });
+
+            return userInfo.Site;
         }
 
         #region Pt and Com
@@ -223,6 +237,31 @@
 
         #endregion
 
+        #region Game Setting
+
+        public List<GameType> GetGameSettingByExchange(int exchangeId, string site)
+        {
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
+
+            return _settingRepository.GetGameSetting(criteria);
+        }
+
+        public List<GameType> GetGameSettingByCustomerId(int custId)
+        {
+            var criteria = new GetGameSettingByCustomerIdCriteria
+            {
+                CustId = custId
+            };
+
+            return _settingRepository.GetGameSetting(criteria);
+        }
+
+        #endregion
+
         #region Private Methods
 
         private PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
@@ -271,6 +310,36 @@
             return null;
         }
 
+        private IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
+        {
+            var gameSettings = new List<GameType>();
+
+            if (settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
+            {
+                var site = GetCustomerSiteByUsername(custInfo.UserName);
+                gameSettings = GetGameSettingByExchange(custInfo.CurrencyId, site);
+
+                // Check all by default
+                foreach (var gameSettingItem in gameSettings)
+                {
+                    foreach (var betLimitItem in gameSettingItem.BettingLimit)
+                    {
+                        betLimitItem.IsChecked = true;
+                    }
+                    gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), "E");
+                }
+            }
+            else if (!settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
+            {
+                gameSettings = GetGameSettingByCustomerId(settingContext.CustId);
+            }
+            else
+            {
+                gameSettings = GetGameSettingByCustomerId(settingContext.TargetCustId);
+            }
+
+            return gameSettings;
+        }
 
         private string FormatJavascript(object obj, string name)
         {
