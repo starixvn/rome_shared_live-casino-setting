@@ -111,8 +111,9 @@
                 case CustRole.Master:
                     updateResult = _settingService.UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
                     break;
-                //case CustRole.Agent:
-                //    return new UpdateAgentSettingCriteria();
+                case CustRole.Agent:
+                    updateResult = _settingService.UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
                 //case CustRole.Member:
                 //    switch ((CustRole)settingContext.RoleId)
                 //    {

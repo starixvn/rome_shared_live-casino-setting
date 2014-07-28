@@ -17,7 +17,11 @@
         case CustRole.Master:
         <edit-master-pt-and-com></edit-master-pt-and-com>
             break;
+        case CustRole.Agent:
+            <edit-agent-pt-and-com></edit-agent-pt-and-com>
+            break;
     }
+
 
     <div id="presetOnMemberModal" class="modal fade">
         <div class="modal-dialog">
@@ -29,7 +33,7 @@
                         Confirm Update Member's PT</h4>
                 </div>
                 <div class="modal-body">
-                    <p>You have changed this Master not to take auto position taking.</p>
+                    <p>You have changed this @(Model.TargetRoleId == (int)CustRole.Super ? "Super" : "Master") not to take auto position taking.</p>
                     <p>Do you want to update all member's position taking to:</p>
                      <select 
                         data-ng-model="ptAndComSetting.PositionTaking.NewPresetOnMember" 

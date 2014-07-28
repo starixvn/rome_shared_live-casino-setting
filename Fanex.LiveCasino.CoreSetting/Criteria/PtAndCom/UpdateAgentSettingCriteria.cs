@@ -55,9 +55,9 @@
             }
         }
 
-        public bool updateallmembers { get; set; }
+        public bool UpdateAllMembers { get; set; }
 
-        public decimal newmpositiontaking { get; set; }
+        public decimal NewMPositionTaking { get; set; }
 
         public int UserId { get; set; }
 
@@ -66,10 +66,6 @@
         public string Language { get; set; }
 
         public string IP { get; set; }
-
-        public string ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

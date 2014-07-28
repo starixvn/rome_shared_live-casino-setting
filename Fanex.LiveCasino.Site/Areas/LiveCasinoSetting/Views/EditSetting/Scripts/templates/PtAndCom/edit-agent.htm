@@ -1,1 +1,53 @@
-﻿
+﻿<table class="pt-setting">
+    <thead>
+        <tr>
+            <th>
+                Master Preset PT
+            </th>
+            <th>
+                Master Auto Preset PT
+            </th>
+            <th>
+                Agent Max PT
+            </th>
+            <th>
+                Agent Min PT
+            </th>
+            <th>
+                Agent Comm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.M2" 
+                data-ng-options="item.id as item.value for item in masterPresetOptions" 
+                data-ng-disabled="ptAndComSetting.PositionTaking.Im2"
+                data-ng-change="updateMasterPreset()"></select>
+            </td>
+            <td>
+                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im2" />
+                <select 
+                data-ng-model="ptAndComSetting.PositionTaking.Um2" 
+                data-ng-options="item.id as item.value for item in masterAutoPresetOptions"
+                data-ng-disabled="!ptAndComSetting.PositionTaking.Im2"
+                data-ng-change="updateAgentPreset()"></select>
+            </td>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.A2" 
+                data-ng-options="item.id as item.value for item in agentMaxOptions"
+                data-ng-change="updateAgentMax()"></select>
+            </td>
+            <td>
+                <select data-ng-model="ptAndComSetting.PositionTaking.N2" 
+                data-ng-options="item.id as item.value for item in agentMinOptions" ></select>
+            </td>
+            <td>
+                <select 
+                data-ng-model="ptAndComSetting.Commission.Value" 
+                data-ng-options="item.id as item.value for item in agentCommissionOptions" ></select>
+            </td>
+        </tr>
+    </tbody>
+</table>

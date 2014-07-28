@@ -130,7 +130,23 @@
 
         public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            throw new System.NotImplementedException();
+            return _settingRepository.Update(new UpdateAgentSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                MRecommend = settingContext.CustId,
+                UserId = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162discount_1101 = ptAndComSetting.Commission.Value,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
+                min_v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.N2,
+                isauto_v162mpositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Im2,
+                auto_v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Um2,
+                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
+                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
+                NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
+            });
         }
 
         public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)

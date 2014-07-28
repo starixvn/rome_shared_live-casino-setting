@@ -43,10 +43,6 @@
 
         public string Username { get; set; }
 
-        public string ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public override string GetSettingKey()
         {
             return "Acc_CustomerUpdMemberLiveCS_MAg";
