@@ -1,12 +1,11 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
-    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.NAP.Framework.Command;
-    using System.Collections.Generic;
 
     /// <summary>
     /// TODO: Update summary.
@@ -75,7 +74,13 @@
 
         List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes);
 
-        List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo);
+        List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+
+        #endregion
+
+        #region Log
+
+        ICommandResult WriteLog(ILogData logData);
 
         #endregion
     }

@@ -38,6 +38,8 @@
         /// </summary>
         public int SubAccId { get; set; }
 
+        public string SubAccName { get; set; }
+
         /// <summary>
         /// Current role id of customer that is performing
         /// </summary>

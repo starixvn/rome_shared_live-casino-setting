@@ -75,7 +75,7 @@
     <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\GetCustomerSiteByUsernameCriteria.cs" />
-    <Compile Include="Criteria\InsertLogUserRunSPCriteria.cs" />
+    <Compile Include="Criteria\Log\InsertLogUserRunSPCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditAgentCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMasterCriteria.cs" />
@@ -96,6 +96,10 @@
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
+    <Compile Include="Enumerations\LogAction.cs" />
+    <Compile Include="Models\Log\ILogData.cs" />
+    <Compile Include="Models\Log\LogDataBase.cs" />
+    <Compile Include="Models\Log\LogManualInsertAccount.cs" />
     <Compile Include="Models\PositionTakingMatrix.cs" />
     <Compile Include="Models\Commission.cs" />
     <Compile Include="Models\CurrentMemberWin.cs" />
@@ -143,6 +147,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LiveCasinoLang.zh-TW.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

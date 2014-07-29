@@ -2,21 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Resources;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
+    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Command;
     using Newtonsoft.Json;
     using RemotingRef;
-    using Fanex.LiveCasino.CoreSetting.Resources;
-    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -420,17 +421,76 @@
             return results;
         }
 
-        public List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo)
+        public List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             if (!custInfo.IsSyncLiveCasino)
             {
                 ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
+
+                if (resultInsertAccount.IsSuccessful)
+                {
+                    var logData = new LogManualInsertAccount
+                    {
+                        Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
+                        AgentId = settingContext.AgentId,
+                        CustId = settingContext.TargetCustId,
+                        CustUserName = settingContext.TargetUsername,
+                        ExchangeId = settingContext.ExchangeId,
+                        SignUpIp = settingContext.IP,
+                        SignUpForm = InsertFormId,
+                        SubAccId = settingContext.SubAccId,
+                        SubAccName = settingContext.SubAccName,
+                        SuperId = settingContext.SuperId,
+                        UserId = settingContext.UserIdDoAction,
+                        UserName = settingContext.UserName,
+                        CustSite = settingContext.SiteName
+                    };
+
+                    WriteLog(logData);
+
+                    List<ICommandResult> resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
+
+                    var successResultUpdateStakeLevel = resultUpdateStakeLevels.Select(x => x.IsSuccessful).FirstOrDefault();
+                    if (successResultUpdateStakeLevel != null)
+                    {
+                        if (settingContext.IsEdittingSuper)
+                        {
+                            UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
+                            {
+                                
+                            });
+                        }
+                    }
+
+                    return resultUpdateStakeLevels;
+                }
             }
 
-            return null;
+            return new List<ICommandResult>();
         }
 
         #endregion Game Setting
+
+        #region Log
+
+        public ICommandResult WriteLog(ILogData logData)
+        {
+            var criteria = new InsertLogUserRunSPCriteria
+            {
+                UserId = logData.UserId,
+                CustId = logData.CustId,
+                SpName = logData.SpName,
+                Doing = string.Empty,
+                ActionId = (int)logData.Action,
+                TrackingValue = logData.NewValues,
+                TrackingValue2 = logData.OldValues,
+                Duration = 0
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        #endregion
 
         #region Private Methods
 
@@ -553,6 +613,29 @@
             }
 
             return resultDetails;
+        }
+
+        private LogActions GetUpdateStakeLevelLogAction(int roleId)
+        {
+            LogActions logAction;
+
+            switch (roleId)
+            {
+                case (int)CustRole.Super:
+                    logAction = LogActions.UpdateStakeLevel_Super;
+                    break;
+                case (int)CustRole.Master:
+                    logAction = LogActions.UpdateStakeLevel_Master;
+                    break;
+                case (int)CustRole.Agent:
+                    logAction = LogActions.UpdateStakeLevel_Agent;
+                    break;
+                default:
+                    logAction = LogActions.UpdateStakeLevel_Member;
+                    break;
+            }
+
+            return logAction;
         }
 
         #endregion Private Methods
