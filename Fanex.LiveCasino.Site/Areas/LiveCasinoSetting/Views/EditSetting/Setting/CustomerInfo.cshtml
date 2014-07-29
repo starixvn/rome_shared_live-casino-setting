@@ -2,76 +2,79 @@
     Layout = null;
 }
 @model SettingContext
-<table data-ng-controller="CustomerInfoController" class="cust-info">
-    <tr class="title">
-        <td colspan="4" class="center">
-            Customer Information
-        </td>
-    </tr>
-    <tr>
-        <td class="right bold">
-            Username:
-        </td>
-        <td class="left">
-            {{custInfo.UserName}}
-        </td>
-        <td class="right bold">
-            Nick name:
-        </td>
-        <td class="left">
-            {{custInfo.NickName}}
-        </td>
-    </tr>
-    <tr>
-        <td class="right bold">
-            First Name:
-        </td>
-        <td class="left">
-            {{custInfo.FirstName}}
-        </td>
-        <td class="right bold">
-            Last Name:
-        </td>
-        <td class="left">
-            {{custInfo.LastName}}
-        </td>
-    </tr>
-    <tr>
-        <td class="right bold">
-            Phone:
-        </td>
-        <td class="left">
-            {{custInfo.Phone}}
-        </td>
-        <td class="right bold">
-            Mobile Phone:
-        </td>
-        <td class="left">
-            {{custInfo.Mobile}}
-        </td>
-    </tr>
-    <tr>
-        <td class="right bold">
-            Fax:
-        </td>
-        <td class="left">
-            {{custInfo.Fax}}
-        </td>
-        @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
-        {
+<div id="tblCustInfo" class="col-xs-12">
+    <table data-ng-controller="CustomerInfoController" class="cust-info">
+        <tr class="title">
+            <td colspan="4" class="center">
+                Customer Information
+            </td>
+        </tr>
+        <tr>
             <td class="right bold">
-                Enable:
+                Username:
             </td>
             <td class="left">
-                <input type="checkbox" data-ng-model="enableLiveCasino" data-ng-change="updateStatus()" data-ng-disabled="disableCheckBoxLiveCasino" />
+                {{custInfo.UserName}}
             </td>
-        }
-        else
-        {
             <td class="right bold">
+                Nick name:
             </td>
             <td class="left">
+                {{custInfo.NickName}}
             </td>
-        }
-    </tr>
-</table>
+        </tr>
+        <tr>
+            <td class="right bold">
+                First Name:
+            </td>
+            <td class="left">
+                {{custInfo.FirstName}}
+            </td>
+            <td class="right bold">
+                Last Name:
+            </td>
+            <td class="left">
+                {{custInfo.LastName}}
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Phone:
+            </td>
+            <td class="left">
+                {{custInfo.Phone}}
+            </td>
+            <td class="right bold">
+                Mobile Phone:
+            </td>
+            <td class="left">
+                {{custInfo.Mobile}}
+            </td>
+        </tr>
+        <tr>
+            <td class="right bold">
+                Fax:
+            </td>
+            <td class="left">
+                {{custInfo.Fax}}
+            </td>
+            @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
+            {
+                <td class="right bold">
+                    Enable:
+                </td>
+                <td class="left">
+                    <input type="checkbox" data-ng-model="enableLiveCasino" data-ng-change="updateStatus()"
+                        data-ng-disabled="disableCheckBoxLiveCasino" />
+                </td>
+            }
+            else
+            {
+                <td class="right bold">
+                </td>
+                <td class="left">
+                </td>
+            }
+        </tr>
+    </table>
+</div>

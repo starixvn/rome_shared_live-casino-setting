@@ -2,12 +2,12 @@
 @{
     Layout = null;
 }
-<div id="tblPtComSetting" class="pt-container" 
+<div id="tblPtComSetting" class="pt-container col-xs-12" 
     data-ng-controller="PtAndComSettingController"
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtAndComSetting")">
     <div class="pt-title">
-        Position Taking/Commission
-        <input type="button" value="Update Partial" data-ng-click="updatePtAndComSetting()" />
+        <span class="pt-title-text">Position Taking/Commission</span>
+        <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial"></span>
     </div>
     @switch ((CustRole)Model.TargetRoleId)
     {

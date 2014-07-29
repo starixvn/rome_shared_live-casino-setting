@@ -5,7 +5,7 @@ body
     font-size: 12px;
 }
 
-.edit-setting-livecs, .pt-setting
+.edit-setting-livecs
 {
     width: 700px;
 }
@@ -30,11 +30,12 @@ body
     text-align: center;
 }
 
-.edit-setting-livecs .title
+.edit-setting-livecs .title, .pt-container .pt-title
 {
     font-weight: bold;
     color: White;
     background-color: Gray;
+    padding-left: 10px;
 	
 }
 
@@ -44,7 +45,7 @@ body
     border-collapse: collapse;
 }
 
-.edit-setting-livecs .cust-info
+.edit-setting-livecs .cust-info, .edit-setting-livecs .pt-setting
 {
     width: 100%;
 }
@@ -54,6 +55,26 @@ body
     width: 25%;
 }
 
+.edit-setting-livecs .pt-setting {
+	clear: both;
+}
+
+.edit-setting-livecs .pt-title {
+	position: relative;
+	height: 20px;
+}
+
+.edit-setting-livecs .btn-save-partial {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-image: url(Images/save.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+	position: absolute;
+	right: 2px;
+}
 
 /*Win Limit*/
 .edit-setting-livecs .cust-win-limit
@@ -101,4 +122,8 @@ label.clearfix
 {
     float: none;
     clear: both;
+}
+.pt-container .pt-title {
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
 }

@@ -113,7 +113,6 @@
         {
             ICommandResult updateResult = new CommandResult();
             settingContext.Language = "E";
-            settingContext.AdminId = 8;
             settingContext.IP = HttpContext.Request.UserHostAddress;
             switch ((CustRole)settingContext.TargetRoleId)
             {

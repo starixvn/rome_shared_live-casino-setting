@@ -151,10 +151,13 @@
     <Compile Include="Services\UnityBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\LiveCasinoSetting.xml" />
+    <Content Include="App_Data\LiveCasinoSetting.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
@@ -191,7 +194,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\LiveCasinoSetting\Content\Images\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
     <Folder Include="Content\" />
     <Folder Include="Models\" />
