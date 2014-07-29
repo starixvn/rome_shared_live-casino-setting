@@ -13,11 +13,13 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: custSettingForUpdate
             }).
-            success(function (commandResults) {
-                scope.commandResults = commandResults;
-                $timeout(function () {
-                    $window.localtion.href = $window.localtion.href;
-                }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+            success(function (result) {
+                scope.commandResults = result.CommandResults;
+                if (result.IsSuccessful) {
+                    $timeout(function () {
+                        $window.localtion.href = $window.location.href;
+                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+                }
             }).
             error(function (data) {
                 //// loging error

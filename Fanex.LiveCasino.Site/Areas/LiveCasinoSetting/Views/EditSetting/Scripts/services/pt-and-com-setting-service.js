@@ -16,11 +16,13 @@
                 headers: { 'Content-Type': 'application/json' },
                 data: ptAndComUpdateModel
             }).
-            success(function (commandResults) {
-                custSettingScope.commandResults = commandResults;
-                $timeout(function () {
-                    custSettingScope.commandResults = [];
-                }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+            success(function (result) {
+                custSettingScope.commandResults = result.CommandResults;
+                if (result.IsSuccessful) {
+                    $timeout(function () {
+                        custSettingScope.commandResults = [];
+                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+                }
             }).
             error(function (data) {
                 //// loging error

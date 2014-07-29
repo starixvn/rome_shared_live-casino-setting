@@ -103,6 +103,7 @@
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\MemberWinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
+    <Compile Include="Models\ResultList.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

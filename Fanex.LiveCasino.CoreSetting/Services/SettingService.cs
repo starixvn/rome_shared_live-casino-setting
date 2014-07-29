@@ -145,9 +145,9 @@
             return _settingRepository.GetSettingForMasterEditMember(criteria);
         }
 
-        public IList<CommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IList<CommandResult> updateResults = new List<CommandResult>();
+            IList<ICommandResult> updateResults = new List<ICommandResult>();
             switch ((CustRole)settingContext.TargetRoleId)
             {
                 case CustRole.Super:
@@ -178,7 +178,7 @@
             return updateResults;
         }
 
-        public IList<CommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
@@ -194,7 +194,7 @@
             return GetResultDetails(commandResult);
         }
 
-        public IList<CommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateMasterSettingCriteria
             {
@@ -217,7 +217,7 @@
             return GetResultDetails(commandResult);
         }
 
-        public IList<CommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateAgentSettingCriteria
             {
@@ -240,7 +240,7 @@
             return GetResultDetails(commandResult);
         }
 
-        public IList<CommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new AgentUpdateMemberSettingCriteria
             {
@@ -257,7 +257,7 @@
             return GetResultDetails(commandResult);
         }
 
-        public IList<CommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new SuperUpdateMemberSettingCriteria
             {
@@ -273,7 +273,7 @@
             return GetResultDetails(commandResult);
         }
 
-        public IList<CommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new MasterUpdateMemberSettingCriteria
             {
@@ -512,9 +512,9 @@
             return string.Empty;
         }
 
-        private IList<CommandResult> GetResultDetails(ICommandResult commandResult)
+        private IList<ICommandResult> GetResultDetails(ICommandResult commandResult)
         {
-            IList<CommandResult> resultDetails = new List<CommandResult>();
+            IList<ICommandResult> resultDetails = new List<ICommandResult>();
 
             string[] errCodes = commandResult.Code.Split('\a');
             string[] errMsgs = commandResult.Message.Split('\a');

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using System.Linq;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -64,10 +65,10 @@
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
             //// Check what setting will be update
-            List<ICommandResult> results = new List<ICommandResult>();
+            ResultList resultList = new ResultList();
             if (custSetting.CustInfo != null)
             {
-                results.Add(_settingService.UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
+                resultList.CommandResults.Add(_settingService.UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
                 {
                     Custid = settingContext.TargetCustId,
                     UserID = settingContext.UserIdDoAction,
@@ -77,9 +78,9 @@
                 }));
             }
 
-            results.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
+            resultList.CommandResults.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
 
-            return Json(results);
+            return Json(resultList);
         }
 
         #region Win Limit
@@ -120,7 +121,10 @@
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
 
-            IList<CommandResult> updateResults = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting);
+            ResultList updateResults = new ResultList
+                {
+                    CommandResults = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
+                };
 
             return Json(updateResults);
         }
