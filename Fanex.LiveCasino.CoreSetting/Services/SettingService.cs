@@ -34,7 +34,7 @@
 
         public ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
         {
-            return _settingRepository.Update(criteria);
+            return _settingRepository.InsertOrUpdate(criteria);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@
 
         public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new UpdateSuperSettingCriteria
+            return _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -123,7 +123,7 @@
 
         public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new UpdateMasterSettingCriteria
+            return _settingRepository.InsertOrUpdate(new UpdateMasterSettingCriteria
             {
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -144,7 +144,7 @@
 
         public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new UpdateAgentSettingCriteria
+            return _settingRepository.InsertOrUpdate(new UpdateAgentSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -165,7 +165,7 @@
 
         public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new AgentUpdateMemberSettingCriteria
+            return _settingRepository.InsertOrUpdate(new AgentUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -180,7 +180,7 @@
 
         public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new SuperUpdateMemberSettingCriteria
+            return _settingRepository.InsertOrUpdate(new SuperUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -195,7 +195,7 @@
 
         public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.Update(new MasterUpdateMemberSettingCriteria
+            return _settingRepository.InsertOrUpdate(new MasterUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -222,7 +222,7 @@
 
         public ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            ICommandResult result = _settingRepository.Update(new UpdateCustomerWinLimitCriteria
+            ICommandResult result = _settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.TargetCustId,
                 MaxWinLimit = memberWinLimit.Max,

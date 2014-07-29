@@ -8,6 +8,6 @@
     /// </summary>
     public interface IBaseRepository : IDynamicRepository
     {
-        ICommandResult Update(ICriteria criteria);
+        ICommandResult InsertOrUpdate(ICriteria criteria);
     }
 }

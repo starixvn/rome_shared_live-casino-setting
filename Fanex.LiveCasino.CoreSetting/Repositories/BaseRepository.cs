@@ -13,7 +13,7 @@
     /// </summary>
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
-        public ICommandResult Update(ICriteria criteria)
+        public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
