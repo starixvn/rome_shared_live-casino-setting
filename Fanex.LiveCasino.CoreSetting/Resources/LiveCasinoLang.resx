@@ -117,6 +117,105 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="lblAgentComm" xml:space="preserve">
+    <value>Agent Comm</value>
+  </data>
+  <data name="lblAgentMaxPT" xml:space="preserve">
+    <value>Agent Max PT</value>
+  </data>
+  <data name="lblAgentMinPT" xml:space="preserve">
+    <value>Agent Min PT</value>
+  </data>
+  <data name="lblAgentPresetPT" xml:space="preserve">
+    <value>Agent Preset PT</value>
+  </data>
+  <data name="lblAgentPT" xml:space="preserve">
+    <value>Agent PT</value>
+  </data>
+  <data name="lblCustomerInformation" xml:space="preserve">
+    <value>Customer Information</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="lblMasterAutoPresetPT" xml:space="preserve">
+    <value>Master Auto Preset PT</value>
+  </data>
+  <data name="lblMasterAutoPT" xml:space="preserve">
+    <value>Master Auto PT</value>
+  </data>
+  <data name="lblMasterComm" xml:space="preserve">
+    <value>Master Comm</value>
+  </data>
+  <data name="lblMasterMaxPT" xml:space="preserve">
+    <value>Master Max PT</value>
+  </data>
+  <data name="lblMasterMinPT" xml:space="preserve">
+    <value>Master Min PT</value>
+  </data>
+  <data name="lblMasterPresetPT" xml:space="preserve">
+    <value>Master Preset PT</value>
+  </data>
+  <data name="lblMasterPT" xml:space="preserve">
+    <value>Master PT</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>Member Commission</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>Mobile Phone</value>
+  </data>
+  <data name="lblNickname" xml:space="preserve">
+    <value>Nick name</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="lblPositionTakingCommission" xml:space="preserve">
+    <value>Position Taking/Commission</value>
+  </data>
+  <data name="lblSuperAutoPresetPT" xml:space="preserve">
+    <value>Super Auto Preset PT</value>
+  </data>
+  <data name="lblSuperAutoPT" xml:space="preserve">
+    <value>Super Auto PT</value>
+  </data>
+  <data name="lblSuperCommission" xml:space="preserve">
+    <value>Super Commission</value>
+  </data>
+  <data name="lblSuperMaxPosition" xml:space="preserve">
+    <value>Super Max Position</value>
+  </data>
+  <data name="lblSuperMinPosition" xml:space="preserve">
+    <value>Super Min Position</value>
+  </data>
+  <data name="lblSuperPresetPT" xml:space="preserve">
+    <value>Super Preset PT</value>
+  </data>
+  <data name="lblSuperPT" xml:space="preserve">
+    <value>Super PT</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>Super</value>
+  </data>
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>Updated Status Successfully.</value>
   </data>

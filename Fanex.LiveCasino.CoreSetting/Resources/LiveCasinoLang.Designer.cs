@@ -97,6 +97,303 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent.
+        /// </summary>
+        public static string Agent {
+            get {
+                return ResourceManager.GetString("Agent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Comm.
+        /// </summary>
+        public static string lblAgentComm {
+            get {
+                return ResourceManager.GetString("lblAgentComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Max PT.
+        /// </summary>
+        public static string lblAgentMaxPT {
+            get {
+                return ResourceManager.GetString("lblAgentMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Min PT.
+        /// </summary>
+        public static string lblAgentMinPT {
+            get {
+                return ResourceManager.GetString("lblAgentMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Preset PT.
+        /// </summary>
+        public static string lblAgentPresetPT {
+            get {
+                return ResourceManager.GetString("lblAgentPresetPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent PT.
+        /// </summary>
+        public static string lblAgentPT {
+            get {
+                return ResourceManager.GetString("lblAgentPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Information.
+        /// </summary>
+        public static string lblCustomerInformation {
+            get {
+                return ResourceManager.GetString("lblCustomerInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fax.
+        /// </summary>
+        public static string lblFax {
+            get {
+                return ResourceManager.GetString("lblFax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string lblFirstName {
+            get {
+                return ResourceManager.GetString("lblFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string lblLastName {
+            get {
+                return ResourceManager.GetString("lblLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Auto Preset PT.
+        /// </summary>
+        public static string lblMasterAutoPresetPT {
+            get {
+                return ResourceManager.GetString("lblMasterAutoPresetPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Auto PT.
+        /// </summary>
+        public static string lblMasterAutoPT {
+            get {
+                return ResourceManager.GetString("lblMasterAutoPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Comm.
+        /// </summary>
+        public static string lblMasterComm {
+            get {
+                return ResourceManager.GetString("lblMasterComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Max PT.
+        /// </summary>
+        public static string lblMasterMaxPT {
+            get {
+                return ResourceManager.GetString("lblMasterMaxPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Min PT.
+        /// </summary>
+        public static string lblMasterMinPT {
+            get {
+                return ResourceManager.GetString("lblMasterMinPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Preset PT.
+        /// </summary>
+        public static string lblMasterPresetPT {
+            get {
+                return ResourceManager.GetString("lblMasterPresetPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master PT.
+        /// </summary>
+        public static string lblMasterPT {
+            get {
+                return ResourceManager.GetString("lblMasterPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member Commission.
+        /// </summary>
+        public static string lblMemberCommission {
+            get {
+                return ResourceManager.GetString("lblMemberCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Phone.
+        /// </summary>
+        public static string lblMobilePhone {
+            get {
+                return ResourceManager.GetString("lblMobilePhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nick name.
+        /// </summary>
+        public static string lblNickname {
+            get {
+                return ResourceManager.GetString("lblNickname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string lblPhone {
+            get {
+                return ResourceManager.GetString("lblPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Taking/Commission.
+        /// </summary>
+        public static string lblPositionTakingCommission {
+            get {
+                return ResourceManager.GetString("lblPositionTakingCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Auto Preset PT.
+        /// </summary>
+        public static string lblSuperAutoPresetPT {
+            get {
+                return ResourceManager.GetString("lblSuperAutoPresetPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Auto PT.
+        /// </summary>
+        public static string lblSuperAutoPT {
+            get {
+                return ResourceManager.GetString("lblSuperAutoPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Commission.
+        /// </summary>
+        public static string lblSuperCommission {
+            get {
+                return ResourceManager.GetString("lblSuperCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Max Position.
+        /// </summary>
+        public static string lblSuperMaxPosition {
+            get {
+                return ResourceManager.GetString("lblSuperMaxPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Min Position.
+        /// </summary>
+        public static string lblSuperMinPosition {
+            get {
+                return ResourceManager.GetString("lblSuperMinPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Preset PT.
+        /// </summary>
+        public static string lblSuperPresetPT {
+            get {
+                return ResourceManager.GetString("lblSuperPresetPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super PT.
+        /// </summary>
+        public static string lblSuperPT {
+            get {
+                return ResourceManager.GetString("lblSuperPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string lblUsername {
+            get {
+                return ResourceManager.GetString("lblUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master.
+        /// </summary>
+        public static string Master {
+            get {
+                return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super.
+        /// </summary>
+        public static string Super {
+            get {
+                return ResourceManager.GetString("Super", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated Status Successfully..
         /// </summary>
         public static string UpdateLiveCasinoStatusSuccess {

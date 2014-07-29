@@ -13,7 +13,7 @@
     /// </summary>
     public interface ISettingService
     {
-        ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria);
+        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
 

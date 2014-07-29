@@ -24,6 +24,11 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/setting")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/live-casino-lang.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.en-US.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-CN.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-TW.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-info-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")

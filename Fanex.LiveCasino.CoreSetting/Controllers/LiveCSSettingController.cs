@@ -68,14 +68,7 @@
             ResultList resultList = new ResultList();
             if (custSetting.CustInfo != null)
             {
-                resultList.CommandResults.Add(_settingService.UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
-                {
-                    Custid = settingContext.TargetCustId,
-                    UserID = settingContext.UserIdDoAction,
-                    DisabledLiveCS = custSetting.CustInfo.DisableLiveCasino,
-                    IP = settingContext.IP,
-                    Language = settingContext.Language
-                }));
+                resultList.CommandResults.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
             }
 
             resultList.CommandResults.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));

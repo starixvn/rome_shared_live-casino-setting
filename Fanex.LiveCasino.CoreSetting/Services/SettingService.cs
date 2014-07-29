@@ -44,8 +44,17 @@
             _settingRepository = settingRepository ?? new SettingRepository();
         }
 
-        public ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
+        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo)
         {
+            var criteria = new UpdateLiveCasinoStatusCriteria
+                {
+                    Custid = settingContext.TargetCustId,
+                    UserID = settingContext.UserIdDoAction,
+                    DisabledLiveCS = custInfo.DisableLiveCasino,
+                    IP = settingContext.IP,
+                    Language = settingContext.Language
+                };
+
             ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
             //UpdateLiveCasinoStatusSuccess
             if (updateResult.Code.ToString() == "0")

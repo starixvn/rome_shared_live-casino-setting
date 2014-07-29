@@ -47,6 +47,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="RemotingRef">
       <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
     </Reference>
@@ -63,6 +64,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -125,6 +127,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="T4Toolbox.10.0, Version=10.10.13.1, Culture=neutral, PublicKeyToken=7e313accbcce84dc, processorArchitecture=x86" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
@@ -159,6 +162,20 @@
     <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js">
+      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
+    </Content>
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
+    </Content>
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-CN.js">
+      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
+    </Content>
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-TW.js">
+      <DependentUpon>LiveCasinoLang.tt</DependentUpon>
+    </Content>
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
@@ -182,6 +199,7 @@
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
     <Content Include="Global.asax" />
+    <Content Include="TestFolder\ReadMe.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -242,6 +260,13 @@
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang.js</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
