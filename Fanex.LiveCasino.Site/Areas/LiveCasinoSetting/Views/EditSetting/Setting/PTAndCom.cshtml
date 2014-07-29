@@ -6,7 +6,7 @@
     data-ng-controller="PtAndComSettingController"
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtAndComSetting")">
     <div class="pt-title">
-        <span class="pt-title-text">Position Taking/Commission</span>
+        <span class="pt-title-text">@LiveCasinoLang.lblPositionTakingCommission</span>
         <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial"></span>
     </div>
     @switch ((CustRole)Model.TargetRoleId)
@@ -44,11 +44,11 @@
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">
-                        Confirm Update Member's PT</h4>
+                        @LiveCasinoLang.lblConfirmUpdateMemberPT</h4>
                 </div>
                 <div class="modal-body">
-                    <p>You have changed this @(Model.TargetRoleId == (int)CustRole.Super ? "Super" : "Master") not to take auto position taking.</p>
-                    <p>Do you want to update all member's position taking to:</p>
+                    <p>@string.Format(LiveCasinoLang.lblHaveChangePositionTaking, Model.IsEdittingMaster ? LiveCasinoLang.Super : LiveCasinoLang.Master)</p>
+                    <p>@LiveCasinoLang.lblChangePTTo:</p>
                      <select 
                         data-ng-model="ptAndComSetting.PositionTaking.NewPresetOnMember" 
                         data-ng-options="item.id as item.value for item in presetOnMemberOptions">
@@ -56,9 +56,9 @@
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(true)"  data-dismiss="modal">
-                        Yes</button>
+                        @LiveCasinoLang.lblYes</button>
                     <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(false)" data-dismiss="modal">
-                        No</button>
+                        @LiveCasinoLang.lblNo</button>
                 </div>
             </div>
             <!-- /.modal-content -->

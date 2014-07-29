@@ -151,11 +151,47 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to update all member&apos;s position taking to.
+        /// </summary>
+        public static string lblChangePTTo {
+            get {
+                return ResourceManager.GetString("lblChangePTTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string lblClose {
+            get {
+                return ResourceManager.GetString("lblClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Update Member&apos;s PT.
+        /// </summary>
+        public static string lblConfirmUpdateMemberPT {
+            get {
+                return ResourceManager.GetString("lblConfirmUpdateMemberPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Information.
         /// </summary>
         public static string lblCustomerInformation {
             get {
                 return ResourceManager.GetString("lblCustomerInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable.
+        /// </summary>
+        public static string lblEnable {
+            get {
+                return ResourceManager.GetString("lblEnable", resourceCulture);
             }
         }
         
@@ -174,6 +210,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         public static string lblFirstName {
             get {
                 return ResourceManager.GetString("lblFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have changed this {0} not to take auto position taking..
+        /// </summary>
+        public static string lblHaveChangePositionTaking {
+            get {
+                return ResourceManager.GetString("lblHaveChangePositionTaking", resourceCulture);
             }
         }
         
@@ -277,6 +322,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string lblNo {
+            get {
+                return ResourceManager.GetString("lblNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string lblPhone {
@@ -363,6 +417,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         public static string lblUsername {
             get {
                 return ResourceManager.GetString("lblUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string lblYes {
+            get {
+                return ResourceManager.GetString("lblYes", resourceCulture);
             }
         }
         

@@ -6,18 +6,18 @@
     <table data-ng-controller="CustomerInfoController" class="cust-info">
         <tr class="title">
             <td colspan="4" class="center">
-                Customer Information
+                @LiveCasinoLang.lblCustomerInformation
             </td>
         </tr>
         <tr>
             <td class="right bold">
-                Username:
+                @LiveCasinoLang.lblUsername:
             </td>
             <td class="left">
                 {{custInfo.UserName}}
             </td>
             <td class="right bold">
-                Nick name:
+                @LiveCasinoLang.lblNickname:
             </td>
             <td class="left">
                 {{custInfo.NickName}}
@@ -25,13 +25,13 @@
         </tr>
         <tr>
             <td class="right bold">
-                First Name:
+                @LiveCasinoLang.lblFirstName:
             </td>
             <td class="left">
                 {{custInfo.FirstName}}
             </td>
             <td class="right bold">
-                Last Name:
+                @LiveCasinoLang.lblLastName:
             </td>
             <td class="left">
                 {{custInfo.LastName}}
@@ -39,13 +39,13 @@
         </tr>
         <tr>
             <td class="right bold">
-                Phone:
+                @LiveCasinoLang.lblPhone:
             </td>
             <td class="left">
                 {{custInfo.Phone}}
             </td>
             <td class="right bold">
-                Mobile Phone:
+                @LiveCasinoLang.lblMobilePhone:
             </td>
             <td class="left">
                 {{custInfo.Mobile}}
@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <td class="right bold">
-                Fax:
+                @LiveCasinoLang.lblFax:
             </td>
             <td class="left">
                 {{custInfo.Fax}}
@@ -61,7 +61,7 @@
             @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
             {
                 <td class="right bold">
-                    Enable:
+                    @LiveCasinoLang.lblEnable:
                 </td>
                 <td class="left">
                     <input type="checkbox" data-ng-model="enableLiveCasino" data-ng-change="updateStatus()"

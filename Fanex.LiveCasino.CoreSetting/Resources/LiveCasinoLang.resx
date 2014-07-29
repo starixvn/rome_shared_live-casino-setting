@@ -234,4 +234,25 @@
   <data name="_104" xml:space="preserve">
     <value>Updated Win Limit Successfully.</value>
   </data>
+  <data name="lblEnable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="lblChangePTTo" xml:space="preserve">
+    <value>Do you want to update all member's position taking to</value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="lblConfirmUpdateMemberPT" xml:space="preserve">
+    <value>Confirm Update Member's PT</value>
+  </data>
+  <data name="lblHaveChangePositionTaking" xml:space="preserve">
+    <value>You have changed this {0} not to take auto position taking.</value>
+  </data>
+  <data name="lblNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="lblYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>
