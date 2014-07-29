@@ -97,6 +97,17 @@
         }
 
         #endregion
+
+        #region Game Setting
+
+        [HttpPost]
+        public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
+        {
+            return Json(gameSetting);
+        }
+
+        #endregion
+
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
@@ -122,11 +133,11 @@
                             updateResult = _settingService.SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
                         case CustRole.Master:
-                             updateResult = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            updateResult = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
                         default:
-                             updateResult = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-                             break;
+                            updateResult = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
                     }
                     break;
             }

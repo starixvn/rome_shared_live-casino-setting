@@ -4,9 +4,13 @@ if (fanex.liveCasinoSetting) {
     [
         '$scope',
         '$http',
-        function ($scope, $http) {
-            $scope.gameSettingViewModel = fanex.cloneObject(custSetting.GameSetting);
+        'CustomerGameSettingService',
+        function ($scope, $http, customerGameSettingService) {
+            $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
 
+            $scope.updateGameSetting = function () {
+                customerGameSettingService.updateGameSetting($scope.gameSetting);
+            }
         }
         ]);
 }

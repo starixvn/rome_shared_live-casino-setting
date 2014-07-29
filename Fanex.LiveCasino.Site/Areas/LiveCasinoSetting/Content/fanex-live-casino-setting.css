@@ -87,7 +87,6 @@ body
     width: 75%;
 }
 
-
 /*PT Style*/
 .pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th {
 	border: 1px solid gray;
@@ -96,4 +95,10 @@ body
 
 .pt-setting tbody td, .pt-setting th {
 	text-align: center;
+}
+
+label.clearfix 
+{
+    float: none;
+    clear: both;
 }
