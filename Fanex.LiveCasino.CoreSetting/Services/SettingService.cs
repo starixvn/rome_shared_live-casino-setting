@@ -90,17 +90,18 @@
         /// </summary>
         /// <param name="criteria">Get criteria information.</param>
         /// <returns>Customer information.</returns>
-        public CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria)
+        public CustInfo GetCustomerInfo(int custId)
         {
+            var criteria = new GetCustomerInfoCriteria
+            {
+                Custid = custId
+            };
             return _settingRepository.GetCustomerInfo(criteria);
         }
 
         public string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
-            CustInfo custInfo = GetCustomerInfo(new GetCustomerInfoCriteria
-                {
-                    Custid = settingContext.TargetCustId
-                });
+            CustInfo custInfo = GetCustomerInfo(settingContext.TargetCustId);
 
             var custSetting = new CustSettingViewModel
             {
@@ -450,15 +451,17 @@
 
                     List<ICommandResult> resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
 
-                    var successResultUpdateStakeLevel = resultUpdateStakeLevels.Select(x => x.IsSuccessful).FirstOrDefault();
+                    var successResultUpdateStakeLevel = resultUpdateStakeLevels.Where(x => x.IsSuccessful).FirstOrDefault();
                     if (successResultUpdateStakeLevel != null)
                     {
                         if (settingContext.IsEdittingSuper)
                         {
-                            UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
-                            {
-                                
-                            });
+                            UpdateLiveCasinoStatus(settingContext, custInfo);
+                        }
+
+                        if (!custInfo.IsSyncLiveCasino)
+                        {
+                            UpdateSyncLiveCasino(settingContext, true);
                         }
                     }
 

@@ -101,13 +101,15 @@
         [HttpPost]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
+            var custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
+
             return Json(gameSetting);
         }
 
         #endregion
 
         #region Pt and Com setting
-            
+
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {

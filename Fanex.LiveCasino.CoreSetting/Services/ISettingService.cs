@@ -18,7 +18,7 @@
 
         string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName);
 
-        CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
+        CustInfo GetCustomerInfo(int custId);
 
         string GetCustomerSiteByUsername(string username);
 
