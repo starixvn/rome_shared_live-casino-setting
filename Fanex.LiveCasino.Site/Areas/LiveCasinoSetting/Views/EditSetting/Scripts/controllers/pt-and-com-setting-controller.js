@@ -9,8 +9,9 @@ if (fanex.liveCasinoSetting) {
             //// Privates
             var me = this;
             me.$presetOnMemberModal = $('#presetOnMemberModal');
-            me.isEditPresetOnMember = function (ptAndComSetting) {
-                var currentPt = ptAndComSetting.PositionTaking;
+
+            $scope.isEditPresetOnMember = function () {
+                var currentPt = $scope.ptAndComSetting.PositionTaking;
                 switch (custSetting.SettingContext.TargetRoleId) {
                     case fanex.liveCasinoSetting.custRole.Master:
                         if (ptAndComSettingService.ptAndComSetting.PositionTaking.Is3
@@ -45,22 +46,26 @@ if (fanex.liveCasinoSetting) {
             //// Properties
             $scope.ptAndComSetting = fanex.cloneObject(ptAndComSettingService.ptAndComSetting);
             $scope.presetOnMemberOptions = [];
+            $scope.isUpdateAllSetting = false;
 
             //// Action
             $scope.updatePtAndComSetting = function () {
-                if (me.isEditPresetOnMember($scope.ptAndComSetting)) {
+                if ($scope.isEditPresetOnMember()) {
                     return;
                 }
 
-                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting);
+                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
             };
 
             $scope.updatePresetOnMember = function (isUpdate) {
                 $scope.ptAndComSetting.PositionTaking.UpdateAllMembers = isUpdate;
-                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting);
+                if ($scope.$parent.isUpdateAllSetting) {
+                    $scope.$parent.updateAllSetting();
+                }
+                else {
+                    ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
+                }
             };
-
-
         }
         ]);
 }

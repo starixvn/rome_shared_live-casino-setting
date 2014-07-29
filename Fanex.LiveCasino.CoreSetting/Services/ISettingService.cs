@@ -47,6 +47,8 @@
 
         IList<CommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
+        IList<CommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
         #endregion
 
         #region Win Limit

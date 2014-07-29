@@ -4,7 +4,7 @@
         var me = this;
 
         me.ptAndComSetting = custSetting.PtAndComSetting;
-        me.updatePtAndComSetting = function (ptAndComSetting) {
+        me.updatePtAndComSetting = function (ptAndComSetting, custSettingScope) {
             var ptAndComUpdateModel = {
                 settingContext: custSetting.SettingContext,
                 ptAndComSetting: ptAndComSetting
@@ -16,14 +16,15 @@
                 headers: { 'Content-Type': 'application/json' },
                 data: ptAndComUpdateModel
             }).
-            success(function (data) {
+            success(function (commandResults) {
+                custSettingScope.commandResults = commandResults;
             }).
             error(function (data) {
                 //// loging error
             });
         };
 
-        
+
 
 
     } ]);

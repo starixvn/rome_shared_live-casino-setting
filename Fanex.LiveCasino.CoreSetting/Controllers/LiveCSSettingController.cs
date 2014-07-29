@@ -61,6 +61,8 @@
         [HttpPost]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
+            settingContext.Language = "E";
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             //// Check what setting will be update
             List<ICommandResult> results = new List<ICommandResult>();
             if (custSetting.CustInfo != null)
@@ -68,12 +70,14 @@
                 results.Add(_settingService.UpdateLiveCasinoStatus(new UpdateLiveCasinoStatusCriteria
                 {
                     Custid = settingContext.TargetCustId,
-                    UserID = settingContext.AdminId > 0 ? settingContext.AdminId : settingContext.CustId,
+                    UserID = settingContext.UserIdDoAction,
                     DisabledLiveCS = custSetting.CustInfo.DisableLiveCasino,
-                    IP = HttpContext.Request.UserHostAddress,
-                    Language = "E"
+                    IP = settingContext.IP,
+                    Language = settingContext.Language
                 }));
             }
+
+            results.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
 
             return Json(results);
         }
@@ -111,42 +115,20 @@
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IList<CommandResult> updateResults = new List<CommandResult>();
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
-            switch ((CustRole)settingContext.TargetRoleId)
-            {
-                case CustRole.Super:
-                    updateResults = _settingService.UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
-                    break;
-                case CustRole.Master:
-                    updateResults = _settingService.UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
-                    break;
-                case CustRole.Agent:
-                    updateResults = _settingService.UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
-                    break;
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
-                    {
-                        case CustRole.Super:
-                            updateResults = _settingService.SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-                            break;
-                        case CustRole.Master:
-                            updateResults = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-                            break;
-                        default:
-                            updateResults = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-                            break;
-                    }
-                    break;
-            }
+
+            IList<CommandResult> updateResults = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting);
 
             return Json(updateResults);
         }
+
+        #endregion
 
         public ActionResult UnAuthorized()
         {
             return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
         }
+
     }
 }

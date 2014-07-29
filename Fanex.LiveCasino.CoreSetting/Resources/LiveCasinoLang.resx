@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>Updated Status Successfully.</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
+    <value>Updated Status unsuccessfully because Live Casino status has been disabled at upline.</value>
+  </data>
   <data name="_101" xml:space="preserve">
     <value>Updated Commission Successfully.</value>
   </data>

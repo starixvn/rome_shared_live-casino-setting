@@ -8,9 +8,35 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerSettingService',
         function ($scope, $http, customerSettingService) {
-
+            $scope.commandResults = [];
+            $scope.isUpdateAllSetting = false;
             //$scope.updateLiveCasinoStatus
-            $scope.updateSetting = customerSettingService.updateSetting;
+
+            $scope.validateAndUpdateSetting = function () {
+                $scope.isUpdateAllSetting = true;
+                var ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
+
+                if (ptAndComScope.isEditPresetOnMember()) {
+                    return;
+                }
+
+                $scope.updateAllSetting();
+            };
+
+            $scope.updateAllSetting = function () {
+                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope(),
+                    ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
+
+                var custSettingForUpdate = {
+                    settingContext: custSetting.SettingContext,
+                    custInfo: custInfoScope.getCustInfo(),
+                    ptAndComSetting: ptAndComScope.ptAndComSetting
+                };
+
+                customerSettingService.updateAllSetting(custSettingForUpdate, $scope);
+                $scope.isUpdateAllSetting = false;
+            };
+
             //$scope.update
             $('#tblSetting').show();
         }

@@ -6,20 +6,15 @@ if (fanex.liveCasinoSetting) {
         var me = this;
 
         me.custSetting = custSetting;
-        me.updateSetting = function () {
-            var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
-            var custSettingForUpdate = {
-                settingContext: custSetting.SettingContext,
-                custInfo: custInfoScope.getCustInfo()
-            };
-
+        me.updateAllSetting = function (custSettingForUpdate, scope) {
             $http({
                 method: 'POST',
                 url: $('#tblSetting').data('update-href'),
                 headers: { 'Content-Type': 'application/json' },
                 data: custSettingForUpdate
             }).
-            success(function (data) {
+            success(function (commandResults) {
+                scope.commandResults = commandResults;
             }).
             error(function (data) {
                 //// loging error

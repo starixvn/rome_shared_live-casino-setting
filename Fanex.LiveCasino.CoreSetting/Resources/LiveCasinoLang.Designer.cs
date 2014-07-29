@@ -95,5 +95,23 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
                 return ResourceManager.GetString("_104", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Status Successfully..
+        /// </summary>
+        public static string UpdateLiveCasinoStatusSuccess {
+            get {
+                return ResourceManager.GetString("UpdateLiveCasinoStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Status unsuccessfully because Live Casino status has been disabled at upline..
+        /// </summary>
+        public static string UpdateLiveCasinoStatusUnSuccess {
+            get {
+                return ResourceManager.GetString("UpdateLiveCasinoStatusUnSuccess", resourceCulture);
+            }
+        }
     }
 }

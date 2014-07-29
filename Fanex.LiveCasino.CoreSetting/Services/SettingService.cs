@@ -42,7 +42,17 @@
 
         public ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria)
         {
-            return _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
+            //UpdateLiveCasinoStatusSuccess
+            if (updateResult.Code.ToString() == "0")
+            {
+                updateResult = new CommandResult
+                {
+                    Code = 0,
+                    Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
+                };
+            }
+
         }
 
         /// <summary>
@@ -113,6 +123,39 @@
         public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
         {
             return _settingRepository.GetSettingForMasterEditMember(criteria);
+        }
+
+        public IList<CommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IList<CommandResult> updateResults = new List<CommandResult>();
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Super:
+                    updateResults = UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
+                case CustRole.Master:
+                    updateResults = UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
+                case CustRole.Agent:
+                    updateResults = UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
+                    break;
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            updateResults = SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
+                        case CustRole.Master:
+                            updateResults = MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
+                        default:
+                            updateResults = AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            break;
+                    }
+                    break;
+            }
+
+            return updateResults;
         }
 
         public IList<CommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
