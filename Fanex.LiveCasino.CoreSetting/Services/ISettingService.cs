@@ -35,17 +35,17 @@
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
 
-        ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+        IList<CommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
         #endregion
 

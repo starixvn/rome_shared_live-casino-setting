@@ -111,37 +111,37 @@
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult updateResult = new CommandResult();
+            IList<CommandResult> updateResults = new List<CommandResult>();
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
             switch ((CustRole)settingContext.TargetRoleId)
             {
                 case CustRole.Super:
-                    updateResult = _settingService.UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
+                    updateResults = _settingService.UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
                     break;
                 case CustRole.Master:
-                    updateResult = _settingService.UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
+                    updateResults = _settingService.UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
                     break;
                 case CustRole.Agent:
-                    updateResult = _settingService.UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
+                    updateResults = _settingService.UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
                     break;
                 case CustRole.Member:
                     switch ((CustRole)settingContext.RoleId)
                     {
                         case CustRole.Super:
-                            updateResult = _settingService.SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            updateResults = _settingService.SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
                         case CustRole.Master:
-                            updateResult = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            updateResults = _settingService.MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
                         default:
-                            updateResult = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+                            updateResults = _settingService.AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
                     }
                     break;
             }
 
-            return Json(updateResult);
+            return Json(updateResults);
         }
 
         public ActionResult UnAuthorized()

@@ -59,5 +59,41 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Commission Successfully..
+        /// </summary>
+        public static string _101 {
+            get {
+                return ResourceManager.GetString("_101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Min Position Successfully..
+        /// </summary>
+        public static string _102 {
+            get {
+                return ResourceManager.GetString("_102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Position Taking Successfully..
+        /// </summary>
+        public static string _103 {
+            get {
+                return ResourceManager.GetString("_103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Win Limit Successfully..
+        /// </summary>
+        public static string _104 {
+            get {
+                return ResourceManager.GetString("_104", resourceCulture);
+            }
+        }
     }
 }

@@ -1,7 +1,11 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.Resources;
+    using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Criteria;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -10,8 +14,8 @@
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Command;
     using Newtonsoft.Json;
-    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using RemotingRef;
+    using Fanex.LiveCasino.CoreSetting.Resources;
 
     /// <summary>
     /// TODO: Update summary.
@@ -23,9 +27,13 @@
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented
         };
+
         private readonly ISettingRepository _settingRepository;
 
-        public SettingService() : this(null) { }
+        public SettingService()
+            : this(null)
+        {
+        }
 
         public SettingService(ISettingRepository settingRepository)
         {
@@ -107,9 +115,9 @@
             return _settingRepository.GetSettingForMasterEditMember(criteria);
         }
 
-        public ICommandResult UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -119,11 +127,13 @@
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
                 v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
             });
+
+            return GetResultDetails(commandResult);
         }
 
-        public ICommandResult UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new UpdateMasterSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateMasterSettingCriteria
             {
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -140,11 +150,13 @@
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
                 NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             });
+
+            return GetResultDetails(commandResult);
         }
 
-        public ICommandResult UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new UpdateAgentSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateAgentSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -161,11 +173,13 @@
                 v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
                 NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             });
+
+            return GetResultDetails(commandResult);
         }
 
-        public ICommandResult AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new AgentUpdateMemberSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new AgentUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -176,11 +190,13 @@
                 v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
                 v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
             });
+
+            return GetResultDetails(commandResult);
         }
 
-        public ICommandResult SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new SuperUpdateMemberSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new SuperUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -191,11 +207,12 @@
                 isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
                 auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
             });
+            return GetResultDetails(commandResult);
         }
 
-        public ICommandResult MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public IList<CommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            return _settingRepository.InsertOrUpdate(new MasterUpdateMemberSettingCriteria
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new MasterUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -206,9 +223,11 @@
                 isauto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
                 auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
             });
+
+            return GetResultDetails(commandResult);
         }
 
-        #endregion
+        #endregion Pt and Com
 
         #region Win Limit
 
@@ -235,7 +254,7 @@
             return result;
         }
 
-        #endregion
+        #endregion Win Limit
 
         #region Game Setting
 
@@ -260,7 +279,7 @@
             return _settingRepository.GetGameSetting(criteria);
         }
 
-        #endregion
+        #endregion Game Setting
 
         #region Private Methods
 
@@ -351,6 +370,40 @@
             return string.Empty;
         }
 
-        #endregion
+        private IList<CommandResult> GetResultDetails(ICommandResult commandResult)
+        {
+            IList<CommandResult> resultDetails = new List<CommandResult>();
+
+            string[] errCodes = commandResult.Code.Split('\a');
+            string[] errMsgs = commandResult.Message.Split('\a');
+
+            for (int i = 0; i < errCodes.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(errCodes[i]))
+                {
+                    var errCode = Converter.ToInt(errCodes[i]);
+                    if (errCode < 0)
+                    {
+                        resultDetails.Add(new CommandResult
+                        {
+                            Code = errCode,
+                            Message = LiveCasinoLang.ResourceManager.GetString(string.Format("_{0}", Math.Abs(errCode)))
+                        });
+                    }
+                    else
+                    {
+                        resultDetails.Add(new CommandResult
+                        {
+                            Code = errCode,
+                            Message = errMsgs[i]
+                        });
+                    }
+                }
+            }
+
+            return resultDetails;
+        }
+
+        #endregion Private Methods
     }
 }
