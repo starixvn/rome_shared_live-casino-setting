@@ -159,6 +159,7 @@
     <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
@@ -194,7 +195,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
     <Folder Include="Content\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
