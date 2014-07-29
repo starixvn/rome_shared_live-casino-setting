@@ -72,6 +72,7 @@
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertAutoAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertManualAccountCriteria.cs" />
+    <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\GetCustomerSiteByUsernameCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteria.cs" />

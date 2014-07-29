@@ -21,6 +21,8 @@
         /// </summary>
         public string UserName { get; set; }
 
+        public string TargetUsername { get; set; }
+
         /// <summary>
         /// Target customer id of edited customer
         /// </summary>
@@ -70,6 +72,17 @@
         /// LangKey of current request
         /// </summary>
         public string LangKey { get; set; }
+
+        /// <summary>
+        /// Currency identify.
+        /// </summary>
+        public int ExchangeId { get; set; }
+
+        public int SuperId { get; set; }
+
+        public int MasterId { get; set; }
+
+        public int AgentId { get; set; }
 
         public SettingContext()
         {

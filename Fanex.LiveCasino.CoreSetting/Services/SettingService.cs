@@ -16,12 +16,16 @@
     using Newtonsoft.Json;
     using RemotingRef;
     using Fanex.LiveCasino.CoreSetting.Resources;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class SettingService : ISettingService
     {
+        private const string CasinoNo = "01";
+        private const int InsertFormId = 1;
+
         private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -53,6 +57,21 @@
                 };
             }
 
+        }
+
+        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync)
+        {
+            var criteria = new UpdateSyncLiveCasinoCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                UserId = settingContext.UserIdDoAction,
+                Ip = settingContext.IP,
+                Language = settingContext.Language,
+                SubAccId = settingContext.SubAccId,
+                SyncLiveCS = isSync
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
         }
 
         /// <summary>
@@ -320,6 +339,83 @@
             };
 
             return _settingRepository.GetGameSetting(criteria);
+        }
+
+        public ICommandResult InsertAutoAccount(SettingContext settingContext)
+        {
+            var criteria = new InsertAutoAccountCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                CasinoNo = CasinoNo,
+                ExchangeId = settingContext.ExchangeId,
+                SuperId = settingContext.SuperId,
+                MasterId = settingContext.MasterId,
+                AgentId = settingContext.AgentId,
+                RoleId = settingContext.TargetRoleId,
+                SignupIp = settingContext.IP,
+                SignupBy = settingContext.UserIdDoAction,
+                SignupForm = InsertFormId,
+                ModifyUsername = settingContext.UserName,
+                Username = settingContext.TargetUsername
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        public ICommandResult InsertManualAccount(SettingContext settingContext)
+        {
+            var criteria = new InsertManualAccountCriteria
+           {
+               CustId = settingContext.TargetCustId,
+               CasinoNo = CasinoNo,
+               ExchangeId = settingContext.ExchangeId,
+               SuperId = settingContext.SuperId,
+               MasterId = settingContext.MasterId,
+               AgentId = settingContext.AgentId,
+               RoleId = settingContext.TargetRoleId,
+               SignupIp = settingContext.IP,
+               SignupBy = settingContext.UserIdDoAction,
+               SignupForm = InsertFormId,
+               ModifyUsername = settingContext.UserName,
+               Username = settingContext.TargetUsername,
+               CustSite = settingContext.SiteName
+           };
+
+            return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        public ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType)
+        {
+            var criteria = new UpdateStakeLevelCriteria
+            {
+                CustId = custId,
+                RoleId = roleId,
+                GameTypeId = gameType.Id,
+                StakeLevelList = string.Join(",", gameType.BettingLimit.Select(x => x.Id.ToString()).ToArray())
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        public List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
+        {
+            var results = new List<ICommandResult>();
+
+            foreach (var itemGameType in gameTypes)
+            {
+                var result = UpdateStakeLevel(custId, roleId, itemGameType);
+                results.Add(result);
+            }
+
+            return results;
+        }
+
+        public List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo)
+        {
+            if (!custInfo.IsSyncLiveCasino)
+            {
+                ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
+            }
         }
 
         #endregion Game Setting

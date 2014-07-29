@@ -15,6 +15,8 @@
     {
         ICommandResult UpdateLiveCasinoStatus(UpdateLiveCasinoStatusCriteria criteria);
 
+        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
+
         string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName);
 
         CustInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
@@ -64,6 +66,16 @@
         List<GameType> GetGameSettingByExchange(int exchangeId, string site);
 
         List<GameType> GetGameSettingByCustomerId(int custId);
+
+        ICommandResult InsertAutoAccount(SettingContext settingContext);
+
+        ICommandResult InsertManualAccount(SettingContext settingContext);
+
+        ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType);
+
+        List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes);
+
+        List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo);
 
         #endregion
     }
