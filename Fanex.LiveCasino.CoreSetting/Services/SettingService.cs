@@ -57,6 +57,7 @@
                 };
             }
 
+            return updateResult;
         }
 
         public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync)
@@ -416,6 +417,8 @@
             {
                 ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
             }
+
+            return null;
         }
 
         #endregion Game Setting
