@@ -112,6 +112,8 @@
 
         #endregion
 
+        #region Pt and Com setting
+            
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
