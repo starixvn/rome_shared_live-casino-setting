@@ -1,76 +1,154 @@
-﻿
-if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.controller('PtAndComSettingController',
-    [
-        '$scope',
-        '$window',
-        'PtAndComSettingService',
-        function ($scope, $window, ptAndComSettingService) {
-            //// Privates
-            var me = this;
-            me.$presetOnMemberModal = $('#presetOnMemberModal');
+﻿/// <reference path="../../../../../../custSetting.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/bootstrap.js" />
 
-            $scope.isEditPresetOnMember = function () {
-                var currentPt = $scope.ptAndComSetting.PositionTaking;
-                switch (custSetting.SettingContext.TargetRoleId) {
-                    case fanex.liveCasinoSetting.custRole.Master:
-                        if (custSetting.PtAndComSetting.PositionTaking.Is3
-                            && !currentPt.Is3) {
-                            currentPt.NewPresetOnMember = currentPt.S3;
-                            $scope.presetOnMemberOptions = fanex.createOptionsFromRange(currentPt.S3, 0, currentPt.S3, fanex.liveCasinoSetting.PT_INTERVAL);
-                            me.$presetOnMemberModal.modal({
-                                backdrop: 'static',
-                                show: true,
-                                keyboard: false
-                            });
-                            return true;
-                        }
-                        break;
-                    case fanex.liveCasinoSetting.custRole.Agent:
-                        if (custSetting.PtAndComSetting.PositionTaking.Im2
-                            && !currentPt.Im2) {
-                            currentPt.NewPresetOnMember = currentPt.M2;
-                            $scope.presetOnMemberOptions = fanex.createOptionsFromRange(currentPt.M2, 0, currentPt.M2, fanex.liveCasinoSetting.PT_INTERVAL);
-                            me.$presetOnMemberModal.modal({
-                                backdrop: 'static',
-                                show: true,
-                                keyboard: false
-                            });
-                            return true;
-                        }
-                        break;
-                }
-                return false;
-            }
+/// <reference path="../../../../../../angular-mocks.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
+/// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/pt-and-com-setting-controller.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" />
+/// <reference path="../../../../Scripts/core/live-casino-lang.spec.js" />
 
-            //// Properties
-            $scope.ptAndComSetting = fanex.cloneObject(custSetting.PtAndComSetting);
-            $scope.presetOnMemberOptions = [];
-            $scope.isUpdateAllSetting = false;
-            $scope.language = language;
-            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
+describe('pt-and-com-setting-controller', function () {
+    var $scope, ptAndComSettingService;
 
-            //// Action
-            $scope.updatePtAndComSetting = function () {
-                if ($scope.isEditPresetOnMember()) {
-                    return;
-                }
+    beforeEach(module('fanex.liveCasinoSetting'));
 
-                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
-            };
+    beforeEach(inject(function ($rootScope, $controller) {
+        $scope = $rootScope.$new();
 
-            $scope.updatePresetOnMember = function (isUpdate) {
-                $scope.ptAndComSetting.PositionTaking.UpdateAllMembers = isUpdate;
-                if ($scope.$parent.isUpdateAllSetting) {
-                    $scope.$parent.updateAllSetting();
-                }
-                else {
-                    ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
-                }
-            };
-        }
-        ]);
-}
-else {
-    alert('Missing fanex.liveCasinoSetting!')
-}
+        ptAndComSettingService = {
+            updatePtAndComSetting: function () { return; }
+        };
+
+        spyOn(ptAndComSettingService, 'updatePtAndComSetting');
+
+        $controller('PtAndComSettingController',
+        {
+            $scope: $scope,
+            PtAndComSettingService: ptAndComSettingService
+        });
+    }));
+
+    it('should show popup when super change from is auto preset to not', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.PtAndComSetting.PositionTaking = {
+            Is3: true
+        };
+
+        //// Act
+        $scope.ptAndComSetting.PositionTaking.Is3 = false;
+        var isEditOnMember = $scope.isEditPresetOnMember();
+        //// Assert
+
+        expect(isEditOnMember).toEqual(true);
+    });
+
+    it('should not show popup when super change from not auto to take auto', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.PtAndComSetting.PositionTaking = {
+            Is3: false
+        };
+
+        //// Act
+        $scope.ptAndComSetting.PositionTaking.Is3 = true;
+        var isEditOnMember = $scope.isEditPresetOnMember();
+        //// Assert
+
+        expect(isEditOnMember).toEqual(false);
+    });
+
+    it('should show popup when master change from is auto preset to not', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
+        custSetting.PtAndComSetting.PositionTaking = {
+            Im2: true
+        };
+
+        //// Act
+        $scope.ptAndComSetting.PositionTaking.Im2 = false;
+        var isEditOnMember = $scope.isEditPresetOnMember();
+        //// Assert
+
+        expect(isEditOnMember).toEqual(true);
+    });
+
+    it('should not show popup when master change from is not auto to take auto', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
+        custSetting.PtAndComSetting.PositionTaking = {
+            Im2: false
+        };
+
+        //// Act
+        $scope.ptAndComSetting.PositionTaking.Im2 = true;
+        var isEditOnMember = $scope.isEditPresetOnMember();
+        //// Assert
+
+        expect(isEditOnMember).toEqual(false);
+    });
+
+    it('should not show popup when form has no auto', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Member;
+
+        //// Act
+        var isEditOnMember = $scope.isEditPresetOnMember();
+        //// Assert
+        expect(isEditOnMember).toEqual(false);
+    });
+
+    it('should update setting', function () {
+        //// Act
+        $scope.updatePtAndComSetting();
+
+        //// Assert
+        expect(ptAndComSettingService.updatePtAndComSetting).toHaveBeenCalled();
+    });
+
+    it('should not update setting and show popup when update setting', function () {
+        //// Arrange
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.PtAndComSetting.PositionTaking = {
+            Is3: true
+        };
+
+        //// Act
+        $scope.updatePtAndComSetting();
+
+        //// Assert
+        expect(ptAndComSettingService.updatePtAndComSetting).not.toHaveBeenCalled();
+    });
+
+    it('should update setting after choose preset on member', function () {
+        //// Arrange 
+        $scope.$parent.isUpdateAllSetting = false;
+        var isUpdate = false;
+
+        //// Act
+        $scope.updatePresetOnMember(isUpdate);
+
+        //// Assert
+        expect(ptAndComSettingService.updatePtAndComSetting).toHaveBeenCalled();
+        expect($scope.ptAndComSetting.PositionTaking.UpdateAllMembers).toEqual(isUpdate);
+    });
+
+    it('should update all setting after choose preset on member', function () {
+        //// Arrange 
+        $scope.$parent.isUpdateAllSetting = true;
+        var isUpdate = true;
+        $scope.$parent.updateAllSetting = function () { return; }
+        spyOn($scope.$parent, 'updateAllSetting');
+
+        //// Act
+        $scope.updatePresetOnMember(isUpdate);
+
+        //// Assert
+        expect(ptAndComSettingService.updatePtAndComSetting).not.toHaveBeenCalled();
+        expect($scope.ptAndComSetting.PositionTaking.UpdateAllMembers).toEqual(isUpdate);
+    });
+});
