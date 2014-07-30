@@ -11,8 +11,19 @@
     public class GameType
     {
         public int Id { get; set; }
+        
         public string Name { get; set; }
+        
         public int BetTypeId { get; set; }
+        
         public List<StakeLevel> BettingLimit { get; set; }
+
+        public string CheckedStakeLevel
+        {
+            get
+            {
+                return string.Join(",", BettingLimit.Where(x => x.IsChecked).Select(x => x.Id.ToString()).ToArray());
+            }
+        }
     }
 }

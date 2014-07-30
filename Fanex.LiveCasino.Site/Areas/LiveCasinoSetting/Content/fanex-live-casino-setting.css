@@ -36,7 +36,6 @@ body
     color: White;
     background-color: Gray;
     padding-left: 10px;
-	
 }
 
 .edit-setting-livecs table, .edit-setting-livecs table tr, .edit-setting-livecs table td
@@ -55,16 +54,19 @@ body
     width: 25%;
 }
 
-.edit-setting-livecs .pt-setting {
-	clear: both;
+.edit-setting-livecs .pt-setting
+{
+    clear: both;
 }
 
-.edit-setting-livecs .pt-title {
-	position: relative;
-	height: 20px;
+.edit-setting-livecs .pt-title
+{
+    position: relative;
+    height: 20px;
 }
 
-.edit-setting-livecs .btn-save-partial {
+.edit-setting-livecs .btn-save-partial
+{
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -72,8 +74,8 @@ body
     background-repeat: no-repeat;
     background-color: transparent;
     display: inline-block;
-	position: absolute;
-	right: 2px;
+    position: absolute;
+    right: 2px;
 }
 
 
@@ -81,54 +83,30 @@ body
 	padding: 2px 0px 0px 4px;
 }
 
-/*Win Limit*/
-.edit-setting-livecs .cust-win-limit
-{
-    width: 100%;
-}
-
-.edit-setting-livecs .cust-win-limit td
-{
-    width: 25%;
-}
-
-.edit-setting-livecs .cust-win-limit .reset-limit
-{
-    width: 50%;
-}
-
-/*Game Setting*/
-.edit-setting-livecs .cust-game-setting
-{
-    width: 100%;
-}
-
-.edit-setting-livecs .cust-game-setting td
-{
-    width: 25%;
-}
-
-.edit-setting-livecs .cust-game-setting .bet-limit
-{
-    width: 75%;
-}
-
 /*PT Style*/
-.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th {
-	border: 1px solid gray;
-	border-collapse: collapse;
+.pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th
+{
+    border: 1px solid gray;
+    border-collapse: collapse;
 }
 
-.pt-setting tbody td, .pt-setting th {
-	text-align: center;
+.pt-setting tbody td, .pt-setting th
+{
+    text-align: center;
 }
 
-label.clearfix 
+label.clearfix
 {
     float: none;
     clear: both;
 }
-.pt-container .pt-title {
-	border-left: 1px solid gray;
-	border-right: 1px solid gray;
+.pt-container .pt-title
+{
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.win-limit .checkbox-inline
+{
+    padding-left: 19px;
 }

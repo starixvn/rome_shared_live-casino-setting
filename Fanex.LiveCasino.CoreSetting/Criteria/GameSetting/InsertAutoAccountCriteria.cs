@@ -25,7 +25,7 @@
 
         public int SignupBy { get; set; }
 
-        public int SignupForm { get; set; }
+        public int SignupFrom { get; set; }
 
         public string ModifyUsername { get; set; }
 

@@ -6,6 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
+    using RemotingRef;
 
     /// <summary>
     /// TODO: Update summary.
@@ -168,25 +169,42 @@
             });
         }
 
-        public List<GameType> GetGameSetting(ICriteria criteria)
+        public List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked)
         {
             var gameTypes = new List<GameType>();
             GameType current = null;
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                objDb.Query<GameType, StakeLevel, GameType>((g, s) =>
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                 {
-                    if (current == null || current.Id != g.Id)
+                    while (reader.Read())
                     {
-                        gameTypes.Add(g);
-                        current = g;
-                        current.BettingLimit = new List<StakeLevel>();
+                        var itemGameType = new GameType
+                        {
+                            Id = reader.ToInt("GameTypeID"),
+                            BetTypeId = reader.ToInt("IBCBetTypeID")
+                        };
+
+                        var itemStakeLevel = new StakeLevel
+                        {
+                            Id = reader.ToInt("StakeLevelID"),
+                            Range = reader.ToString("StakeLevelName"),
+                            IsChecked = hasChecked ? reader.ToBool("IsChecked") : false
+                        };
+
+                        if (current == null || current.Id != itemGameType.Id)
+                        {
+                            gameTypes.Add(itemGameType);
+                            current = itemGameType;
+                            current.BettingLimit = new List<StakeLevel>();
+                        }
+
+                        current.BettingLimit.Add(itemStakeLevel);
                     }
-                    current.BettingLimit.Add(s);
-                    return current;
-                }, "StakeLevelID", criteria.GetSpParams());
+                }
             }
+
 
             return gameTypes;
         }

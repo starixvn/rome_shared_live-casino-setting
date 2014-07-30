@@ -56,6 +56,7 @@
         [HttpGet]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             return JavaScript(_settingService.GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
@@ -104,7 +105,9 @@
         {
             var custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
 
-            return Json(gameSetting);
+            var result = _settingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting);
+
+            return Json(result);
         }
 
         #endregion

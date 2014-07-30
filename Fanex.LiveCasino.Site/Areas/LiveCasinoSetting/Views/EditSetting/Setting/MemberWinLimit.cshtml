@@ -1,42 +1,36 @@
 ﻿@model SettingContext
-<div id="tblMaxWinLimit" 
+<div id="tblMaxWinLimit" class="pt-container col-xs-12"
     data-ng-controller="CustomerWinLimitController"
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit")">
-    <div class="">
-        Maximum Win Limit
-        <input type="button" value="Update Partial" data-ng-click="updateWinLimitSetting()" />
+    <div class="pt-title">
+        <span class="pt-title-text">Maximum Win Limit</span> <span data-ng-click="updateWinLimitSetting()"
+            class="btn-save-partial"></span>
     </div>
-    <table class="cust-win-limit ng-scope">
+    <table class="win-limit">
         <tbody>
-            <tr class="title">
-                <td colspan="3" class="center">
-                    Member Win Limit
-                </td>
-            </tr>
             <tr>
-                <td class="right bold">
+                <td class="col-xs-3 right bold">
                     Maximum Win
                 </td>
-                <td class="left ng-binding">
+                <td class="col-xs-4">
                     <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
-                        data-ng-model="maxWinLimitModel.Max" style="width: 80px">
+                        data-ng-model="maxWinLimitModel.Max">
                     </select>
                     <span>&nbsp;on given credit</span>
                 </td>
-                <td class="reset-limit">
-                    <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset"
-                        style="vertical-align: middle; margin-bottom: 3px;" checked="checked">
-                    <label for="dailyAutoReset">
+                <td class="col-xs-6">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset">
                         Daily auto reset limit (at 12 noon GMT+8)</label>
                 </td>
             </tr>
             @if (Model.TargetRoleId == (int)CustRole.Member)
             { 
                 <tr>
-                    <td class="right bold">
+                    <td class="col-xs-3 right bold">
                         Current Win Limit
                     </td>
-                    <td class="left ng-binding">
+                    <td class="col-xs-3 left ng-binding">
                         <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
                             Click to view Current Win Limit
                         </div>
@@ -46,7 +40,7 @@
                             Unlimited</div>
                         <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">of {{winLimit}}</span>
                     </td>
-                    <td class="reset-limit">
+                    <td class="col-xs-3">
                     </td>
                 </tr>
             }

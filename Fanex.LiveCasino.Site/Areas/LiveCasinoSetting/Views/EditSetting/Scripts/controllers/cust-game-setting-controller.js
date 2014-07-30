@@ -9,6 +9,16 @@ if (fanex.liveCasinoSetting) {
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
 
             $scope.updateGameSetting = function () {
+                if (custSetting.SettingContext.TargetRoleId == fanex.liveCasinoSetting.custRole.Member) {
+                    for (var i = 0; i < $scope.gameSetting.length; i++) {
+                        var gameType = $scope.gameSetting[i];
+                        for (var j = 0; j < gameType.BettingLimit.length; j++) {
+                            var bettingLimit = gameType.BettingLimit[j];
+                            bettingLimit.IsChecked = bettingLimit.Id == gameType.CheckedStakeLevel;
+                        }
+                    }
+                }
+
                 customerGameSettingService.updateGameSetting($scope.gameSetting);
             }
         }

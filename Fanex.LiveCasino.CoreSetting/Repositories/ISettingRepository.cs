@@ -30,7 +30,7 @@
 
         #region Game Setting
 
-        List<GameType> GetGameSetting(ICriteria criteria);
+        List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked);
 
         #endregion
     }

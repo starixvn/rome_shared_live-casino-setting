@@ -1,39 +1,48 @@
 ﻿@model SettingContext
-<div id="tblGameSetting" data-ng-controller="CustGameSettingController" data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSetting")">
+<div id="tblGameSetting" class="pt-container col-xs-12" 
+    data-ng-controller="CustGameSettingController" 
+    data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSetting")">
     <div class="pt-title">
-        Game Setting
-        <input type="button" value="Update Partial" data-ng-click="updateGameSetting()" />
+        <span class="pt-title-text">Game Setting</span> <span data-ng-click="updateGameSetting()"
+            class="btn-save-partial"></span>
     </div>
-    <table class="cust-game-setting ng-scope">
-        <tr class="title">
-            <td colspan="4" class="center">
-                Game Setting
-            </td>
-        </tr>
-        <tr>
-            <td class="right bold">
-                Game Type
-            </td>
-            <td class="left bold bet-limit">
-                Betting Limit
-            </td>
-        </tr>
-        <tr data-ng-repeat="item in gameSetting">
-            <td class="right">
-                {{item.Name}}
-            </td>
-            <td class="bet-limit">
-                <span data-ng-repeat="betLimitItem in item.BettingLimit">
-                    <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
-                    <label class="checkbox-inline">
-                        <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-show="betLimitItem.IsChecked"
-                            data-ng-model="betLimitItem.IsChecked" checked="checked" />
-                        <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-show="!betLimitItem.IsChecked"
-                            data-ng-model="betLimitItem.IsChecked" />
-                        {{betLimitItem.Range}}
-                    </label>
-                </span>
-            </td>
-        </tr>
+    <table class="game-setting col-xs-12">
+        <thead>
+            <tr>
+                <td class="col-xs-3 right bold">
+                    Game Type
+                </td>
+                <td class="col-xs-9 left bold">
+                    Betting Limit
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="item in gameSetting">
+                <td class="right">
+                    {{item.Name}}
+                </td>
+                <td>
+                    <span data-ng-repeat="betLimitItem in item.BettingLimit">
+                        <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                        @if (Model.TargetRoleId != (int)CustRole.Member)
+                        {
+                            <label class="checkbox-inline">
+                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                        else
+                        { 
+                            <label class="radio-inline">
+                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{item.Name}}" data-ng-model="item.CheckedStakeLevel"
+                                    value="{{betLimitItem.Id}}" />
+                                {{betLimitItem.Range}}
+                            </label>
+                        }
+                    </span>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>

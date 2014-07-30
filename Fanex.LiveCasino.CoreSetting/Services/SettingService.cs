@@ -57,6 +57,7 @@
                 };
 
             ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
+
             //UpdateLiveCasinoStatusSuccess
             if (updateResult.Code.ToString() == "0")
             {
@@ -340,7 +341,7 @@
                 Site = site
             };
 
-            return _settingRepository.GetGameSetting(criteria);
+            return _settingRepository.GetGameSetting(criteria, false);
         }
 
         public List<GameType> GetGameSettingByCustomerId(int custId)
@@ -350,7 +351,7 @@
                 CustId = custId
             };
 
-            return _settingRepository.GetGameSetting(criteria);
+            return _settingRepository.GetGameSetting(criteria, true);
         }
 
         public ICommandResult InsertAutoAccount(SettingContext settingContext)
@@ -366,7 +367,7 @@
                 RoleId = settingContext.TargetRoleId,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupForm = InsertFormId,
+                SignupFrom = InsertFormId,
                 ModifyUsername = settingContext.UserName,
                 Username = settingContext.TargetUsername
             };
@@ -387,7 +388,7 @@
                RoleId = settingContext.TargetRoleId,
                SignupIp = settingContext.IP,
                SignupBy = settingContext.UserIdDoAction,
-               SignupForm = InsertFormId,
+               SignupFrom = InsertFormId,
                ModifyUsername = settingContext.UserName,
                Username = settingContext.TargetUsername,
                CustSite = settingContext.SiteName
@@ -403,10 +404,17 @@
                 CustId = custId,
                 RoleId = roleId,
                 GameTypeId = gameType.Id,
-                StakeLevelList = string.Join(",", gameType.BettingLimit.Select(x => x.Id.ToString()).ToArray())
+                StakeLevelList = gameType.CheckedStakeLevel
             };
 
-            return _settingRepository.InsertOrUpdate(criteria);
+            var result = (CommandResultBase)_settingRepository.InsertOrUpdate(criteria);
+
+            if (string.IsNullOrWhiteSpace(result.Code))
+            {
+                result.Message = gameType.Id.ToString();
+            }
+
+            return result;
         }
 
         public List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
@@ -428,11 +436,11 @@
             {
                 ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
 
-                if (resultInsertAccount.IsSuccessful)
+                if (string.IsNullOrWhiteSpace(resultInsertAccount.Code))
                 {
                     var logData = new LogManualInsertAccount
                     {
-                        Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
+                        Action = GetInsertManualLogAction(settingContext.TargetRoleId),
                         AgentId = settingContext.AgentId,
                         CustId = settingContext.TargetCustId,
                         CustUserName = settingContext.TargetUsername,
@@ -448,28 +456,38 @@
                     };
 
                     WriteLog(logData);
-
-                    List<ICommandResult> resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
-
-                    var successResultUpdateStakeLevel = resultUpdateStakeLevels.Where(x => x.IsSuccessful).FirstOrDefault();
-                    if (successResultUpdateStakeLevel != null)
-                    {
-                        if (settingContext.IsEdittingSuper)
-                        {
-                            UpdateLiveCasinoStatus(settingContext, custInfo);
-                        }
-
-                        if (!custInfo.IsSyncLiveCasino)
-                        {
-                            UpdateSyncLiveCasino(settingContext, true);
-                        }
-                    }
-
-                    return resultUpdateStakeLevels;
                 }
             }
 
-            return new List<ICommandResult>();
+            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
+
+            List<ICommandResult> resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
+
+            var successResultUpdateStakeLevel = resultUpdateStakeLevels.Where(x => string.IsNullOrWhiteSpace(x.Code));
+            if (successResultUpdateStakeLevel.Any())
+            {
+                if (settingContext.IsEdittingSuper)
+                {
+                    UpdateLiveCasinoStatus(settingContext, custInfo);
+                }
+
+                if (!custInfo.IsSyncLiveCasino)
+                {
+                    UpdateSyncLiveCasino(settingContext, true);
+                }
+
+                foreach (var itemResult in successResultUpdateStakeLevel)
+                {
+                    var newGameType = gameTypes.Where(x => x.Id.ToString() == itemResult.Message).FirstOrDefault();
+                    if (newGameType != null)
+                    {
+                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
+                        WriteLogUpdateStakeLevel(settingContext, oldGameType, newGameType);
+                    }
+                }
+            }
+
+            return resultUpdateStakeLevels;
         }
 
         #endregion Game Setting
@@ -559,7 +577,6 @@
                     {
                         betLimitItem.IsChecked = true;
                     }
-                    gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), "E");
                 }
             }
             else if (!settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
@@ -569,6 +586,11 @@
             else
             {
                 gameSettings = GetGameSettingByCustomerId(settingContext.TargetCustId);
+            }
+
+            foreach (var gameSettingItem in gameSettings)
+            {
+                gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), "E");
             }
 
             return gameSettings;
@@ -618,6 +640,29 @@
             return resultDetails;
         }
 
+        private LogActions GetInsertManualLogAction(int roleId)
+        {
+            LogActions logAction;
+
+            switch (roleId)
+            {
+                case (int)CustRole.Super:
+                    logAction = LogActions.ManualInsert_Super;
+                    break;
+                case (int)CustRole.Master:
+                    logAction = LogActions.ManualInsert_Master;
+                    break;
+                case (int)CustRole.Agent:
+                    logAction = LogActions.ManualInsert_Agent;
+                    break;
+                default:
+                    logAction = LogActions.ManualInsert_Member;
+                    break;
+            }
+
+            return logAction;
+        }
+
         private LogActions GetUpdateStakeLevelLogAction(int roleId)
         {
             LogActions logAction;
@@ -639,6 +684,26 @@
             }
 
             return logAction;
+        }
+
+        private void WriteLogUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew)
+        {
+            var log = new LogUpdateStakeLevel
+            {
+                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
+                CustId = settingContext.TargetCustId,
+                SignUpIp = settingContext.IP,
+                Language = "E",
+                UserId = settingContext.UserIdDoAction,
+                RoleId = settingContext.TargetRoleId,
+                NewGameType = gameTypeNew,
+                OldGameType = gameTypeOld
+            };
+
+            if (gameTypeNew.CheckedStakeLevel != gameTypeOld.CheckedStakeLevel)
+            {
+                WriteLog(log);
+            }
         }
 
         #endregion Private Methods

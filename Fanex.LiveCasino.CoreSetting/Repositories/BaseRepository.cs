@@ -20,9 +20,17 @@
                 var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
                 objDb.ExecuteNonQuery(parameters);
 
-                ICommandResult result = new CommandResultBase(parameters["errcode"].ToString(), parameters["errmsg"].ToString());
+                var outParameters = objDb.GetOuputParams();
+                if (outParameters != null)
+                {
+                    return new CommandResultBase
+                    {
+                        Code = outParameters.Contains("errcode") ? outParameters["errcode"].ToString() : string.Empty,
+                        Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty
+                    };
+                }
 
-                return result;
+                return new CommandResultBase();
             }
         }
 
