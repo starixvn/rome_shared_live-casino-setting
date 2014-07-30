@@ -3,7 +3,6 @@
         'use strict';
         var me = this;
 
-        me.ptAndComSetting = custSetting.PtAndComSetting;
         me.updatePtAndComSetting = function (ptAndComSetting, custSettingScope) {
             var ptAndComUpdateModel = {
                 settingContext: custSetting.SettingContext,

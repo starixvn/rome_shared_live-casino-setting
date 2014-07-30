@@ -1,0 +1,3 @@
+{
+    "CodeCoverageExcludes": ["*\\angular.js", "*\\jquery-2.1.1.js", "*\\angular-mocks.js"]
+} 

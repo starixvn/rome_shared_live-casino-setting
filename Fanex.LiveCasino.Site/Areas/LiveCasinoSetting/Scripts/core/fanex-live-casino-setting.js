@@ -30,7 +30,7 @@ fanex.roundNumber = function (number, decimals) {
 fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
     var options = [];
     decimals = decimals || 2;
-    to = fanex.roundNumber(to + gap, decimals);
+    to = fanex.roundNumber(to, decimals);
 
     if (current < from) {
         options.push({
@@ -39,7 +39,7 @@ fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
         });
     }
 
-    for (var i = from; i < to; i = fanex.roundNumber(i + gap, decimals)) {
+    for (var i = from; i <= to; i = fanex.roundNumber(i + gap, decimals)) {
         options.push({
             id: i,
             value: i
