@@ -36,7 +36,8 @@
             int roleId = 0,
             int targetCustId = 0,
             int targetRoleId = 0,
-            int adminId = 0
+            int adminId = 0,
+            int formType = (int)FormType.Edit
             )
         {
             var settingContext = new SettingContext
@@ -45,7 +46,7 @@
                     RoleId = roleId,
                     TargetCustId = targetCustId,
                     TargetRoleId = targetRoleId,
-                    FormType = FormType.Edit,
+                    FormType = (FormType)formType,
                     AdminId = adminId
                 };
 

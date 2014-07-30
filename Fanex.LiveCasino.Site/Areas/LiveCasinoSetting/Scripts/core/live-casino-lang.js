@@ -1,7 +1,7 @@
 ﻿var language = language || {};
 
 language.defaultCode = 'en-US';
-language.code = 'en-US';
+language.code = language.defaultCode;
 
 language.setLanguageCode = function (languageCode) {
     language.code = languageCode;

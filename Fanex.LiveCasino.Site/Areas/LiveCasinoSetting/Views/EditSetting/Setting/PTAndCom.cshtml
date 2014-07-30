@@ -7,7 +7,7 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtAndComSetting")">
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblPositionTakingCommission</span>
-        <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial"></span>
+        <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial" data-ng-if="!isReadOnly"></span>
     </div>
     @switch ((CustRole)Model.TargetRoleId)
     {

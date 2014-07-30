@@ -76,6 +76,11 @@ body
 	right: 2px;
 }
 
+
+.edit-setting-livecs .update-setting {
+	padding: 2px 0px 0px 4px;
+}
+
 /*Win Limit*/
 .edit-setting-livecs .cust-win-limit
 {

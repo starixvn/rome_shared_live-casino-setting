@@ -125,6 +125,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.zh-CN.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\LiveCasinoLang.zh-TW.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.zh-TW.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
@@ -145,7 +150,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LiveCasinoLang.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-TW.resx" />
+    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-TW.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang.zh-TW.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

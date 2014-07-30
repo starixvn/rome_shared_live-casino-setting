@@ -3,12 +3,13 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}",
+        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}",
         Model.CustId,
         Model.RoleId,
         Model.AdminId,
         Model.TargetCustId,
-        Model.TargetRoleId);
+        Model.TargetRoleId,
+        Model.FormType);
 }
 @section modeldata
 {
@@ -21,7 +22,7 @@
     style="display:none;"
     class="edit-setting-livecs">
 
-    <div id="updatedResult" class="updated-result  col-xs-12" data-ng-show="commandResults.length > 0">
+    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
         <p data-ng-repeat="result in commandResults" data-ng-class="{'bg-success': result.Code <= 0,'bg-danger': result.Code > 0}">
             {{result.Message}}
         </p>
@@ -31,8 +32,8 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
-    <div class="update-setting">
-        <input type="button" data-ng-click="validateAndUpdateSetting()" value="Update" />
+    <div class="update-setting col-xs-12">
+        <input type="button" class="btn btn-primary btn-sm" data-ng-click="validateAndUpdateSetting()" value="Update" />
     </div>
 </div>
 @section scripts

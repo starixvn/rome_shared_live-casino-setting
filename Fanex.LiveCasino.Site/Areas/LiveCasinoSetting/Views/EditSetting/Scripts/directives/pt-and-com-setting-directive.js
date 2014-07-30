@@ -2,7 +2,7 @@
 
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,
@@ -26,7 +26,7 @@ if (fanex.liveCasinoSetting) {
     ]);
 
     fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,
@@ -87,7 +87,7 @@ if (fanex.liveCasinoSetting) {
     ]);
 
     fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,
@@ -144,7 +144,7 @@ if (fanex.liveCasinoSetting) {
     ]);
 
     fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,
@@ -161,7 +161,7 @@ if (fanex.liveCasinoSetting) {
     ]);
 
     fanex.liveCasinoSetting.directive('superEditMemberPt', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,
@@ -177,7 +177,7 @@ if (fanex.liveCasinoSetting) {
     ]);
 
     fanex.liveCasinoSetting.directive('masterEditMemberPt', [
-        function (settingService) {
+        function () {
             return {
                 restrict: 'E',
                 replace: true,

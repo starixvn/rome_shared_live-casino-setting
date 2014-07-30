@@ -30,7 +30,7 @@ fanex.roundNumber = function (number, decimals) {
 fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
     var options = [];
     decimals = decimals || 2;
-    to = fanex.roundNumber(to + gap);
+    to = fanex.roundNumber(to + gap, decimals);
 
     if (current < from) {
         options.push({
@@ -64,7 +64,8 @@ fanex.liveCasinoSetting = angular.module('fanex.liveCasinoSetting', []);
 
 fanex.liveCasinoSetting.formType = {
     Add: 0,
-    Edit: 1
+    Edit: 1,
+    ReadOnly: 2
 };
 
 fanex.liveCasinoSetting.custRole = {
