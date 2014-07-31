@@ -65,13 +65,10 @@
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
             //// Check what setting will be update
-            ResultList resultList = new ResultList();
-            if (custSetting.CustInfo != null)
-            {
-                resultList.CommandResults.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
-            }
+            ICommandResults resultList = new CommandResults();
 
-            resultList.CommandResults.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
+            resultList.Results.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
+            resultList.Results.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
 
             return Json(resultList);
         }
@@ -118,9 +115,9 @@
             settingContext.Language = "E";
             settingContext.IP = HttpContext.Request.UserHostAddress;
 
-            ResultList updateResults = new ResultList
+            ICommandResults updateResults = new CommandResults
                 {
-                    CommandResults = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
+                    Results = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
                 };
 
             return Json(updateResults);

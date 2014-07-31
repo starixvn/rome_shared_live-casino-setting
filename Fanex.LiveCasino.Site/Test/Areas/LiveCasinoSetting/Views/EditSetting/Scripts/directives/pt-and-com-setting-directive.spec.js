@@ -78,7 +78,7 @@ describe('superEditMemberPt', function () {
 
     beforeEach(function () {
         custSetting.PtAndComSetting.PositionTaking = {
-            S1Min: 0.0000,
+            S1Min: 0.1,
             S1Max: 0.2500,
             S4: 0.9900,
             S1: 0.1200,
@@ -93,8 +93,9 @@ describe('superEditMemberPt', function () {
     });
 
     it('should assign right range', function () {
-        expect($scope.superPTOptions.length).toEqual(26);
+        expect($scope.superPTOptions.length).toEqual(16);
         expect($scope.superPTOptions[0].value).toEqual(0.25);
+        expect($scope.superPTOptions[$scope.superPTOptions.length - 1].value).toEqual(0.1);
         expect($scope.superAutoPTOptions.length).toEqual(100);
         expect($scope.superAutoPTOptions[0].value).toEqual(0.99);
     });
@@ -136,5 +137,47 @@ describe('masterEditMemberPt', function () {
         expect($scope.masterPTOptions[$scope.masterPTOptions.length - 1].value).toEqual(0.1);
         expect($scope.masterAutoPTOptions.length).toEqual(75);
         expect($scope.masterAutoPTOptions[0].value).toEqual(0.74);
+    });
+});
+
+describe('agentEditMemberPtAndCom', function () {
+    var $compile, $scope, $templateCache;
+
+    // Load the myApp module, which contains the directive
+    beforeEach(module('fanex.liveCasinoSetting'));
+
+    beforeEach(inject(function (_$compile_, _$rootScope_, _$templateCache_) {
+        $compile = _$compile_;
+        $scope = _$rootScope_;
+        $templateCache = _$templateCache_;
+        $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm', '<template-goes-here />');
+    }));
+
+    beforeEach(function () {
+        custSetting.PtAndComSetting.PositionTaking = {
+            A2: 0.3300,
+            A1: 0.3200,
+            N2: 0.2500
+        };
+
+        custSetting.PtAndComSetting.Commission = {
+            "Value": 0.006,
+            "Upline": {
+                "Value": 0.0065
+            }
+        };
+
+        var element = $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
+        $scope.$digest();
+    });
+
+    it('should assign right range', function () {
+        //// Then agent on member range in [0.35:0.33]
+        expect($scope.agentPresetOptions.length).toEqual(9);
+        expect($scope.agentPresetOptions[0].value).toEqual(0.33);
+        expect($scope.agentPresetOptions[$scope.agentPresetOptions.length - 1].value).toEqual(0.25);
+        //// Then member commission in []
+        expect($scope.memberCommissionOptions.length).toEqual(14);
+        expect($scope.memberCommissionOptions[0].value).toEqual(0.0065);
     });
 });

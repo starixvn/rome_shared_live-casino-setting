@@ -14,10 +14,10 @@ if (fanex.liveCasinoSetting) {
                 data: custSettingForUpdate
             }).
             success(function (result) {
-                scope.commandResults = result.CommandResults;
+                scope.commandResults = result.Results;
                 if (result.IsSuccessful) {
                     $timeout(function () {
-                        $window.localtion.href = $window.location.href;
+                        //$window.localtion.href = $window.location.href;
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             }).

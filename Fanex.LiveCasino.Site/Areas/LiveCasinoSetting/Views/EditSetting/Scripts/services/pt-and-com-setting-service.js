@@ -16,7 +16,7 @@
                 data: ptAndComUpdateModel
             }).
             success(function (result) {
-                custSettingScope.commandResults = result.CommandResults;
+                custSettingScope.commandResults = result.Results;
                 if (result.IsSuccessful) {
                     $timeout(function () {
                         custSettingScope.commandResults = [];
