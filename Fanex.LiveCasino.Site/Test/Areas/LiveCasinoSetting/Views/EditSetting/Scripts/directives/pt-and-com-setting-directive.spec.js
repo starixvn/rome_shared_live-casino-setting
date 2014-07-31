@@ -1,197 +1,140 @@
-﻿/* File Created: July 23, 2014 */
+﻿/// <reference path="../../../../../../custSetting.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../angular-mocks.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
+/// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
 
-if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-super.htm',
-                link: function ($scope, $element) {
-                    var currentPt = $scope.ptAndComSetting.PositionTaking,
-                        currentCom = $scope.ptAndComSetting.Commission;
-                    $scope.superMaxOptions = fanex.createOptionsFromRange(currentPt.S4, 0, currentPt.L4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.superMinOptions = fanex.createOptionsFromRange(currentPt.N4, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.superCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
-                    $scope.updateSuperMax = function () {
-                        if (currentPt.N4 > currentPt.S4) {
-                            currentPt.N4 = currentPt.S4;
-                        }
-                        $scope.superMinOptions = fanex.createOptionsFromRange(currentPt.N4, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    };
-                }
-            };
-        }
-    ]);
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" />
+/// <reference path="../../../../Scripts/core/live-casino-lang.spec.js" />
 
-    fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-master.htm',
-                link: function ($scope, $element) {
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/pt-and-com-setting-controller.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
+/// <reference path="../controllers/pt-and-com-setting-controller.spec.js" />
 
-                    var currentPt = $scope.ptAndComSetting.PositionTaking,
-                        currentCom = $scope.ptAndComSetting.Commission;
-                    var actions = {
-                        computeMinM3: function () {
-                            return currentPt.N3;
-                        },
-                        computeMaxM3: function () {
-                            if (currentPt.Is3) {
-                                return currentPt.S4;
-                            }
-                            else {
-                                return fanex.roundNumber(currentPt.S4 - currentPt.S3);
-                            }
-                        }
-                    };
-                    // PT
-                    $scope.superPresetOptions = fanex.createOptionsFromRange(currentPt.S3, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.superAutoPresetOptions = fanex.createOptionsFromRange(currentPt.Us3, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterMaxOptions = fanex.createOptionsFromRange(currentPt.M3, currentPt.N3, actions.computeMaxM3(), fanex.liveCasinoSetting.PT_INTERVAL);
-                    // Com
-                    $scope.masterCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
-                    //// Onchange functions
-                    $scope.updateSuperPreset = function () {
-                        var maxOfMasterMax = actions.computeMaxM3();
-                        if (currentPt.M3 > maxOfMasterMax) {
-                            currentPt.M3 = maxOfMasterMax;
-                        }
+/// <reference path="../services/pt-and-com-setting-service.spec.js" />
 
-                        if (currentPt.M3 < currentPt.N3)
-                        {
-                            currentPt.M3 = currentPt.N3;
-                        }
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.js" />
 
 
-                        $scope.masterMaxOptions = fanex.createOptionsFromRange(currentPt.M3, currentPt.N3, maxOfMasterMax, fanex.liveCasinoSetting.PT_INTERVAL);
-                        $scope.updateMasterMax();
-                    };
+describe('editSuperPtAndCom', function () {
+    var $compile, $scope, $templateCache;
 
-                    $scope.updateMasterMax = function () {
-                        if (currentPt.N3 > currentPt.M3) {
-                            currentPt.N3 = currentPt.M3;
-                        }
+    // Load the myApp module, which contains the directive
+    beforeEach(module('fanex.liveCasinoSetting'));
 
-                        $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                    };
+    beforeEach(inject(function (_$compile_, _$rootScope_, _$templateCache_) {
+        $compile = _$compile_;
+        $scope = _$rootScope_;
+        $templateCache = _$templateCache_;
+        $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-super.htm', '<template-goes-here />');
+    }));
 
-                }
-            };
-        }
-    ]);
+    beforeEach(function () {
+        custSetting.PtAndComSetting.PositionTaking = {
+            S4: 0.9900,
+            L4: 1.0,
+            N4: 0.3900
+        };
+        var element = $compile("<edit-super-pt-and-com></edit-super-pt-and-com>")($scope);
+        $scope.$digest();
+    });
 
-    fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-agent.htm',
-                link: function ($scope, $element) {
+    it('should change min range when max change greater than min', function () {
+        //// When update S4 to 0.6
+        $scope.ptAndComSetting.PositionTaking.S4 = 0.6;
+        $scope.updateSuperMax();
 
-                    var currentPt = $scope.ptAndComSetting.PositionTaking,
-                        currentCom = $scope.ptAndComSetting.Commission;
-                    var actions = {
-                        computeMaxA2: function () {
-                            if (currentPt.Im2) {
-                                return currentPt.M3;
-                            }
-                            else {
-                                return fanex.roundNumber(currentPt.M3 - currentPt.M2);
-                            }
-                        }
-                    };
-                    // PT
-                    $scope.masterPresetOptions = fanex.createOptionsFromRange(currentPt.M2, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterAutoPresetOptions = fanex.createOptionsFromRange(currentPt.Um2, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, actions.computeMaxA2(), fanex.liveCasinoSetting.PT_INTERVAL);
-                    // Com
-                    $scope.agentCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
-                    //// Onchange functions
-                    $scope.updateMasterPreset = function () {
-                        var maxOfAgentMax = actions.computeMaxA2();
-                        if (currentPt.A2 > maxOfAgentMax) {
-                            currentPt.A2 = maxOfAgentMax;
-                        }
+        //// Then change range of S3 in [0 : 0.6]
+        expect($scope.ptAndComSetting.PositionTaking.N4).toEqual(0.39);
+        expect($scope.superMinOptions.length).toEqual(61);
+        expect($scope.superMinOptions[0].value).toEqual(0.6);
+    });
 
-                        if (currentPt.A2 < currentPt.N2) {
-                            currentPt.A2 = currentPt.N2;
-                        }
+    it('should change min range and min when updata max lower than min', function () {
+        //// When Update S4 to 0.3
+        $scope.ptAndComSetting.PositionTaking.S4 = 0.3;
+        $scope.updateSuperMax();
 
+        //// Then S3 change to 0.3 and range of S3 in [0 - 0.3]
+        expect($scope.ptAndComSetting.PositionTaking.N4).toEqual(0.3);
+        expect($scope.superMinOptions.length).toEqual(31);
+        expect($scope.superMinOptions[0].value).toEqual(0.3);
+    });
+});
 
-                        $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, maxOfAgentMax, fanex.liveCasinoSetting.PT_INTERVAL);
-                        $scope.updateAgentMax();
-                    };
+describe('superEditMemberPt', function () {
+    var $compile, $scope, $templateCache;
 
-                    $scope.updateAgentMax = function () {
-                        if (currentPt.N2 > currentPt.A2) {
-                            currentPt.N2 = currentPt.A2;
-                        }
+    // Load the myApp module, which contains the directive
+    beforeEach(module('fanex.liveCasinoSetting'));
 
-                        $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
-                    };
+    beforeEach(inject(function (_$compile_, _$rootScope_, _$templateCache_) {
+        $compile = _$compile_;
+        $scope = _$rootScope_;
+        $templateCache = _$templateCache_;
+        $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm', '<template-goes-here />');
+    }));
 
-                }
-            };
-        }
-    ]);
+    beforeEach(function () {
+        custSetting.PtAndComSetting.PositionTaking = {
+            S1Min: 0.0000,
+            S1Max: 0.2500,
+            S4: 0.9900,
+            S1: 0.1200,
+            M1: 0.1300,
+            A1: 0.3200,
+            Us1: 0.1200,
+            Is3: true,
+            Is1: true
+        };
+        var element = $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
+        $scope.$digest();
+    });
 
-    fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm',
-                link: function ($scope, $element) {
-                    var currentPt = $scope.ptAndComSetting.PositionTaking,
-                        currentCom = $scope.ptAndComSetting.Commission;
-                    $scope.agentPresetOptions = fanex.createOptionsFromRange(currentPt.A1, currentPt.N2, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.memberCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
-                }
-            };
-        }
-    ]);
+    it('should assign right range', function () {
+        expect($scope.superPTOptions.length).toEqual(26);
+        expect($scope.superPTOptions[0].value).toEqual(0.25);
+        expect($scope.superAutoPTOptions.length).toEqual(100);
+        expect($scope.superAutoPTOptions[0].value).toEqual(0.99);
+    });
+});
 
-    fanex.liveCasinoSetting.directive('superEditMemberPt', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm',
-                link: function ($scope, $element) {
-                    var currentPt = $scope.ptAndComSetting.PositionTaking;
-                    $scope.superPTOptions = fanex.createOptionsFromRange(currentPt.S1, currentPt.S1Min, currentPt.S1Max, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.superAutoPTOptions = fanex.createOptionsFromRange(currentPt.S1, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                }
-            };
-        }
-    ]);
+describe('masterEditMemberPt', function () {
+    var $compile, $scope, $templateCache;
 
-    fanex.liveCasinoSetting.directive('masterEditMemberPt', [
-        function () {
-            return {
-                restrict: 'E',
-                replace: true,
-                controller: 'PtAndComSettingController',
-                templateUrl: '/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm',
-                link: function ($scope, $element) {
-                    var currentPt = $scope.ptAndComSetting.PositionTaking;
-                    $scope.masterPTOptions = fanex.createOptionsFromRange(currentPt.M1, currentPt.M1Min, currentPt.M1Max, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterAutoPTOptions = fanex.createOptionsFromRange(currentPt.M1, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                }
-            };
-        }
-    ]);
-}
-else {
-    alert('Missing fanex.liveCasinoSetting in directive declare!');
-}
+    // Load the myApp module, which contains the directive
+    beforeEach(module('fanex.liveCasinoSetting'));
+
+    beforeEach(inject(function (_$compile_, _$rootScope_, _$templateCache_) {
+        $compile = _$compile_;
+        $scope = _$rootScope_;
+        $templateCache = _$templateCache_;
+        $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm', '<template-goes-here />');
+    }));
+
+    beforeEach(function () {
+        custSetting.PtAndComSetting.PositionTaking = {
+            IsDisableAuto: false,
+            M1Max: 0.4200,
+            M1Min: 0.1,
+            M3: 0.7400,
+            M1: 0.1300,
+            A1: 0.3200,
+            Um1: 0.1300,
+            Im2: false,
+            Im1: true
+        };
+        var element = $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
+        $scope.$digest();
+    });
+
+    it('should assign right range', function () {
+        //// Then master on member range in [0.1:0.42], and auto in [0:0.74] 
+        expect($scope.masterPTOptions.length).toEqual(33);
+        expect($scope.masterPTOptions[0].value).toEqual(0.42);
+        expect($scope.masterPTOptions[$scope.masterPTOptions.length - 1].value).toEqual(0.1);
+        expect($scope.masterAutoPTOptions.length).toEqual(75);
+        expect($scope.masterAutoPTOptions[0].value).toEqual(0.74);
+    });
+});

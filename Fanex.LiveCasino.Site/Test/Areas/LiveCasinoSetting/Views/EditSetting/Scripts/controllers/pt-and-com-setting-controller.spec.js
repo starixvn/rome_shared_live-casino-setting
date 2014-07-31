@@ -20,7 +20,7 @@ describe('pt-and-com-setting-controller', function () {
         $scope = $rootScope.$new();
 
         ptAndComSettingService = {
-            updatePtAndComSetting: function () { return; }
+            updatePtAndComSetting: null
         };
 
         spyOn(ptAndComSettingService, 'updatePtAndComSetting');

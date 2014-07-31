@@ -1,7 +1,6 @@
 ﻿/* File Created: July 23, 2014 */
 
-if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
+fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -25,7 +24,7 @@ if (fanex.liveCasinoSetting) {
         }
     ]);
 
-    fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
+fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -63,8 +62,7 @@ if (fanex.liveCasinoSetting) {
                             currentPt.M3 = maxOfMasterMax;
                         }
 
-                        if (currentPt.M3 < currentPt.N3)
-                        {
+                        if (currentPt.M3 < currentPt.N3) {
                             currentPt.M3 = currentPt.N3;
                         }
 
@@ -86,7 +84,7 @@ if (fanex.liveCasinoSetting) {
         }
     ]);
 
-    fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
+fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -143,7 +141,7 @@ if (fanex.liveCasinoSetting) {
         }
     ]);
 
-    fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
+fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -160,7 +158,7 @@ if (fanex.liveCasinoSetting) {
         }
     ]);
 
-    fanex.liveCasinoSetting.directive('superEditMemberPt', [
+fanex.liveCasinoSetting.directive('superEditMemberPt', [
         function () {
             return {
                 restrict: 'E',
@@ -176,7 +174,7 @@ if (fanex.liveCasinoSetting) {
         }
     ]);
 
-    fanex.liveCasinoSetting.directive('masterEditMemberPt', [
+fanex.liveCasinoSetting.directive('masterEditMemberPt', [
         function () {
             return {
                 restrict: 'E',
@@ -191,7 +189,3 @@ if (fanex.liveCasinoSetting) {
             };
         }
     ]);
-}
-else {
-    alert('Missing fanex.liveCasinoSetting in directive declare!');
-}

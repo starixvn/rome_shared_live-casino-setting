@@ -54,6 +54,12 @@ var custSetting = {
             "Um1": 0.1300,
             "Im2": false,
             "Im1": true
+        },
+        "Commission": {
+            "Value": 0.0085,
+            "Upline": {
+                "Value": 0.0095
+            }
         }
     },
     "GameSetting": []
