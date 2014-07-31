@@ -29,7 +29,7 @@
 
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            return Custid > 0;
         }
     }
 }

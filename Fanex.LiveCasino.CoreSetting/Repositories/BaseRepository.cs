@@ -15,23 +15,25 @@
     {
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            var result = new CommandResultBase();
+
+            if (criteria.IsValid())
             {
-                var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
-                objDb.ExecuteNonQuery(parameters);
-
-                var outParameters = objDb.GetOuputParams();
-                if (outParameters != null)
+                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    return new CommandResultBase
-                    {
-                        Code = outParameters.Contains("errcode") ? outParameters["errcode"].ToString() : string.Empty,
-                        Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty
-                    };
-                }
+                    var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
+                    objDb.ExecuteNonQuery(parameters);
 
-                return new CommandResultBase();
+                    var outParameters = objDb.GetOuputParams();
+                    if (outParameters != null)
+                    {
+                        result.Code = outParameters.Contains("errcode") ? outParameters["errcode"].ToString() : string.Empty;
+                        result.Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty;
+                    }
+                }
             }
+
+            return result;
         }
 
         protected PtAndComSetting GetCommonSettingForEdit(
@@ -39,13 +41,17 @@
             Action<IDataReader, PtAndComSetting> mapSetting)
         {
             PtAndComSetting ptAndComSetting = new PtAndComSetting();
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+
+            if (criteria.IsValid())
             {
-                using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    while (reader.Read())
+                    using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                     {
-                        mapSetting(reader, ptAndComSetting);
+                        while (reader.Read())
+                        {
+                            mapSetting(reader, ptAndComSetting);
+                        }
                     }
                 }
             }

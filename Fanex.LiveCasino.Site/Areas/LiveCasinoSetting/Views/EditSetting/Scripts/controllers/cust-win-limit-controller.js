@@ -69,6 +69,13 @@ if (fanex.liveCasinoSetting) {
             $scope.updateWinLimitSetting = function () {
                 customerWinLimitService.updateWinLimitSetting($scope.maxWinLimitModel, $scope.$parent);
             }
+
+            $scope.getWinLimit = function () {
+                return {
+                    Max: $scope.maxWinLimitModel.Max.value,
+                    IsAutoReset: $scope.maxWinLimitModel.IsAutoReset
+                };
+            }
         }
         ]);
 }

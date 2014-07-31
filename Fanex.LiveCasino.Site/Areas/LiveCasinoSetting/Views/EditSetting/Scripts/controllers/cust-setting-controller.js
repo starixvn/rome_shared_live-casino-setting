@@ -25,12 +25,19 @@ if (fanex.liveCasinoSetting) {
 
             $scope.updateAllSetting = function () {
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope(),
-                    ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
+                    ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope(),
+                    winLimitScope = angular.element('[data-ng-controller="CustomerWinLimitController"]').scope(),
+                    gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+
+                var custInfo = custInfoScope.getCustInfo();
+                custInfo.MemberWinLimit = winLimitScope.getWinLimit();
+
 
                 var custSettingForUpdate = {
                     settingContext: custSetting.SettingContext,
-                    custInfo: custInfoScope.getCustInfo(),
-                    ptAndComSetting: ptAndComScope.ptAndComSetting
+                    custInfo: custInfo,
+                    ptAndComSetting: ptAndComScope.ptAndComSetting,
+                    gameSetting: gameSettingScope.gameSetting
                 };
 
                 customerSettingService.updateAllSetting(custSettingForUpdate, $scope);

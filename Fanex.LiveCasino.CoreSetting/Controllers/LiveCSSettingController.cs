@@ -70,6 +70,10 @@
             resultList.Results.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
             resultList.Results.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
 
+            _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit);
+
+            _settingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList());
+
             return Json(resultList);
         }
 

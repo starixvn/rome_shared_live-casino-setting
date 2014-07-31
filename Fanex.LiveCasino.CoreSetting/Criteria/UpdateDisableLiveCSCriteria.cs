@@ -8,7 +8,7 @@
     /// </summary>
     public class UpdateDisableLiveCSCriteria : CriteriaBase
     {
-        public int custid { get; set; }
+        public int CustId { get; set; }
 
         public bool DisabledLiveCS { get; set; }
 
@@ -29,7 +29,7 @@
 
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            return CustId > 0;
         }
     }
 }
