@@ -97,6 +97,10 @@
     <Compile Include="Enumerations\CustRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
+    <Compile Include="Models\Command\CommandResults.cs" />
+    <Compile Include="Models\Command\GameSettingCommandResult.cs" />
+    <Compile Include="Models\Command\ICommandResults.cs" />
+    <Compile Include="Models\Command\WinLimitCommandResult.cs" />
     <Compile Include="Models\Log\ILogData.cs" />
     <Compile Include="Models\Log\LogDataBase.cs" />
     <Compile Include="Models\Log\LogManualInsertAccount.cs" />

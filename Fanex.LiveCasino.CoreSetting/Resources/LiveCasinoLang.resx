@@ -255,4 +255,55 @@
   <data name="lblYes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="lblMaximumWinLimit" xml:space="preserve">
+    <value>Maximum Win Limit</value>
+  </data>
+  <data name="lblMaximumWin" xml:space="preserve">
+    <value>Maximum Win</value>
+  </data>
+  <data name="lblOnGivenCredit" xml:space="preserve">
+    <value>on given credit</value>
+  </data>
+  <data name="lblDailyAutoResetLimit" xml:space="preserve">
+    <value>Daily auto reset limit (at 12 noon GMT+8)</value>
+  </data>
+  <data name="lblClickToViewCurrentWinLimit" xml:space="preserve">
+    <value>Click to view Current Win Limit</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="lblCurrentWinLimit" xml:space="preserve">
+    <value>Current Win Limit</value>
+  </data>
+  <data name="lbl10X" xml:space="preserve">
+    <value>10X</value>
+  </data>
+  <data name="lbl3X" xml:space="preserve">
+    <value>3X</value>
+  </data>
+  <data name="lbl5X" xml:space="preserve">
+    <value>5X</value>
+  </data>
+  <data name="lblUnlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
+    <value>Updated Win Limit Successfully.</value>
+  </data>
+  <data name="lblBettingLimit" xml:space="preserve">
+    <value>Betting Limit</value>
+  </data>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>Game Setting</value>
+  </data>
+  <data name="lblGameType" xml:space="preserve">
+    <value>Game Type</value>
+  </data>
+  <data name="UpdateLiveCasinoGameSettingFail" xml:space="preserve">
+    <value>Updated Game Setting {0} fail because {1}.</value>
+  </data>
+  <data name="UpdateLiveCasinoGameSettingSuccess" xml:space="preserve">
+    <value>Updated {0} Game Setting Successfully.</value>
+  </data>
 </root>

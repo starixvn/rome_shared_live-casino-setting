@@ -6,6 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.NAP.Framework.Command;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -56,7 +57,7 @@
 
         CurrentMemberWin GetCurrentWinLimit(int custId);
 
-        ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
+        ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
 
         #endregion
 
@@ -72,9 +73,9 @@
 
         ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType);
 
-        List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes);
+        ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes);
 
-        List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+        ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
 
         #endregion
 

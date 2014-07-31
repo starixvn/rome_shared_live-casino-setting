@@ -3,42 +3,44 @@
     data-ng-controller="CustomerWinLimitController"
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit")">
     <div class="pt-title">
-        <span class="pt-title-text">Maximum Win Limit</span> <span data-ng-click="updateWinLimitSetting()"
+        <span class="pt-title-text">@LiveCasinoLang.lblMaximumWinLimit</span><span data-ng-click="updateWinLimitSetting()"
             class="btn-save-partial"></span>
     </div>
     <table class="win-limit">
         <tbody>
             <tr>
                 <td class="col-xs-3 right bold">
-                    Maximum Win
+                    @LiveCasinoLang.lblMaximumWin
                 </td>
                 <td class="col-xs-4">
                     <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
                         data-ng-model="maxWinLimitModel.Max">
                     </select>
-                    <span>&nbsp;on given credit</span>
+                    <span>&nbsp;@LiveCasinoLang.lblOnGivenCredit</span>
                 </td>
                 <td class="col-xs-6">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset">
-                        Daily auto reset limit (at 12 noon GMT+8)</label>
+                        <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset"
+                            data-ng-disabled="!maxWinLimitModel.UplineAutoReset">@LiveCasinoLang.lblDailyAutoResetLimit
+                    </label>
                 </td>
             </tr>
             @if (Model.TargetRoleId == (int)CustRole.Member)
             { 
                 <tr>
                     <td class="col-xs-3 right bold">
-                        Current Win Limit
+                        @LiveCasinoLang.lblCurrentWinLimit
                     </td>
                     <td class="col-xs-3 left ng-binding">
                         <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
-                            Click to view Current Win Limit
+                            @LiveCasinoLang.lblClickToViewCurrentWinLimit
                         </div>
                         <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
                             {{percent}} %</div>
                         <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
-                            Unlimited</div>
-                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">of {{winLimit}}</span>
+                            @LiveCasinoLang.lblUnlimited</div>
+                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">@LiveCasinoLang.lblOf
+                            {{winLimit}}</span>
                     </td>
                     <td class="col-xs-3">
                     </td>

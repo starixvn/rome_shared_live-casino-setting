@@ -1,15 +1,13 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using System.Linq;
-    using Fanex.LiveCasino.CoreSetting.Criteria;
+    using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
-    using Fanex.NAP.Framework.Command;
-    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
 
     /// <summary>
     /// TODO: Update summary.
@@ -91,7 +89,7 @@
         [HttpPost]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            ICommandResult result = _settingService.UpdateWinLimit(settingContext, model);
+            ICommandResults result = _settingService.UpdateWinLimit(settingContext, model);
 
             return Json(result);
         }

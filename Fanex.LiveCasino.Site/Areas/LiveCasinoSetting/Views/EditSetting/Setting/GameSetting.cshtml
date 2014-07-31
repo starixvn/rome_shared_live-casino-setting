@@ -3,17 +3,17 @@
     data-ng-controller="CustGameSettingController" 
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSetting")">
     <div class="pt-title">
-        <span class="pt-title-text">Game Setting</span> <span data-ng-click="updateGameSetting()"
+        <span class="pt-title-text">@LiveCasinoLang.lblGameSetting</span> <span data-ng-click="updateGameSetting()"
             class="btn-save-partial"></span>
     </div>
     <table class="game-setting col-xs-12">
         <thead>
             <tr>
                 <td class="col-xs-3 right bold">
-                    Game Type
+                    @LiveCasinoLang.lblGameType
                 </td>
                 <td class="col-xs-9 left bold">
-                    Betting Limit
+                    @LiveCasinoLang.lblBettingLimit
                 </td>
             </tr>
         </thead>

@@ -18,6 +18,7 @@
     using Fanex.NAP.Framework.Command;
     using Newtonsoft.Json;
     using RemotingRef;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -314,9 +315,9 @@
             });
         }
 
-        public ICommandResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        public ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            ICommandResult result = _settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
+            var result = (CommandResultBase)_settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.TargetCustId,
                 MaxWinLimit = memberWinLimit.Max,
@@ -326,7 +327,16 @@
                 Language = settingContext.Language
             });
 
-            return result;
+            var commandResults = new CommandResults();
+            var winLimitResult = new WinLimitCommandResult(result);
+
+            if (winLimitResult.IsSuccessful)
+            {
+                winLimitResult.Message = LiveCasinoLang.UpdatedWinLimitSuccessfully;
+            }
+            commandResults.Results.Add(winLimitResult);
+
+            return commandResults;
         }
 
         #endregion Win Limit
@@ -409,28 +419,35 @@
 
             var result = (CommandResultBase)_settingRepository.InsertOrUpdate(criteria);
 
-            if (string.IsNullOrWhiteSpace(result.Code))
+            var gameSettingResult = new GameSettingCommandResult(result);
+
+            if (gameSettingResult.IsSuccessful)
             {
-                result.Message = gameType.Id.ToString();
+                gameSettingResult.Message = gameType.Id.ToString();
+            }
+            else
+            {
+                var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), "E");
+                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, betType, gameSettingResult.Message);
             }
 
-            return result;
+            return gameSettingResult;
         }
 
-        public List<ICommandResult> UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
+        public ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
         {
-            var results = new List<ICommandResult>();
+            var results = new CommandResults();
 
             foreach (var itemGameType in gameTypes)
             {
                 var result = UpdateStakeLevel(custId, roleId, itemGameType);
-                results.Add(result);
+                results.Results.Add(result);
             }
 
             return results;
         }
 
-        public List<ICommandResult> UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        public ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             if (!custInfo.IsSyncLiveCasino)
             {
@@ -461,10 +478,9 @@
 
             List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
 
-            List<ICommandResult> resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
+            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
 
-            var successResultUpdateStakeLevel = resultUpdateStakeLevels.Where(x => string.IsNullOrWhiteSpace(x.Code));
-            if (successResultUpdateStakeLevel.Any())
+            if (resultUpdateStakeLevels.IsSuccessful)
             {
                 if (settingContext.IsEdittingSuper)
                 {
@@ -476,13 +492,18 @@
                     UpdateSyncLiveCasino(settingContext, true);
                 }
 
+                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
+
                 foreach (var itemResult in successResultUpdateStakeLevel)
                 {
-                    var newGameType = gameTypes.Where(x => x.Id.ToString() == itemResult.Message).FirstOrDefault();
+                    var gameSettingResult = (GameSettingCommandResult)itemResult;
+                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
                     if (newGameType != null)
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
                         WriteLogUpdateStakeLevel(settingContext, oldGameType, newGameType);
+
+                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), "E"));
                     }
                 }
             }

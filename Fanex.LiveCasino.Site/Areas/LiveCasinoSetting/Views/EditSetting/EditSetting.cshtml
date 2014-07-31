@@ -23,7 +23,7 @@
     class="edit-setting-livecs">
 
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
-        <p data-ng-repeat="result in commandResults" data-ng-class="{'bg-success': result.Code <= 0,'bg-danger': result.Code > 0}">
+        <p data-ng-repeat="result in commandResults" data-ng-class="{'bg-success': result.Code <= 0|| result.Code == '0','bg-danger': result.Code > 0}">
             {{result.Message}}
         </p>
     </div>

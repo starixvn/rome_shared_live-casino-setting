@@ -1,21 +1,30 @@
 ﻿/* File Created: July 21, 2014 */
 
 if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', function ($http) {
+    fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', '$timeout', function ($http, $timeout) {
         'use strict';
         var $this = this;
 
-        $this.updateGameSetting = function (gameSetting) {
+        $this.updateGameSetting = function (gameSetting, custSettingScope) {
             var gameSettingModel = {
                 settingContext: custSetting.SettingContext,
                 gameSetting: gameSetting
             };
 
-            return $http({
+            $http({
                 method: 'POST',
                 url: $('#tblGameSetting').data('update-href'),
                 headers: { 'Content-Type': 'application/json' },
                 data: gameSettingModel
+            }).success(function (result) {
+                custSettingScope.commandResults = result.Results;
+                if (result.IsSuccessful) {
+                    $timeout(function () {
+                        custSettingScope.commandResults = [];
+                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+                }
+            }).error(function (data) {
+                window.console.log(data);
             });
         };
     } ]);

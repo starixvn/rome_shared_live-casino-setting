@@ -19,7 +19,7 @@ if (fanex.liveCasinoSetting) {
                     }
                 }
 
-                customerGameSettingService.updateGameSetting($scope.gameSetting);
+                customerGameSettingService.updateGameSetting($scope.gameSetting, $scope.$parent);
             }
         }
         ]);
