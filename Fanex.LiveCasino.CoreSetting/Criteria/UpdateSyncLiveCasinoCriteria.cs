@@ -23,7 +23,7 @@
 
         public override string GetSettingKey()
         {
-            return "Acc_CustomerUpdSyncLiveCS";
+            return "Acc_CustomerUpdSyncLiveCS_Cust";
         }
     }
 }

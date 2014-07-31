@@ -15,7 +15,7 @@
     {
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
-            var result = new CommandResultBase();
+            var result = new CommandResult();
 
             if (criteria.IsValid())
             {
@@ -27,7 +27,7 @@
                     var outParameters = objDb.GetOuputParams();
                     if (outParameters != null)
                     {
-                        result.Code = outParameters.Contains("errcode") ? outParameters["errcode"].ToString() : string.Empty;
+                        result.Code = outParameters.Contains("errcode") ? outParameters["errcode"] : 0;
                         result.Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty;
                     }
                 }

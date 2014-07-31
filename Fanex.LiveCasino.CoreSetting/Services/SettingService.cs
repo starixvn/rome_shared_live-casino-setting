@@ -317,7 +317,7 @@
 
         public ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            var result = (CommandResultBase)_settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
+            var result = (CommandResult)_settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.TargetCustId,
                 MaxWinLimit = memberWinLimit.Max,
@@ -417,7 +417,7 @@
                 StakeLevelList = gameType.CheckedStakeLevel
             };
 
-            var result = (CommandResultBase)_settingRepository.InsertOrUpdate(criteria);
+            var result = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
             var gameSettingResult = new GameSettingCommandResult(result);
 
@@ -473,6 +473,8 @@
                     };
 
                     WriteLog(logData);
+
+                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, true);
                 }
             }
 
@@ -485,11 +487,6 @@
                 if (settingContext.IsEdittingSuper)
                 {
                     UpdateLiveCasinoStatus(settingContext, custInfo);
-                }
-
-                if (!custInfo.IsSyncLiveCasino)
-                {
-                    UpdateSyncLiveCasino(settingContext, true);
                 }
 
                 var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);

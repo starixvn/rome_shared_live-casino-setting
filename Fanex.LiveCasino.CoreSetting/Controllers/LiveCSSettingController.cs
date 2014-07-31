@@ -68,11 +68,16 @@
             ICommandResults resultList = new CommandResults();
 
             resultList.Results.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
-            resultList.Results.AddRange(_settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting));
 
-            _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit);
+            var ptAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
+            resultList.Results.AddRange(ptAndCommResults);
 
-            _settingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList());
+            // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
+            var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
+            var gameSettingResult = _settingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
+
+            resultList.Results.AddRange(winLimitResults);
+            resultList.Results.AddRange(gameSettingResult);
 
             return Json(resultList);
         }

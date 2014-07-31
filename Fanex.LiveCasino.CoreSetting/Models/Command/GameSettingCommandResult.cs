@@ -1,10 +1,11 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
+    using System;
     using Fanex.NAP.Framework.Command;
 
-    public class GameSettingCommandResult : CommandResultBase
+    public class GameSettingCommandResult : CommandResult
     {
-        public GameSettingCommandResult(CommandResultBase result)
+        public GameSettingCommandResult(CommandResult result)
         {
             Code = result.Code;
             Message = result.Message;
@@ -14,7 +15,7 @@
         {
             get
             {
-                return string.IsNullOrWhiteSpace((string)Code);
+                return string.IsNullOrWhiteSpace(Convert.ToString(Code));
             }
         }
     }
