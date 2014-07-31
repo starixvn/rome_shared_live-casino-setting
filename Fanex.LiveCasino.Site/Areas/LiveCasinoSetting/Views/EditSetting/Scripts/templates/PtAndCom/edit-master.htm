@@ -41,7 +41,8 @@
             </td>
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.N3" 
-                data-ng-options="item.id as item.value for item in masterMinOptions" ></select>
+                data-ng-options="item.id as item.value for item in masterMinOptions"
+                data-ng-change="updateMasterMin()"></select>
             </td>
             <td>
                 <select 

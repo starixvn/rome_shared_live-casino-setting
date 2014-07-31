@@ -41,7 +41,8 @@
             </td>
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.N2" 
-                data-ng-options="item.id as item.value for item in agentMinOptions" ></select>
+                data-ng-options="item.id as item.value for item in agentMinOptions"
+                data-ng-change="updateAgentMin()></select>
             </td>
             <td>
                 <select 

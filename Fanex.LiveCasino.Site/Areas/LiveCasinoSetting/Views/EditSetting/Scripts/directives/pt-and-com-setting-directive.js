@@ -24,7 +24,7 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
         }
     ]);
 
-fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
+        fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -51,19 +51,14 @@ fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
                                 currentPt.M3 = maxOfMasterMax;
                             }
 
-                            if (currentPt.M3 < currentPt.N3) {
-                                currentPt.M3 = currentPt.N3;
-                            }
-
                             $scope.masterMaxOptions = fanex.createOptionsFromRange(currentPt.M3, currentPt.N3, maxOfMasterMax, fanex.liveCasinoSetting.PT_INTERVAL);
                             $scope.updateMasterMax();
                         },
                         updateMasterMax: function () {
-                            if (currentPt.N3 > currentPt.M3) {
-                                currentPt.N3 = currentPt.M3;
-                            }
-
                             $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
+                        },
+                        updateMasterMin: function () {
+                            $scope.masterMaxOptions = fanex.createOptionsFromRange(currentPt.M3, currentPt.N3, actions.computeMaxM3(), fanex.liveCasinoSetting.PT_INTERVAL);
                         }
                     };
                     // PT
@@ -77,12 +72,13 @@ fanex.liveCasinoSetting.directive('editMasterPtAndCom', [
                     //// Onchange functions
                     $scope.updateSuperPreset = actions.updateSuperPreset;
                     $scope.updateMasterMax = actions.updateMasterMax;
+                    $scope.updateMasterMin = actions.updateMasterMin;
                 }
             };
         }
     ]);
 
-fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
+        fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
         function () {
             return {
                 restrict: 'E',
@@ -108,19 +104,14 @@ fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
                                 currentPt.A2 = maxOfAgentMax;
                             }
 
-                            if (currentPt.A2 < currentPt.N2) {
-                                currentPt.A2 = currentPt.N2;
-                            }
-
                             $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, maxOfAgentMax, fanex.liveCasinoSetting.PT_INTERVAL);
                             $scope.updateAgentMax();
                         },
                         updateAgentMax: function () {
-                            if (currentPt.N2 > currentPt.A2) {
-                                currentPt.N2 = currentPt.A2;
-                            }
-
                             $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
+                        },
+                        updateAgentMin: function () {
+                            $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, actions.computeMaxA2(), fanex.liveCasinoSetting.PT_INTERVAL);
                         }
                     };
                     // PT
@@ -133,6 +124,7 @@ fanex.liveCasinoSetting.directive('editAgentPtAndCom', [
                     //// Onchange functions
                     $scope.updateMasterPreset = actions.updateMasterPreset;
                     $scope.updateAgentMax = actions.updateAgentMax;
+                    $scope.updateAgentMin = actions.updateAgentMin;
 
                 }
             };
