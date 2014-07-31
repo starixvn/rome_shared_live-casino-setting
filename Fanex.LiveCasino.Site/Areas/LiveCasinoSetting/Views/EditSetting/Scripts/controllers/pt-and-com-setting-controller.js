@@ -48,6 +48,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
         $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
+        $scope.updatePtAndCommUrl = $('#tblPtComSetting').data('update-href');
 
         //// Action
         $scope.updatePtAndComSetting = function () {
@@ -55,7 +56,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 return;
             }
 
-            ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
+            ptAndComSettingService.updatePtAndComSetting($scope.updatePtAndCommUrl, $scope.ptAndComSetting, $scope.$parent);
         };
 
         $scope.updatePresetOnMember = function (isUpdate) {
@@ -64,7 +65,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 $scope.$parent.updateAllSetting();
             }
             else {
-                ptAndComSettingService.updatePtAndComSetting($scope.ptAndComSetting, $scope.$parent);
+                ptAndComSettingService.updatePtAndComSetting($scope.updatePtAndCommUrl, $scope.ptAndComSetting, $scope.$parent);
             }
         };
     }

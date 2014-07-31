@@ -3,7 +3,7 @@
         'use strict';
         var me = this;
 
-        me.updatePtAndComSetting = function (ptAndComSetting, custSettingScope) {
+        me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, custSettingScope) {
             var ptAndComUpdateModel = {
                 settingContext: custSetting.SettingContext,
                 ptAndComSetting: ptAndComSetting
@@ -11,7 +11,7 @@
 
             $http({
                 method: 'POST',
-                url: $('#tblPtComSetting').data('update-href'),
+                url: updatePtAndComUrl,
                 headers: { 'Content-Type': 'application/json' },
                 data: ptAndComUpdateModel
             }).
@@ -27,9 +27,6 @@
                 //// loging error
             });
         };
-
-
-
 
     } ]);
 }

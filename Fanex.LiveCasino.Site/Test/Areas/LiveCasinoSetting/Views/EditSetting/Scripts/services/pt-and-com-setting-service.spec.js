@@ -1,39 +1,77 @@
-﻿if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', '$timeout', function ($http, $timeout) {
-        'use strict';
-        var me = this;
+﻿/// <reference path="../../../../../../custSetting.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../angular-mocks.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
+/// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
 
-        me.ptAndComSetting = custSetting.PtAndComSetting;
-        me.updatePtAndComSetting = function (ptAndComSetting, custSettingScope) {
-            var ptAndComUpdateModel = {
-                settingContext: custSetting.SettingContext,
-                ptAndComSetting: ptAndComSetting
-            };
+describe('pt-and-com-setting-service', function () {
+    var httpBackend, ptAndComSettingService, timeOut;
 
-            $http({
-                method: 'POST',
-                url: $('#tblPtComSetting').data('update-href'),
-                headers: { 'Content-Type': 'application/json' },
-                data: ptAndComUpdateModel
-            }).
-            success(function (result) {
-                custSettingScope.commandResults = result.CommandResults;
-                if (result.IsSuccessful) {
-                    $timeout(function () {
-                        custSettingScope.commandResults = [];
-                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+    beforeEach(module("fanex.liveCasinoSetting"));
+
+    beforeEach(inject(function ($httpBackend, $timeout, _PtAndComSettingService_) {
+        ptAndComSettingService = _PtAndComSettingService_;
+        httpBackend = $httpBackend;
+        timeOut = $timeout;
+    }));
+
+    // make sure no expectations were missed in your tests.
+    // (e.g. expectGET or expectPOST)
+    afterEach(function () {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('should send the msg and return the response.', function () {
+        // set up some data for the http call to return and test later.
+        var result = {
+            CommandResults: [],
+            IsSuccessful: false
+        },
+            urlRequest = 'request/url',
+            ptAndComSetting = {},
+            custSettingScope = {};
+
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(200, result);
+
+        // make the call.
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
+
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
+
+        expect(custSettingScope.commandResults).toEqual(result.CommandResults);
+    });
+
+    it('should send the msg and return the response, show result message and then hide', function () {
+        // set up some data for the http call to return and test later.
+        var result = {
+            CommandResults: [
+                {
+                    ErrCode: 0,
+                    Message: 'success'
                 }
-            }).
-            error(function (data) {
-                //// loging error
-            });
-        };
+            ],
+            IsSuccessful: true
+        },
+            urlRequest = 'request/url',
+            ptAndComSetting = {},
+            custSettingScope = {};
 
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(200, result);
 
+        // make the call.
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
 
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
 
-    } ]);
-}
-else {
-    
-}
+        expect(custSettingScope.commandResults).toEqual(result.CommandResults);
+        timeOut.flush();
+        expect(custSettingScope.commandResults).toEqual([]);
+    });
+});
