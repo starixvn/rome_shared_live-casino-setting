@@ -98,6 +98,7 @@
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
     <Compile Include="Models\Command\CommandResults.cs" />
+    <Compile Include="Models\Command\PtAndComCommandResult.cs" />
     <Compile Include="Models\Command\GameSettingCommandResult.cs" />
     <Compile Include="Models\Command\ICommandResults.cs" />
     <Compile Include="Models\Command\WinLimitCommandResult.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\MemberWinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
-    <Compile Include="Models\ResultList.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

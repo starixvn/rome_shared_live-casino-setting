@@ -64,8 +64,9 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                     // PT
                     $scope.superPresetOptions = fanex.createOptionsFromRange(currentPt.S3, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.superAutoPresetOptions = fanex.createOptionsFromRange(currentPt.Us3, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.masterMaxOptions = fanex.createOptionsFromRange(currentPt.M3, currentPt.N3, actions.computeMaxM3(), fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
+
                     // Com
                     $scope.masterCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
 
@@ -109,18 +110,32 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                         },
                         updateAgentMax: function () {
                             $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
+                            actions.updateAgentMaxOptions();
                         },
                         updateAgentMin: function () {
                             $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, actions.computeMaxA2(), fanex.liveCasinoSetting.PT_INTERVAL);
+                        },
+                        updateAgentMaxOptions: function () {
+                            var maxOptions = $scope.agentMaxOptions[0],
+                                minOptions = $scope.agentMaxOptions[$scope.agentMaxOptions.length - 1],
+                                currentMax = actions.computeMaxA2(),
+                                currentMin = actions.N2;
+
+                            if (maxOptions.value !== currentMax || minOptions.value !== currentMin) {
+                                $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, currentMax, fanex.liveCasinoSetting.PT_INTERVAL);
+                            }
                         }
                     };
+
                     // PT
                     $scope.masterPresetOptions = fanex.createOptionsFromRange(currentPt.M2, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.masterAutoPresetOptions = fanex.createOptionsFromRange(currentPt.Um2, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
-                    $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, actions.computeMaxA2(), fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
+
                     // Com
                     $scope.agentCommissionOptions = fanex.createOptionsFromRange(currentCom.Value, 0, currentCom.Upline.Value, fanex.liveCasinoSetting.COM_INTERVAL, fanex.liveCasinoSetting.COM_DECIMAL);
+
                     //// Onchange functions
                     $scope.updateMasterPreset = actions.updateMasterPreset;
                     $scope.updateAgentMax = actions.updateAgentMax;

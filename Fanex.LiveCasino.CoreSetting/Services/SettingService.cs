@@ -204,7 +204,7 @@
                 v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
             });
 
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -227,7 +227,7 @@
                 NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             });
 
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -250,7 +250,7 @@
                 NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             });
 
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -267,7 +267,7 @@
                 v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
             });
 
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -283,7 +283,7 @@
                 isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
                 auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
             });
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -300,7 +300,7 @@
                 auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
             });
 
-            return GetResultDetails(commandResult);
+            return GetPtAnhComResultDetails(commandResult);
         }
 
         #endregion Pt and Com
@@ -624,7 +624,7 @@
             return string.Empty;
         }
 
-        private IList<ICommandResult> GetResultDetails(ICommandResult commandResult)
+        private IList<ICommandResult> GetPtAnhComResultDetails(ICommandResult commandResult)
         {
             IList<ICommandResult> resultDetails = new List<ICommandResult>();
 
@@ -638,7 +638,7 @@
                     var errCode = Converter.ToInt(errCodes[i]);
                     if (errCode < 0)
                     {
-                        resultDetails.Add(new CommandResult
+                        resultDetails.Add(new PtAndComCommandResult
                         {
                             Code = errCode,
                             Message = LiveCasinoLang.ResourceManager.GetString(string.Format("_{0}", Math.Abs(errCode)))
@@ -646,7 +646,7 @@
                     }
                     else
                     {
-                        resultDetails.Add(new CommandResult
+                        resultDetails.Add(new PtAndComCommandResult
                         {
                             Code = errCode,
                             Message = errMsgs[i]

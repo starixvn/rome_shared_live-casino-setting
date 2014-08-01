@@ -313,9 +313,9 @@ describe('agentEditMemberPtAndCom', function () {
         };
 
         custSetting.PtAndComSetting.Commission = {
-            "Value": 0.006,
-            "Upline": {
-                "Value": 0.0065
+            Value: 0.006,
+            Upline: {
+                Value: 0.0065
             }
         };
 
