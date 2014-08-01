@@ -4,6 +4,7 @@
     using System.Linq;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
@@ -12,7 +13,7 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.NAP.Framework.Command;
     using RemotingRef;
-    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
+    using System.Threading.Tasks;
 
     public class GameSettingService : IGameSettingService
     {
@@ -138,7 +139,7 @@
                     if (newGameType != null)
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
-                        WriteLogUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
+                        WriteLogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
 
                         gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), "E"));
                     }
@@ -148,115 +149,13 @@
             return resultUpdateStakeLevels;
         }
 
-        public ICommandResults UpdateAutoGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        public ICommandResults InsertAutoGameSetting(SettingContext settingContext, CustInfo custInfo)
         {
+            List<GameType> gameTypes = InsertAutoAccount(settingContext);
+
+            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(settingContext, gameTypes); });
+
             return null;
-        }
-
-        public List<GameType> GetGameSettingByExchange(int exchangeId, string site)
-        {
-            var criteria = new GetGameSettingByExchangeCriteria
-            {
-                ExchangeId = exchangeId,
-                Site = site
-            };
-
-            return _settingRepository.GetGameSetting(criteria, false);
-        }
-
-        public List<GameType> GetGameSettingByCustomerId(int custId)
-        {
-            var criteria = new GetGameSettingByCustomerIdCriteria
-            {
-                CustId = custId
-            };
-
-            return _settingRepository.GetGameSetting(criteria, true);
-        }
-
-        #region Log
-
-        public ICommandResult WriteLog(ILogData logData)
-        {
-            var criteria = new InsertLogUserRunSPCriteria
-            {
-                UserId = logData.UserId,
-                CustId = logData.CustId,
-                SpName = logData.SpName,
-                Doing = string.Empty,
-                ActionId = (int)logData.Action,
-                TrackingValue = logData.NewValues,
-                TrackingValue2 = logData.OldValues,
-                Duration = 0
-            };
-
-            return _settingRepository.InsertOrUpdate(criteria);
-        }
-
-        private LogActions GetInsertManualLogAction(int roleId)
-        {
-            LogActions logAction;
-
-            switch (roleId)
-            {
-                case (int)CustRole.Super:
-                    logAction = LogActions.ManualInsert_Super;
-                    break;
-                case (int)CustRole.Master:
-                    logAction = LogActions.ManualInsert_Master;
-                    break;
-                case (int)CustRole.Agent:
-                    logAction = LogActions.ManualInsert_Agent;
-                    break;
-                default:
-                    logAction = LogActions.ManualInsert_Member;
-                    break;
-            }
-
-            return logAction;
-        }
-
-        private LogActions GetUpdateStakeLevelLogAction(int roleId)
-        {
-            LogActions logAction;
-
-            switch (roleId)
-            {
-                case (int)CustRole.Super:
-                    logAction = LogActions.UpdateStakeLevel_Super;
-                    break;
-                case (int)CustRole.Master:
-                    logAction = LogActions.UpdateStakeLevel_Master;
-                    break;
-                case (int)CustRole.Agent:
-                    logAction = LogActions.UpdateStakeLevel_Agent;
-                    break;
-                default:
-                    logAction = LogActions.UpdateStakeLevel_Member;
-                    break;
-            }
-
-            return logAction;
-        }
-
-        private void WriteLogUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
-        {
-            var log = new LogUpdateStakeLevel
-            {
-                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
-                CustId = settingContext.TargetCustId,
-                SignUpIp = settingContext.IP,
-                Language = "E",
-                UserId = settingContext.UserIdDoAction,
-                RoleId = settingContext.TargetRoleId,
-                NewGameType = gameTypeNew,
-                OldGameType = isInsert ? null : gameTypeOld
-            };
-
-            if (gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)
-            {
-                WriteLog(log);
-            }
         }
 
         public IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
@@ -294,7 +193,32 @@
             return gameSettings;
         }
 
-        private ICommandResult InsertAutoAccount(SettingContext settingContext)
+        #region Private Function
+
+        #region Game Setting
+
+        private List<GameType> GetGameSettingByExchange(int exchangeId, string site)
+        {
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
+
+            return _settingRepository.GetGameSetting(criteria, false);
+        }
+
+        private List<GameType> GetGameSettingByCustomerId(int custId)
+        {
+            var criteria = new GetGameSettingByCustomerIdCriteria
+            {
+                CustId = custId
+            };
+
+            return _settingRepository.GetGameSetting(criteria, true);
+        }
+
+        private List<GameType> InsertAutoAccount(SettingContext settingContext)
         {
             var criteria = new InsertAutoAccountCriteria
             {
@@ -312,7 +236,7 @@
                 Username = settingContext.TargetUsername
             };
 
-            return _settingRepository.InsertOrUpdate(criteria);
+            return _settingRepository.GetGameSetting(criteria, true);
         }
 
         private ICommandResult InsertManualAccount(SettingContext settingContext)
@@ -376,6 +300,120 @@
 
             return results;
         }
+
+        #endregion
+
+        #region Log
+
+        private void WriteLogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes)
+        {
+        }
+
+        private void WriteLogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
+        {
+            var log = new LogUpdateStakeLevel
+            {
+                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
+                CustId = settingContext.TargetCustId,
+                SignUpIp = settingContext.IP,
+                Language = "E",
+                UserId = settingContext.UserIdDoAction,
+                RoleId = settingContext.TargetRoleId,
+                NewGameType = gameTypeNew,
+                OldGameType = isInsert ? null : gameTypeOld
+            };
+
+            if (gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)
+            {
+                WriteLog(log);
+            }
+        }
+
+        private ICommandResult WriteLog(ILogData logData)
+        {
+            var criteria = new InsertLogUserRunSPCriteria
+            {
+                UserId = logData.UserId,
+                CustId = logData.CustId,
+                SpName = logData.SpName,
+                Doing = string.Empty,
+                ActionId = (int)logData.Action,
+                TrackingValue = logData.NewValues,
+                TrackingValue2 = logData.OldValues,
+                Duration = 0
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        private LogActions GetInsertManualLogAction(int roleId)
+        {
+            LogActions logAction;
+
+            switch (roleId)
+            {
+                case (int)CustRole.Super:
+                    logAction = LogActions.ManualInsert_Super;
+                    break;
+                case (int)CustRole.Master:
+                    logAction = LogActions.ManualInsert_Master;
+                    break;
+                case (int)CustRole.Agent:
+                    logAction = LogActions.ManualInsert_Agent;
+                    break;
+                default:
+                    logAction = LogActions.ManualInsert_Member;
+                    break;
+            }
+
+            return logAction;
+        }
+
+        private LogActions GetInsertAutoLogAction(int roleId)
+        {
+            LogActions logAction;
+
+            switch (roleId)
+            {
+                case (int)CustRole.Master:
+                    logAction = LogActions.AutoInsert_Master;
+                    break;
+                case (int)CustRole.Agent:
+                    logAction = LogActions.AutoInsert_Agent;
+                    break;
+                default:
+                    logAction = LogActions.AutoInsert_Member;
+                    break;
+            }
+
+            return logAction;
+        }
+
+        private LogActions GetUpdateStakeLevelLogAction(int roleId)
+        {
+            LogActions logAction;
+
+            switch (roleId)
+            {
+                case (int)CustRole.Super:
+                    logAction = LogActions.UpdateStakeLevel_Super;
+                    break;
+                case (int)CustRole.Master:
+                    logAction = LogActions.UpdateStakeLevel_Master;
+                    break;
+                case (int)CustRole.Agent:
+                    logAction = LogActions.UpdateStakeLevel_Agent;
+                    break;
+                default:
+                    logAction = LogActions.UpdateStakeLevel_Member;
+                    break;
+            }
+
+            return logAction;
+        }
+
+        #endregion
+
         #endregion
     }
 }

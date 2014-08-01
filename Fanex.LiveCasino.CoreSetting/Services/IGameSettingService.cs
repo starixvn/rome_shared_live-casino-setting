@@ -15,11 +15,7 @@
 
         ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
 
-        ICommandResults UpdateAutoGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
-
-        List<GameType> GetGameSettingByExchange(int exchangeId, string site);
-
-        List<GameType> GetGameSettingByCustomerId(int custId);
+        ICommandResults InsertAutoGameSetting(SettingContext settingContext, CustInfo custInfo);
 
         IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
     }
