@@ -35,7 +35,8 @@
             int targetCustId = 0,
             int targetRoleId = 0,
             int adminId = 0,
-            int formType = (int)FormType.Edit
+            int formType = (int)FormType.Edit,
+            string language = "E"
             )
         {
             var settingContext = new SettingContext
@@ -45,7 +46,8 @@
                     TargetCustId = targetCustId,
                     TargetRoleId = targetRoleId,
                     FormType = (FormType)formType,
-                    AdminId = adminId
+                    AdminId = adminId,
+                    Language = language
                 };
 
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
@@ -62,8 +64,6 @@
         [HttpPost]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
-            settingContext.Language = "E";
-            settingContext.IP = HttpContext.Request.UserHostAddress;
             //// Check what setting will be update
             ICommandResults resultList = new CommandResults();
 
@@ -121,9 +121,6 @@
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            settingContext.Language = "E";
-            settingContext.IP = HttpContext.Request.UserHostAddress;
-
             ICommandResults updateResults = new CommandResults
                 {
                     Results = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
