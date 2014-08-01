@@ -9,18 +9,18 @@
 
         protected string CreateLogData(GameType gameType)
         {
-            return string.Format(TrackingTemplate
+            return gameType != null ? string.Format(TrackingTemplate
                 , SpName
                 , CustId
                 , RoleId == 4 ? string.Empty : string.Format(TrackingSubAcc, SubAccId, SubAccName)
                 , gameType.Id
                 , gameType.BetTypeId
-                , gameType.CheckedStakeLevel
+                , gameType.CheckedStakeLevelRange
                 , SignUpIp
                 , Language
                 , RoleId
                 , ErrCode
-                , ErrMsg);
+                , ErrMsg) : string.Empty;
         }
 
         public override string SpName

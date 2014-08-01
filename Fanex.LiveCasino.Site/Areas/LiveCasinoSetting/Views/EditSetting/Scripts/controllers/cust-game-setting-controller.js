@@ -14,7 +14,7 @@ if (fanex.liveCasinoSetting) {
                         var gameType = $scope.gameSetting[i];
                         for (var j = 0; j < gameType.BettingLimit.length; j++) {
                             var bettingLimit = gameType.BettingLimit[j];
-                            bettingLimit.IsChecked = bettingLimit.Id == gameType.CheckedStakeLevel;
+                            bettingLimit.IsChecked = bettingLimit.Id == gameType.CheckedStakeLevelId;
                         }
                     }
                 }

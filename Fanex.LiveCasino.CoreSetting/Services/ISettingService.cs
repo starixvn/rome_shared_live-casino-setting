@@ -1,27 +1,17 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Log;
-    using Fanex.NAP.Framework.Command;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public interface ISettingService
     {
-        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
-
-        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
-
-        string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName);
-
         CustInfo GetCustomerInfo(int custId);
-
-        string GetCustomerSiteByUsername(string username);
 
         #region PT and Com
 
@@ -51,6 +41,8 @@
 
         IList<ICommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
+        PtAndComSetting GetPtAndComSetting(SettingContext settingContext);
+
         #endregion
 
         #region Win Limit
@@ -58,30 +50,6 @@
         CurrentMemberWin GetCurrentWinLimit(int custId);
 
         ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
-
-        #endregion
-
-        #region Game Setting
-
-        List<GameType> GetGameSettingByExchange(int exchangeId, string site);
-
-        List<GameType> GetGameSettingByCustomerId(int custId);
-
-        ICommandResult InsertAutoAccount(SettingContext settingContext);
-
-        ICommandResult InsertManualAccount(SettingContext settingContext);
-
-        ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType);
-
-        ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes);
-
-        ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
-
-        #endregion
-
-        #region Log
-
-        ICommandResult WriteLog(ILogData logData);
 
         #endregion
     }

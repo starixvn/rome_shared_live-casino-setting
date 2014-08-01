@@ -8,22 +8,31 @@
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class LiveCSSettingController : Controller
     {
+        private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
+
         private readonly ISettingService _settingService;
+        private readonly IGameSettingService _gameSettingService;
 
         public LiveCSSettingController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public LiveCSSettingController(ISettingService settingService)
+        public LiveCSSettingController(ISettingService settingService, IGameSettingService gameSettingService)
         {
             _settingService = settingService ?? new SettingService();
+            _gameSettingService = gameSettingService ?? new GameSettingService();
         }
 
         //
@@ -57,7 +66,7 @@
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
             settingContext.IP = HttpContext.Request.UserHostAddress;
-            return JavaScript(_settingService.GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
+            return JavaScript(GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
         //[InjectedFilter]
@@ -67,14 +76,14 @@
             //// Check what setting will be update
             ICommandResults resultList = new CommandResults();
 
-            resultList.Results.Add(_settingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
+            resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
 
             var ptAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
             resultList.Results.AddRange(ptAndCommResults);
 
             // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
             var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-            var gameSettingResult = _settingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
+            var gameSettingResult = _gameSettingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
 
             resultList.Results.AddRange(winLimitResults);
             resultList.Results.AddRange(gameSettingResult);
@@ -109,7 +118,7 @@
         {
             var custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
 
-            var result = _settingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting);
+            var result = _gameSettingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting);
 
             return Json(result);
         }
@@ -136,5 +145,29 @@
             return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
         }
 
+        private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
+        {
+            CustInfo custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
+
+            var custSetting = new CustSettingViewModel
+            {
+                SettingContext = settingContext,
+                CustInfo = custInfo,
+                PtAndComSetting = _settingService.GetPtAndComSetting(settingContext),
+                GameSetting = _gameSettingService.GetGameSetting(settingContext, custInfo)
+            };
+
+            return FormatJavascript(custSetting, objectName);
+        }
+
+        private string FormatJavascript(object obj, string name)
+        {
+            if (obj != null)
+            {
+                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, jsonSerializeSettings));
+            }
+
+            return string.Empty;
+        }
     }
 }

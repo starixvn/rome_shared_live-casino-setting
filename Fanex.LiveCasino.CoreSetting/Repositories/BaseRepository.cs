@@ -27,7 +27,7 @@
                     var outParameters = objDb.GetOuputParams();
                     if (outParameters != null)
                     {
-                        result.Code = outParameters.Contains("errcode") ? outParameters["errcode"] : 0;
+                        result.Code = outParameters.Contains("errcode") && outParameters["errcode"] != DBNull.Value ? outParameters["errcode"] : 0;
                         result.Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty;
                     }
                 }
