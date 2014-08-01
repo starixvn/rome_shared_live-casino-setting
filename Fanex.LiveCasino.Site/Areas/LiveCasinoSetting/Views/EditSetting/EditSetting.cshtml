@@ -27,7 +27,7 @@
 
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
         <div data-ng-repeat="subResult in commandResults"> 
-            <p>{{subResult.CustId}}</p>
+            <p>User name</p>
             <p data-ng-repeat="result in subResult.Results" data-ng-class="{'bg-success': result.IsSuccessful,'bg-danger': !result.IsSuccessful}">
                 {{result.Message}}
             </p>

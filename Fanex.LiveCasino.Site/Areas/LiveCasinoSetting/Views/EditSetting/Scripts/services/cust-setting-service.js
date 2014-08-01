@@ -14,7 +14,7 @@ if (fanex.liveCasinoSetting) {
                 data: custSettingForUpdate
             }).
             success(function (result) {
-                scope.commandResults = result.Results;
+                scope.commandResults = result.CommandResultsList;
                 if (result.IsSuccessful) {
                     $timeout(function () {
                         //$window.localtion.href = $window.location.href;

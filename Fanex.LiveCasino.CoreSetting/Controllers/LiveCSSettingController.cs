@@ -105,11 +105,11 @@
         {
             //// Check what setting will be update
             ICommandResults resultList = new CommandResults();
-
+            
             resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
 
             var ptAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
-            resultList.Results.AddRange(ptAndCommResults);
+            resultList.Results.AddRange(ptAndCommResults.Results);
 
             // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
             var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
@@ -118,7 +118,19 @@
             resultList.Results.AddRange(winLimitResults);
             resultList.Results.AddRange(gameSettingResult);
 
-            return Json(resultList);
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
+
+            if (settingContext.IsEditMultiple)
+            {
+
+            }
+            else
+            {
+                updateResult.CommandResultsList.Add(resultList);
+            }
+
+
+            return Json(updateResult);
         }
 
         #region Win Limit
@@ -134,9 +146,17 @@
         [HttpPost]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            ICommandResults result = _settingService.UpdateWinLimit(settingContext, model);
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            return Json(result);
+            if (settingContext.IsEditMultiple)
+            {
+            }
+            else
+            {
+                updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
+            }
+
+            return Json(updateResult);
         }
 
         #endregion
@@ -148,9 +168,17 @@
         {
             var custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
 
-            var result = _gameSettingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting);
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            return Json(result);
+            if (settingContext.IsEditMultiple)
+            {
+            }
+            else
+            {
+                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting));
+            }
+
+            return Json(updateResult);
         }
 
         #endregion
@@ -167,10 +195,7 @@
             }
             else
             {
-                updateResult.CommandResultsList.Add(new CommandResults
-                {
-                    Results = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
-                });
+                updateResult.CommandResultsList.Add(_settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting));
             }
 
             return Json(updateResult);

@@ -17,7 +17,7 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: gameSettingModel
             }).success(function (result) {
-                custSettingScope.commandResults = result.Results;
+                custSettingScope.commandResults = result.CommandResultsList;
                 if (result.IsSuccessful) {
                     $timeout(function () {
                         custSettingScope.commandResults = [];
