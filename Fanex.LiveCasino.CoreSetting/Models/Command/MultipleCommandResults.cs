@@ -12,16 +12,16 @@
     {
         public MultipleCommandResults()
         {
-            CommandResultsList = new Dictionary<int, ICommandResults>();
+            CommandResultsList = new List<ICommandResults>();
         }
 
-        public Dictionary<int, ICommandResults> CommandResultsList { get; set; }
+        public List<ICommandResults> CommandResultsList { get; set; }
 
         public bool IsSuccessful
         {
             get
             {
-                return CommandResultsList.Select(x => !x.Value.IsSuccessful) == null;
+                return CommandResultsList.Where(x => !x.IsSuccessful).FirstOrDefault() == null;
             }
         }
     }

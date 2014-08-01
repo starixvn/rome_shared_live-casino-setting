@@ -42,12 +42,10 @@
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.N2" 
                 data-ng-options="item.id as item.value for item in agentMinOptions"
-                data-ng-change="updateAgentMin()></select>
+                data-ng-change="updateAgentMin()"></select>
             </td>
             <td>
-                <select 
-                data-ng-model="ptAndComSetting.Commission.Value" 
-                data-ng-options="item.id as item.value for item in agentCommissionOptions" ></select>
+                <select data-ng-model="ptAndComSetting.Commission.Value" data-ng-options="item.id as item.value for item in agentCommissionOptions"></select>
             </td>
         </tr>
     </tbody>

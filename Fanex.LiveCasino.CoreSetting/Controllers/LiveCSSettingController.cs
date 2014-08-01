@@ -80,11 +80,14 @@
                 RoleId = roleId,
                 TargetRoleId = targetRoleId,
                 TargetCustIds = targetCustIds,
+                TargetUsernames = targetUsernames,
                 FormType = (FormType)formType,
                 AdminId = adminId,
                 Language = language,
                 IsEditMultiple = true
             };
+
+            settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(targetCustIds, targetSyncStatus);
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
                 
@@ -157,12 +160,20 @@
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResults updateResults = new CommandResults
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
+
+            if (settingContext.IsEditMultiple)
+            {
+            }
+            else
+            {
+                updateResult.CommandResultsList.Add(new CommandResults
                 {
                     Results = _settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting).ToList()
-                };
+                });
+            }
 
-            return Json(updateResults);
+            return Json(updateResult);
         }
 
         #endregion

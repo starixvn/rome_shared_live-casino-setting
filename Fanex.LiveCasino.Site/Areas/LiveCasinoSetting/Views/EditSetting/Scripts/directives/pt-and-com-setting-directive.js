@@ -110,21 +110,21 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                         },
                         updateAgentMax: function () {
                             $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
-                            actions.updateAgentMaxOptions();
+                            //actions.updateAgentMaxOptions();
                         },
                         updateAgentMin: function () {
                             $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, actions.computeMaxA2(), fanex.liveCasinoSetting.PT_INTERVAL);
                         },
-                        updateAgentMaxOptions: function () {
-                            var maxOptions = $scope.agentMaxOptions[0],
-                                minOptions = $scope.agentMaxOptions[$scope.agentMaxOptions.length - 1],
-                                currentMax = actions.computeMaxA2(),
-                                currentMin = actions.N2;
+//                        updateAgentMaxOptions: function () {
+//                            var maxOptions = $scope.agentMaxOptions[0],
+//                                minOptions = $scope.agentMaxOptions[$scope.agentMaxOptions.length - 1],
+//                                currentMax = actions.computeMaxA2(),
+//                                currentMin = actions.N2;
 
-                            if (maxOptions.value !== currentMax || minOptions.value !== currentMin) {
-                                $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, currentMax, fanex.liveCasinoSetting.PT_INTERVAL);
-                            }
-                        }
+//                            if (maxOptions.value !== currentMax || minOptions.value !== currentMin) {
+//                                $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, currentMax, fanex.liveCasinoSetting.PT_INTERVAL);
+//                            }
+//                        }
                     };
 
                     // PT

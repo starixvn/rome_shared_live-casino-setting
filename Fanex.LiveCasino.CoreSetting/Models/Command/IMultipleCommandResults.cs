@@ -7,7 +7,7 @@
     /// </summary>
     public interface IMultipleCommandResults
     {
-        Dictionary<int, ICommandResults> CommandResultsList { get; set; }
+        List<ICommandResults> CommandResultsList { get; set; }
 
         bool IsSuccessful { get; }
     }

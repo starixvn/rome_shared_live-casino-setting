@@ -13,6 +13,8 @@
     {
         CustInfo GetCustomerInfo(int custId);
 
+        int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses);
+
         #region PT and Com
 
         PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);

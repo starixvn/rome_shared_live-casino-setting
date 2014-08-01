@@ -46,6 +46,27 @@
             return _settingRepository.GetCustomerInfo(criteria);
         }
 
+        public int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses)
+        {
+            var custIdList = custIds.Split(new char[] { ',' });
+            var custSyncList = custSyncStatuses.Split(new char[] { ',' });
+            var firstCustIdNotSync = 0;
+
+            for (int i = 0; i < custIds.Length; i++)
+            {
+                if (custSyncList[i] == "1")
+                {
+                    return Converter.ToInt(custIdList[i]);
+                }
+                else if (firstCustIdNotSync == 0)
+                {
+                    firstCustIdNotSync = Converter.ToInt(custIdList[i]);
+                }
+            }
+
+            return firstCustIdNotSync;
+        }
+
         #region Pt and Com
 
         public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
@@ -137,7 +158,6 @@
         public IList<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, ptAndComSetting);
-
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -146,7 +166,6 @@
         public IList<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, ptAndComSetting);
-
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -155,7 +174,6 @@
         public IList<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -164,7 +182,6 @@
         public IList<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -173,7 +190,6 @@
         public IList<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -220,67 +236,47 @@
 
         public IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
-
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, ptAndComSetting);
-
-            List<int> custIds = null;
-
+            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return updateResults;
+            return GetPtAndComResultDetailsMultiple(commandResults);
         }
 
         public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
-
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, ptAndComSetting);
-
-            List<int> custIds = null;
-
+            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return updateResults;
+            return GetPtAndComResultDetailsMultiple(commandResults);
         }
 
         public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
-
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
-            List<int> custIds = null;
-
+            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return updateResults;
+            return GetPtAndComResultDetailsMultiple(commandResults);
         }
 
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
-
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
-            List<int> custIds = null;
-
+            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return updateResults;
+            return GetPtAndComResultDetailsMultiple(commandResults);
         }
 
         public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
-
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
-
-            List<int> custIds = null;
-
+            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return updateResults;
+            return GetPtAndComResultDetailsMultiple(commandResults);
         }
 
         #endregion Pt and Com Multiple Update
@@ -502,13 +498,22 @@
 
             foreach (var result in commandResults)
             {
-                multipleResults.CommandResultsList[result.Key] = new CommandResults
+                multipleResults.CommandResultsList.Add(new CommandResults
                 {
-                    Results = GetPtAndComResultDetails(result.Value).ToList()
-                };
+                    Results = GetPtAndComResultDetails(result.Value).ToList(),
+                    CustId = result.Key
+                });
             }
 
             return multipleResults;
+        }
+
+        private List<int> GetCustIds(string custIds)
+        {
+            return custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select<string, int>(cid =>
+            {
+                return Converter.ToInt(cid);
+            }).ToList();
         }
 
         #endregion Private Methods

@@ -24,6 +24,11 @@
         public string TargetUsername { get; set; }
 
         /// <summary>
+        /// Target User
+        /// </summary>
+        public string TargetUsernames { get; set; }
+
+        /// <summary>
         /// Target customer id of edited customer
         /// </summary>
         public int TargetCustId { get; set; }

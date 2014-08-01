@@ -3,14 +3,16 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}",
+        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&isEditMultiple={8}",
         Model.CustId,
         Model.RoleId,
         Model.AdminId,
         Model.TargetCustId,
         Model.TargetRoleId,
         Model.FormType,
-        Model.Language);
+        Model.Language,
+        Model.TargetCustIds,
+        Model.IsEditMultiple);
 }
 @section modeldata
 {
@@ -24,9 +26,12 @@
     class="edit-setting-livecs">
 
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
-        <p data-ng-repeat="result in commandResults" data-ng-class="{'bg-success': result.IsSuccessful,'bg-danger': !result.IsSuccessful}">
-            {{result.Message}}
-        </p>
+        <div data-ng-repeat="subResult in commandResults"> 
+            <p>{{subResult.CustId}}</p>
+            <p data-ng-repeat="result in subResult.Results" data-ng-class="{'bg-success': result.IsSuccessful,'bg-danger': !result.IsSuccessful}">
+                {{result.Message}}
+            </p>
+        </div>
     </div>
 
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)

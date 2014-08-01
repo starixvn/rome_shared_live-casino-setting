@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.Framework.Command;
+    using System;
 
     public class CommandResults : ICommandResults
     {
@@ -12,6 +13,10 @@
         }
 
         public List<ICommandResult> Results { get; set; }
+
+        public string Username { get; set; }
+
+        public int CustId { get; set; }
 
         public virtual bool IsSuccessful
         {
