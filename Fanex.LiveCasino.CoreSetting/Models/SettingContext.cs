@@ -29,6 +29,11 @@
         public int TargetCustId { get; set; }
 
         /// <summary>
+        /// Target customers id for edit multiple.
+        /// </summary>
+        public string TargetCustIds { get; set; }
+
+        /// <summary>
         /// Administrator id, using in Accounting or internal agent
         /// </summary>
         public int AdminId { get; set; }
@@ -74,6 +79,11 @@
         /// LangKey of current request
         /// </summary>
         public string LangKey { get; set; }
+
+        /// <summary>
+        /// Is edit multiple or not.
+        /// </summary>
+        public bool IsEditMultiple { get; set; }
 
         /// <summary>
         /// Currency identify.

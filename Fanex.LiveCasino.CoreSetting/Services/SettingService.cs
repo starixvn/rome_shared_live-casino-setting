@@ -12,6 +12,7 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -76,6 +77,8 @@
             return _settingRepository.GetSettingForMasterEditMember(criteria);
         }
 
+        #region Pt and Com Single Update
+
         public IList<ICommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             IList<ICommandResult> updateResults = new List<ICommandResult>();
@@ -84,21 +87,26 @@
                 case CustRole.Super:
                     updateResults = UpdateSuperPtAndComSetting(settingContext, ptAndComSetting);
                     break;
+
                 case CustRole.Master:
                     updateResults = UpdateMasterPtAndComSetting(settingContext, ptAndComSetting);
                     break;
+
                 case CustRole.Agent:
                     updateResults = UpdateAgentPtAndComSetting(settingContext, ptAndComSetting);
                     break;
+
                 case CustRole.Member:
                     switch ((CustRole)settingContext.RoleId)
                     {
                         case CustRole.Super:
                             updateResults = SuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
+
                         case CustRole.Master:
                             updateResults = MasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
+
                         default:
                             updateResults = AgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
                             break;
@@ -122,104 +130,160 @@
                 v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
             });
 
-            return GetPtAnhComResultDetails(commandResult);
+            return GetPtAndComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateMasterSettingCriteria
-            {
-                Custid = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                SRecommend = settingContext.CustId,
-                Userid = settingContext.AdminId,
-                SubAccID = settingContext.SubAccId,
-                v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
-                v162mpositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N3,
-                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is3,
-                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us3,
-                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
-                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
-                NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
-            });
+            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, ptAndComSetting);
 
-            return GetPtAnhComResultDetails(commandResult);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateAgentSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                MRecommend = settingContext.CustId,
-                UserId = settingContext.AdminId,
-                SubAccID = settingContext.SubAccId,
-                v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
-                min_v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.N2,
-                isauto_v162mpositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Im2,
-                auto_v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Um2,
-                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
-                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
-                NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
-            });
+            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, ptAndComSetting);
 
-            return GetPtAnhComResultDetails(commandResult);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new AgentUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                Recommend = settingContext.CustId,
-                UserID = settingContext.AdminId,
-                SubAccID = settingContext.SubAccId,
-                v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
-                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
-            });
+            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
 
-            return GetPtAnhComResultDetails(commandResult);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new SuperUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserID = settingContext.AdminId,
-                SubAccID = settingContext.SubAccId,
-                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
-                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
-                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
-            });
-            return GetPtAnhComResultDetails(commandResult);
+            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
         }
 
         public IList<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new MasterUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M1,
-                isauto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
-                auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
-            });
+            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
 
-            return GetPtAnhComResultDetails(commandResult);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
         }
+
+        #endregion Pt and Com Single Update
+
+        #region Pt and Com Multiple Update
+
+        public IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Master:
+                    updateResults = UpdateMasterPtAndComSettingMultiple(settingContext, ptAndComSetting);
+                    break;
+
+                case CustRole.Agent:
+                    updateResults = UpdateAgentPtAndComSettingMultiple(settingContext, ptAndComSetting);
+                    break;
+
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            updateResults = SuperUpdateMemberPtAndComSettingMultiple(settingContext, ptAndComSetting);
+                            break;
+
+                        case CustRole.Master:
+                            updateResults = MasterUpdateMemberPtAndComSettingMultiple(settingContext, ptAndComSetting);
+                            break;
+
+                        default:
+                            updateResults = AgentUpdateMemberPtAndComSettingMultiple(settingContext, ptAndComSetting);
+                            break;
+                    }
+                    break;
+            }
+
+            return updateResults;
+        }
+
+        public IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, ptAndComSetting);
+
+            List<int> custIds = null;
+
+            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
+
+            return updateResults;
+        }
+
+        public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, ptAndComSetting);
+
+            List<int> custIds = null;
+
+            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
+
+            return updateResults;
+        }
+
+        public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+
+            List<int> custIds = null;
+
+            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
+
+            return updateResults;
+        }
+
+
+        public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+
+            List<int> custIds = null;
+
+            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
+
+            return updateResults;
+        }
+
+        public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            IMultipleCommandResults updateResults = new MultipleCommandResults();
+
+            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, ptAndComSetting);
+
+            List<int> custIds = null;
+
+            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
+
+            return updateResults;
+        }
+
+        #endregion Pt and Com Multiple Update
 
         #endregion Pt and Com
 
@@ -259,6 +323,7 @@
 
         #endregion Win Limit
 
+        #endregion Log
         #region Private Methods
 
         public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
@@ -307,7 +372,7 @@
             return null;
         }
 
-        private IList<ICommandResult> GetPtAnhComResultDetails(ICommandResult commandResult)
+        private IList<ICommandResult> GetPtAndComResultDetails(ICommandResult commandResult)
         {
             IList<ICommandResult> resultDetails = new List<ICommandResult>();
 
@@ -339,6 +404,120 @@
             }
 
             return resultDetails;
+        }
+
+        private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            return new UpdateMasterSettingCriteria
+            {
+                Custid = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                SRecommend = settingContext.CustId,
+                Userid = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162discount_1101 = ptAndComSetting.Commission.Value,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
+                v162mpositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N3,
+                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is3,
+                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us3,
+                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
+                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
+                NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
+            };
+        }
+
+        private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            ICriteria criteria = new UpdateAgentSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                MRecommend = settingContext.CustId,
+                UserId = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162discount_1101 = ptAndComSetting.Commission.Value,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
+                min_v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.N2,
+                isauto_v162mpositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Im2,
+                auto_v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Um2,
+                UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
+                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
+                NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
+            };
+            return criteria;
+        }
+
+        private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            ICriteria criteria = new AgentUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                Recommend = settingContext.CustId,
+                UserID = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
+                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
+            };
+            return criteria;
+        }
+
+        private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            ICriteria criteria = new SuperUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserID = settingContext.AdminId,
+                SubAccID = settingContext.SubAccId,
+                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
+                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
+                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
+            };
+            return criteria;
+        }
+
+        private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        {
+            ICriteria criteria = new MasterUpdateMemberSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserId = settingContext.UserIdDoAction,
+                SubAccID = settingContext.SubAccId,
+                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M1,
+                isauto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
+                auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
+            };
+            return criteria;
+        }
+
+        private IMultipleCommandResults GetPtAndComResultDetailsMultiple(Dictionary<int, ICommandResult> commandResults)
+        {
+            IMultipleCommandResults multipleResults = new MultipleCommandResults();
+
+            foreach (var result in commandResults)
+            {
+                multipleResults.CommandResultsList[result.Key] = new CommandResults
+                {
+                    Results = GetPtAndComResultDetails(result.Value).ToList()
+                };
+            }
+
+            return multipleResults;
+        }
+
+
+
+
+
+
+
         }
 
         #endregion Private Methods

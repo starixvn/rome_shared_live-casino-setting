@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -26,12 +27,18 @@
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
 
-        #endregion
+        #endregion Get Setting
+
+        #region Update Setting
+
+        Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds);
+
+        #endregion Update Setting
 
         #region Game Setting
 
         List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked);
 
-        #endregion
+        #endregion Game Setting
     }
 }

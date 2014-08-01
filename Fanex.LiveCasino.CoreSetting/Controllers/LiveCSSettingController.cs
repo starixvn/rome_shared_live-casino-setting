@@ -62,6 +62,33 @@
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
+        public ActionResult EditSettingMultiple(
+            int custId = 0,
+            int roleId = 0,
+            string targetCustIds = "",
+            string targetUsernames = "",
+            string targetSyncStatus = "",
+            int targetRoleId = 0,
+            int adminId = 0,
+            int formType = (int)FormType.Edit,
+            string language = "E")
+        {
+
+            var settingContext = new SettingContext
+            {
+                CustId = custId,
+                RoleId = roleId,
+                TargetRoleId = targetRoleId,
+                TargetCustIds = targetCustIds,
+                FormType = (FormType)formType,
+                AdminId = adminId,
+                Language = language,
+                IsEditMultiple = true
+            };
+            return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
+        }
+                
+
         [HttpGet]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {

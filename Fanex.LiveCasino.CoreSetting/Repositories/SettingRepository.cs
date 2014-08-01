@@ -7,6 +7,9 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
     using RemotingRef;
+using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.Criteria;
+using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -208,5 +211,38 @@
 
             return gameTypes;
         }
+
+        public Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds)
+        {
+            Dictionary<int, ICommandResult> results = new Dictionary<int, ICommandResult>();
+
+            if (criteria.IsValid())
+            {
+                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
+
+                    foreach (var custId in custIds)
+                    {
+                        parameters["custid"] = custId;
+                        objDb.ExecuteNonQuery(parameters);
+
+                        var outParameters = objDb.GetOuputParams();
+                        if (outParameters != null)
+                        {
+                            results[custId] = new CommandResult
+                            {
+                                Code = outParameters.Contains("errcode") ? outParameters["errcode"] : 0,
+                                Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty
+                            };
+                        }
+                    }
+                    
+                }
+            }
+
+            return results;
+        }
+                
     }
 }

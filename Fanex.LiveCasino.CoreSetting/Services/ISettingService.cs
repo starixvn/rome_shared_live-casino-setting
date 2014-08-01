@@ -26,6 +26,8 @@
         PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
+        
+        PtAndComSetting GetPtAndComSetting(SettingContext settingContext);
 
         IList<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
@@ -41,7 +43,17 @@
 
         IList<ICommandResult> UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        PtAndComSetting GetPtAndComSetting(SettingContext settingContext);
+        IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
+
+        IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
         #endregion
 
