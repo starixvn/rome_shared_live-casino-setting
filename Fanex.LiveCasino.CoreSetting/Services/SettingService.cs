@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
@@ -256,7 +257,6 @@
             return updateResults;
         }
 
-
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             IMultipleCommandResults updateResults = new MultipleCommandResults();
@@ -323,7 +323,6 @@
 
         #endregion Win Limit
 
-        #endregion Log
         #region Private Methods
 
         public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
@@ -510,14 +509,6 @@
             }
 
             return multipleResults;
-        }
-
-
-
-
-
-
-
         }
 
         #endregion Private Methods
