@@ -1,16 +1,21 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
+﻿// --------------------------------------------------------------------------
+// <copyright file="SettingRepository.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
+namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
     using System.Collections.Generic;
     using Fanex.Common.Extensions;
     using Fanex.Data;
+    using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
-    using RemotingRef;
-using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using Fanex.LiveCasino.CoreSetting.Criteria;
-using Fanex.NAP.Framework.Command;
-    using System.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -209,7 +214,6 @@ using Fanex.NAP.Framework.Command;
                 }
             }
 
-
             return gameTypes;
         }
 
@@ -239,12 +243,10 @@ using Fanex.NAP.Framework.Command;
                             };
                         }
                     }
-                    
                 }
             }
 
             return results;
         }
-                
     }
 }

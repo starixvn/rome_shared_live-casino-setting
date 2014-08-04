@@ -1,8 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="InjectedFilterAttribute.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="InjectedFilterAttribute.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
 
 namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
@@ -21,17 +24,16 @@ namespace Fanex.LiveCasino.CoreSetting.Web.Filters
     /// </summary>
     public class InjectedFilterAttribute : ActionFilterAttribute
     {
-
         [Dependency]
-        public IAuthenticationService authenticationService { get; set; }
+        public IAuthenticationService AuthenticationService { get; set; }
 
-        //public override void OnResultExecuted(ResultExecutedContext filterContext)
-        //{
-        //    if (authenticationService.IsAuthorized())
-        //    {
-        //        filterContext.HttpContext.Response.Write("This Action was authorized!");
-        //    }
-        //}
+        ////public override void OnResultExecuted(ResultExecutedContext filterContext)
+        ////{
+        ////    if (authenticationService.IsAuthorized())
+        ////    {
+        ////        filterContext.HttpContext.Response.Write("This Action was authorized!");
+        ////    }
+        ////}
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -41,9 +43,8 @@ namespace Fanex.LiveCasino.CoreSetting.Web.Filters
             }
             else
             {
-                
                 var custId = Converter.ToInt(filterContext.RequestContext.HttpContext.Request["custId"]);
-                if (!authenticationService.IsAuthorized(custId))
+                if (!AuthenticationService.IsAuthorized(custId))
                 {
                     filterContext.Result = new RedirectResult("~/LiveCasinoSetting/LiveCSSetting/UnAuthorized");
                 }

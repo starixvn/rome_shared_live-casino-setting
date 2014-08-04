@@ -1,4 +1,12 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Services
+﻿// --------------------------------------------------------------------------
+// <copyright file="ISettingService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
+namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
@@ -28,7 +36,7 @@
         PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria);
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
-        
+
         PtAndComSetting GetPtAndComSetting(SettingContext settingContext);
 
         List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
@@ -57,7 +65,7 @@
 
         IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
 
-        #endregion
+        #endregion PT and Com
 
         #region Win Limit
 
@@ -65,6 +73,6 @@
 
         ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
 
-        #endregion
+        #endregion Win Limit
     }
 }

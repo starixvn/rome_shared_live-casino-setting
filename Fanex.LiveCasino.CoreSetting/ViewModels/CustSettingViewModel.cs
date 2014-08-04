@@ -1,15 +1,15 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="CustomerSetting.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="CustSettingViewModel.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
 
 namespace Fanex.LiveCasino.CoreSetting.ViewModels
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
@@ -24,7 +24,5 @@ namespace Fanex.LiveCasino.CoreSetting.ViewModels
         public PtAndComSetting PtAndComSetting { get; set; }
 
         public IList<GameType> GameSetting { get; set; }
-
-        
     }
 }

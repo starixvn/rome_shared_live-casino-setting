@@ -1,9 +1,18 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
+﻿// --------------------------------------------------------------------------
+// <copyright file="AgentUpdateMemberSettingCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
+
+namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Agent Update Member Setting Criteria.
     /// </summary>
     public class AgentUpdateMemberSettingCriteria : CriteriaBase
     {
@@ -11,11 +20,11 @@
 
         public int Recommend { get; set; }
 
-        public decimal v162apositiontaking_1101 { get; set; }
+        public decimal V162apositiontaking_1101 { get; set; }
 
-        public decimal v162playerdiscount_1101 { get; set; }
+        public decimal V162playerdiscount_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101
+        public bool V162UpdatePositiontaking_1101
         {
             get
             {
@@ -23,7 +32,7 @@
             }
         }
 
-        public bool v162UpdateCommission_1101
+        public bool V162UpdateCommission_1101
         {
             get
             {

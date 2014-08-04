@@ -28,15 +28,15 @@ namespace Fanex.LiveCasino.Site
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
-            //var oldProvider = FilterProviders.Providers.Single(
-            //       f => f is FilterAttributeFilterProvider
-            //   );
-            //FilterProviders.Providers.Remove(oldProvider);
+            ////var oldProvider = FilterProviders.Providers.Single(
+            ////       f => f is FilterAttributeFilterProvider
+            ////   );
+            ////FilterProviders.Providers.Remove(oldProvider);
 
-            //var unityBootstrapper = new UnityBootstrapper();
-            //unityBootstrapper.RegisterTypes();
-            //var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
-            //FilterProviders.Providers.Add(provider);
+            ////var unityBootstrapper = new UnityBootstrapper();
+            ////unityBootstrapper.RegisterTypes();
+            ////var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
+            ////FilterProviders.Providers.Add(provider);
         }
     }
 }

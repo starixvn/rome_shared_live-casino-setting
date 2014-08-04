@@ -1,4 +1,12 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
+﻿// --------------------------------------------------------------------------
+// <copyright file="UpdateMasterSettingCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
+namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
     using Fanex.NAP.Framework.Data;
 
@@ -11,19 +19,19 @@
 
         public int SRecommend { get; set; }
 
-        public decimal v162spositiontaking_1101 { get; set; }
+        public decimal V162spositiontaking_1101 { get; set; }
 
-        public decimal v162mpositiontaking_1101 { get; set; }
+        public decimal V162mpositiontaking_1101 { get; set; }
 
-        public bool isauto_v162spositiontaking_1101 { get; set; }
+        public bool IsAuto_v162spositiontaking_1101 { get; set; }
 
-        public decimal auto_v162spositiontaking_1101 { get; set; }
+        public decimal Auto_v162spositiontaking_1101 { get; set; }
 
-        public decimal v162mpositiontaking_1101_min { get; set; }
+        public decimal V162mpositiontaking_1101_min { get; set; }
 
-        public decimal v162discount_1101 { get; set; }
+        public decimal V162discount_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101
+        public bool V162UpdatePositiontaking_1101
         {
             get
             {
@@ -31,7 +39,7 @@
             }
         }
 
-        public bool v162UpdateMinPositiontaking_1101
+        public bool V162UpdateMinPositiontaking_1101
         {
             get
             {
@@ -39,7 +47,7 @@
             }
         }
 
-        public bool v162UpdateAutoPositiontaking_1101
+        public bool V162UpdateAutoPositiontaking_1101
         {
             get
             {
@@ -47,7 +55,7 @@
             }
         }
 
-        public bool v162UpdateCommission_1101
+        public bool V162UpdateCommission_1101
         {
             get
             {

@@ -147,9 +147,9 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.UserIdDoAction,
-                v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
-                v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
+                V162discount_1101 = ptAndComSetting.Commission.Value,
+                V162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
+                V162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
             });
 
             return GetPtAndComResultDetails(commandResult);
@@ -411,13 +411,13 @@
                 SRecommend = settingContext.CustId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
-                v162mpositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N3,
-                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is3,
-                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us3,
+                V162discount_1101 = ptAndComSetting.Commission.Value,
+                V162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
+                V162mpositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N3,
+                IsAuto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is3,
+                Auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us3,
                 UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
-                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
+                V162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S3,
                 NewSPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             };
         }
@@ -432,13 +432,13 @@
                 MRecommend = settingContext.CustId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                v162discount_1101 = ptAndComSetting.Commission.Value,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
-                min_v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.N2,
-                isauto_v162mpositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Im2,
-                auto_v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Um2,
+                V162discount_1101 = ptAndComSetting.Commission.Value,
+                V162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
+                Min_v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.N2,
+                IsAuto_v162mpositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Im2,
+                Auto_v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Um2,
                 UpdateAllMembers = (bool)ptAndComSetting.PositionTaking.UpdateAllMembers,
-                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
+                V162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A2,
                 NewMPositionTaking = (decimal)ptAndComSetting.PositionTaking.NewPresetOnMember
             };
             return criteria;
@@ -454,8 +454,8 @@
                 Recommend = settingContext.CustId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
-                v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
+                V162playerdiscount_1101 = ptAndComSetting.Commission.Value,
+                V162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
             };
             return criteria;
         }
@@ -469,9 +469,9 @@
                 Language = settingContext.Language,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
-                isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
-                auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
+                V162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
+                IsAuto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
+                Auto_v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.Us1
             };
             return criteria;
         }
@@ -485,9 +485,9 @@
                 Language = settingContext.Language,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M1,
-                isauto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
-                auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
+                V162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M1,
+                IsAuto_v162mpositiontaking_mem_1101 = (bool)ptAndComSetting.PositionTaking.Im1,
+                Auto_v162mpositiontaking_mem_1101 = (decimal)ptAndComSetting.PositionTaking.Um1
             };
             return criteria;
         }

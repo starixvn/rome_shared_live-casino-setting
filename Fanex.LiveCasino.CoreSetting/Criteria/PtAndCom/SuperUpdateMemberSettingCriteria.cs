@@ -1,4 +1,12 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
+﻿// --------------------------------------------------------------------------
+// <copyright file="SuperUpdateMemberSettingCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
+// </history>
+namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
     using Fanex.NAP.Framework.Data;
 
@@ -9,13 +17,13 @@
     {
         public int CustId { get; set; }
 
-        public decimal v162spositiontaking_1101 { get; set; }
+        public decimal V162spositiontaking_1101 { get; set; }
 
-        public bool isauto_v162spositiontaking_1101 { get; set; }
+        public bool IsAuto_v162spositiontaking_1101 { get; set; }
 
-        public decimal auto_v162spositiontaking_1101 { get; set; }
+        public decimal Auto_v162spositiontaking_1101 { get; set; }
 
-        public bool v162UpdatePositiontaking_1101
+        public bool V162UpdatePositiontaking_1101
         {
             get
             {
@@ -23,7 +31,7 @@
             }
         }
 
-        public bool v162UpdateAutoPositiontaking_1101
+        public bool V162UpdateAutoPositiontaking_1101
         {
             get
             {
