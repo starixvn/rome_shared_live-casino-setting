@@ -1,6 +1,6 @@
 ﻿/* File Created: July 21, 2014 */
 
-var fanex = fanex || {};
+var fanex = fanex || {}; // jshint ignore:line
 
 //// Core function
 fanex.cloneObject = function (obj) {
@@ -28,6 +28,7 @@ fanex.roundNumber = function (number, decimals) {
 };
 
 fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
+    'use strict';
     var options = [];
     decimals = decimals || 2;
     to = fanex.roundNumber(to, decimals);
@@ -54,7 +55,7 @@ fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
     }
 
     return options.reverse();
-}
+};
 
 
 

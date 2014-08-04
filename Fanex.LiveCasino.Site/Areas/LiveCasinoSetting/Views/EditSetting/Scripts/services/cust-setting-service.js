@@ -1,7 +1,7 @@
 /* File Created: July 21, 2014 */
-
+/*global custSetting*/
 if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', '$timeout', '$window', function ($http, $timeout, $window) {
+    fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', '$timeout', function ($http, $timeout) {
         'use strict';
         var me = this;
 
@@ -20,9 +20,6 @@ if (fanex.liveCasinoSetting) {
                         //$window.localtion.href = $window.location.href;
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }
-            }).
-            error(function (data) {
-                //// loging error
             });
         };
     } ]);

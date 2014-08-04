@@ -15,9 +15,10 @@
 /// <reference path="../services/pt-and-com-setting-service.spec.js" />
 
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.js" />
-
+/*global describe, beforeEach, inject, custSetting, it, expect*/
 
 describe('editSuperPtAndCom', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -36,7 +37,7 @@ describe('editSuperPtAndCom', function () {
             L4: 1.0,
             N4: 0.3900
         };
-        var element = $compile("<edit-super-pt-and-com></edit-super-pt-and-com>")($scope);
+        $compile("<edit-super-pt-and-com></edit-super-pt-and-com>")($scope);
         $scope.$digest();
     });
 
@@ -64,6 +65,7 @@ describe('editSuperPtAndCom', function () {
 });
 
 describe('editMasterPtAndCom', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -87,7 +89,7 @@ describe('editMasterPtAndCom', function () {
             Is3: true,
             N3: 0.20
         };
-        var element = $compile("<edit-master-pt-and-com></edit-master-pt-and-com>")($scope);
+        $compile("<edit-master-pt-and-com></edit-master-pt-and-com>")($scope);
         $scope.$digest();
     });
 
@@ -141,6 +143,7 @@ describe('editMasterPtAndCom', function () {
 });
 
 describe('editAgentPtAndCom', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -165,7 +168,7 @@ describe('editAgentPtAndCom', function () {
             Im2: true,
             N2: 0.2000
         };
-        var element = $compile("<edit-agent-pt-and-com></edit-agent-pt-and-com>")($scope);
+        $compile("<edit-agent-pt-and-com></edit-agent-pt-and-com>")($scope);
         $scope.$digest();
     });
 
@@ -216,6 +219,7 @@ describe('editAgentPtAndCom', function () {
 });
 
 describe('superEditMemberPt', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -240,7 +244,7 @@ describe('superEditMemberPt', function () {
             Is3: true,
             Is1: true
         };
-        var element = $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
+        $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
         $scope.$digest();
     });
 
@@ -254,6 +258,7 @@ describe('superEditMemberPt', function () {
 });
 
 describe('masterEditMemberPt', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -278,7 +283,7 @@ describe('masterEditMemberPt', function () {
             Im2: false,
             Im1: true
         };
-        var element = $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
+        $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
         $scope.$digest();
     });
 
@@ -293,6 +298,7 @@ describe('masterEditMemberPt', function () {
 });
 
 describe('agentEditMemberPtAndCom', function () {
+    'use strict';
     var $compile, $scope, $templateCache;
 
     // Load the myApp module, which contains the directive
@@ -319,7 +325,7 @@ describe('agentEditMemberPtAndCom', function () {
             }
         };
 
-        var element = $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
+        $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
         $scope.$digest();
     });
 

@@ -6,6 +6,7 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerWinLimitService',
         function ($scope, $http, customerWinLimitService) {
+            'use strict';
             $scope.maxWinLimitModel = fanex.cloneObject(custSetting.CustInfo.MemberWinLimit);
             var memberWinLimit = custSetting.CustInfo.MemberWinLimit;
             $scope.isShowCurrentWinLimit = false;

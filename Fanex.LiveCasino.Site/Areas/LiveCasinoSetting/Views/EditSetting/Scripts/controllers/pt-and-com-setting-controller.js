@@ -1,10 +1,11 @@
-﻿
+﻿/*global custSetting, language*/
 fanex.liveCasinoSetting.controller('PtAndComSettingController',
     [
     '$scope',
     '$window',
     'PtAndComSettingService',
     function ($scope, $window, ptAndComSettingService) {
+        'use strict';
         //// Privates
         var me = this;
         me.$presetOnMemberModal = $('#presetOnMemberModal');
@@ -40,7 +41,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                     break;
             }
             return false;
-        }
+        };
 
         //// Properties
         $scope.ptAndComSetting = fanex.cloneObject(custSetting.PtAndComSetting);

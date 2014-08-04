@@ -1,4 +1,5 @@
 ﻿/* File Created: July 30, 2014 */
+/*exported custSetting*/
 var custSetting = {
     "SettingContext": {
         "CustId": 1176083,

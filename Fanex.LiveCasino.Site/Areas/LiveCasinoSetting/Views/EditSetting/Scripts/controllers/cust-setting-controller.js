@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-
+/*global custSetting*/
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.js" />
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerSettingController',
@@ -8,6 +8,7 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerSettingService',
         function ($scope, $http, customerSettingService) {
+            'use strict';
             $scope.commandResults = [];
             $scope.isUpdateAllSetting = false;
             //$scope.updateLiveCasinoStatus
@@ -50,5 +51,5 @@ if (fanex.liveCasinoSetting) {
         ]);
 }
 else {
-    alert('Missing fanex.liveCasinoSetting!')
+    alert('Missing fanex.liveCasinoSetting!');
 }

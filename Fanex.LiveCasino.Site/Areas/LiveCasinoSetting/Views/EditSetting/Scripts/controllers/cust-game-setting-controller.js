@@ -6,6 +6,7 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
+            'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
 
             $scope.updateGameSetting = function () {

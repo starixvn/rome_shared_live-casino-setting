@@ -5,8 +5,9 @@
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
-
+/*global describe, beforeEach, inject, afterEach, it, expect*/
 describe('pt-and-com-setting-service', function () {
+    'use strict';
     var httpBackend, ptAndComSettingService, timeOut;
 
     beforeEach(module("fanex.liveCasinoSetting"));

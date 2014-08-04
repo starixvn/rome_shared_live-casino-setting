@@ -1,9 +1,9 @@
 ﻿/* File Created: July 21, 2014 */
 /// <reference path="../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
 /// <reference path="../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
-
+/*global describe, it, expect*/
 describe('Fanex.Core', function () {
-
+    'use strict';
     it('should be clone object.', function () {
         //// Arrange
         var needBeCloneObject = {
@@ -41,7 +41,7 @@ describe('Fanex.Core', function () {
         var roundedNumber = fanex.roundNumber(notRoundedNumber, 2);
 
         //// Assert
-        expect(roundedNumber).toEqual(1.22)
+        expect(roundedNumber).toEqual(1.22);
     });
 
     it('should create range from 0.1 to 0.2 with 2 decimals', function () {

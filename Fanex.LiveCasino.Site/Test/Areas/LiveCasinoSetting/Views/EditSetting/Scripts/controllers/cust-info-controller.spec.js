@@ -5,8 +5,9 @@
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-info-controller.js" />
-
+/*global describe, beforeEach, inject, it, custSetting, expect*/
 describe('cust-info-controller', function () {
+    'use strict';
     var $scope;
 
     beforeEach(module('fanex.liveCasinoSetting'));

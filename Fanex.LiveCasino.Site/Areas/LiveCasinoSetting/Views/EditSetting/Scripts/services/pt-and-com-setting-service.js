@@ -1,20 +1,20 @@
-﻿if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', '$timeout', function ($http, $timeout) {
-        'use strict';
-        var me = this;
+﻿/*global custSetting*/
+fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', '$timeout', function ($http, $timeout) {
+    'use strict';
+    var me = this;
 
-        me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, custSettingScope) {
-            var ptAndComUpdateModel = {
-                settingContext: custSetting.SettingContext,
-                ptAndComSetting: ptAndComSetting
-            };
+    me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, custSettingScope) {
+        var ptAndComUpdateModel = {
+            settingContext: custSetting.SettingContext,
+            ptAndComSetting: ptAndComSetting
+        };
 
-            $http({
-                method: 'POST',
-                url: updatePtAndComUrl,
-                headers: { 'Content-Type': 'application/json' },
-                data: ptAndComUpdateModel
-            }).
+        $http({
+            method: 'POST',
+            url: updatePtAndComUrl,
+            headers: { 'Content-Type': 'application/json' },
+            data: ptAndComUpdateModel
+        }).
             success(function (result) {
                 custSettingScope.commandResults = result.CommandResultsList;
                 if (result.IsSuccessful) {
@@ -22,14 +22,10 @@
                         custSettingScope.commandResults = [];
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }
-            }).
-            error(function (data) {
-                //// loging error
             });
-        };
+        //            .error(function (data) {
+        //                //// loging error
+        //            });
+    };
 
-    } ]);
-}
-else {
-    
-}
+} ]);

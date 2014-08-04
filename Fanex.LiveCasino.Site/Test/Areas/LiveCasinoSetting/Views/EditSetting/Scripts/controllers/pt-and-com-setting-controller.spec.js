@@ -10,8 +10,9 @@
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" />
 /// <reference path="../../../../Scripts/core/live-casino-lang.spec.js" />
-
+/*global describe, beforeEach, inject, spyOn, it, custSetting, expect*/
 describe('pt-and-com-setting-controller', function () {
+    'use strict';
     var $scope, ptAndComSettingService;
 
     beforeEach(module('fanex.liveCasinoSetting'));
@@ -141,7 +142,7 @@ describe('pt-and-com-setting-controller', function () {
         //// Arrange 
         $scope.$parent.isUpdateAllSetting = true;
         var isUpdate = true;
-        $scope.$parent.updateAllSetting = function () { return; }
+        $scope.$parent.updateAllSetting = function () { return; };
         spyOn($scope.$parent, 'updateAllSetting');
 
         //// Act
