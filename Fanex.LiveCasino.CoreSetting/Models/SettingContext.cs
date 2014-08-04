@@ -137,7 +137,7 @@
             }
         }
 
-        public bool IsEdittingMember
+        public bool IsAgentEdittingMember
         {
             get
             {

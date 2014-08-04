@@ -50,7 +50,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0;
+            return CustId > 0 & UserId > 0;
         }
     }
 }

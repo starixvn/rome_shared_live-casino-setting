@@ -3,7 +3,7 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&isEditMultiple={8}",
+        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&&targetUsernames={8}&isEditMultiple={9}",
         Model.CustId,
         Model.RoleId,
         Model.AdminId,
@@ -12,6 +12,7 @@
         Model.FormType,
         Model.Language,
         Model.TargetCustIds,
+        Model.TargetUsernames,
         Model.IsEditMultiple);
 }
 @section modeldata
@@ -27,7 +28,7 @@
 
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
         <div data-ng-repeat="subResult in commandResults"> 
-            <p>User name</p>
+            <p>{{subResult.Username}}</p>
             <p data-ng-repeat="result in subResult.Results" data-ng-class="{'bg-success': result.IsSuccessful,'bg-danger': !result.IsSuccessful}">
                 {{result.Message}}
             </p>

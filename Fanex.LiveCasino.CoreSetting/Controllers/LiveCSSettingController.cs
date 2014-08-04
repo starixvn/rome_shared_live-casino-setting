@@ -105,8 +105,11 @@
         {
             //// Check what setting will be update
             ICommandResults resultList = new CommandResults();
-            
-            resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
+
+            if (settingContext.IsAgentEdittingMember)
+            {
+                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
+            }
 
             var ptAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
             resultList.Results.AddRange(ptAndCommResults.Results);
@@ -192,6 +195,7 @@
 
             if (settingContext.IsEditMultiple)
             {
+                updateResult = _settingService.UpdatePtAndComSettingMultiple(settingContext, ptAndComSetting);
             }
             else
             {

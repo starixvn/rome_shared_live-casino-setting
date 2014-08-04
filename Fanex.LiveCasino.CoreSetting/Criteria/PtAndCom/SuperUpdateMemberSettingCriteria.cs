@@ -35,7 +35,7 @@
 
         public string IP { get; set; }
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public string Language { get; set; }
 

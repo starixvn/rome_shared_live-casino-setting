@@ -7,7 +7,7 @@
     /// </summary>
     public class UpdateSuperSettingCriteria : CriteriaBase
     {
-        public int Custid { get; set; }
+        public int CustId { get; set; }
 
         public decimal v162spositiontaking_1101 { get; set; }
 
@@ -41,7 +41,7 @@
 
         public string IP { get; set; }
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public string Language { get; set; }
 
@@ -52,7 +52,7 @@
 
         public override bool IsValid()
         {
-            return Custid > 0;
+            return CustId > 0 && UserId > 0;
         }
     }
 }

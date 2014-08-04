@@ -10,6 +10,7 @@
 using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Criteria;
 using Fanex.NAP.Framework.Command;
+    using System.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -221,11 +222,12 @@ using Fanex.NAP.Framework.Command;
                 using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                 {
                     var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
-
+                    objDb.AssignParamValues(parameters);
                     foreach (var custId in custIds)
                     {
-                        parameters["custid"] = custId;
-                        objDb.ExecuteNonQuery(parameters);
+                        objDb.Database.SetParameterValue(objDb.DbCommand, "custid", custId);
+
+                        objDb.ExecuteNonQuery();
 
                         var outParameters = objDb.GetOuputParams();
                         if (outParameters != null)

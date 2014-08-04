@@ -35,7 +35,7 @@
 
         public string IP { get; set; }
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public string Language { get; set; }
 
@@ -46,7 +46,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && Recommend > 0;
+            return CustId > 0 && Recommend > 0 && UserId > 0;
         }
     }
 }

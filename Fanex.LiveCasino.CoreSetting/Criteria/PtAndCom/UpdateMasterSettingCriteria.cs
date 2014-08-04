@@ -61,7 +61,7 @@
 
         public int SubAccID { get; set; }
 
-        public int Userid { get; set; }
+        public int UserId { get; set; }
 
         public string IP { get; set; }
 
@@ -74,7 +74,7 @@
 
         public override bool IsValid()
         {
-            return Custid > 0 && SRecommend > 0;
+            return Custid > 0 && SRecommend > 0 & UserId > 0;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿/* File Created: July 21, 2014 */
+﻿ /* File Created: July 21, 2014 */
 
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', '$timeout', function ($http, $timeout) {

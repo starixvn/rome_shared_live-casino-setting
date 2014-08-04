@@ -143,10 +143,10 @@
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
-                Custid = settingContext.TargetCustId,
+                CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserID = settingContext.UserIdDoAction,
+                UserId = settingContext.UserIdDoAction,
                 v162discount_1101 = ptAndComSetting.Commission.Value,
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S4,
                 v162spositiontaking_1101_min = (decimal)ptAndComSetting.PositionTaking.N4,
@@ -240,7 +240,7 @@
             List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(commandResults);
+            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
         }
 
         public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -249,7 +249,7 @@
             List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(commandResults);
+            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
         }
 
         public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -258,7 +258,7 @@
             List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(commandResults);
+            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
         }
 
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -267,7 +267,7 @@
             List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(commandResults);
+            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
         }
 
         public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting)
@@ -276,7 +276,7 @@
             List<int> custIds = GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(commandResults);
+            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
         }
 
         #endregion Pt and Com Multiple Update
@@ -409,7 +409,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 SRecommend = settingContext.CustId,
-                Userid = settingContext.AdminId,
+                UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 v162discount_1101 = ptAndComSetting.Commission.Value,
                 v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M3,
@@ -430,7 +430,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 MRecommend = settingContext.CustId,
-                UserId = settingContext.AdminId,
+                UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 v162discount_1101 = ptAndComSetting.Commission.Value,
                 v162mpositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.M2,
@@ -452,7 +452,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 Recommend = settingContext.CustId,
-                UserID = settingContext.AdminId,
+                UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 v162playerdiscount_1101 = ptAndComSetting.Commission.Value,
                 v162apositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.A1
@@ -467,7 +467,7 @@
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserID = settingContext.AdminId,
+                UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 v162spositiontaking_1101 = (decimal)ptAndComSetting.PositionTaking.S1,
                 isauto_v162spositiontaking_1101 = (bool)ptAndComSetting.PositionTaking.Is1,
@@ -492,16 +492,18 @@
             return criteria;
         }
 
-        private IMultipleCommandResults GetPtAndComResultDetailsMultiple(Dictionary<int, ICommandResult> commandResults)
+        private IMultipleCommandResults GetPtAndComResultDetailsMultiple(string custIds, string userNames, Dictionary<int, ICommandResult> commandResults)
         {
             IMultipleCommandResults multipleResults = new MultipleCommandResults();
+            Dictionary<int, string> userNamesWithCustIds = GetUsernamesWithCustIds(custIds, userNames); 
 
             foreach (var result in commandResults)
             {
                 multipleResults.CommandResultsList.Add(new CommandResults
                 {
                     Results = GetPtAndComResultDetails(result.Value).ToList(),
-                    CustId = result.Key
+                    CustId = result.Key,
+                    Username = userNamesWithCustIds[result.Key]
                 });
             }
 
@@ -514,6 +516,26 @@
             {
                 return Converter.ToInt(cid);
             }).ToList();
+        }
+
+        private Dictionary<int, string> GetUsernamesWithCustIds(string custIds, string usernames)
+        {
+            Dictionary<int, string> userNamesWithCustIds = new Dictionary<int, string>();
+
+            string[] custIdsList = custIds.Split(new char[] { ',' });
+            string[] userNameList = usernames.Split(new char[] { ',' });
+            int userNameCount = userNameList.Length;
+
+            for (int i = 0; i < custIdsList.Length; i++)
+            {
+                userNamesWithCustIds.Add(
+                    Converter.ToInt(custIdsList[i]), 
+                    i < userNameCount 
+                    ? userNameList[i] 
+                    : custIdsList[i]);
+            }
+
+            return userNamesWithCustIds;
         }
 
         #endregion Private Methods
