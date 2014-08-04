@@ -15,11 +15,11 @@
     /// </summary>
     public class LiveCSSettingController : Controller
     {
-        private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented
-        };
+        //private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
+        //{
+        //    NullValueHandling = NullValueHandling.Ignore,
+        //    Formatting = Formatting.Indented
+        //};
 
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;
@@ -231,7 +231,9 @@
         {
             if (obj != null)
             {
-                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, jsonSerializeSettings));
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, Formatting.Indented, settings));
             }
 
             return string.Empty;
