@@ -131,6 +131,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\LiveCasinoLang.ja-JP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LiveCasinoLang.th-TH.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.th-TH.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LiveCasinoLang.vi-VN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCasinoLang.vi-VN.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\LiveCasinoLang.zh-CN.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,9 +170,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.ja-JP.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang.ja-JP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.ko-KR.resx" />
     <EmbeddedResource Include="Resources\LiveCasinoLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LiveCasinoLang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.th-TH.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang.th-TH.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.vi-VN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LiveCasinoLang.vi-VN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LiveCasinoLang.zh-CN.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

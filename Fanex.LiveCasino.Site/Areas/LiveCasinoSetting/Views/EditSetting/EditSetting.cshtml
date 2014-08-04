@@ -34,8 +34,14 @@
             </p>
         </div>
     </div>
-
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)
+    @if (Model.IsEditMultiple)
+    {
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfoMultiple.cshtml", Model)
+    }
+    else
+    {
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml", Model)
+    }
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")

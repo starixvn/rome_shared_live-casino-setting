@@ -175,7 +175,7 @@
     <value>Mobile Phone</value>
   </data>
   <data name="lblNickname" xml:space="preserve">
-    <value>Nick name</value>
+    <value>Nickname</value>
   </data>
   <data name="lblPhone" xml:space="preserve">
     <value>Phone</value>
@@ -223,13 +223,13 @@
     <value>Updated Status unsuccessfully because Live Casino status has been disabled at upline.</value>
   </data>
   <data name="_101" xml:space="preserve">
-    <value>Updated Commission Successfully.</value>
+    <value>Commission is updated successfully.</value>
   </data>
   <data name="_102" xml:space="preserve">
     <value>Updated Min Position Successfully.</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>Updated Position Taking Successfully.</value>
+    <value>Position taking is updated successfully.</value>
   </data>
   <data name="_104" xml:space="preserve">
     <value>Updated Win Limit Successfully.</value>
