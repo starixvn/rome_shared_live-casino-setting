@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.NAP.Framework.Command;
@@ -15,7 +16,7 @@
 
         ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
 
-        ICommandResults InsertAutoGameSetting(SettingContext settingContext, CustInfo custInfo);
+        ICommandResult InsertAutoGameSetting(InsertAutoAccountCriteria criteria);
 
         IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
     }

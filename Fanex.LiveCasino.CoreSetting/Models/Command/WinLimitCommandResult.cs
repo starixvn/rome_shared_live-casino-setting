@@ -5,6 +5,10 @@
 
     public class WinLimitCommandResult : CommandResult
     {
+        public WinLimitCommandResult()
+        {
+        }
+
         public WinLimitCommandResult(CommandResult result)
         {
             Code = result.Code;

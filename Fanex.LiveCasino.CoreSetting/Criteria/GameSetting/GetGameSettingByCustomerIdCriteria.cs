@@ -2,6 +2,9 @@
 {
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Setting key : TP_Admin_StakeLevel_GetCustStakeLevelMulti.
+    /// </summary>
     public class GetGameSettingByCustomerIdCriteria : CriteriaBase
     {
         public int CustId { get; set; }

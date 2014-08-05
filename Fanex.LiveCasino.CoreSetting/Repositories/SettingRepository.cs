@@ -16,6 +16,7 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
 
     /// <summary>
     /// TODO: Update summary.
@@ -215,6 +216,46 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
             }
 
             return gameTypes;
+        }
+
+        public ICommandResult InsertAutoAccount(ICriteria criteria, ref List<GameType> gameTypes)
+        {
+            var result = new GameSettingCommandResult();
+            GameType current = null;
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        var itemGameType = new GameType
+                        {
+                            Id = reader.ToInt("GameTypeID"),
+                            BetTypeId = reader.ToInt("IBCBetTypeID")
+                        };
+
+                        var itemStakeLevel = new StakeLevel
+                        {
+                            Range = reader.ToString("StakeLevelName")
+                        };
+
+                        if (current == null || current.Id != itemGameType.Id)
+                        {
+                            gameTypes.Add(itemGameType);
+                            current = itemGameType;
+                            current.BettingLimit = new List<StakeLevel>();
+                        }
+
+                        current.BettingLimit.Add(itemStakeLevel);
+                    }
+                }
+
+                var outParameters = objDb.GetOuputParams();
+                result = new GameSettingCommandResult(GetCommandResult(outParameters));
+            }
+
+            return result;
         }
 
         public Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds)

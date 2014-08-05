@@ -6,9 +6,8 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
-            'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
-
+            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             $scope.updateGameSetting = function () {
                 if (custSetting.SettingContext.TargetRoleId == fanex.liveCasinoSetting.custRole.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {

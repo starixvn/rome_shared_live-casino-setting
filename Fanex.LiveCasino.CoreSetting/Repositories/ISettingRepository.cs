@@ -47,6 +47,8 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
 
         List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked);
 
+        ICommandResult InsertAutoAccount(ICriteria criteria, ref List<GameType> gameTypes);
+
         #endregion Game Setting
     }
 }

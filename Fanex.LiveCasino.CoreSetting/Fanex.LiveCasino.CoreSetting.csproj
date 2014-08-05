@@ -110,6 +110,7 @@
     <Compile Include="Models\Command\ICommandResults.cs" />
     <Compile Include="Models\Command\WinLimitCommandResult.cs" />
     <Compile Include="Models\Log\ILogData.cs" />
+    <Compile Include="Models\Log\LogAutoInsertAccount.cs" />
     <Compile Include="Models\Log\LogDataBase.cs" />
     <Compile Include="Models\Log\LogManualInsertAccount.cs" />
     <Compile Include="Models\Log\LogUpdateStakeLevel.cs" />

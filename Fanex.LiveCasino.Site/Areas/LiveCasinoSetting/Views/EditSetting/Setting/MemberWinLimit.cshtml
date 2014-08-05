@@ -4,7 +4,7 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit")">
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblMaximumWinLimit</span><span data-ng-click="updateWinLimitSetting()"
-            class="btn-save-partial"></span>
+            data-ng-if="!isReadOnly" class="btn-save-partial"></span>
     </div>
     <table class="win-limit">
         <tbody>
@@ -14,14 +14,14 @@
                 </td>
                 <td class="col-xs-4">
                     <select id="maxWinLimit" name="maxWinLimit" data-ng-options="opt as opt.lable for opt in maxWinLimits"
-                        data-ng-model="maxWinLimitModel.Max">
+                        data-ng-disabled="isReadOnly" data-ng-model="maxWinLimitModel.Max">
                     </select>
                     <span>&nbsp;@LiveCasinoLang.lblOnGivenCredit</span>
                 </td>
                 <td class="col-xs-6">
                     <label class="checkbox-inline">
                         <input type="checkbox" id="dailyAutoReset" name="dailyAutoReset" data-ng-model="maxWinLimitModel.IsAutoReset"
-                            data-ng-disabled="!maxWinLimitModel.UplineAutoReset">@LiveCasinoLang.lblDailyAutoResetLimit
+                            data-ng-disabled="!maxWinLimitModel.UplineAutoReset||isReadOnly">@LiveCasinoLang.lblDailyAutoResetLimit
                     </label>
                 </td>
             </tr>

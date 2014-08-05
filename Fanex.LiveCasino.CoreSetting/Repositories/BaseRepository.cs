@@ -15,6 +15,7 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
+    using System.Collections;
 
     /// <summary>
     /// TODO: Update summary.
@@ -33,11 +34,7 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
                     objDb.ExecuteNonQuery(parameters);
 
                     var outParameters = objDb.GetOuputParams();
-                    if (outParameters != null)
-                    {
-                        result.Code = outParameters.Contains("errcode") && outParameters["errcode"] != DBNull.Value ? outParameters["errcode"] : 0;
-                        result.Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty;
-                    }
+                    result = GetCommandResult(outParameters);
                 }
             }
 
@@ -65,6 +62,19 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
             }
 
             return ptAndComSetting;
+        }
+
+        protected CommandResult GetCommandResult(Hashtable outParameters)
+        {
+            var result = new CommandResult();
+
+            if (outParameters != null)
+            {
+                result.Code = outParameters.Contains("errcode") && outParameters["errcode"] != DBNull.Value ? outParameters["errcode"] : 0;
+                result.Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty;
+            }
+
+            return result;
         }
     }
 }

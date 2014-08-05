@@ -15,12 +15,6 @@
     /// </summary>
     public class LiveCSSettingController : Controller
     {
-        //private static JsonSerializerSettings jsonSerializeSettings = new JsonSerializerSettings
-        //{
-        //    NullValueHandling = NullValueHandling.Ignore,
-        //    Formatting = Formatting.Indented
-        //};
-
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;
 
@@ -90,7 +84,7 @@
             settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(targetCustIds, targetSyncStatus);
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
-                
+
 
         [HttpGet]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)

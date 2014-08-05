@@ -5,6 +5,10 @@
 
     public class GameSettingCommandResult : CommandResult
     {
+        public GameSettingCommandResult()
+        {
+        }
+
         public GameSettingCommandResult(CommandResult result)
         {
             Code = result.Code;

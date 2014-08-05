@@ -2,6 +2,9 @@
 {
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Setting key : TP_User_CustGameType_UpdStakeLevel.
+    /// </summary>
     public class UpdateStakeLevelCriteria : CriteriaBase
     {
         public int CustId { get; set; }

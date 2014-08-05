@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
@@ -13,12 +15,12 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.NAP.Framework.Command;
     using RemotingRef;
-    using System.Threading.Tasks;
 
     public class GameSettingService : IGameSettingService
     {
         private const string CasinoNo = "01";
         private const int InsertFormId = 1;
+        private const int TimeOut = 5;
 
         private readonly ISettingRepository _settingRepository;
 
@@ -56,7 +58,7 @@
             ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
 
             //UpdateLiveCasinoStatusSuccess
-            if (updateResult.Code.ToString() == "0")
+            if (updateResult.IsSuccessful)
             {
                 updateResult = new CommandResult
                 {
@@ -149,13 +151,14 @@
             return resultUpdateStakeLevels;
         }
 
-        public ICommandResults InsertAutoGameSetting(SettingContext settingContext, CustInfo custInfo)
+        public ICommandResult InsertAutoGameSetting(InsertAutoAccountCriteria criteria)
         {
-            List<GameType> gameTypes = InsertAutoAccount(settingContext);
+            var gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertAutoAccount(criteria, ref gameTypes);
 
-            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(settingContext, gameTypes); });
+            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(criteria, gameTypes); });
 
-            return null;
+            return result;
         }
 
         public IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
@@ -218,26 +221,26 @@
             return _settingRepository.GetGameSetting(criteria, true);
         }
 
-        private List<GameType> InsertAutoAccount(SettingContext settingContext)
-        {
-            var criteria = new InsertAutoAccountCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                CasinoNo = CasinoNo,
-                ExchangeId = settingContext.ExchangeId,
-                SuperId = settingContext.SuperId,
-                MasterId = settingContext.MasterId,
-                AgentId = settingContext.AgentId,
-                RoleId = settingContext.TargetRoleId,
-                SignupIp = settingContext.IP,
-                SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = InsertFormId,
-                ModifyUsername = settingContext.UserName,
-                Username = settingContext.TargetUsername
-            };
+        //private List<GameType> InsertAutoAccount(SettingContext settingContext)
+        //{
+        //    var criteria = new InsertAutoAccountCriteria
+        //    {
+        //        CustId = settingContext.TargetCustId,
+        //        CasinoNo = CasinoNo,
+        //        ExchangeId = settingContext.ExchangeId,
+        //        SuperId = settingContext.SuperId,
+        //        MasterId = settingContext.MasterId,
+        //        AgentId = settingContext.AgentId,
+        //        RoleId = settingContext.TargetRoleId,
+        //        SignupIp = settingContext.IP,
+        //        SignupBy = settingContext.UserIdDoAction,
+        //        SignupFrom = InsertFormId,
+        //        ModifyUsername = settingContext.UserName,
+        //        Username = settingContext.TargetUsername
+        //    };
 
-            return _settingRepository.GetGameSetting(criteria, true);
-        }
+        //    return _settingRepository.GetGameSetting(criteria, true);
+        //}
 
         private ICommandResult InsertManualAccount(SettingContext settingContext)
         {
@@ -305,8 +308,46 @@
 
         #region Log
 
-        private void WriteLogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes)
+        private void WriteLogAutoInsertAccount(InsertAutoAccountCriteria criteria, List<GameType> gameTypes)
         {
+            if (!gameTypes.Any())
+            {
+                for (int i = 0; i < TimeOut; i++)
+                {
+                    Thread.Sleep(1000);
+                    gameTypes = GetGameSettingByCustomerId(criteria.CustId);
+
+                    if (gameTypes.Any())
+                    {
+                        break;
+                    }
+                }
+            }
+            if (!gameTypes.Any())
+            {
+                gameTypes = GetGameSettingByExchange(criteria.ExchangeId, criteria.SiteName);
+            }
+
+
+            var log = new LogAutoInsertAccount
+            {
+                Action = GetInsertManualLogAction(criteria.RoleId),
+                AgentId = criteria.AgentId,
+                CustId = criteria.CustId,
+                CustUserName = criteria.Username,
+                ExchangeId = criteria.ExchangeId,
+                SignUpIp = criteria.IP,
+                SignUpForm = InsertFormId,
+                SubAccId = criteria.SubAccId,
+                SubAccName = criteria.SubAccName,
+                SuperId = criteria.SuperId,
+                UserId = criteria.SignupBy,
+                UserName = criteria.ModifyUsername,
+                CustSite = criteria.SiteName,
+                GameSetting = gameTypes
+            };
+
+            WriteLog(log);
         }
 
         private void WriteLogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
