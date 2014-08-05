@@ -1,17 +1,9 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="GetCustomerInfoCriteria.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-namespace Fanex.LiveCasino.CoreSetting.Criteria
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Get customer information criteria.
     /// </summary>
     public class GetCustomerInfoCriteria : CriteriaBase
     {

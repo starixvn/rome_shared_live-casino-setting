@@ -1,15 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="PtAndComSetting.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// Position taking and Commission setting.
     /// </summary>
     public class PtAndComSetting
     {

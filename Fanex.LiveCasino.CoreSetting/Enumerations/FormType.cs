@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Enumerations
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// Form setting type.
     /// </summary>
     public enum FormType : int
     {

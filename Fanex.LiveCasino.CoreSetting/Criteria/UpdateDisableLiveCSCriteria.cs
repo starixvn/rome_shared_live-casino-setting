@@ -4,7 +4,7 @@
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Update Disable Live Casino Criteria.
     /// </summary>
     public class UpdateDisableLiveCSCriteria : CriteriaBase
     {

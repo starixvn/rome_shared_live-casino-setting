@@ -5,7 +5,7 @@
     using System.Web.Mvc;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Base controller for handle pre-request.
     /// </summary>
     public class BaseController : Controller
     {

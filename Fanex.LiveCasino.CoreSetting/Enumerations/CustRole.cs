@@ -1,16 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CustRole.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Enumerations
+﻿namespace Fanex.LiveCasino.CoreSetting.Enumerations
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// Customer Role.
     /// </summary>
     public enum CustRole : int
     {

@@ -16,7 +16,7 @@
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Setting service for update position taking setting, commission, member win limit.
     /// </summary>
     public class SettingService : ISettingService
     {

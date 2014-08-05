@@ -1,18 +1,10 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SettingContext.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
     using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Setting Context.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1609:PropertyDocumentationMustHaveValue", Justification = "Reviewed.")]
     public class SettingContext

@@ -21,7 +21,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     using Newtonsoft.Json;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Controller handles setting request.
     /// </summary>
     public class LiveCSSettingController : BaseController
     {
