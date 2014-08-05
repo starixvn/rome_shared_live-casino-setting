@@ -1,7 +1,7 @@
 ﻿/* File Created: July 21, 2014 */
 /*global custSetting*/
 if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('CustomerWinLimitService', ['$http', '$timeout', function ($http, $timeout) {
+    fanex.liveCasinoSetting.service('CustomerWinLimitService', ['$http', function ($http) {
         'use strict';
         var $this = this;
 
@@ -29,11 +29,6 @@ if (fanex.liveCasinoSetting) {
                 data: winLimitUpdate
             }).success(function (result) {
                 custSettingScope.commandResults = result.CommandResultsList;
-                if (result.IsSuccessful) {
-                    $timeout(function () {
-                        custSettingScope.commandResults = [];
-                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
-                }
             }).error(function (data) {
                 window.console.log(data);
             });

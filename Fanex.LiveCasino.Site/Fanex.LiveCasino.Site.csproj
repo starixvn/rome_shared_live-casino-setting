@@ -163,7 +163,12 @@
     <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js">
       <DependentUpon>LiveCasinoLang.tt</DependentUpon>

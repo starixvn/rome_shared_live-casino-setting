@@ -111,3 +111,24 @@ label.clearfix
 {
     padding-left: 19px;
 }
+
+.edit-setting-livecs .updated-result .main-success 
+{
+    background-image: url(Images/Success.gif);
+}
+
+.edit-setting-livecs .updated-result .main-error {
+	background-image: url(Images/error-icon.gif);
+}
+
+.edit-setting-livecs .updated-result .sub-success {
+	background-image: url(Images/tick.png);
+}
+
+.edit-setting-livecs .updated-result .sub-error {
+	background-image: url(Images/cross.png);
+}
+
+/*Result message*/
+
+

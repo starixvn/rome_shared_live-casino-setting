@@ -28,10 +28,14 @@
     class="edit-setting-livecs">
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
         <div data-ng-repeat="subResult in commandResults"> 
-            <p>{{subResult.Username}}</p>
-            <p data-ng-repeat="result in subResult.Results" data-ng-class="{'bg-success': result.IsSuccessful,'bg-danger': !result.IsSuccessful}">
-                {{result.Message}}
-            </p>
+            <div class="main-icon" data-ng-class="{'main-icon-success': subResult.IsSuccessful,'main-icon-error': !subResult.IsSuccessful}"></div>
+            <div class="main-message">
+                <div class="message-user-name">{{subResult.Username}}</div>
+                <div class="sub-message" data-ng-repeat="result in subResult.Results">
+                    <div data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"></div>
+                    <div class="message-content">{{result.Message}}</div>
+                </div>
+            </div>
         </div>
     </div>
 

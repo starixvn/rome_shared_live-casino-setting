@@ -1,5 +1,5 @@
 ﻿/*global custSetting*/
-fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', '$timeout', function ($http, $timeout) {
+fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($http) {
     'use strict';
     var me = this;
 
@@ -17,15 +17,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', '$timeout', 
         }).
             success(function (result) {
                 custSettingScope.commandResults = result.CommandResultsList;
-                if (result.IsSuccessful) {
-                    $timeout(function () {
-                        custSettingScope.commandResults = [];
-                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
-                }
             });
-        //            .error(function (data) {
-        //                //// loging error
-        //            });
     };
 
 } ]);

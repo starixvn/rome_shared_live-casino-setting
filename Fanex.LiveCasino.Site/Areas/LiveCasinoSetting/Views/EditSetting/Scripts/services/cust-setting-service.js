@@ -1,7 +1,7 @@
 /* File Created: July 21, 2014 */
 /*global custSetting*/
 if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', '$timeout', function ($http, $timeout) {
+    fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', function ($http) {
         'use strict';
         var me = this;
 
@@ -15,11 +15,6 @@ if (fanex.liveCasinoSetting) {
             }).
             success(function (result) {
                 scope.commandResults = result.CommandResultsList;
-                if (result.IsSuccessful) {
-                    $timeout(function () {
-                        //$window.localtion.href = $window.location.href;
-                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
-                }
             });
         };
     } ]);
