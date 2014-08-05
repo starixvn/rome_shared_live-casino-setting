@@ -20,7 +20,10 @@
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.S1" 
                 data-ng-options="item.id as item.value for item in superPTOptions" 
-                data-ng-disabled="ptAndComSetting.PositionTaking.Is1"></select>
+                data-ng-disabled="ptAndComSetting.PositionTaking.Is1"
+                data-ng-change="superPTChange()"
+                data-ng-if="!ptAndComSetting.PositionTaking.Is3"></select>
+                <span data-ng-if="ptAndComSetting.PositionTaking.Is3">{{ptAndComSetting.PositionTaking.S1}}</span>
             </td>
             <td>
                 <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is1" />

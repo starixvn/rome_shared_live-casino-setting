@@ -148,17 +148,6 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                                                                 actions.computeMaxA2(), 
                                                                 fanex.liveCasinoSetting.PT_INTERVAL);
                         }
-//                        updateAgentMaxOptions: function () {
-//                            var maxOptions = $scope.agentMaxOptions[0],
-//                                minOptions = $scope.agentMaxOptions[$scope.agentMaxOptions.length - 1],
-//                                currentMax = actions.computeMaxA2(),
-//                                currentMin = actions.N2;
-
-//                            if (maxOptions.value !== currentMax || minOptions.value !== currentMin) {
-//                                $scope.agentMaxOptions = fanex.createOptionsFromRange(currentPt.A2, currentPt.N2, 
-//currentMax, fanex.liveCasinoSetting.PT_INTERVAL);
-//                            }
-//                        }
                     };
 
                     // PT
@@ -212,7 +201,7 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
         }
     ]);
 
-fanex.liveCasinoSetting.directive('superEditMemberPt', [
+        fanex.liveCasinoSetting.directive('superEditMemberPt', [
         function () {
             'use strict';
             return {
@@ -224,6 +213,18 @@ fanex.liveCasinoSetting.directive('superEditMemberPt', [
                     var currentPt = $scope.ptAndComSetting.PositionTaking;
                     $scope.superPTOptions = fanex.createOptionsFromRange(currentPt.S1, currentPt.S1Min, currentPt.S1Max, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.superAutoPTOptions = fanex.createOptionsFromRange(currentPt.S1, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.isSuperPTOutOfRange = currentPt.S1 < currentPt.S1Min || currentPt.S1 > currentPt.S1Max;
+
+                    $scope.superPTChange = function () {
+                        if ($scope.isSuperPTOutOfRange) {
+                            $scope.superPTOptions = fanex.createOptionsFromRange(
+                                currentPt.S1,
+                                currentPt.S1Min,
+                                currentPt.S1Max, 
+                                fanex.liveCasinoSetting.PT_INTERVAL);
+                            $scope.isSuperPTOutOfRange = false;
+                        }
+                    };
                 }
             };
         }
@@ -241,6 +242,17 @@ fanex.liveCasinoSetting.directive('masterEditMemberPt', [
                     var currentPt = $scope.ptAndComSetting.PositionTaking;
                     $scope.masterPTOptions = fanex.createOptionsFromRange(currentPt.M1, currentPt.M1Min, currentPt.M1Max, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.masterAutoPTOptions = fanex.createOptionsFromRange(currentPt.M1, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.isMasterPTOutOfRange = currentPt.M1 < currentPt.M1Min || currentPt.M1 > currentPt.M1Max;
+                    $scope.masterPTChange = function () {
+                        if ($scope.isMasterPTOutOfRange) {
+                            $scope.masterPTOptions = fanex.createOptionsFromRange(
+                                                            currentPt.M1,
+                                                            currentPt.M1Min,
+                                                            currentPt.M1Max, 
+                                                            fanex.liveCasinoSetting.PT_INTERVAL);
+                            $scope.isMasterPTOutOfRange = false;
+                        }
+                    };
                 }
             };
         }

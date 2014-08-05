@@ -17,7 +17,10 @@
             <td>
                 <select data-ng-model="ptAndComSetting.PositionTaking.M1" 
                 data-ng-options="item.id as item.value for item in masterPTOptions" 
-                data-ng-disabled="ptAndComSetting.PositionTaking.Im1"></select>
+                data-ng-disabled="ptAndComSetting.PositionTaking.Im1"
+                data-ng-change="masterPTChange()"
+                data-ng-if="!ptAndComSetting.PositionTaking.Im2"></select>
+                <span data-ng-if="ptAndComSetting.PositionTaking.Im2">{{ptAndComSetting.PositionTaking.M1}}</span>
             </td>
             <td>
                 <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
