@@ -1,4 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
+/*global custSetting,language, numeral*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerWinLimitController',
     [
@@ -6,6 +7,7 @@ if (fanex.liveCasinoSetting) {
         '$http',
         'CustomerWinLimitService',
         function ($scope, $http, customerWinLimitService) {
+            'use strict';
             $scope.maxWinLimitModel = fanex.cloneObject(custSetting.CustInfo.MemberWinLimit);
             var memberWinLimit = custSetting.CustInfo.MemberWinLimit;
             $scope.isShowCurrentWinLimit = false;
@@ -48,7 +50,7 @@ if (fanex.liveCasinoSetting) {
             $scope.maxWinLimitModel = {
                 Max: $scope.maxWinLimits[index],
                 IsAutoReset: memberWinLimit.IsAutoReset,
-                UplineAutoReset: custSetting.SettingContext.TargetRoleId == fanex.liveCasinoSetting.custRole.Super ? true : memberWinLimit.Upline.IsAutoReset
+                UplineAutoReset: custSetting.SettingContext.TargetRoleId === fanex.liveCasinoSetting.custRole.Super ? true : memberWinLimit.Upline.IsAutoReset
             };
 
             $scope.maxWinLimits = $scope.maxWinLimits.reverse();
@@ -69,17 +71,17 @@ if (fanex.liveCasinoSetting) {
 
             $scope.updateWinLimitSetting = function () {
                 customerWinLimitService.updateWinLimitSetting($scope.maxWinLimitModel, $scope.$parent);
-            }
+            };
 
             $scope.getWinLimit = function () {
                 return {
                     Max: $scope.maxWinLimitModel.Max.value,
                     IsAutoReset: $scope.maxWinLimitModel.IsAutoReset
                 };
-            }
+            };
         }
         ]);
 }
 else {
-    alert('Missing fanex.liveCasinoSetting!')
+    alert('Missing fanex.liveCasinoSetting!');
 }

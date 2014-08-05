@@ -1,5 +1,5 @@
 ﻿ /* File Created: July 21, 2014 */
-
+/*global custSetting*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', '$timeout', function ($http, $timeout) {
         'use strict';
