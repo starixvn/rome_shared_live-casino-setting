@@ -1,10 +1,12 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.WinLimit
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Setting key : Acc_CustomerUpdLiveCS_WinLimit.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
     public class UpdateCustomerWinLimitCriteria : CriteriaBase
     {
         public int CustId { get; set; }

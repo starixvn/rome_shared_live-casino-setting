@@ -1,10 +1,12 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.GameSetting
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Setting key : TP_User_CustGameType_UpdStakeLevel.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
     public class UpdateStakeLevelCriteria : CriteriaBase
     {
         public int CustId { get; set; }

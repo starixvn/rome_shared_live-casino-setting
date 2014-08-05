@@ -4,13 +4,11 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
-    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.NAP.Framework.Command;
@@ -22,9 +20,7 @@
     public class GameSettingService : IGameSettingService
     {
         private const string CasinoNo = "01";
-        private const int InsertFromId = 1;
         private const int TimeOutReplication = 5;
-
         private readonly ILogService _logService = new LogService();
         private readonly ISettingRepository _settingRepository;
 
@@ -87,37 +83,6 @@
             }
 
             return gameSettings;
-        }
-
-        /// <summary>
-        /// Gets the game setting with time out for waiting replication.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="exchangeId">The exchange identifier.</param>
-        /// <param name="site">The site name.</param>
-        /// <param name="timeOut">The time out.</param>
-        /// <returns>Game settings.</returns>
-        public IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut = TimeOutReplication)
-        {
-            var gameTypes = new List<GameType>();
-
-            for (int i = 0; i < timeOut; i++)
-            {
-                Thread.Sleep(1000);
-                gameTypes = GetGameSettingByCustomerId(custId);
-
-                if (gameTypes.Any())
-                {
-                    break;
-                }
-            }
-
-            if (!gameTypes.Any())
-            {
-                gameTypes = GetGameSettingByExchange(exchangeId, site);
-            }
-
-            return gameTypes;
         }
 
         /// <summary>
@@ -215,7 +180,6 @@
                 if (resultInsertAccount.IsSuccessful)
                 {
                     _logService.LogManualInsertAccount(settingContext);
-
                     CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, true);
 
                     if (syncResult.IsSuccessful)
@@ -230,7 +194,7 @@
 
             List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
 
-            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
+            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
 
             if (resultUpdateStakeLevels.IsSuccessful)
             {
@@ -239,13 +203,17 @@
                 foreach (var itemResult in successResultUpdateStakeLevel)
                 {
                     var gameSettingResult = (GameSettingCommandResult)itemResult;
+
+                    // When update game setting successfully game type id will be set to message property
                     var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
+
                     if (newGameType != null)
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
                         _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
 
-                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), "E"));
+                        var betType = RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), settingContext.Language);
+                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
                     }
                 }
             }
@@ -272,6 +240,38 @@
             };
 
             return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        /// <summary>
+        /// Gets the game setting with time out for waiting replication.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="exchangeId">The exchange identifier.</param>
+        /// <param name="site">The site name.</param>
+        /// <param name="timeOut">The time out.</param>
+        /// <returns>Game settings.</returns>
+        private IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut = TimeOutReplication)
+        {
+            var gameTypes = new List<GameType>();
+
+            // Waiting for replication
+            for (int i = 0; i < timeOut; i++)
+            {
+                Thread.Sleep(1000);
+                gameTypes = GetGameSettingByCustomerId(custId);
+
+                if (gameTypes.Any())
+                {
+                    break;
+                }
+            }
+
+            if (!gameTypes.Any())
+            {
+                gameTypes = GetGameSettingByExchange(exchangeId, site);
+            }
+
+            return gameTypes;
         }
 
         private List<GameType> GetGameSettingByCustomerId(int custId)
@@ -313,7 +313,7 @@
                 RoleId = settingContext.TargetRoleId,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = InsertFromId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 ModifyUsername = settingContext.UserName,
                 Username = settingContext.TargetUsername,
                 CustSite = settingContext.SiteName
@@ -328,14 +328,17 @@
         /// <param name="custId">The customer identifier.</param>
         /// <param name="roleId">The role identifier.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Command results update list stake level.</returns>
-        private ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// Command results update list stake level.
+        /// </returns>
+        private ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes, string language)
         {
             var results = new CommandResults();
 
             foreach (var itemGameType in gameTypes)
             {
-                var result = UpdateStakeLevel(custId, roleId, itemGameType);
+                var result = UpdateStakeLevel(custId, roleId, itemGameType, language);
                 results.Results.Add(result);
             }
 
@@ -348,8 +351,11 @@
         /// <param name="custId">The customer identifier.</param>
         /// <param name="roleId">The role identifier.</param>
         /// <param name="gameType">Type of the game.</param>
-        /// <returns>Command result update stake level.</returns>
-        private ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType)
+        /// <param name="language">The language.</param>
+        /// <returns>
+        /// Command result update stake level.
+        /// </returns>
+        private ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType, string language)
         {
             var criteria = new UpdateStakeLevelCriteria
             {
@@ -369,7 +375,7 @@
             }
             else
             {
-                var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), "E");
+                var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), language);
                 gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, betType, gameSettingResult.Message);
             }
 

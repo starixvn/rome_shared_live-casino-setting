@@ -1,7 +1,12 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Setting key : Acc_CustomerUpdSyncLiveCS_Cust.
+    /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
     public class UpdateSyncLiveCasinoCriteria : CriteriaBase
     {
         public int CustId { get; set; }

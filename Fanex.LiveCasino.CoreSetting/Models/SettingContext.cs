@@ -108,7 +108,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
 
         public int AgentId { get; set; }
 
-        public int SignupFrom { get; set; }
 
         public int UserIdDoAction
         {

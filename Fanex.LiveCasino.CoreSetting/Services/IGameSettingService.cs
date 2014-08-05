@@ -10,9 +10,7 @@
     {
         string GetCustomerSiteByUsername(string username);
 
-        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
-
-        IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut);
+        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);        
 
         ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria);
 

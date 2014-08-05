@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -96,7 +97,7 @@
                 CustUserName = settingContext.TargetUsername,
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
-                SignUpForm = settingContext.SignupFrom,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 SubAccId = settingContext.SubAccId,
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
