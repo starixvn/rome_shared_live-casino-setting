@@ -21,31 +21,34 @@
     <tbody>
         <tr>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.M2" 
+                <select id="ddlM2"
+                data-ng-model="ptAndComSetting.PositionTaking.M2" 
                 data-ng-options="item.id as item.value for item in masterPresetOptions" 
                 data-ng-disabled="ptAndComSetting.PositionTaking.Im2"
                 data-ng-change="updateMasterPreset()"></select>
             </td>
             <td data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
-                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im2" />
-                <select 
+                <input id="cbIm2" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im2" />
+                <select id="ddlUm2"
                 data-ng-model="ptAndComSetting.PositionTaking.Um2" 
                 data-ng-options="item.id as item.value for item in masterAutoPresetOptions"
                 data-ng-disabled="!ptAndComSetting.PositionTaking.Im2"
                 data-ng-change="updateAgentPreset()"></select>
             </td>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.A2" 
+                <select id="ddlA2"
+                data-ng-model="ptAndComSetting.PositionTaking.A2" 
                 data-ng-options="item.id as item.value for item in agentMaxOptions"
                 data-ng-change="updateAgentMax()"></select>
             </td>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.N2" 
+                <select id="ddlN2"
+                data-ng-model="ptAndComSetting.PositionTaking.N2" 
                 data-ng-options="item.id as item.value for item in agentMinOptions"
                 data-ng-change="updateAgentMin()"></select>
             </td>
             <td>
-                <select data-ng-model="ptAndComSetting.Commission.Value" data-ng-options="item.id as item.value for item in agentCommissionOptions"></select>
+                <select id="ddlCom" data-ng-model="ptAndComSetting.Commission.Value" data-ng-options="item.id as item.value for item in agentCommissionOptions"></select>
             </td>
         </tr>
     </tbody>

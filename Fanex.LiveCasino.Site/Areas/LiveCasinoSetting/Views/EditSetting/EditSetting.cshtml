@@ -19,13 +19,13 @@
 {
     <script type="text/javascript" src="~/LiveCasinoSetting/LiveCSSetting/GetSettingForUpdate?@(editQueryString)"></script>
 }
+
 <div id="tblSetting" 
     data-ng-app="fanex.liveCasinoSetting" 
     data-ng-controller="CustomerSettingController" 
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")" 
     style="display:none;"
     class="edit-setting-livecs">
-
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
         <div data-ng-repeat="subResult in commandResults"> 
             <p>{{subResult.Username}}</p>
@@ -34,6 +34,11 @@
             </p>
         </div>
     </div>
+
+    <div class="setting-header bold col-xs-12">
+        @(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)
+    </div>
+
     @if (Model.IsEditMultiple)
     {
         @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfoMultiple.cshtml", Model)

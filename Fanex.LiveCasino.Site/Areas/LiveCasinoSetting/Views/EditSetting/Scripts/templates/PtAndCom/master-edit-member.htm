@@ -15,7 +15,8 @@
     <tbody>
         <tr>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.M1" 
+                <select id="ddlM1" 
+                data-ng-model="ptAndComSetting.PositionTaking.M1" 
                 data-ng-options="item.id as item.value for item in masterPTOptions" 
                 data-ng-disabled="ptAndComSetting.PositionTaking.Im1"
                 data-ng-change="masterPTChange()"
@@ -23,8 +24,8 @@
                 <span data-ng-if="ptAndComSetting.PositionTaking.Im2">{{ptAndComSetting.PositionTaking.M1}}</span>
             </td>
             <td data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
-                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
-                <select 
+                <input id="cbIm1" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
+                <select id="ddlUm1"
                 data-ng-model="ptAndComSetting.PositionTaking.Um1" 
                 data-ng-options="item.id as item.value for item in masterAutoPTOptions"
                 data-ng-disabled="!ptAndComSetting.PositionTaking.Im1"></select>

@@ -18,7 +18,8 @@
     <tbody>
         <tr>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.S1" 
+                <select id="ddlS1"
+                data-ng-model="ptAndComSetting.PositionTaking.S1" 
                 data-ng-options="item.id as item.value for item in superPTOptions" 
                 data-ng-disabled="ptAndComSetting.PositionTaking.Is1"
                 data-ng-change="superPTChange()"
@@ -26,8 +27,8 @@
                 <span data-ng-if="ptAndComSetting.PositionTaking.Is3">{{ptAndComSetting.PositionTaking.S1}}</span>
             </td>
             <td>
-                <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is1" />
-                <select 
+                <input id="cbIs1" type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Is1" />
+                <select id="ddlUs1"
                 data-ng-model="ptAndComSetting.PositionTaking.Us1" 
                 data-ng-options="item.id as item.value for item in superAutoPTOptions"
                 data-ng-disabled="!ptAndComSetting.PositionTaking.Is1"></select>

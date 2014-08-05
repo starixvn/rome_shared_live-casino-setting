@@ -306,4 +306,10 @@
   <data name="UpdateLiveCasinoGameSettingSuccess" xml:space="preserve">
     <value>Updated {0} Game Setting Successfully.</value>
   </data>
+  <data name="lblEditLiveCasino" xml:space="preserve">
+    <value>Edit Live Casino</value>
+  </data>
+  <data name="lblEditMultipleLiveCasino" xml:space="preserve">
+    <value>Edit Multiple Live Casino</value>
+  </data>
 </root>

@@ -12,12 +12,12 @@
     <tbody>
         <tr>
             <td>
-                <select data-ng-model="ptAndComSetting.PositionTaking.A1" 
+                <select id="ddlA1" data-ng-model="ptAndComSetting.PositionTaking.A1" 
                 data-ng-options="item.id as item.value for item in agentPresetOptions" 
                 data-ng-disabled="isReadOnly"></select>
             </td>
             <td>
-                <select 
+                <select  id="ddlCom"
                 data-ng-model="ptAndComSetting.Commission.Value" 
                 data-ng-options="item.id as item.value for item in memberCommissionOptions" 
                 data-ng-disabled="isReadOnly"></select>

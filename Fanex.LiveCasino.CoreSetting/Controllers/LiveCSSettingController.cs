@@ -10,6 +10,7 @@
 namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -242,6 +243,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="ptAndComSetting">Position taking and commission setting for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();

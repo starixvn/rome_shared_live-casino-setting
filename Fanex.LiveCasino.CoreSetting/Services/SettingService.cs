@@ -609,14 +609,14 @@
         {
             Dictionary<int, string> userNamesWithCustIds = new Dictionary<int, string>();
 
-            string[] custIdsList = custIds.Split(new char[] { ',' });
-            string[] userNameList = usernames.Split(new char[] { ',' });
+            string[] custIdsList = custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] userNameList = usernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             int userNameCount = userNameList.Length;
             var tempUsername = string.Empty;
 
             for (int i = 0; i < custIdsList.Length; i++)
             {
-                tempUsername = i < userNameCount ? userNameList[i] : custIdsList[i];
+                tempUsername = i < userNameCount ? userNameList[i] : string.Empty;
                 userNamesWithCustIds.Add(Converter.ToInt(custIdsList[i]), tempUsername);
             }
 

@@ -250,6 +250,24 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Live Casino.
+        /// </summary>
+        public static string lblEditLiveCasino {
+            get {
+                return ResourceManager.GetString("lblEditLiveCasino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Multiple Live Casino.
+        /// </summary>
+        public static string lblEditMultipleLiveCasino {
+            get {
+                return ResourceManager.GetString("lblEditMultipleLiveCasino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable.
         /// </summary>
         public static string lblEnable {
