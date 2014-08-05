@@ -3,6 +3,9 @@
     using System;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
+    /// <summary>
+    /// Log data base class.
+    /// </summary>
     public class LogDataBase : ILogData
     {
         protected const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
@@ -35,11 +38,29 @@
             get { return true; }
         }
 
-        public virtual string SpName { get { throw new NotImplementedException(); } }
+        public virtual string SpName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        public virtual string NewValues { get { throw new NotImplementedException(); } }
+        public virtual string NewValue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        public virtual string OldValues { get { throw new NotImplementedException(); } }
+        public virtual string OldValue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public string SignUpIp
         {

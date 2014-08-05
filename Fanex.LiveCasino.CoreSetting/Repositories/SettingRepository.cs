@@ -218,7 +218,7 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
             return gameTypes;
         }
 
-        public ICommandResult InsertAutoAccount(ICriteria criteria, ref List<GameType> gameTypes)
+        public ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes)
         {
             var result = new GameSettingCommandResult();
             GameType current = null;

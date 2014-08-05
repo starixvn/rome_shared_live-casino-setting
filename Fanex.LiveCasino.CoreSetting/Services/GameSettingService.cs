@@ -85,7 +85,7 @@
             return _settingRepository.InsertOrUpdate(criteria);
         }
 
-        public ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             var isInsert = false;
 
@@ -151,10 +151,20 @@
             return resultUpdateStakeLevels;
         }
 
-        public ICommandResult InsertAutoGameSetting(InsertAutoAccountCriteria criteria)
+        public ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria)
         {
             var gameTypes = new List<GameType>();
-            ICommandResult result = _settingRepository.InsertAutoAccount(criteria, ref gameTypes);
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
+
+            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(criteria, gameTypes); });
+
+            return result;
+        }
+
+        public ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria)
+        {
+            var gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
 
             Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(criteria, gameTypes); });
 
@@ -350,6 +360,48 @@
             WriteLog(log);
         }
 
+        private void WriteLogAutoInsertAccount(InsertFromExistingAccountCriteria criteria, List<GameType> gameTypes)
+        {
+            if (!gameTypes.Any())
+            {
+                for (int i = 0; i < TimeOut; i++)
+                {
+                    Thread.Sleep(1000);
+                    gameTypes = GetGameSettingByCustomerId(criteria.CustId);
+
+                    if (gameTypes.Any())
+                    {
+                        break;
+                    }
+                }
+            }
+            if (!gameTypes.Any())
+            {
+                gameTypes = GetGameSettingByExchange(criteria.ExchangeId, criteria.SiteName);
+            }
+
+
+            var log = new LogAutoInsertAccount
+            {
+                Action = GetInsertManualLogAction(criteria.RoleId),
+                AgentId = criteria.AgentId,
+                CustId = criteria.CustId,
+                CustUserName = criteria.Username,
+                ExchangeId = criteria.ExchangeId,
+                SignUpIp = criteria.IP,
+                SignUpForm = InsertFormId,
+                SubAccId = criteria.SubAccId,
+                SubAccName = criteria.SubAccName,
+                SuperId = criteria.SuperId,
+                UserId = criteria.SignupBy,
+                UserName = criteria.ModifyUsername,
+                CustSite = criteria.SiteName,
+                GameSetting = gameTypes
+            };
+
+            WriteLog(log);
+        }
+
         private void WriteLogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
         {
             var log = new LogUpdateStakeLevel
@@ -379,8 +431,8 @@
                 SpName = logData.SpName,
                 Doing = string.Empty,
                 ActionId = (int)logData.Action,
-                TrackingValue = logData.NewValues,
-                TrackingValue2 = logData.OldValues,
+                TrackingValue = logData.NewValue,
+                TrackingValue2 = logData.OldValue,
                 Duration = 0
             };
 

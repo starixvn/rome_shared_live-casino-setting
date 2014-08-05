@@ -14,9 +14,11 @@
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
 
-        ICommandResults UpdateManualGameSetting(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
 
-        ICommandResult InsertAutoGameSetting(InsertAutoAccountCriteria criteria);
+        ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria);
+
+        ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria);
 
         IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
     }

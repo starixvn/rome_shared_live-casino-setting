@@ -4,6 +4,9 @@
     using System.Linq;
     using Fanex.NAP.Framework.Command;
 
+    /// <summary>
+    /// Class contain list command results.
+    /// </summary>
     public class CommandResults : ICommandResults
     {
         public CommandResults()

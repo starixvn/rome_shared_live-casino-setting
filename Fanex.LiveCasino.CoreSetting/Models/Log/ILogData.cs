@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
-    using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     public interface ILogData
@@ -27,9 +26,9 @@
 
         LogActions Action { get; set; }
 
-        string NewValues { get; }
+        string NewValue { get; }
 
-        string OldValues { get; }
+        string OldValue { get; }
 
         bool IsValid { get; }
     }

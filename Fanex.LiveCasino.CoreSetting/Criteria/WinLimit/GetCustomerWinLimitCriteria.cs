@@ -2,6 +2,9 @@
 {
     using Fanex.NAP.Framework.Data;
 
+    /// <summary>
+    /// Setting key : Acc_CustomerSelWinLimitLiveCS.
+    /// </summary>
     public class GetCustomerWinLimitCriteria : CriteriaBase
     {
         public int CustId { get; set; }

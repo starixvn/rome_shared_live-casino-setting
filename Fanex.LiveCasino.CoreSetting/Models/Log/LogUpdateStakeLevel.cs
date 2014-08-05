@@ -1,26 +1,39 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
+    /// <summary>
+    /// Log update stake level.
+    /// </summary>
     public class LogUpdateStakeLevel : LogDataBase, ILogData
     {
-        protected const string TrackingTemplate = "<{0} CustID=\"{1}\" {2} GameTypeId=\"{3}\" BetTypeId=\"{4}\" StakeLevel=\"{5}\" Ip=\"{6}\" Lang=\"{7}\" RoleID=\"{8}\" ErrCode=\"{9}\" ErrMsg=\"{10}\" />";
+        protected const string TrackingTemplate = "<{0} CustID=\"{1}\" {2} GameTypeId=\"{3}\" BetTypeId=\"{4}\" StakeLevel=\"{5}\"" +
+                                                  " Ip=\"{6}\" Lang=\"{7}\" RoleID=\"{8}\" ErrCode=\"{9}\" ErrMsg=\"{10}\" />";
 
-        public GameType OldGameType { get; set; }
+        public override bool IsValid
+        {
+            get
+            {
+                return base.IsValid;
+            }
+        }
+
         public GameType NewGameType { get; set; }
 
-        protected string CreateLogData(GameType gameType)
+        public override string NewValue
         {
-            return gameType != null ? string.Format(TrackingTemplate
-                , SpName
-                , CustId
-                , RoleId == 4 ? string.Empty : string.Format(TrackingSubAcc, SubAccId, SubAccName)
-                , gameType.Id
-                , gameType.BetTypeId
-                , gameType.CheckedStakeLevelRange
-                , SignUpIp
-                , Language
-                , RoleId
-                , ErrCode
-                , ErrMsg) : string.Empty;
+            get
+            {
+                return CreateLogData(NewGameType);
+            }
+        }
+
+        public GameType OldGameType { get; set; }
+
+        public override string OldValue
+        {
+            get
+            {
+                return CreateLogData(OldGameType);
+            }
         }
 
         public override string SpName
@@ -31,28 +44,33 @@
             }
         }
 
-        public override string NewValues
+        /// <summary>
+        /// Creates the log data.
+        /// </summary>
+        /// <param name="gameType">Type of the game.</param>
+        /// <returns>The tracking value formatted xml.</returns>
+        protected string CreateLogData(GameType gameType)
         {
-            get
+            if (gameType == null)
             {
-                return CreateLogData(NewGameType);
+                return string.Empty;
             }
-        }
 
-        public override string OldValues
-        {
-            get
-            {
-                return CreateLogData(OldGameType);
-            }
-        }
+            var trackingValue = string.Format(
+                TrackingTemplate,
+                 SpName,
+                 CustId,
+                 RoleId == 4 ? string.Empty : string.Format(TrackingSubAcc, SubAccId, SubAccName),
+                 gameType.Id,
+                 gameType.BetTypeId,
+                 gameType.CheckedStakeLevelRange,
+                 SignUpIp,
+                 Language,
+                 RoleId,
+                 ErrCode,
+                 ErrMsg);
 
-        public override bool IsValid
-        {
-            get
-            {
-                return base.IsValid;
-            }
+            return trackingValue;
         }
     }
 }

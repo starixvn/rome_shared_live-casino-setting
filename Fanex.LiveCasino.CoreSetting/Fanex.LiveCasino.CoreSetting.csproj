@@ -76,6 +76,7 @@
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertAutoAccountCriteria.cs" />
+    <Compile Include="Criteria\GameSetting\InsertFromExistingAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertManualAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Models\Log\ILogData.cs" />
     <Compile Include="Models\Log\LogAutoInsertAccount.cs" />
     <Compile Include="Models\Log\LogDataBase.cs" />
+    <Compile Include="Models\Log\LogInsertFromExistingAccount.cs" />
     <Compile Include="Models\Log\LogManualInsertAccount.cs" />
     <Compile Include="Models\Log\LogUpdateStakeLevel.cs" />
     <Compile Include="Models\PositionTakingMatrix.cs" />

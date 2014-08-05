@@ -110,7 +110,7 @@
 
             // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
             var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-            var gameSettingResult = _gameSettingService.UpdateManualGameSetting(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
+            var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
 
             resultList.Results.AddRange(winLimitResults);
             resultList.Results.AddRange(gameSettingResult);
@@ -172,7 +172,7 @@
             }
             else
             {
-                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManualGameSetting(settingContext, custInfo, gameSetting));
+                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo, gameSetting));
             }
 
             return Json(updateResult);

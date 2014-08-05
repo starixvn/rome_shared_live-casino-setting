@@ -3,6 +3,9 @@
     using System;
     using Fanex.NAP.Framework.Command;
 
+    /// <summary>
+    /// Game setting command result class.
+    /// </summary>
     public class GameSettingCommandResult : CommandResult
     {
         public GameSettingCommandResult()

@@ -3,6 +3,9 @@
     using System;
     using Fanex.NAP.Framework.Command;
 
+    /// <summary>
+    /// Win limit command result class.
+    /// </summary>
     public class WinLimitCommandResult : CommandResult
     {
         public WinLimitCommandResult()

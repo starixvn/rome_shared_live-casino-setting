@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
-    using System;
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
 
