@@ -1,27 +1,24 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="BaseRepository.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-namespace Fanex.LiveCasino.CoreSetting.Repositories
+﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
     using System;
+    using System.Collections;
     using System.Data;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
-    using System.Collections;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// The base repository class.
     /// </summary>
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
+        /// <summary>
+        /// Inserts the or update.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Command results class.</returns>
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
             var result = new CommandResult();
@@ -41,11 +38,15 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
             return result;
         }
 
-        protected PtAndComSetting GetCommonSettingForEdit(
-            ICriteria criteria,
-            Action<IDataReader, PtAndComSetting> mapSetting)
+        /// <summary>
+        /// Gets the common setting for edit.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="mapSetting">The map setting.</param>
+        /// <returns>Position taking and commission setting models.</returns>
+        protected PtAndComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PtAndComSetting> mapSetting)
         {
-            PtAndComSetting ptAndComSetting = new PtAndComSetting();
+            var positionTakingAndComSetting = new PtAndComSetting();
 
             if (criteria.IsValid())
             {
@@ -55,15 +56,20 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories
                     {
                         while (reader.Read())
                         {
-                            mapSetting(reader, ptAndComSetting);
+                            mapSetting(reader, positionTakingAndComSetting);
                         }
                     }
                 }
             }
 
-            return ptAndComSetting;
+            return positionTakingAndComSetting;
         }
 
+        /// <summary>
+        /// Gets the command result.
+        /// </summary>
+        /// <param name="outParameters">The out parameters.</param>
+        /// <returns>Error code and error message.</returns>
         protected CommandResult GetCommandResult(Hashtable outParameters)
         {
             var result = new CommandResult();
