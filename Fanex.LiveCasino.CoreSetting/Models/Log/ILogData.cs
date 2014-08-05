@@ -2,7 +2,7 @@
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
-    public interface ILogData
+    internal interface ILogData
     {
         int UserId { get; set; }
 

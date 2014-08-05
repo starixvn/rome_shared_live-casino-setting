@@ -163,7 +163,9 @@
     <Compile Include="Services\GameSettingService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IGameSettingService.cs" />
+    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Models\PtAndComSetting.cs" />

@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SettingService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-namespace Fanex.LiveCasino.CoreSetting.Services
+﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System;
     using System.Collections.Generic;
@@ -116,8 +108,8 @@ namespace Fanex.LiveCasino.CoreSetting.Services
         #region Pt and Com Single Update
 
         /// <summary>
-        /// Update position taking and commission setting, depend on setting context, 
-        /// we will decide which store procedure and function will be called. 
+        /// Update position taking and commission setting, depend on setting context,
+        /// we will decide which store procedure and function will be called.
         /// </summary>
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
@@ -584,7 +576,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services
         private IMultipleCommandResults GetPtAndComResultDetailsMultiple(string custIds, string userNames, Dictionary<int, ICommandResult> commandResults)
         {
             IMultipleCommandResults multipleResults = new MultipleCommandResults();
-            Dictionary<int, string> userNamesWithCustIds = GetUsernamesWithCustIds(custIds, userNames); 
+            Dictionary<int, string> userNamesWithCustIds = GetUsernamesWithCustIds(custIds, userNames);
 
             foreach (var result in commandResults)
             {

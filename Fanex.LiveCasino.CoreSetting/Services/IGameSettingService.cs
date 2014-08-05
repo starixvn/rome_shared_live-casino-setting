@@ -10,16 +10,18 @@
     {
         string GetCustomerSiteByUsername(string username);
 
-        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
+        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
 
-        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
-
-        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+        IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut);
 
         ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria);
 
         ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria);
 
-        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
+        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
+
+        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+
+        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
     }
 }

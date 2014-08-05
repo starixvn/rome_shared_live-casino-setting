@@ -16,12 +16,16 @@
     using Fanex.NAP.Framework.Command;
     using RemotingRef;
 
+    /// <summary>
+    /// Game setting service class.
+    /// </summary>
     public class GameSettingService : IGameSettingService
     {
         private const string CasinoNo = "01";
-        private const int InsertFormId = 1;
-        private const int TimeOut = 5;
+        private const int InsertFromId = 1;
+        private const int TimeOutReplication = 5;
 
+        private readonly ILogService _logService = new LogService();
         private readonly ISettingRepository _settingRepository;
 
         public GameSettingService()
@@ -44,133 +48,12 @@
             return userInfo.Site;
         }
 
-        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo)
-        {
-            var criteria = new UpdateLiveCasinoStatusCriteria
-            {
-                Custid = settingContext.TargetCustId,
-                UserID = settingContext.UserIdDoAction,
-                DisabledLiveCS = custInfo.DisableLiveCasino,
-                IP = settingContext.IP,
-                Language = settingContext.Language
-            };
-
-            ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
-
-            //UpdateLiveCasinoStatusSuccess
-            if (updateResult.IsSuccessful)
-            {
-                updateResult = new CommandResult
-                {
-                    Code = 0,
-                    Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
-                };
-            }
-
-            return updateResult;
-        }
-
-        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync)
-        {
-            var criteria = new UpdateSyncLiveCasinoCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                UserId = settingContext.UserIdDoAction,
-                Ip = settingContext.IP,
-                Language = settingContext.Language,
-                SubAccId = settingContext.SubAccId,
-                SyncLiveCS = isSync
-            };
-
-            return _settingRepository.InsertOrUpdate(criteria);
-        }
-
-        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
-        {
-            var isInsert = false;
-
-            if (!custInfo.IsSyncLiveCasino)
-            {
-                ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
-
-                if (resultInsertAccount.IsSuccessful)
-                {
-                    var logData = new LogManualInsertAccount
-                    {
-                        Action = GetInsertManualLogAction(settingContext.TargetRoleId),
-                        AgentId = settingContext.AgentId,
-                        CustId = settingContext.TargetCustId,
-                        CustUserName = settingContext.TargetUsername,
-                        ExchangeId = settingContext.ExchangeId,
-                        SignUpIp = settingContext.IP,
-                        SignUpForm = InsertFormId,
-                        SubAccId = settingContext.SubAccId,
-                        SubAccName = settingContext.SubAccName,
-                        SuperId = settingContext.SuperId,
-                        UserId = settingContext.UserIdDoAction,
-                        UserName = settingContext.UserName,
-                        CustSite = settingContext.SiteName
-                    };
-
-                    WriteLog(logData);
-
-                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, true);
-
-                    if (syncResult.IsSuccessful)
-                    {
-                        custInfo.DisableLiveCasino = false;
-                        UpdateLiveCasinoStatus(settingContext, custInfo);
-                    }
-
-                    isInsert = true;
-                }
-            }
-
-            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
-
-            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
-
-            if (resultUpdateStakeLevels.IsSuccessful)
-            {
-                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
-
-                foreach (var itemResult in successResultUpdateStakeLevel)
-                {
-                    var gameSettingResult = (GameSettingCommandResult)itemResult;
-                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
-                    if (newGameType != null)
-                    {
-                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
-                        WriteLogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
-
-                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), "E"));
-                    }
-                }
-            }
-
-            return resultUpdateStakeLevels;
-        }
-
-        public ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria)
-        {
-            var gameTypes = new List<GameType>();
-            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
-
-            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(criteria, gameTypes); });
-
-            return result;
-        }
-
-        public ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria)
-        {
-            var gameTypes = new List<GameType>();
-            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
-
-            Task.Factory.StartNew(() => { WriteLogAutoInsertAccount(criteria, gameTypes); });
-
-            return result;
-        }
-
+        /// <summary>
+        /// Gets the game setting.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="custInfo">The customer information.</param>
+        /// <returns>Game settings.</returns>
         public IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
         {
             var gameSettings = new List<GameType>();
@@ -200,25 +83,195 @@
 
             foreach (var gameSettingItem in gameSettings)
             {
-                gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), "E");
+                gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), settingContext.Language);
             }
 
             return gameSettings;
         }
 
-        #region Private Function
-
-        #region Game Setting
-
-        private List<GameType> GetGameSettingByExchange(int exchangeId, string site)
+        /// <summary>
+        /// Gets the game setting with time out for waiting replication.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="exchangeId">The exchange identifier.</param>
+        /// <param name="site">The site name.</param>
+        /// <param name="timeOut">The time out.</param>
+        /// <returns>Game settings.</returns>
+        public IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut = TimeOutReplication)
         {
-            var criteria = new GetGameSettingByExchangeCriteria
+            var gameTypes = new List<GameType>();
+
+            for (int i = 0; i < timeOut; i++)
             {
-                ExchangeId = exchangeId,
-                Site = site
+                Thread.Sleep(1000);
+                gameTypes = GetGameSettingByCustomerId(custId);
+
+                if (gameTypes.Any())
+                {
+                    break;
+                }
+            }
+
+            if (!gameTypes.Any())
+            {
+                gameTypes = GetGameSettingByExchange(exchangeId, site);
+            }
+
+            return gameTypes;
+        }
+
+        /// <summary>
+        /// Inserts the automatic account.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Command result insert automatic account.</returns>
+        public ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria)
+        {
+            var gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
+
+            Task.Factory.StartNew(() =>
+            {
+                if (!gameTypes.Any())
+                {
+                    gameTypes = GetGameSetting(criteria.CustId, criteria.ExchangeId, criteria.SiteName).ToList();
+                }
+
+                _logService.LogAutoInsertAccount(criteria, gameTypes);
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Inserts from existing account.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Command result insert from existing account.</returns>
+        public ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria)
+        {
+            var gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
+
+            Task.Factory.StartNew(() =>
+            {
+                if (!gameTypes.Any())
+                {
+                    gameTypes = GetGameSetting(criteria.CustId, criteria.ExchangeId, criteria.SiteName).ToList();
+                }
+
+                _logService.LogInsertFromExistingAccount(criteria, gameTypes);
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates the live casino status.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="custInfo">The customer information.</param>
+        /// <returns>Command result update status.</returns>
+        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo)
+        {
+            var criteria = new UpdateLiveCasinoStatusCriteria
+            {
+                Custid = settingContext.TargetCustId,
+                UserID = settingContext.UserIdDoAction,
+                DisabledLiveCS = custInfo.DisableLiveCasino,
+                IP = settingContext.IP,
+                Language = settingContext.Language
             };
 
-            return _settingRepository.GetGameSetting(criteria, false);
+            ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
+
+            if (updateResult.IsSuccessful)
+            {
+                updateResult = new CommandResult
+                {
+                    Code = 0,
+                    Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
+                };
+            }
+
+            return updateResult;
+        }
+
+        /// <summary>
+        /// Updates the manual.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="custInfo">The customer information.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Game setting command result.</returns>
+        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        {
+            var isInsert = false;
+
+            if (!custInfo.IsSyncLiveCasino)
+            {
+                ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
+
+                if (resultInsertAccount.IsSuccessful)
+                {
+                    _logService.LogManualInsertAccount(settingContext);
+
+                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, true);
+
+                    if (syncResult.IsSuccessful)
+                    {
+                        custInfo.DisableLiveCasino = false;
+                        UpdateLiveCasinoStatus(settingContext, custInfo);
+                    }
+
+                    isInsert = true;
+                }
+            }
+
+            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
+
+            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes);
+
+            if (resultUpdateStakeLevels.IsSuccessful)
+            {
+                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
+
+                foreach (var itemResult in successResultUpdateStakeLevel)
+                {
+                    var gameSettingResult = (GameSettingCommandResult)itemResult;
+                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
+                    if (newGameType != null)
+                    {
+                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
+                        _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
+
+                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), "E"));
+                    }
+                }
+            }
+
+            return resultUpdateStakeLevels;
+        }
+
+        /// <summary>
+        /// Updates the synchronize live casino.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="isSync">If set to <c>true</c> [is synchronize].</param>
+        /// <returns>Command result update sync.</returns>
+        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync)
+        {
+            var criteria = new UpdateSyncLiveCasinoCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                UserId = settingContext.UserIdDoAction,
+                Ip = settingContext.IP,
+                Language = settingContext.Language,
+                SubAccId = settingContext.SubAccId,
+                SyncLiveCS = isSync
+            };
+
+            return _settingRepository.InsertOrUpdate(criteria);
         }
 
         private List<GameType> GetGameSettingByCustomerId(int custId)
@@ -231,27 +284,22 @@
             return _settingRepository.GetGameSetting(criteria, true);
         }
 
-        //private List<GameType> InsertAutoAccount(SettingContext settingContext)
-        //{
-        //    var criteria = new InsertAutoAccountCriteria
-        //    {
-        //        CustId = settingContext.TargetCustId,
-        //        CasinoNo = CasinoNo,
-        //        ExchangeId = settingContext.ExchangeId,
-        //        SuperId = settingContext.SuperId,
-        //        MasterId = settingContext.MasterId,
-        //        AgentId = settingContext.AgentId,
-        //        RoleId = settingContext.TargetRoleId,
-        //        SignupIp = settingContext.IP,
-        //        SignupBy = settingContext.UserIdDoAction,
-        //        SignupFrom = InsertFormId,
-        //        ModifyUsername = settingContext.UserName,
-        //        Username = settingContext.TargetUsername
-        //    };
+        private List<GameType> GetGameSettingByExchange(int exchangeId, string site)
+        {
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
 
-        //    return _settingRepository.GetGameSetting(criteria, true);
-        //}
+            return _settingRepository.GetGameSetting(criteria, false);
+        }
 
+        /// <summary>
+        /// Inserts the manual account.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <returns>Command result insert manual account.</returns>
         private ICommandResult InsertManualAccount(SettingContext settingContext)
         {
             var criteria = new InsertManualAccountCriteria
@@ -265,7 +313,7 @@
                 RoleId = settingContext.TargetRoleId,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = InsertFormId,
+                SignupFrom = InsertFromId,
                 ModifyUsername = settingContext.UserName,
                 Username = settingContext.TargetUsername,
                 CustSite = settingContext.SiteName
@@ -274,6 +322,33 @@
             return _settingRepository.InsertOrUpdate(criteria);
         }
 
+        /// <summary>
+        /// Updates the list stake level.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="roleId">The role identifier.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Command results update list stake level.</returns>
+        private ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
+        {
+            var results = new CommandResults();
+
+            foreach (var itemGameType in gameTypes)
+            {
+                var result = UpdateStakeLevel(custId, roleId, itemGameType);
+                results.Results.Add(result);
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Updates the stake level.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="roleId">The role identifier.</param>
+        /// <param name="gameType">Type of the game.</param>
+        /// <returns>Command result update stake level.</returns>
         private ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType)
         {
             var criteria = new UpdateStakeLevelCriteria
@@ -300,213 +375,5 @@
 
             return gameSettingResult;
         }
-
-        private ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes)
-        {
-            var results = new CommandResults();
-
-            foreach (var itemGameType in gameTypes)
-            {
-                var result = UpdateStakeLevel(custId, roleId, itemGameType);
-                results.Results.Add(result);
-            }
-
-            return results;
-        }
-
-        #endregion
-
-        #region Log
-
-        private void WriteLogAutoInsertAccount(InsertAutoAccountCriteria criteria, List<GameType> gameTypes)
-        {
-            if (!gameTypes.Any())
-            {
-                for (int i = 0; i < TimeOut; i++)
-                {
-                    Thread.Sleep(1000);
-                    gameTypes = GetGameSettingByCustomerId(criteria.CustId);
-
-                    if (gameTypes.Any())
-                    {
-                        break;
-                    }
-                }
-            }
-            if (!gameTypes.Any())
-            {
-                gameTypes = GetGameSettingByExchange(criteria.ExchangeId, criteria.SiteName);
-            }
-
-
-            var log = new LogAutoInsertAccount
-            {
-                Action = GetInsertManualLogAction(criteria.RoleId),
-                AgentId = criteria.AgentId,
-                CustId = criteria.CustId,
-                CustUserName = criteria.Username,
-                ExchangeId = criteria.ExchangeId,
-                SignUpIp = criteria.IP,
-                SignUpForm = InsertFormId,
-                SubAccId = criteria.SubAccId,
-                SubAccName = criteria.SubAccName,
-                SuperId = criteria.SuperId,
-                UserId = criteria.SignupBy,
-                UserName = criteria.ModifyUsername,
-                CustSite = criteria.SiteName,
-                GameSetting = gameTypes
-            };
-
-            WriteLog(log);
-        }
-
-        private void WriteLogAutoInsertAccount(InsertFromExistingAccountCriteria criteria, List<GameType> gameTypes)
-        {
-            if (!gameTypes.Any())
-            {
-                for (int i = 0; i < TimeOut; i++)
-                {
-                    Thread.Sleep(1000);
-                    gameTypes = GetGameSettingByCustomerId(criteria.CustId);
-
-                    if (gameTypes.Any())
-                    {
-                        break;
-                    }
-                }
-            }
-            if (!gameTypes.Any())
-            {
-                gameTypes = GetGameSettingByExchange(criteria.ExchangeId, criteria.SiteName);
-            }
-
-
-            var log = new LogAutoInsertAccount
-            {
-                Action = GetInsertManualLogAction(criteria.RoleId),
-                AgentId = criteria.AgentId,
-                CustId = criteria.CustId,
-                CustUserName = criteria.Username,
-                ExchangeId = criteria.ExchangeId,
-                SignUpIp = criteria.IP,
-                SignUpForm = InsertFormId,
-                SubAccId = criteria.SubAccId,
-                SubAccName = criteria.SubAccName,
-                SuperId = criteria.SuperId,
-                UserId = criteria.SignupBy,
-                UserName = criteria.ModifyUsername,
-                CustSite = criteria.SiteName,
-                GameSetting = gameTypes
-            };
-
-            WriteLog(log);
-        }
-
-        private void WriteLogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
-        {
-            var log = new LogUpdateStakeLevel
-            {
-                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
-                CustId = settingContext.TargetCustId,
-                SignUpIp = settingContext.IP,
-                Language = "E",
-                UserId = settingContext.UserIdDoAction,
-                RoleId = settingContext.TargetRoleId,
-                NewGameType = gameTypeNew,
-                OldGameType = isInsert ? null : gameTypeOld
-            };
-
-            if (gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)
-            {
-                WriteLog(log);
-            }
-        }
-
-        private ICommandResult WriteLog(ILogData logData)
-        {
-            var criteria = new InsertLogUserRunSPCriteria
-            {
-                UserId = logData.UserId,
-                CustId = logData.CustId,
-                SpName = logData.SpName,
-                Doing = string.Empty,
-                ActionId = (int)logData.Action,
-                TrackingValue = logData.NewValue,
-                TrackingValue2 = logData.OldValue,
-                Duration = 0
-            };
-
-            return _settingRepository.InsertOrUpdate(criteria);
-        }
-
-        private LogActions GetInsertManualLogAction(int roleId)
-        {
-            LogActions logAction;
-
-            switch (roleId)
-            {
-                case (int)CustRole.Super:
-                    logAction = LogActions.ManualInsert_Super;
-                    break;
-                case (int)CustRole.Master:
-                    logAction = LogActions.ManualInsert_Master;
-                    break;
-                case (int)CustRole.Agent:
-                    logAction = LogActions.ManualInsert_Agent;
-                    break;
-                default:
-                    logAction = LogActions.ManualInsert_Member;
-                    break;
-            }
-
-            return logAction;
-        }
-
-        private LogActions GetInsertAutoLogAction(int roleId)
-        {
-            LogActions logAction;
-
-            switch (roleId)
-            {
-                case (int)CustRole.Master:
-                    logAction = LogActions.AutoInsert_Master;
-                    break;
-                case (int)CustRole.Agent:
-                    logAction = LogActions.AutoInsert_Agent;
-                    break;
-                default:
-                    logAction = LogActions.AutoInsert_Member;
-                    break;
-            }
-
-            return logAction;
-        }
-
-        private LogActions GetUpdateStakeLevelLogAction(int roleId)
-        {
-            LogActions logAction;
-
-            switch (roleId)
-            {
-                case (int)CustRole.Super:
-                    logAction = LogActions.UpdateStakeLevel_Super;
-                    break;
-                case (int)CustRole.Master:
-                    logAction = LogActions.UpdateStakeLevel_Master;
-                    break;
-                case (int)CustRole.Agent:
-                    logAction = LogActions.UpdateStakeLevel_Agent;
-                    break;
-                default:
-                    logAction = LogActions.UpdateStakeLevel_Member;
-                    break;
-            }
-
-            return logAction;
-        }
-
-        #endregion
-
-        #endregion
     }
 }

@@ -6,7 +6,7 @@
     /// <summary>
     /// Log insert account when up line is synced Live Casino setting.
     /// </summary>
-    public class LogAutoInsertAccount : LogManualInsertAccount
+    internal class LogAutoInsertAccount : LogManualInsertAccount
     {
         private const string GameTypeTemplate = "<GameType GameTypeId=\"{0}\" BetTypeId=\"{1}\" StakeLevel=\"{2}\" />";
 
