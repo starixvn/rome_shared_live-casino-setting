@@ -172,8 +172,6 @@
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Models\PtAndComSetting.cs" />
-    <Compile Include="Web\Filters\InjectedFilterAttribute.cs" />
-    <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -207,7 +205,9 @@
       <LastGenOutput>LiveCasinoLang.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Web\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

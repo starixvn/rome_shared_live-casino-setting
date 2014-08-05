@@ -1,12 +1,8 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Web.Mvc;
     using System.Globalization;
     using System.Threading;
+    using System.Web.Mvc;
 
     /// <summary>
     /// TODO: Update summary.
@@ -34,6 +30,5 @@
 
             base.OnActionExecuting(filterContext);
         }
-
     }
 }
