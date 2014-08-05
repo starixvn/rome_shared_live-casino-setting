@@ -18,7 +18,7 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
 
-        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+        ICommandResults UpdateManual(SettingContext settingContext, CustInfo customerInfo, List<GameType> gameTypes);
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
     }

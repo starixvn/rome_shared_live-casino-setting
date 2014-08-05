@@ -163,7 +163,7 @@
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
         /// <returns>Log action for insert automatic account.</returns>
-        private LogActions GetInsertAutoLogAction(int roleId)
+        private static LogActions GetInsertAutoLogAction(int roleId)
         {
             LogActions logAction;
 
@@ -190,7 +190,7 @@
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
         /// <returns>Log action for insert from existing account.</returns>
-        private LogActions GetInsertFromExistingLogAction(int roleId)
+        private static LogActions GetInsertFromExistingLogAction(int roleId)
         {
             LogActions logAction;
 
@@ -217,7 +217,7 @@
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
         /// <returns>Log action for manual insert account.</returns>
-        private LogActions GetInsertManualLogAction(int roleId)
+        private static LogActions GetInsertManualLogAction(int roleId)
         {
             LogActions logAction;
 
@@ -248,7 +248,7 @@
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
         /// <returns>Log action for update stake level.</returns>
-        private LogActions GetUpdateStakeLevelLogAction(int roleId)
+        private static LogActions GetUpdateStakeLevelLogAction(int roleId)
         {
             LogActions logAction;
 

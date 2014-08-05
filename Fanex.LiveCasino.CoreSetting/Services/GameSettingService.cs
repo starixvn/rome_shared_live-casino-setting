@@ -166,14 +166,14 @@
         /// Updates the manual.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="custInfo">The customer information.</param>
+        /// <param name="customerInfo">The customer information.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Game setting command result.</returns>
-        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo customerInfo, List<GameType> gameTypes)
         {
             var isInsert = false;
 
-            if (!custInfo.IsSyncLiveCasino)
+            if (!customerInfo.IsSyncLiveCasino)
             {
                 ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
 
@@ -184,8 +184,8 @@
 
                     if (syncResult.IsSuccessful)
                     {
-                        custInfo.DisableLiveCasino = false;
-                        UpdateLiveCasinoStatus(settingContext, custInfo);
+                        customerInfo.DisableLiveCasino = false;
+                        UpdateLiveCasinoStatus(settingContext, customerInfo);
                     }
 
                     isInsert = true;

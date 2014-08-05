@@ -152,7 +152,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\UnityBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LiveCasinoSetting.xml">
