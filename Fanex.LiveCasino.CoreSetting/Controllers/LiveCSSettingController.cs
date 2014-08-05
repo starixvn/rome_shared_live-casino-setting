@@ -23,7 +23,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class LiveCSSettingController : Controller
+    public class LiveCSSettingController : BaseController
     {
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;

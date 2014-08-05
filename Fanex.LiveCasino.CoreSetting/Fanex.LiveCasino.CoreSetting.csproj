@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\LiveCSSettingController.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />
