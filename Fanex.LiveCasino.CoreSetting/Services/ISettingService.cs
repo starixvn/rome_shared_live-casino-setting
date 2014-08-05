@@ -1,11 +1,13 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.NAP.Framework.Command;
 
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
     {
         CustInfo GetCustomerInfo(int custId);

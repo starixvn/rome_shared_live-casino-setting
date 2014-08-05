@@ -8,94 +8,97 @@
 // </history>
 namespace Fanex.LiveCasino.CoreSetting.Models
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1609:PropertyDocumentationMustHaveValue", Justification = "Reviewed.")]
     public class SettingContext
     {
+        public SettingContext()
+        {
+        }
+
         /// <summary>
-        /// Current login customer id or customer that is performing
+        /// Gets or sets Current login customer id or customer that is performing.
         /// </summary>
         public int CustId { get; set; }
 
         /// <summary>
-        /// Current login customer user name
+        /// Gets or sets Current login customer user name.
         /// </summary>
         public string UserName { get; set; }
 
         public string TargetUsername { get; set; }
 
         /// <summary>
-        /// Target User
+        /// Gets or sets Target User.
         /// </summary>
         public string TargetUsernames { get; set; }
 
         /// <summary>
-        /// Target customer id of edited customer
+        /// Gets or sets Target customer id of edited customer.
         /// </summary>
         public int TargetCustId { get; set; }
 
         /// <summary>
-        /// Target customers id for edit multiple.
+        /// Gets or sets Target customers id for edit multiple.
         /// </summary>
         public string TargetCustIds { get; set; }
 
         /// <summary>
-        /// Administrator id, using in Accounting or internal agent
+        /// Gets or sets Administrator id, using in Accounting or internal agent.
         /// </summary>
         public int AdminId { get; set; }
 
         /// <summary>
-        /// Sub-Account id using in Agency
+        /// Gets or sets Sub-Account id using in Agency.
         /// </summary>
         public int SubAccId { get; set; }
 
         public string SubAccName { get; set; }
 
         /// <summary>
-        /// Current role id of customer that is performing
+        /// Gets or sets Current role id of customer that is performing.
         /// </summary>
         public int RoleId { get; set; }
 
         /// <summary>
-        /// Site name
+        /// Gets or sets Site name.
         /// </summary>
         public string SiteName { get; set; }
 
         /// <summary>
-        /// Role id of edited customer
+        /// Gets or sets Role id of edited customer.
         /// </summary>
         public int TargetRoleId { get; set; }
 
         /// <summary>
-        /// Form type of edit: Edit Min/Max PT, Edit MinPT or Edit PT
+        /// Gets or sets Form type of edit: Edit Min/Max PT, Edit MinPT or Edit PT.
         /// </summary>
         public FormType FormType { get; set; }
 
         /// <summary>
-        /// IP of current request
+        /// Gets or sets IP of current request.
         /// </summary>
         public string IP { get; set; }
 
         /// <summary>
-        /// Language of current request
+        /// Gets or sets Language of current request.
         /// </summary>
         public string Language { get; set; }
 
         /// <summary>
-        /// LangKey of current request
+        /// Gets or sets LangKey of current request.
         /// </summary>
         public string LangKey { get; set; }
 
-        /// <summary>
-        /// Is edit multiple or not.
-        /// </summary>
         public bool IsEditMultiple { get; set; }
 
         /// <summary>
-        /// Currency identify.
+        /// Gets or sets Currency identify.
         /// </summary>
         public int ExchangeId { get; set; }
 
@@ -106,10 +109,6 @@ namespace Fanex.LiveCasino.CoreSetting.Models
         public int AgentId { get; set; }
 
         public int SignupFrom { get; set; }
-
-        public SettingContext()
-        {
-        }
 
         public int UserIdDoAction
         {
