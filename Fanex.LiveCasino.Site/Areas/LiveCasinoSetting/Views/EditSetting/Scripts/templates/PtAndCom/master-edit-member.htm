@@ -4,7 +4,7 @@
             <th class="col-xs-4">
                 {{language.getString('lblMasterPT')}}
             </th>
-            <th class="col-xs-4">
+            <th class="col-xs-4" data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
                 {{language.getString('lblMasterAutoPT')}}
             </th>
             <th class="col-xs-4">
@@ -22,7 +22,7 @@
                 data-ng-if="!ptAndComSetting.PositionTaking.Im2"></select>
                 <span data-ng-if="ptAndComSetting.PositionTaking.Im2">{{ptAndComSetting.PositionTaking.M1}}</span>
             </td>
-            <td>
+            <td data-ng-if="!ptAndComSetting.PositionTaking.IsDisableAuto">
                 <input type="checkbox" data-ng-model="ptAndComSetting.PositionTaking.Im1" />
                 <select 
                 data-ng-model="ptAndComSetting.PositionTaking.Um1" 
