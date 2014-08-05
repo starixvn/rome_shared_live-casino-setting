@@ -28,7 +28,7 @@ describe('pt-and-com-setting-service', function () {
     it('should send the msg and return the response.', function () {
         // set up some data for the http call to return and test later.
         var result = {
-            Results: [],
+            CommandResultsList: [],
             IsSuccessful: false
         },
             urlRequest = 'request/url',
@@ -44,13 +44,13 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.commandResults).toEqual(result.Results);
+        expect(custSettingScope.commandResults).toEqual(result.CommandResultsList);
     });
 
     it('should send the msg and return the response, show result message and then hide', function () {
         // set up some data for the http call to return and test later.
         var result = {
-            Results: [
+            CommandResultsList: [
                 {
                     ErrCode: 0,
                     Message: 'success'
@@ -71,7 +71,7 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.commandResults).toEqual(result.Results);
+        expect(custSettingScope.commandResults).toEqual(result.CommandResultsList);
         timeOut.flush();
         expect(custSettingScope.commandResults).toEqual([]);
     });

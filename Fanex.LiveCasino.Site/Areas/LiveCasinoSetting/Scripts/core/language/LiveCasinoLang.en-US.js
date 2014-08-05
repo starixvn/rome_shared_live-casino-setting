@@ -2,9 +2,9 @@
 /*jshint -W101,-W106,-W044,-W098*/
 
 language.liveCasino['en-US'] = {
-	_101 : "Updated Commission Successfully.",
+	_101 : "Commission is updated successfully.",
 	_102 : "Updated Min Position Successfully.",
-	_103 : "Updated Position Taking Successfully.",
+	_103 : "Position taking is updated successfully.",
 	_104 : "Updated Win Limit Successfully.",
 	Agent : "Agent",
 	lbl10X : "10X",
@@ -15,6 +15,7 @@ language.liveCasino['en-US'] = {
 	lblAgentMinPT : "Agent Min PT",
 	lblAgentPresetPT : "Agent Preset PT",
 	lblAgentPT : "Agent PT",
+	lblBettingLimit : "Betting Limit",
 	lblChangePTTo : "Do you want to update all member&apos;s position taking to",
 	lblClickToViewCurrentWinLimit : "Click to view Current Win Limit",
 	lblClose : "Close",
@@ -25,6 +26,8 @@ language.liveCasino['en-US'] = {
 	lblEnable : "Enable",
 	lblFax : "Fax",
 	lblFirstName : "First Name",
+	lblGameSetting : "Game Setting",
+	lblGameType : "Game Type",
 	lblHaveChangePositionTaking : "You have changed this {0} not to take auto position taking.",
 	lblLastName : "Last Name",
 	lblMasterAutoPresetPT : "Master Auto Preset PT",
@@ -38,7 +41,7 @@ language.liveCasino['en-US'] = {
 	lblMaximumWinLimit : "Maximum Win Limit",
 	lblMemberCommission : "Member Commission",
 	lblMobilePhone : "Mobile Phone",
-	lblNickname : "Nick name",
+	lblNickname : "Nickname",
 	lblNo : "No",
 	lblOf : "of",
 	lblOnGivenCredit : "on given credit",
@@ -57,6 +60,9 @@ language.liveCasino['en-US'] = {
 	Master : "Master",
 	Member : "Member",
 	Super : "Super",
+	UpdatedWinLimitSuccessfully : "Updated Win Limit Successfully.",
+	UpdateLiveCasinoGameSettingFail : "Updated Game Setting {0} fail because {1}.",
+	UpdateLiveCasinoGameSettingSuccess : "Updated {0} Game Setting Successfully.",
 	UpdateLiveCasinoStatusSuccess : "Updated Status Successfully.",
 	UpdateLiveCasinoStatusUnSuccess : "Updated Status unsuccessfully because Live Casino status has been disabled at upline."
 };

@@ -23,7 +23,11 @@ language.liveCasino = {};
     {
         Path.Combine(resourcePath, "LiveCasinoLang.resx"),
         Path.Combine(resourcePath, "LiveCasinoLang.zh-CN.resx"),
-        Path.Combine(resourcePath, "LiveCasinoLang.zh-TW.resx")
+        Path.Combine(resourcePath, "LiveCasinoLang.zh-TW.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.vi-VN.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.ja-JP.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.ko-KR.resx"),
+        Path.Combine(resourcePath, "LiveCasinoLang.th-TH.resx")
     };
 
     var manager = TemplateFileManager.Create(this);

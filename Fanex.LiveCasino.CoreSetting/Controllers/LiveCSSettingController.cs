@@ -1,4 +1,13 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
+﻿// --------------------------------------------------------------------------
+// <copyright file="LiveCSSettingController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Ricky.Nguyen" date="2014.8.5">Created</change>
+// </history>
+
+namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -29,9 +38,18 @@
             _gameSettingService = gameSettingService ?? new GameSettingService();
         }
 
-        //
-        // GET: /Setting/
-        //[InjectedFilter]
+        /// <summary>
+        /// Edit single customer setting.
+        /// </summary>
+        /// <param name="custId">Customer Id is doing action.</param>
+        /// <param name="roleId">Role id of current customer doing action.</param>
+        /// <param name="targetCustId">Target customer is being edited.</param>
+        /// <param name="targetRoleId">Target role of customer being edited.</param>
+        /// <param name="adminId">Admin id doing action.</param>
+        /// <param name="formType">Current Form.</param>
+        /// <param name="language">Current language key.</param>
+        /// <returns>Edit customer page.</returns>
+        ////[InjectedFilter]
         public ActionResult EditSetting(
             int custId = 0,
             int roleId = 0,
@@ -39,8 +57,7 @@
             int targetRoleId = 0,
             int adminId = 0,
             int formType = (int)FormType.Edit,
-            string language = "E"
-            )
+            string language = "E")
         {
             var settingContext = new SettingContext
                 {
@@ -56,6 +73,19 @@
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
+        /// <summary>
+        /// Edit multiple customer.
+        /// </summary>
+        /// <param name="custId">Customer id is doing edit.</param>
+        /// <param name="roleId">Customer role id of user is doing edit.</param>
+        /// <param name="targetCustIds">List of customer id are being edited.</param>
+        /// <param name="targetUsernames">List of customer name are being edited.</param>
+        /// <param name="targetSyncStatus">List of sync customer status are being edited.</param>
+        /// <param name="targetRoleId">Target customer role id of Customer is being edited.</param>
+        /// <param name="adminId">Admin id is doing action.</param>
+        /// <param name="formType">Current form type.</param>
+        /// <param name="language">Current language.</param>
+        /// <returns>Edit multiple form.</returns>
         public ActionResult EditSettingMultiple(
             int custId = 0,
             int roleId = 0,
@@ -67,7 +97,6 @@
             int formType = (int)FormType.Edit,
             string language = "E")
         {
-
             var settingContext = new SettingContext
             {
                 CustId = custId,
@@ -85,7 +114,11 @@
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
-
+        /// <summary>
+        /// Get JAVASCRIPT string for editing customer.
+        /// </summary>
+        /// <param name="settingContext">Current setting context for loading data.</param>
+        /// <returns>JAVASCRIPT string.</returns>
         [HttpGet]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
@@ -93,7 +126,12 @@
             return JavaScript(GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
-        //[InjectedFilter]
+        /// <summary>
+        /// Update live casino setting.
+        /// </summary>
+        /// <param name="settingContext">Setting context for update current customer.</param>
+        /// <param name="custSetting">Customer setting for update data.</param>
+        /// <returns>Update result information.</returns>
         [HttpPost]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
@@ -105,8 +143,8 @@
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
             }
 
-            var ptAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
-            resultList.Results.AddRange(ptAndCommResults.Results);
+            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
+            resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
             // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
             var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
@@ -119,19 +157,22 @@
 
             if (settingContext.IsEditMultiple)
             {
-
             }
             else
             {
                 updateResult.CommandResultsList.Add(resultList);
             }
 
-
             return Json(updateResult);
         }
 
         #region Win Limit
 
+        /// <summary>
+        /// Get current win limit for updating.
+        /// </summary>
+        /// <param name="custId">Customer id for get data.</param>
+        /// <returns>JSON object for returning data.</returns>
         [HttpGet]
         public ActionResult GetCurrentWinLimit(int custId)
         {
@@ -140,6 +181,12 @@
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Update win limit.
+        /// </summary>
+        /// <param name="settingContext">Setting for updating win limit.</param>
+        /// <param name="model">Data for update win limit.</param>
+        /// <returns>Result after updating win limit.</returns>
         [HttpPost]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
@@ -156,10 +203,16 @@
             return Json(updateResult);
         }
 
-        #endregion
+        #endregion Win Limit
 
         #region Game Setting
 
+        /// <summary>
+        /// Update game setting information.
+        /// </summary>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="gameSetting">Game setting information for updating.</param>
+        /// <returns>Update result information.</returns>
         [HttpPost]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
@@ -178,10 +231,16 @@
             return Json(updateResult);
         }
 
-        #endregion
+        #endregion Game Setting
 
         #region Pt and Com setting
 
+        /// <summary>
+        /// Update position taking and commission setting.
+        /// </summary>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="ptAndComSetting">Position taking and commission setting for updating.</param>
+        /// <returns>Update result information.</returns>
         [HttpPost]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
@@ -199,13 +258,19 @@
             return Json(updateResult);
         }
 
-        #endregion
+        #endregion Pt and Com setting
 
-        public ActionResult UnAuthorized()
-        {
-            return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
-        }
+        ////public ActionResult UnAuthorized()
+        ////{
+        ////    return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
+        ////}
 
+        /// <summary>
+        /// Get setting object for showing edit form.
+        /// </summary>
+        /// <param name="settingContext">Setting context for get setting.</param>
+        /// <param name="objectName">JAVASCRIPT object name.</param>
+        /// <returns>JAVASCRIPT object string for returning to client.</returns>
         private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
             CustInfo custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
@@ -221,6 +286,12 @@
             return FormatJavascript(custSetting, objectName);
         }
 
+        /// <summary>
+        /// Format object to JAVASCRIPT string.
+        /// </summary>
+        /// <param name="obj">Object need be formatted.</param>
+        /// <param name="name">Name of object.</param>
+        /// <returns>JAVASCRIPT string.</returns>
         private string FormatJavascript(object obj, string name)
         {
             if (obj != null)

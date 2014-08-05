@@ -12,7 +12,7 @@ describe('Livecasino language', function () {
         var resultString = language.getString("_101");
 
         //// Assert
-        expect(resultString).toEqual("Updated Commission Successfully.");
+        expect(resultString).toEqual("Commission is updated successfully.");
     });
 
     it('should get default language when current language has no information', function () {
@@ -23,7 +23,7 @@ describe('Livecasino language', function () {
         var resultString = language.getString("_101");
 
         //// Assert
-        expect(resultString).toEqual("Updated Commission Successfully.");
+        expect(resultString).toEqual("佣金已更新成功");
     });
 
     it('should get key if there is no langauge', function () {
