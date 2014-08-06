@@ -136,31 +136,31 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         [HttpPost]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
-            //// Check what setting will be update
-            ICommandResults resultList = new CommandResults();
-
-            if (settingContext.IsAgentEdittingMember)
-            {
-                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
-            }
-
-            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
-            resultList.Results.AddRange(positionTakingAndCommResults.Results);
-
-            // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
-            var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-            var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
-
-            resultList.Results.AddRange(winLimitResults);
-            resultList.Results.AddRange(gameSettingResult);
-
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
+                
             }
             else
             {
+                //// Check what setting will be update
+                ICommandResults resultList = new CommandResults();
+
+                if (settingContext.IsAgentEdittingMember)
+                {
+                    resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
+                }
+
+                var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
+                resultList.Results.AddRange(positionTakingAndCommResults.Results);
+
+                // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
+                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
+
+                resultList.Results.AddRange(winLimitResults);
+                resultList.Results.AddRange(gameSettingResult);
                 updateResult.CommandResultsList.Add(resultList);
             }
 
