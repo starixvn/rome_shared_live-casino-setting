@@ -312,4 +312,7 @@
   <data name="lblEditMultipleLiveCasino" xml:space="preserve">
     <value>Edit Multiple Live Casino</value>
   </data>
+  <data name="UnauthorizeMsg" xml:space="preserve">
+    <value>Unauthorize Msg</value>
+  </data>
 </root>

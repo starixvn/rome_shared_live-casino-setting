@@ -1,15 +1,6 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UnityFilterAttributeFilterProvider.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Web.Filters
+﻿namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Web.Mvc;
     using Microsoft.Practices.Unity;
 
@@ -29,9 +20,7 @@ namespace Fanex.LiveCasino.CoreSetting.Web.Filters
                     ControllerContext controllerContext,
                     ActionDescriptor actionDescriptor)
         {
-
-            var attributes = base.GetControllerAttributes(controllerContext,
-                                                          actionDescriptor);
+            var attributes = base.GetControllerAttributes(controllerContext, actionDescriptor);
             foreach (var attribute in attributes)
             {
                 _container.BuildUp(attribute.GetType(), attribute);
@@ -44,9 +33,7 @@ namespace Fanex.LiveCasino.CoreSetting.Web.Filters
                     ControllerContext controllerContext,
                     ActionDescriptor actionDescriptor)
         {
-
-            var attributes = base.GetActionAttributes(controllerContext,
-                                                      actionDescriptor);
+            var attributes = base.GetActionAttributes(controllerContext, actionDescriptor);
             foreach (var attribute in attributes)
             {
                 _container.BuildUp(attribute.GetType(), attribute);

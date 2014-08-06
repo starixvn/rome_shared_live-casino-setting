@@ -75,7 +75,10 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Configuration\LiveCasinoSettings.cs" />
-    <Compile Include="Controllers\LiveCSSettingController.cs" />
+    <Compile Include="Controllers\LiveCasinoUserController.cs" />
+    <Compile Include="Controllers\LiveCSSettingController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertAutoAccountCriteria.cs" />
@@ -164,7 +167,7 @@
       <DependentUpon>LiveCasinoLang.zh-TW.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\GameSettingService.cs" />
-    <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\ILiveCasinoAuthorizationService.cs" />
     <Compile Include="Services\IGameSettingService.cs" />
     <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\ISettingService.cs" />
@@ -172,6 +175,8 @@
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Models\PtAndComSetting.cs" />
+    <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />
+    <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -205,9 +210,7 @@
       <LastGenOutput>LiveCasinoLang.zh-TW.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

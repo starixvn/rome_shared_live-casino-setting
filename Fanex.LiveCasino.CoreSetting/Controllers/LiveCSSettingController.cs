@@ -18,6 +18,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.LiveCasino.CoreSetting.Web.Filters;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -52,7 +53,8 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="language">Current language key.</param>
         /// <returns>
         /// Edit customer page.
-        /// </returns>        
+        /// </returns>   
+        [LiveCasinoAuthorization]     
         public ActionResult EditSetting(
             int custId = 0,
             int directUplineId = 0,
@@ -91,6 +93,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="formType">Current form type.</param>
         /// <param name="language">Current language.</param>
         /// <returns>Edit multiple form.</returns>
+        [LiveCasinoAuthorization]
         public ActionResult EditSettingMultiple(
             int custId = 0,
             int roleId = 0,
@@ -124,7 +127,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// </summary>
         /// <param name="settingContext">Current setting context for loading data.</param>
         /// <returns>JAVASCRIPT string.</returns>
-        [HttpGet]
+        [HttpGet, LiveCasinoAuthorization]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
             settingContext.IP = HttpContext.Request.UserHostAddress;
@@ -137,7 +140,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="settingContext">Setting context for update current customer.</param>
         /// <param name="custSetting">Customer setting for update data.</param>
         /// <returns>Update result information.</returns>
-        [HttpPost]
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
@@ -177,7 +180,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// </summary>
         /// <param name="custId">Customer id for get data.</param>
         /// <returns>JSON object for returning data.</returns>
-        [HttpGet]
+        [HttpGet, LiveCasinoAuthorization]
         public ActionResult GetCurrentWinLimit(int custId)
         {
             CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
@@ -217,7 +220,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="gameSetting">Game setting information for updating.</param>
         /// <returns>Update result information.</returns>
-        [HttpPost]
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
             var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
@@ -245,7 +248,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="ptAndComSetting">Position taking and commission setting for updating.</param>
         /// <returns>Update result information.</returns>
-        [HttpPost]
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
@@ -264,11 +267,6 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         }
 
         #endregion Pt and Com setting
-
-        ////public ActionResult UnAuthorized()
-        ////{
-        ////    return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
-        ////}
 
         /// <summary>
         /// Get setting object for showing edit form.

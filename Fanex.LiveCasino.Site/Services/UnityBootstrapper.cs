@@ -19,7 +19,7 @@ namespace Fanex.LiveCasino.Site.Services
 
         public void RegisterTypes()
         {
-            container.RegisterType<IAuthenticationService, AuthenticationService>();
+            container.RegisterType<ILiveCasinoAuthorizationService, LiveCasinoAuthorizationService>();
         }
     }
 }

@@ -17,6 +17,12 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
         }).
             success(function (mainResult) {
                 custSettingScope.mainResult = mainResult;
+            }).
+            error(function (data, status) {
+                if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
+                    fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
+                    custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                }
             });
     };
 

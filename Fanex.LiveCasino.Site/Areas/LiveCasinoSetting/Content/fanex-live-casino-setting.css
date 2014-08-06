@@ -7,7 +7,7 @@ body
 
 .edit-setting-livecs
 {
-    width: 700px;
+    width: 850px;
     padding: 10px 0px 0px 10px;
 }
 
@@ -45,7 +45,7 @@ body
     border-collapse: collapse;
 }
 
-.edit-setting-livecs .cust-info, .edit-setting-livecs .pt-setting
+.edit-setting-livecs .cust-info, .edit-setting-livecs .pt-setting,.edit-setting-livecs .win-limit
 {
     width: 100%;
 }
@@ -116,7 +116,7 @@ label.clearfix
 /*Result message*/
 .edit-setting-livecs .updated-result
 {
-    
+    margin-bottom: 10px;
 }
 
 .edit-setting-livecs .updated-result .main-message-icon {
@@ -183,6 +183,10 @@ label.clearfix
 .edit-setting-livecs .updated-result .main-message .sub-message .message-content-error 
 {
     color: #DF2267;
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-unauthorized {
+	margin-left: 5px;
 }
 
 

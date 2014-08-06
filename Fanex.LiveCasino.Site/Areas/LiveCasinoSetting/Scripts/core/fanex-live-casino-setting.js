@@ -63,6 +63,11 @@ fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
 
 fanex.liveCasinoSetting = angular.module('fanex.liveCasinoSetting', ['ngSanitize']);
 
+fanex.liveCasinoSetting.config(['$httpProvider', function ($httpProvider) {
+    'use strict';
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+} ]);
+
 fanex.liveCasinoSetting.formType = {
     Add: 0,
     Edit: 1,
@@ -76,9 +81,24 @@ fanex.liveCasinoSetting.custRole = {
     Member: 1
 };
 //// Constant
+fanex.liveCasinoSetting.UN_AUTHORIZED_CODE = 403;
 fanex.liveCasinoSetting.PT_INTERVAL = 0.01;
 fanex.liveCasinoSetting.COM_INTERVAL = 0.0005;
 fanex.liveCasinoSetting.COM_DECIMAL = 4;
 fanex.liveCasinoSetting.PT_DECIMAL = 2;
-fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE = 4000; 
+fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE = 4000;
+fanex.liveCasinoSetting.errorResult = {
+    CommandResultsList: [
+        {
+            Results: [
+                {
+                    IsSuccessful: false,
+                    Message: ''
+                }
+            ]
+        }
+    ],
+    IsSuccessful: false,
+    isUnAuthorized: true
+};
 

@@ -601,6 +601,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unauthorize Msg.
+        /// </summary>
+        public static string UnauthorizeMsg {
+            get {
+                return ResourceManager.GetString("UnauthorizeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated Win Limit Successfully..
         /// </summary>
         public static string UpdatedWinLimitSuccessfully {
