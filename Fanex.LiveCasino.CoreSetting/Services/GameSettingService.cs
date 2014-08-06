@@ -84,7 +84,17 @@
             }
             else if (!settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
             {
-                gameSettings = GetGameSettingByCustomerId(settingContext.CustId);
+                gameSettings = GetGameSettingByCustomerId(settingContext.DirectUplineId);
+                
+                if(settingContext.IsEdittingMember)
+                // Check all by default
+                foreach (var gameSettingItem in gameSettings)
+                {
+                    for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
+                    {
+                        gameSettingItem.BettingLimit[i].IsChecked = false;
+                    }
+                }
             }
             else
             {

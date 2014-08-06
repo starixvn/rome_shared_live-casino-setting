@@ -43,16 +43,19 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// Edit single customer setting.
         /// </summary>
         /// <param name="custId">Customer Id is doing action.</param>
+        /// <param name="directUplineId">The direct upline identifier.</param>
         /// <param name="roleId">Role id of current customer doing action.</param>
         /// <param name="targetCustId">Target customer is being edited.</param>
         /// <param name="targetRoleId">Target role of customer being edited.</param>
         /// <param name="adminId">Admin id doing action.</param>
         /// <param name="formType">Current Form.</param>
         /// <param name="language">Current language key.</param>
-        /// <returns>Edit customer page.</returns>
-        ////[InjectedFilter]
+        /// <returns>
+        /// Edit customer page.
+        /// </returns>        
         public ActionResult EditSetting(
             int custId = 0,
+            int directUplineId = 0,
             int roleId = 0,
             int targetCustId = 0,
             int targetRoleId = 0,
@@ -63,6 +66,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
             var settingContext = new SettingContext
                 {
                     CustId = custId,
+                    DirectUplineId = directUplineId,
                     RoleId = roleId,
                     TargetCustId = targetCustId,
                     TargetRoleId = targetRoleId,
@@ -146,7 +150,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
                 //// Check what setting will be update
                 ICommandResults resultList = new CommandResults();
 
-                if (settingContext.IsAgentEdittingMember)
+                if (settingContext.IsEdittingMember)
                 {
                     resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
                 }
