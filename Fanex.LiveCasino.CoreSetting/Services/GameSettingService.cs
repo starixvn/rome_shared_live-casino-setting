@@ -85,15 +85,20 @@
             else if (!settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
             {
                 gameSettings = GetGameSettingByCustomerId(settingContext.DirectUplineId);
-                
-                if(settingContext.IsEdittingMember)
-                // Check all by default
-                foreach (var gameSettingItem in gameSettings)
+
+                if (settingContext.IsEdittingMember)
                 {
-                    for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
+                    // Check all by default
+                    foreach (var gameSettingItem in gameSettings)
                     {
-                        gameSettingItem.BettingLimit[i].IsChecked = false;
+                        gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
+                        for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
+                        {
+                            gameSettingItem.BettingLimit[i].IsChecked = false;
+                        }
                     }
+
+                    gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
                 }
             }
             else

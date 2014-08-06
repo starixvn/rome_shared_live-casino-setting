@@ -1,4 +1,4 @@
-﻿ /* File Created: July 21, 2014 */
+﻿/* File Created: July 21, 2014 */
 /*global custSetting*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerGameSettingService', ['$http', function ($http) {
@@ -9,7 +9,7 @@ if (fanex.liveCasinoSetting) {
             var gameSettingModel = {
                 settingContext: custSetting.SettingContext,
                 gameSetting: gameSetting
-            };
+            };            
 
             $http({
                 method: 'POST',
