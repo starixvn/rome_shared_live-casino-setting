@@ -102,8 +102,10 @@
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Command result insert automatic account.</returns>
+        /// <param name="settingContext">The setting context.</param>
+        /// <returns>
+        /// Command result insert automatic account.
+        /// </returns>
         public ICommandResult InsertAutoAccount(SettingContext settingContext)
         {
             if (settingContext.IsEdittingSuper)
@@ -157,8 +159,10 @@
         /// <summary>
         /// Inserts from existing account.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Command result insert from existing account.</returns>
+        /// <param name="settingContext">The setting context.</param>
+        /// <returns>
+        /// Command result insert from existing account.
+        /// </returns>
         public ICommandResult InsertFromExistingAccount(SettingContext settingContext)
         {
             var criteria = new InsertFromExistingAccountCriteria
@@ -210,8 +214,10 @@
         /// Updates the live casino status.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="custInfo">The customer information.</param>
-        /// <returns>Command result update status.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Command result update status.
+        /// </returns>
         public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino)
         {
             var criteria = new UpdateLiveCasinoStatusCriteria
@@ -251,54 +257,14 @@
 
             if (!customerInfo.IsSyncLiveCasino)
             {
-                ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
-
-                if (resultInsertAccount.IsSuccessful)
-                {
-                    _logService.LogManualInsertAccount(settingContext);
-                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSync: true);
-
-                    var disableLiveCasino = false;
-                    if (!settingContext.IsEdittingSuper)
-                    {
-                        var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
-                        disableLiveCasino = uplineCustInfo.DisableLiveCasino;
-                    }
-
-                    if (syncResult.IsSuccessful)
-                    {
-                        UpdateLiveCasinoStatus(settingContext, disableLiveCasino);
-                    }
-
-                    isInsert = true;
-                }
+                isInsert = ManualSyncAccount(settingContext);
             }
 
             List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
 
             ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
 
-            if (resultUpdateStakeLevels.IsSuccessful)
-            {
-                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
-
-                foreach (var itemResult in successResultUpdateStakeLevel)
-                {
-                    var gameSettingResult = (GameSettingCommandResult)itemResult;
-
-                    // When update game setting successfully game type id will be set to message property
-                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
-
-                    if (newGameType != null)
-                    {
-                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
-                        _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
-
-                        var betType = RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), settingContext.Language);
-                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
-                    }
-                }
-            }
+            WriteLogUpdateStakeLevel(settingContext, gameTypes, isInsert, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
         }
@@ -322,6 +288,74 @@
             };
 
             return _settingRepository.InsertOrUpdate(criteria);
+        }
+
+        /// <summary>
+        /// Manuals the synchronize account.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <returns>Insert successfully.</returns>
+        private bool ManualSyncAccount(SettingContext settingContext)
+        {
+            ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
+
+            if (resultInsertAccount.IsSuccessful)
+            {
+                _logService.LogManualInsertAccount(settingContext);
+                var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSync: true);
+                var disableLiveCasino = false;
+
+                if (!settingContext.IsEdittingSuper)
+                {
+                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    disableLiveCasino = uplineCustInfo.DisableLiveCasino;
+                }
+
+                if (syncResult.IsSuccessful)
+                {
+                    UpdateLiveCasinoStatus(settingContext, disableLiveCasino);
+                }
+            }
+
+            return resultInsertAccount.IsSuccessful;
+        }
+
+        /// <summary>
+        /// Writes the log update stake level.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <param name="isInsert">If set to <c>true</c> [is insert].</param>
+        /// <param name="gameTypeOlds">The game type olds.</param>
+        /// <param name="resultUpdateStakeLevels">The result update stake levels.</param>
+        private void WriteLogUpdateStakeLevel(
+            SettingContext settingContext,
+            List<GameType> gameTypes,
+            bool isInsert,
+            List<GameType> gameTypeOlds,
+            ICommandResults resultUpdateStakeLevels)
+        {
+            if (resultUpdateStakeLevels.IsSuccessful)
+            {
+                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
+
+                foreach (var itemResult in successResultUpdateStakeLevel)
+                {
+                    var gameSettingResult = (GameSettingCommandResult)itemResult;
+
+                    // When update game setting successfully game type id will be set to message property
+                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
+
+                    if (newGameType != null)
+                    {
+                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
+                        _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
+
+                        var betType = RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), settingContext.Language);
+                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
+                    }
+                }
+            }
         }
 
         /// <summary>

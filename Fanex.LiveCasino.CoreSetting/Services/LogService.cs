@@ -30,7 +30,7 @@
         /// <summary>
         /// Logs the automatic insert account.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         public void LogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes)
         {
@@ -58,7 +58,7 @@
         /// <summary>
         /// Logs the insert from existing account.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         public void LogInsertFromExistingAccount(SettingContext settingContext, List<GameType> gameTypes)
         {
