@@ -1,12 +1,12 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Microsoft.Practices.Unity;
-    using System.Web;
-    using Fanex.LiveCasino.CoreSetting.Resources;
 
     /// <summary>
     /// Live casino authorization filter.
@@ -45,8 +45,8 @@
                 }
                 else
                 {
-                    var unAuthorizedUrl = LiveCasinoAuthenticationService.UnAuthorizedUrl ?? "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized";
-                    filterContext.Result = new RedirectResult(unAuthorizedUrl);
+                    var notAuthorizedUrl = LiveCasinoAuthenticationService.UnAuthorizedUrl ?? "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized";
+                    filterContext.Result = new RedirectResult(notAuthorizedUrl);
                 }
             }
         }
