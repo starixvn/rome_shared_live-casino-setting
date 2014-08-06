@@ -61,7 +61,7 @@ fanex.createOptionsFromRange = function (current, from, to, gap, decimals) {
 
 //// live casino setting app
 
-fanex.liveCasinoSetting = angular.module('fanex.liveCasinoSetting', []);
+fanex.liveCasinoSetting = angular.module('fanex.liveCasinoSetting', ['ngSanitize']);
 
 fanex.liveCasinoSetting.formType = {
     Add: 0,

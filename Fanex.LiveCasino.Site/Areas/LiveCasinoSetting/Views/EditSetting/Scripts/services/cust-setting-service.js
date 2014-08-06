@@ -13,8 +13,8 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: custSettingForUpdate
             }).
-            success(function (result) {
-                scope.commandResults = result.CommandResultsList;
+            success(function (mainResult) {
+                scope.mainResult = mainResult;
             });
         };
     } ]);

@@ -22,12 +22,17 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/jquery-2.1.1.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/numeral.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/angular.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/libs/angular-sanitize.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/setting")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/live-casino-lang.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.en-US.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.ja-JP.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.ko-KR.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.th-TH.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.vi-VN.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-CN.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-TW.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")

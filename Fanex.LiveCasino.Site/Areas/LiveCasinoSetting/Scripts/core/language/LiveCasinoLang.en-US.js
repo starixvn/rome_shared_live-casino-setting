@@ -23,6 +23,8 @@ language.liveCasino['en-US'] = {
 	lblCurrentWinLimit : "Current Win Limit",
 	lblCustomerInformation : "Customer Information",
 	lblDailyAutoResetLimit : "Daily auto reset limit (at 12 noon GMT+8)",
+	lblEditLiveCasino : "Edit Live Casino",
+	lblEditMultipleLiveCasino : "Edit Multiple Live Casino",
 	lblEnable : "Enable",
 	lblFax : "Fax",
 	lblFirstName : "First Name",

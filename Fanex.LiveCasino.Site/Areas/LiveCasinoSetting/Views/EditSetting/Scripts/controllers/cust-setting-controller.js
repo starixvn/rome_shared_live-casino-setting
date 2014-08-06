@@ -9,7 +9,9 @@ if (fanex.liveCasinoSetting) {
         'CustomerSettingService',
         function ($scope, $http, customerSettingService) {
             'use strict';
-            $scope.commandResults = [];
+            $scope.mainResult = {
+                CommandResultsList: []
+            };
             $scope.isUpdateAllSetting = false;
             //$scope.updateLiveCasinoStatus
 

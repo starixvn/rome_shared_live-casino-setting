@@ -27,8 +27,8 @@ if (fanex.liveCasinoSetting) {
                 url: $('#tblMaxWinLimit').data('update-href'),
                 headers: { 'Content-Type': 'application/json' },
                 data: winLimitUpdate
-            }).success(function (result) {
-                custSettingScope.commandResults = result.CommandResultsList;
+            }).success(function (mainResult) {
+                custSettingScope.mainResult = mainResult;
             }).error(function (data) {
                 window.console.log(data);
             });

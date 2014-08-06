@@ -26,14 +26,14 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSetting")" 
     style="display:none;"
     class="edit-setting-livecs">
-    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="commandResults.length > 0">
-        <div data-ng-repeat="subResult in commandResults"> 
-            <div class="main-icon" data-ng-class="{'main-icon-success': subResult.IsSuccessful,'main-icon-error': !subResult.IsSuccessful}"></div>
-            <div class="main-message">
+    <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
+        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}"></div>
+        <div class="main-message">
+            <div data-ng-repeat="subResult in mainResult.CommandResultsList"> 
                 <div class="message-user-name">{{subResult.Username}}</div>
                 <div class="sub-message" data-ng-repeat="result in subResult.Results">
-                    <div data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"></div>
-                    <div class="message-content">{{result.Message}}</div>
+                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"></div>
+                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful}" ng-bind-html="result.Message"></div>
                 </div>
             </div>
         </div>

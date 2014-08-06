@@ -112,23 +112,77 @@ label.clearfix
     padding-left: 19px;
 }
 
-.edit-setting-livecs .updated-result .main-success 
+
+/*Result message*/
+.edit-setting-livecs .updated-result
 {
-    background-image: url(Images/Success.gif);
+    
 }
 
-.edit-setting-livecs .updated-result .main-error {
+.edit-setting-livecs .updated-result .main-message-icon {
+	width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+}
+
+.edit-setting-livecs .updated-result .main-icon-success {
+	background-image: url(Images/Success.gif);
+}
+
+.edit-setting-livecs .updated-result .main-icon-error {
 	background-image: url(Images/error-icon.gif);
 }
 
-.edit-setting-livecs .updated-result .sub-success {
+.edit-setting-livecs .updated-result .main-message {
+	display: inline-block;
+	margin-left: 25px;
+}
+
+.edit-setting-livecs .updated-result .main-message .message-user-name {
+	color: Blue;
+	font-weight: bold;
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message 
+{
+    position: relative;
+	
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message-icon {
+	width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-success {
 	background-image: url(Images/tick.png);
 }
 
-.edit-setting-livecs .updated-result .sub-error {
+.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-error {
 	background-image: url(Images/cross.png);
 }
 
-/*Result message*/
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content {
+	display: inline-block;
+	margin-left: 21px;
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-success 
+{
+    color: #2d9d3b;
+}
+
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-error 
+{
+    color: #DF2267;
+}
 
 

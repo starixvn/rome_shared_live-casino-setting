@@ -15,8 +15,8 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
             headers: { 'Content-Type': 'application/json' },
             data: ptAndComUpdateModel
         }).
-            success(function (result) {
-                custSettingScope.commandResults = result.CommandResultsList;
+            success(function (mainResult) {
+                custSettingScope.mainResult = mainResult;
             });
     };
 
