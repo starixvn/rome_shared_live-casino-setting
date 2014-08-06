@@ -140,7 +140,6 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
 
             if (settingContext.IsEditMultiple)
             {
-                
             }
             else
             {
