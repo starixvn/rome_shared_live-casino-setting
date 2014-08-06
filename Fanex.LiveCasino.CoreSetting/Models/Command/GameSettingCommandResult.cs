@@ -6,24 +6,15 @@
     /// <summary>
     /// Game setting command result class.
     /// </summary>
-    public class GameSettingCommandResult : CommandResult
+    public class GameSettingCommandResult : WinLimitCommandResult
     {
         public GameSettingCommandResult()
         {
         }
 
         public GameSettingCommandResult(CommandResult result)
+            : base(result)
         {
-            Code = result.Code;
-            Message = result.Message;
-        }
-
-        public override bool IsSuccessful
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(Convert.ToString(Code));
-            }
         }
     }
 }

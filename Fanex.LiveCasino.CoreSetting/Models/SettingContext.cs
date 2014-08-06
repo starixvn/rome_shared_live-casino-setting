@@ -100,6 +100,12 @@
 
         public int AgentId { get; set; }
 
+        public int OldCustId { get; set; }
+
+        public string ToUsername { get; set; }
+
+        public int DirectUplineId { get; set; }
+
         public int UserIdDoAction
         {
             get

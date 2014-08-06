@@ -10,13 +10,15 @@
     {
         string GetCustomerSiteByUsername(string username);
 
-        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);        
+        CustInfo GetCustomerInfo(int custId);
 
-        ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria);
+        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
 
-        ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria);
+        ICommandResult InsertAutoAccount(SettingContext settingContext);
 
-        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo);
+        ICommandResult InsertFromExistingAccount(SettingContext settingContext);
+
+        ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
         ICommandResults UpdateManual(SettingContext settingContext, CustInfo customerInfo, List<GameType> gameTypes);
 

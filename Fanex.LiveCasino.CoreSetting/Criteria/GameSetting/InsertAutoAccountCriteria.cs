@@ -34,18 +34,6 @@
 
         public string Username { get; set; }
 
-        [SpParam(Ignored = true)]
-        public string IP { get; set; }
-
-        [SpParam(Ignored = true)]
-        public string SiteName { get; set; }
-
-        [SpParam(Ignored = true)]
-        public int SubAccId { get; set; }
-
-        [SpParam(Ignored = true)]
-        public string SubAccName { get; set; }
-
         public override bool IsValid()
         {
             return CustId > 0;

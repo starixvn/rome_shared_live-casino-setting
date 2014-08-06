@@ -141,7 +141,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
 
             if (settingContext.IsAgentEdittingMember)
             {
-                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo));
+                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
             }
 
             var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
@@ -217,7 +217,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         [HttpPost]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
-            var custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
+            var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
@@ -275,7 +275,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <returns>JAVASCRIPT object string for returning to client.</returns>
         private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
-            CustInfo custInfo = _settingService.GetCustomerInfo(settingContext.TargetCustId);
+            CustInfo custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
             var custSetting = new CustSettingViewModel
             {

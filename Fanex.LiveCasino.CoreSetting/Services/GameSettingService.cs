@@ -45,6 +45,20 @@
         }
 
         /// <summary>
+        /// Get customer information with customer id.
+        /// </summary>
+        /// <param name="custId">Get criteria information.</param>
+        /// <returns>Customer information.</returns>
+        public CustInfo GetCustomerInfo(int custId)
+        {
+            var criteria = new GetCustomerInfoCriteria
+            {
+                Custid = custId
+            };
+            return _settingRepository.GetCustomerInfo(criteria);
+        }
+
+        /// <summary>
         /// Gets the game setting.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
@@ -90,20 +104,52 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Command result insert automatic account.</returns>
-        public ICommandResult InsertAutoAccount(InsertAutoAccountCriteria criteria)
+        public ICommandResult InsertAutoAccount(SettingContext settingContext)
         {
+            if (settingContext.IsEdittingSuper)
+            {
+                return null;
+            }
+
+            var criteria = new InsertAutoAccountCriteria
+            {
+                AgentId = settingContext.AgentId,
+                CasinoNo = CasinoNo,
+                CustId = settingContext.TargetCustId,
+                ExchangeId = settingContext.ExchangeId,
+                MasterId = settingContext.MasterId,
+                ModifyUsername = settingContext.UserName,
+                RoleId = settingContext.TargetRoleId,
+                SignupBy = settingContext.UserIdDoAction,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupIp = settingContext.IP,
+                SuperId = settingContext.SuperId,
+                Username = settingContext.TargetUsername
+            };
+
             var gameTypes = new List<GameType>();
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
 
-            Task.Factory.StartNew(() =>
+            if (result.IsSuccessful)
             {
-                if (!gameTypes.Any())
+                Task.Factory.StartNew(() =>
                 {
-                    gameTypes = GetGameSetting(criteria.CustId, criteria.ExchangeId, criteria.SiteName).ToList();
-                }
+                    if (!gameTypes.Any())
+                    {
+                        gameTypes = GetGameSetting(settingContext.TargetCustId, settingContext.ExchangeId, settingContext.SiteName).ToList();
+                    }
 
-                _logService.LogAutoInsertAccount(criteria, gameTypes);
-            });
+                    _logService.LogAutoInsertAccount(settingContext, gameTypes);
+                });
+
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSync: true);
+
+                if (updateSyncResult.IsSuccessful)
+                {
+                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
+                }
+            }
 
             return result;
         }
@@ -113,20 +159,49 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Command result insert from existing account.</returns>
-        public ICommandResult InsertFromExistingAccount(InsertFromExistingAccountCriteria criteria)
+        public ICommandResult InsertFromExistingAccount(SettingContext settingContext)
         {
+            var criteria = new InsertFromExistingAccountCriteria
+            {
+                AgentId = settingContext.AgentId,
+                CasinoNo = CasinoNo,
+                CustId = settingContext.TargetCustId,
+                ExchangeId = settingContext.ExchangeId,
+                MasterId = settingContext.MasterId,
+                ModifyUsername = settingContext.UserName,
+                RoleId = settingContext.TargetRoleId,
+                SignupBy = settingContext.UserIdDoAction,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupIp = settingContext.IP,
+                SuperId = settingContext.SuperId,
+                Username = settingContext.TargetUsername,
+                OldCustId = settingContext.OldCustId,
+                ToUserName = settingContext.ToUsername
+            };
+
             var gameTypes = new List<GameType>();
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, ref gameTypes);
 
-            Task.Factory.StartNew(() =>
+            if (result.IsSuccessful)
             {
-                if (!gameTypes.Any())
+                Task.Factory.StartNew(() =>
                 {
-                    gameTypes = GetGameSetting(criteria.CustId, criteria.ExchangeId, criteria.SiteName).ToList();
-                }
+                    if (!gameTypes.Any())
+                    {
+                        gameTypes = GetGameSetting(settingContext.CustId, settingContext.ExchangeId, settingContext.SiteName).ToList();
+                    }
 
-                _logService.LogInsertFromExistingAccount(criteria, gameTypes);
-            });
+                    _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
+                });
+
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSync: true);
+
+                if (updateSyncResult.IsSuccessful)
+                {
+                    var fromCustInfo = GetCustomerInfo(settingContext.OldCustId);
+                    UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
+                }
+            }
 
             return result;
         }
@@ -137,13 +212,14 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="custInfo">The customer information.</param>
         /// <returns>Command result update status.</returns>
-        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, CustInfo custInfo)
+        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino)
         {
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
                 Custid = settingContext.TargetCustId,
                 UserID = settingContext.UserIdDoAction,
-                DisabledLiveCS = custInfo.DisableLiveCasino,
+                DisabledLiveCS = disableLiveCasino,
+                EnableDownlinesLiveCS = !disableLiveCasino,
                 IP = settingContext.IP,
                 Language = settingContext.Language
             };
@@ -180,12 +256,18 @@
                 if (resultInsertAccount.IsSuccessful)
                 {
                     _logService.LogManualInsertAccount(settingContext);
-                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, true);
+                    CommandResult syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSync: true);
+
+                    var disableLiveCasino = false;
+                    if (!settingContext.IsEdittingSuper)
+                    {
+                        var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                        disableLiveCasino = uplineCustInfo.DisableLiveCasino;
+                    }
 
                     if (syncResult.IsSuccessful)
                     {
-                        customerInfo.DisableLiveCasino = false;
-                        UpdateLiveCasinoStatus(settingContext, customerInfo);
+                        UpdateLiveCasinoStatus(settingContext, disableLiveCasino);
                     }
 
                     isInsert = true;

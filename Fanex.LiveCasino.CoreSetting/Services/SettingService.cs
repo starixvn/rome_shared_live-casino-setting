@@ -30,21 +30,7 @@
         public SettingService(ISettingRepository settingRepository)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
-        }
-
-        /// <summary>
-        /// Get customer information with customer id.
-        /// </summary>
-        /// <param name="custId">Get criteria information.</param>
-        /// <returns>Customer information.</returns>
-        public CustInfo GetCustomerInfo(int custId)
-        {
-            var criteria = new GetCustomerInfoCriteria
-            {
-                Custid = custId
-            };
-            return _settingRepository.GetCustomerInfo(criteria);
-        }
+        }        
 
         /// <summary>
         /// Get Representative customer for editing multiple.

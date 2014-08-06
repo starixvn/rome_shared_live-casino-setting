@@ -8,9 +8,9 @@
 
     internal interface ILogService
     {
-        void LogAutoInsertAccount(InsertAutoAccountCriteria criteria, List<GameType> gameTypes);
+        void LogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes);
 
-        void LogInsertFromExistingAccount(InsertFromExistingAccountCriteria criteria, List<GameType> gameTypes);
+        void LogInsertFromExistingAccount(SettingContext settingContext, List<GameType> gameTypes);
 
         void LogManualInsertAccount(SettingContext settingContext);
 

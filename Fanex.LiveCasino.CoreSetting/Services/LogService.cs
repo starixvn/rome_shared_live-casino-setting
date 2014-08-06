@@ -32,23 +32,23 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <param name="gameTypes">The game types.</param>
-        public void LogAutoInsertAccount(InsertAutoAccountCriteria criteria, List<GameType> gameTypes)
+        public void LogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes)
         {
             var log = new LogAutoInsertAccount
             {
-                Action = GetInsertManualLogAction(criteria.RoleId),
-                AgentId = criteria.AgentId,
-                CustId = criteria.CustId,
-                CustUserName = criteria.Username,
-                ExchangeId = criteria.ExchangeId,
-                SignUpIp = criteria.IP,
-                SignUpForm = criteria.SignupFrom,
-                SubAccId = criteria.SubAccId,
-                SubAccName = criteria.SubAccName,
-                SuperId = criteria.SuperId,
-                UserId = criteria.SignupBy,
-                UserName = criteria.ModifyUsername,
-                CustSite = criteria.SiteName,
+                Action = GetInsertManualLogAction(settingContext.TargetRoleId),
+                AgentId = settingContext.AgentId,
+                CustId = settingContext.TargetCustId,
+                CustUserName = settingContext.TargetUsername,
+                ExchangeId = settingContext.ExchangeId,
+                SignUpIp = settingContext.IP,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                SubAccId = settingContext.SubAccId,
+                SubAccName = settingContext.SubAccName,
+                SuperId = settingContext.SuperId,
+                UserId = settingContext.UserIdDoAction,
+                UserName = settingContext.UserName,
+                CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
 
@@ -60,23 +60,23 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <param name="gameTypes">The game types.</param>
-        public void LogInsertFromExistingAccount(InsertFromExistingAccountCriteria criteria, List<GameType> gameTypes)
+        public void LogInsertFromExistingAccount(SettingContext settingContext, List<GameType> gameTypes)
         {
             var log = new LogInsertFromExistingAccount
             {
-                Action = GetInsertFromExistingLogAction(criteria.RoleId),
-                AgentId = criteria.AgentId,
-                CustId = criteria.CustId,
-                CustUserName = criteria.Username,
-                ExchangeId = criteria.ExchangeId,
-                SignUpIp = criteria.IP,
-                SignUpForm = criteria.SignupFrom,
-                SubAccId = criteria.SubAccId,
-                SubAccName = criteria.SubAccName,
-                SuperId = criteria.SuperId,
-                UserId = criteria.SignupBy,
-                UserName = criteria.ModifyUsername,
-                CustSite = criteria.SiteName,
+                Action = GetInsertManualLogAction(settingContext.TargetRoleId),
+                AgentId = settingContext.AgentId,
+                CustId = settingContext.TargetCustId,
+                CustUserName = settingContext.TargetUsername,
+                ExchangeId = settingContext.ExchangeId,
+                SignUpIp = settingContext.IP,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                SubAccId = settingContext.SubAccId,
+                SubAccName = settingContext.SubAccName,
+                SuperId = settingContext.SuperId,
+                UserId = settingContext.UserIdDoAction,
+                UserName = settingContext.UserName,
+                CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
 
