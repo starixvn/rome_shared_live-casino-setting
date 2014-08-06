@@ -1,5 +1,6 @@
 ﻿/* File Created: July 21, 2014 */
 /// <reference path="../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
 /// <reference path="../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /*global describe, it, expect*/
 describe('Fanex.Core', function () {

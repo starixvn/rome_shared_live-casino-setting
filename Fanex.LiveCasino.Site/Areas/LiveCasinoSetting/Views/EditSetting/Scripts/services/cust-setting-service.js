@@ -15,6 +15,15 @@ if (fanex.liveCasinoSetting) {
             }).
             success(function (mainResult) {
                 scope.mainResult = mainResult;
+            }).
+            error(function (data, status) {
+                if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
+                    fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
+                    scope.mainResult = fanex.liveCasinoSetting.errorResult;
+                }
+                else {
+                    window.console.log(data);
+                }
             });
         };
     } ]);

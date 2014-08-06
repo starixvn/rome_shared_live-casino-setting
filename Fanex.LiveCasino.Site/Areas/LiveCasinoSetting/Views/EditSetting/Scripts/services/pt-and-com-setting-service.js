@@ -23,6 +23,9 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
                     custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
                 }
+                else {
+                    window.console.log(data);
+                }
             });
     };
 

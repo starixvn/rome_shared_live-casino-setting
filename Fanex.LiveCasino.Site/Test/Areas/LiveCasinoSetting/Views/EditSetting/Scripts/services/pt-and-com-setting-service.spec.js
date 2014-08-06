@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../../../../custSetting.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
 /// <reference path="../../../../../../angular-mocks.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
@@ -44,7 +45,7 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.commandResults).toEqual(result.CommandResultsList);
+        expect(custSettingScope.mainResult).toEqual(result);
     });
 
     it('should send the msg and return the response, show result message and then hide', function () {
@@ -71,8 +72,8 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.commandResults).toEqual(result.CommandResultsList);
-        timeOut.flush();
-        expect(custSettingScope.commandResults).toEqual([]);
+        expect(custSettingScope.mainResult).toEqual(result);
+//        timeOut.flush();
+//        expect(custSettingScope.mainResult).toEqual([]);
     });
 });

@@ -18,8 +18,15 @@ if (fanex.liveCasinoSetting) {
                 data: gameSettingModel
             }).success(function (mainResult) {
                 custSettingScope.mainResult = mainResult;
-            }).error(function (data) {
-                window.console.log(data);
+            }).
+            error(function (data, status) {
+                if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
+                    fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
+                    custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                }
+                else {
+                    window.console.log(data);
+                }
             });
         };
     } ]);

@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../../../../../custSetting.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
 /// <reference path="../../../../../../angular-mocks.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
