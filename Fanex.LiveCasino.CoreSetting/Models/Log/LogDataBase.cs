@@ -1,6 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
-    using System;
+    using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
@@ -30,7 +30,7 @@
 
         public int ActionId
         {
-            get { return Convert.ToInt32(this.Action); }
+            get { return Converter.ToInt(this.Action); }
         }
 
         public virtual bool IsValid
