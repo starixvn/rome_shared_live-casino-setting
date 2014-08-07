@@ -13,7 +13,7 @@
     /// <summary>
     /// Log service class.
     /// </summary>
-    internal class LogService : ILogService
+    public class LogService : ILogService
     {
         private readonly ISettingRepository _settingRepository;
 

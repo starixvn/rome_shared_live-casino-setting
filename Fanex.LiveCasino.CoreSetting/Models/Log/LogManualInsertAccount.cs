@@ -3,7 +3,7 @@
     /// <summary>
     /// Log manual insert account to Live Casino setting.
     /// </summary>
-    internal class LogManualInsertAccount : LogDataBase, ILogData
+    public class LogManualInsertAccount : LogDataBase, ILogData
     {
         private const string TrackingTemplate = "<{0} CustID=\"{1}\" UserName=\"{2}\" CasinoNo=\"{3}\" ExchangeID=\"{4}\"" +
                                                 " SCustID=\"{5}\" MCustID=\"{6}\" ACustID=\"{7}\" RoleID=\"{8}\" SignupIP=\"{9}\" SignupBy=\"{10}\"" +

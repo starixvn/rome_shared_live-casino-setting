@@ -3,7 +3,7 @@
     /// <summary>
     /// Log insert account from existing account.
     /// </summary>
-    internal class LogInsertFromExistingAccount : LogAutoInsertAccount
+    public class LogInsertFromExistingAccount : LogAutoInsertAccount
     {
         public override string SpName
         {

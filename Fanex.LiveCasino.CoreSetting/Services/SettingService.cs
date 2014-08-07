@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common;
-    using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -12,6 +11,7 @@
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
@@ -21,16 +21,18 @@
     public class SettingService : ISettingService
     {
         private readonly ISettingRepository _settingRepository;
+        private readonly ICommonUtil _commonUtil;
 
         public SettingService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public SettingService(ISettingRepository settingRepository)
+        public SettingService(ISettingRepository settingRepository, ICommonUtil commonUtil)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
-        }        
+            _commonUtil = commonUtil ?? new CommonUtil();
+        }
 
         /// <summary>
         /// Get Representative customer for editing multiple.
@@ -250,7 +252,7 @@
         public IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
+            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
             return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
@@ -259,7 +261,7 @@
         public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
+            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
             return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
@@ -268,7 +270,7 @@
         public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
+            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
             return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
@@ -277,7 +279,7 @@
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
+            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
             return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
@@ -286,7 +288,7 @@
         public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = GetCustIds(settingContext.TargetCustIds);
+            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
             Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
             return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
@@ -562,51 +564,19 @@
         private IMultipleCommandResults GetPtAndComResultDetailsMultiple(string custIds, string userNames, Dictionary<int, ICommandResult> commandResults)
         {
             IMultipleCommandResults multipleResults = new MultipleCommandResults();
-            Dictionary<int, string> userNamesWithCustIds = GetUsernamesWithCustIds(custIds, userNames);
+            Dictionary<int, string> userNamesWithCustIds = _commonUtil.GetUsernamesWithCustIds(custIds, userNames);
 
             foreach (var result in commandResults)
             {
                 multipleResults.CommandResultsList.Add(new CommandResults
                 {
                     Results = GetPtAndComResultDetails(result.Value).ToList(),
-                    CustId = result.Key,
-                    Username = userNamesWithCustIds[result.Key]
+                    Id = result.Key,
+                    Name = userNamesWithCustIds[result.Key]
                 });
             }
 
             return multipleResults;
-        }
-
-        private List<int> GetCustIds(string custIds)
-        {
-            return custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select<string, int>(cid =>
-            {
-                return Converter.ToInt(cid);
-            }).ToList();
-        }
-
-        /// <summary>
-        /// Get dictionary map between Customer id and username.
-        /// </summary>
-        /// <param name="custIds">Customer id list.</param>
-        /// <param name="usernames">Username list.</param>
-        /// <returns>Dictionary mapped.</returns>
-        private Dictionary<int, string> GetUsernamesWithCustIds(string custIds, string usernames)
-        {
-            Dictionary<int, string> userNamesWithCustIds = new Dictionary<int, string>();
-
-            string[] custIdsList = custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] userNameList = usernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            int userNameCount = userNameList.Length;
-            var tempUsername = string.Empty;
-
-            for (int i = 0; i < custIdsList.Length; i++)
-            {
-                tempUsername = i < userNameCount ? userNameList[i] : string.Empty;
-                userNamesWithCustIds.Add(Converter.ToInt(custIdsList[i]), tempUsername);
-            }
-
-            return userNamesWithCustIds;
         }
 
         #endregion Private Methods

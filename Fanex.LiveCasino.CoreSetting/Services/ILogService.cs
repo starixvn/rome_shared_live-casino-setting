@@ -6,7 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.NAP.Framework.Command;
 
-    internal interface ILogService
+    public interface ILogService
     {
         void LogAutoInsertAccount(SettingContext settingContext, List<GameType> gameTypes);
 

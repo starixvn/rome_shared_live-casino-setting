@@ -6,7 +6,7 @@
     /// <summary>
     /// Log data base class.
     /// </summary>
-    internal class LogDataBase : ILogData
+    public class LogDataBase : ILogData
     {
         protected const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
 

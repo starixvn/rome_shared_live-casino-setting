@@ -3,7 +3,7 @@
     /// <summary>
     /// Log update stake level.
     /// </summary>
-    internal class LogUpdateStakeLevel : LogDataBase, ILogData
+    public class LogUpdateStakeLevel : LogDataBase, ILogData
     {
         protected const string TrackingTemplate = "<{0} CustID=\"{1}\" {2} GameTypeId=\"{3}\" BetTypeId=\"{4}\" StakeLevel=\"{5}\"" +
                                                   " Ip=\"{6}\" Lang=\"{7}\" RoleID=\"{8}\" ErrCode=\"{9}\" ErrMsg=\"{10}\" />";

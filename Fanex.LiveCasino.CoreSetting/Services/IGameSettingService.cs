@@ -8,9 +8,9 @@
 
     public interface IGameSettingService
     {
-        string GetCustomerSiteByUsername(string username);
-
         CustInfo GetCustomerInfo(int custId);
+
+        string GetCustomerSiteByUsername(string username);
 
         IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
 
@@ -20,7 +20,9 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResults UpdateManual(SettingContext settingContext, CustInfo customerInfo, List<GameType> gameTypes);
+        ICommandResults UpdateManual(SettingContext settingContext, bool isSynced, List<GameType> gameTypes);
+
+        IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
     }

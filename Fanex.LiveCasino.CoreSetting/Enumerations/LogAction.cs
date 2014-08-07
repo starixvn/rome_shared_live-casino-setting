@@ -1,6 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Enumerations
 {
-    internal enum LogActions : int
+    public enum LogActions : int
     {
         /// <summary>
         /// The update stake level super.

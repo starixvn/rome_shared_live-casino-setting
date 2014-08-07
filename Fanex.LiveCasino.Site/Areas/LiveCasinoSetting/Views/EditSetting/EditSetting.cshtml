@@ -32,7 +32,7 @@
         <div class="main-message">
             <div data-ng-repeat="subResult in mainResult.CommandResultsList">
                 <div class="message-user-name">
-                    {{subResult.Username}}</div>
+                    {{subResult.Name}}</div>
                 <div class="sub-message" data-ng-repeat="result in subResult.Results">
                     <div class="sub-message-icon" 
                         data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"

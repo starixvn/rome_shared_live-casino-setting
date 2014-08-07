@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LiveCSSettingController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.5">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Controllers
+﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -54,7 +45,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
         /// <returns>
         /// Edit customer page.
         /// </returns>   
-        [LiveCasinoAuthorization]     
+        [LiveCasinoAuthorization]
         public ActionResult EditSetting(
             int custId = 0,
             int directUplineId = 0,
@@ -115,7 +106,8 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
                 FormType = (FormType)formType,
                 AdminId = adminId,
                 Language = language,
-                IsEditMultiple = true
+                IsEditMultiple = true,
+                TargetSyncStatus = targetSyncStatus
             };
 
             settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(targetCustIds, targetSyncStatus);
@@ -163,7 +155,7 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
 
                 // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
                 var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting.ToList()).Results;
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
 
                 resultList.Results.AddRange(winLimitResults);
                 resultList.Results.AddRange(gameSettingResult);
@@ -229,10 +221,11 @@ namespace Fanex.LiveCasino.CoreSetting.Controllers
 
             if (settingContext.IsEditMultiple)
             {
+                updateResult = _gameSettingService.UpdateManualMultiple(settingContext, gameSetting);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo, gameSetting));
+                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameSetting));
             }
 
             return Json(updateResult);

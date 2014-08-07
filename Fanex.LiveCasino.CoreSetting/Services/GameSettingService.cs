@@ -11,6 +11,7 @@
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
     using RemotingRef;
 
@@ -21,17 +22,20 @@
     {
         private const string CasinoNo = "01";
         private const int TimeOutReplication = 5;
-        private readonly ILogService _logService = new LogService();
+        private readonly ILogService _logService;
         private readonly ISettingRepository _settingRepository;
+        private readonly ICommonUtil _commonUti;
 
         public GameSettingService()
-            : this(null)
+            : this(null, null, null)
         {
         }
 
-        public GameSettingService(ISettingRepository settingRepository)
+        public GameSettingService(ISettingRepository settingRepository, ILogService logService, ICommonUtil commonUtil)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
+            _logService = logService ?? new LogService();
+            _commonUti = commonUtil ?? new CommonUtil();
         }
 
         public string GetCustomerSiteByUsername(string username)
@@ -263,14 +267,16 @@
         /// Updates the manual.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="customerInfo">The customer information.</param>
+        /// <param name="isSynced">If set to <c>true</c> [is synced].</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Game setting command result.</returns>
-        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo customerInfo, List<GameType> gameTypes)
+        /// <returns>
+        /// Game setting command result.
+        /// </returns>
+        public ICommandResults UpdateManual(SettingContext settingContext, bool isSynced, List<GameType> gameTypes)
         {
             var isInsert = false;
 
-            if (!customerInfo.IsSyncLiveCasino)
+            if (!isSynced)
             {
                 isInsert = ManualSyncAccount(settingContext);
             }
@@ -282,6 +288,27 @@
             WriteLogUpdateStakeLevel(settingContext, gameTypes, isInsert, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
+        }
+
+        /// <summary>
+        /// Updates the manual multiple.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Multiple result command.</returns>
+        public IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
+        {
+            var results = new MultipleCommandResults();
+            List<CustInfo> custInfos = _commonUti.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+
+            foreach (var custInfo in custInfos)
+            {
+                settingContext.TargetCustId = custInfo.CustId;
+                var updateResult = UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameTypes);
+                results.CommandResultsList.Add(updateResult);
+            }
+
+            return results;
         }
 
         /// <summary>
@@ -358,8 +385,7 @@
                 {
                     var gameSettingResult = (GameSettingCommandResult)itemResult;
 
-                    // When update game setting successfully game type id will be set to message property
-                    var newGameType = gameTypes.Where(x => x.Id.ToString() == gameSettingResult.Message).FirstOrDefault();
+                    var newGameType = gameTypes.Where(x => x.Id == gameSettingResult.Id).FirstOrDefault();
 
                     if (newGameType != null)
                     {
@@ -502,7 +528,7 @@
 
             if (gameSettingResult.IsSuccessful)
             {
-                gameSettingResult.Message = gameType.Id.ToString();
+                gameSettingResult.Id = gameType.Id;
             }
             else
             {

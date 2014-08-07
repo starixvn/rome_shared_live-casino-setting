@@ -106,6 +106,8 @@
 
         public int DirectUplineId { get; set; }
 
+        public string TargetSyncStatus { get; set; }
+
         public int UserIdDoAction
         {
             get

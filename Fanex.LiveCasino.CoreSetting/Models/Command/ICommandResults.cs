@@ -7,9 +7,9 @@
     {
         List<ICommandResult> Results { get; set; }
 
-        string Username { get; set; }
+        string Name { get; set; }
 
-        int CustId { get; set; }
+        int Id { get; set; }
 
         bool IsSuccessful { get; }
     }

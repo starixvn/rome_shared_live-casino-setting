@@ -16,5 +16,7 @@
             : base(result)
         {
         }
+
+        public int Id { get; set; }
     }
 }

@@ -16,9 +16,9 @@
 
         public List<ICommandResult> Results { get; set; }
 
-        public string Username { get; set; }
+        public string Name { get; set; }
 
-        public int CustId { get; set; }
+        public int Id { get; set; }
 
         public virtual bool IsSuccessful
         {
