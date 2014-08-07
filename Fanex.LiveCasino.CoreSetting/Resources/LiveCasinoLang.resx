@@ -318,4 +318,7 @@
   <data name="NoInformation" xml:space="preserve">
     <value>No information is available!</value>
   </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>Updated Successfully.</value>
+  </data>
 </root>

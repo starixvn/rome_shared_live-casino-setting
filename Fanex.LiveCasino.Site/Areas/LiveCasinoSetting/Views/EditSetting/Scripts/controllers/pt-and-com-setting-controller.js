@@ -53,6 +53,11 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         //// Action
         $scope.updatePtAndComSetting = function () {
+            if (!custSetting.CustInfo.IsSyncLiveCasino) {
+                $scope.$parent.validateAndUpdateSetting();
+                return;
+            }
+
             if ($scope.isEditPresetOnMember()) {
                 return;
             }

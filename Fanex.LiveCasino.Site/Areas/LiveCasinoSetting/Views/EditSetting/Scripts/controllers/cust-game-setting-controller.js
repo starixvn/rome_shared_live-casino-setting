@@ -11,6 +11,11 @@ if (fanex.liveCasinoSetting) {
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
             $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             $scope.updateGameSetting = function () {
+                if (!custSetting.CustInfo.IsSyncLiveCasino) {
+                    $scope.$parent.validateAndUpdateSetting();
+                    return;
+                }
+
                 if (custSetting.SettingContext.TargetRoleId === fanex.liveCasinoSetting.custRole.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
                         var gameType = $scope.gameSetting[i];

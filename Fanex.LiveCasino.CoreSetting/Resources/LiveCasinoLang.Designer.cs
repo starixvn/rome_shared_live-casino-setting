@@ -662,5 +662,14 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
                 return ResourceManager.GetString("UpdateLiveCasinoStatusUnSuccess", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Successfully..
+        /// </summary>
+        public static string UpdateSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateSuccessfully", resourceCulture);
+            }
+        }
     }
 }
