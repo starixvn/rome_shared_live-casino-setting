@@ -22,7 +22,7 @@
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
 
-        Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds);
+        ////Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds);
 
         List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked);
 

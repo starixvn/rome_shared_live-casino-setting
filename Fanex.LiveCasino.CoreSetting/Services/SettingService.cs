@@ -14,6 +14,7 @@
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
+    using System.Collections;
 
     /// <summary>
     /// Setting service for update position taking setting, commission, member win limit.
@@ -62,6 +63,57 @@
         }
 
         #region Pt and Com
+
+        /// <summary>
+        /// Get Customer Setting for Editing.
+        /// </summary>
+        /// <param name="settingContext">Current context for getting customer information.</param>
+        /// <returns>Position taking and commission setting.</returns>
+        public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
+        {
+            switch ((CustRole)settingContext.TargetRoleId)
+            {
+                case CustRole.Super:
+                    return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
+                    {
+                        Custid = settingContext.TargetCustId
+                    });
+                case CustRole.Master:
+                    return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
+                    {
+                        CustId = settingContext.TargetCustId,
+                        SRecommend = settingContext.CustId
+                    });
+                case CustRole.Agent:
+                    return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
+                    {
+                        CustId = settingContext.TargetCustId,
+                        MRecommend = settingContext.CustId
+                    });
+                case CustRole.Member:
+                    switch ((CustRole)settingContext.RoleId)
+                    {
+                        case CustRole.Super:
+                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
+                            {
+                                CustId = settingContext.TargetCustId
+                            });
+                        case CustRole.Master:
+                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria
+                            {
+                                CustId = settingContext.TargetCustId
+                            });
+                        default:
+                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria
+                            {
+                                CustId = settingContext.TargetCustId,
+                                Recommend = settingContext.CustId
+                            });
+                    }
+            }
+
+            return null;
+        }
 
         public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
         {
@@ -252,46 +304,36 @@
         public IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
-            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
+            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
         }
 
         public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
-            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
+            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
         }
 
         public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
-            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
+            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
         }
 
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
-            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
+            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
         }
 
         public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            List<int> custIds = _commonUtil.GetCustIds(settingContext.TargetCustIds);
-            Dictionary<int, ICommandResult> commandResults = _settingRepository.UpdatePtAndCommSettingMultiple(criteria, custIds);
 
-            return GetPtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, commandResults);
+            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
         }
 
         #endregion Pt and Com Multiple Update
@@ -367,57 +409,6 @@
         #endregion Win Limit
 
         #region Private Methods
-
-        /// <summary>
-        /// Get Customer Setting for Editing.
-        /// </summary>
-        /// <param name="settingContext">Current context for getting customer information.</param>
-        /// <returns>Position taking and commission setting.</returns>
-        public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
-        {
-            switch ((CustRole)settingContext.TargetRoleId)
-            {
-                case CustRole.Super:
-                    return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
-                    {
-                        Custid = settingContext.TargetCustId
-                    });
-                case CustRole.Master:
-                    return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
-                        {
-                            CustId = settingContext.TargetCustId,
-                            SRecommend = settingContext.CustId
-                        });
-                case CustRole.Agent:
-                    return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
-                        {
-                            CustId = settingContext.TargetCustId,
-                            MRecommend = settingContext.CustId
-                        });
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
-                    {
-                        case CustRole.Super:
-                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId
-                            });
-                        case CustRole.Master:
-                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId
-                            });
-                        default:
-                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId,
-                                Recommend = settingContext.CustId
-                            });
-                    }
-            }
-
-            return null;
-        }
 
         /// <summary>
         /// Get information after updated.
@@ -586,19 +577,23 @@
         /// <param name="userNames">User name for showing message information.</param>
         /// <param name="commandResults">General result for separating.</param>
         /// <returns>Result details for showing on web.</returns>
-        private IMultipleCommandResults GetPtAndComResultDetailsMultiple(string custIds, string userNames, Dictionary<int, ICommandResult> commandResults)
+        private IMultipleCommandResults UpdatePtAndComResultDetailsMultiple(string custIds, string userNames, ICriteria criteria)
         {
             IMultipleCommandResults multipleResults = new MultipleCommandResults();
             Dictionary<int, string> userNamesWithCustIds = _commonUtil.GetUsernamesWithCustIds(custIds, userNames);
-
-            foreach (var result in commandResults)
+            var custIdParameter = new Hashtable();
+            
+            foreach (var userNamesWithCustId in userNamesWithCustIds)
             {
+                custIdParameter["custid"] = userNamesWithCustId.Key;
+                criteria.AddSpParams(custIdParameter);
+                var updateResult = _settingRepository.InsertOrUpdate(criteria);
                 multipleResults.CommandResultsList.Add(new CommandResults
-                {
-                    Results = GetPtAndComResultDetails(result.Value).ToList(),
-                    Id = result.Key,
-                    Name = userNamesWithCustIds[result.Key]
-                });
+                    {
+                         Id = userNamesWithCustId.Key,
+                         Name = userNamesWithCustId.Value,
+                         Results = GetPtAndComResultDetails(updateResult)
+                    });
             }
 
             return multipleResults;

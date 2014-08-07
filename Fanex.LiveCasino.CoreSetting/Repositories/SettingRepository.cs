@@ -315,36 +315,36 @@
         /// <param name="criteria">The criteria.</param>
         /// <param name="custIds">The customer ids.</param>
         /// <returns>Command result.</returns>
-        public Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds)
-        {
-            Dictionary<int, ICommandResult> results = new Dictionary<int, ICommandResult>();
+        ////public Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds)
+        ////{
+        ////    Dictionary<int, ICommandResult> results = new Dictionary<int, ICommandResult>();
 
-            if (criteria.IsValid())
-            {
-                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
-                    objDb.AssignParamValues(parameters);
-                    foreach (var custId in custIds)
-                    {
-                        objDb.Database.SetParameterValue(objDb.DbCommand, "custid", custId);
+        ////    if (criteria.IsValid())
+        ////    {
+        ////        using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+        ////        {
+        ////            var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
+        ////            objDb.AssignParamValues(parameters);
+        ////            foreach (var custId in custIds)
+        ////            {
+        ////                objDb.Database.SetParameterValue(objDb.DbCommand, "custid", custId);
 
-                        objDb.ExecuteNonQuery();
+        ////                objDb.ExecuteNonQuery();
 
-                        var outParameters = objDb.GetOuputParams();
-                        if (outParameters != null)
-                        {
-                            results[custId] = new CommandResult
-                            {
-                                Code = outParameters.Contains("errcode") ? outParameters["errcode"] : 0,
-                                Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty
-                            };
-                        }
-                    }
-                }
-            }
+        ////                var outParameters = objDb.GetOuputParams();
+        ////                if (outParameters != null)
+        ////                {
+        ////                    results[custId] = new CommandResult
+        ////                    {
+        ////                        Code = outParameters.Contains("errcode") ? outParameters["errcode"] : 0,
+        ////                        Message = outParameters.Contains("errmsg") ? outParameters["errmsg"].ToString() : string.Empty
+        ////                    };
+        ////                }
+        ////            }
+        ////        }
+        ////    }
 
-            return results;
-        }
+        ////    return results;
+        ////}
     }
 }

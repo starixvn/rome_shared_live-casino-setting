@@ -147,5 +147,6 @@
                 return TargetRoleId == (int)CustRole.Member;
             }
         }
+
     }
 }
