@@ -305,35 +305,35 @@
         {
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
 
-            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
+            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
         }
 
         public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
 
-            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
+            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
         }
 
         public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
 
-            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
+            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
         }
 
         public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
 
-            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
+            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
         }
 
         public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
 
-            return UpdatePtAndComResultDetailsMultiple(settingContext.TargetCustIds, settingContext.TargetUsernames, criteria);
+            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
         }
 
         #endregion Pt and Com Multiple Update
@@ -577,22 +577,22 @@
         /// <param name="userNames">User name for showing message information.</param>
         /// <param name="commandResults">General result for separating.</param>
         /// <returns>Result details for showing on web.</returns>
-        private IMultipleCommandResults UpdatePtAndComResultDetailsMultiple(string custIds, string userNames, ICriteria criteria)
+        private IMultipleCommandResults UpdatePtAndComResultDetailsMultiple(SettingContext settingContext, ICriteria criteria)
         {
             IMultipleCommandResults multipleResults = new MultipleCommandResults();
-            Dictionary<int, string> userNamesWithCustIds = _commonUtil.GetUsernamesWithCustIds(custIds, userNames);
+            List<CustInfo> custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
             var custIdParameter = new Hashtable();
-            
-            foreach (var userNamesWithCustId in userNamesWithCustIds)
+
+            foreach (var custInfo in custInfoes)
             {
-                custIdParameter["custid"] = userNamesWithCustId.Key;
-                criteria.AddSpParams(custIdParameter);
-                var updateResult = _settingRepository.InsertOrUpdate(criteria);
+                custIdParameter["custid"] = custInfo.CustId;
+
+                var updateResult = _settingRepository.InsertOrUpdate(criteria, custIdParameter);
                 multipleResults.CommandResultsList.Add(new CommandResults
                     {
-                         Id = userNamesWithCustId.Key,
-                         Name = userNamesWithCustId.Value,
-                         Results = GetPtAndComResultDetails(updateResult)
+                        Id = custInfo.CustId,
+                        Name = custInfo.UserName,
+                        Results = GetPtAndComResultDetails(updateResult)
                     });
             }
 

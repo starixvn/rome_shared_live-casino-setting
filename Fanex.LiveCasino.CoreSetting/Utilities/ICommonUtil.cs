@@ -5,10 +5,6 @@
 
     public interface ICommonUtil
     {
-        List<int> GetCustIds(string custIds);
-
-        Dictionary<int, string> GetUsernamesWithCustIds(string custIds, string usernames);
-
         List<CustInfo> GetCustomerInfo(string custIds, string usernames, string syncStatus);
     }
 }
