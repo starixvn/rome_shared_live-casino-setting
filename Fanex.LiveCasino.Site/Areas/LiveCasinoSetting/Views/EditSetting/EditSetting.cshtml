@@ -3,7 +3,7 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&&targetUsernames={8}&isEditMultiple={9}&directUplineId={10}",
+        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&&targetUsernames={8}&isEditMultiple={9}&directUplineId={10}&targetSyncStatus={11}",
         Model.CustId,
         Model.RoleId,
         Model.AdminId,
@@ -14,7 +14,8 @@
         Model.TargetCustIds,
         Model.TargetUsernames,
         Model.IsEditMultiple,
-        Model.DirectUplineId);
+        Model.DirectUplineId,
+        Model.TargetSyncStatus);
 }
 @section modeldata
 {
@@ -27,25 +28,23 @@
     style="display:none;"
     class="edit-setting-livecs">
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
-        <div class="main-message-icon" 
-            data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}"></div>
+        <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
+        </div>
         <div class="main-message">
             <div data-ng-repeat="subResult in mainResult.CommandResultsList">
                 <div class="message-user-name">
                     {{subResult.Name}}</div>
                 <div class="sub-message" data-ng-repeat="result in subResult.Results">
-                    <div class="sub-message-icon" 
-                        data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
-                        data-ng-show="!mainResult.isUnAuthorized"></div>
-                    <div class="message-content" 
-                        data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}" 
-                        data-ng-bind-html="result.Message"></div>
+                    <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
+                        data-ng-show="!mainResult.isUnAuthorized">
+                    </div>
+                    <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
+                        data-ng-bind-html="result.Message">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-
     <div class="setting-header bold col-xs-12">
         @(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)
     </div>
@@ -60,8 +59,6 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
-
-
     <div class="update-setting col-xs-12">
         <input type="button" class="btn btn-primary btn-sm" data-ng-click="validateAndUpdateSetting()"
             value="Update" />

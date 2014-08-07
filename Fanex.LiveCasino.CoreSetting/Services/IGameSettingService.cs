@@ -24,6 +24,6 @@
 
         IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 
-        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync);
+        ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSynced);
     }
 }

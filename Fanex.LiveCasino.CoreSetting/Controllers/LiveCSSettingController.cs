@@ -193,6 +193,7 @@
 
             if (settingContext.IsEditMultiple)
             {
+                updateResult = _settingService.UpdateWinLimitMultiple(settingContext, model);
             }
             else
             {

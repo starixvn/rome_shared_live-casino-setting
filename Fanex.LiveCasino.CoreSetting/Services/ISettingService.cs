@@ -9,7 +9,7 @@
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
-    {       
+    {
         int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses);
 
         #region PT and Com
@@ -61,6 +61,8 @@
         CurrentMemberWin GetCurrentWinLimit(int custId);
 
         ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
+
+        IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit);
 
         #endregion Win Limit
     }

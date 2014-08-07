@@ -339,6 +339,31 @@
             return commandResults;
         }
 
+        /// <summary>
+        /// Updates the win limit multiple.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="memberWinLimit">The member win limit.</param>
+        /// <returns>Update win limit multiple result.</returns>
+        public IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        {
+            var results = new MultipleCommandResults();
+            List<CustInfo> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+
+            foreach (var custInfo in custInfos)
+            {
+                settingContext.TargetCustId = custInfo.CustId;
+                var updateResult = UpdateWinLimit(settingContext, memberWinLimit);
+
+                updateResult.Id = custInfo.CustId;
+                updateResult.Name = custInfo.UserName;
+
+                results.CommandResultsList.Add(updateResult);
+            }
+
+            return results;
+        }
+
         #endregion Win Limit
 
         #region Private Methods

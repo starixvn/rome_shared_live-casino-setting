@@ -163,7 +163,7 @@
                     _logService.LogAutoInsertAccount(settingContext, gameTypes);
                 });
 
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSync: true);
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
                 {
@@ -217,7 +217,7 @@
                     _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
                 });
 
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSync: true);
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
                 {
@@ -304,7 +304,11 @@
             foreach (var custInfo in custInfos)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var updateResult = UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameTypes);
+                var updateResult = (CommandResults)UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameTypes);
+
+                updateResult.Id = custInfo.CustId;
+                updateResult.Name = custInfo.UserName;
+
                 results.CommandResultsList.Add(updateResult);
             }
 
@@ -315,9 +319,9 @@
         /// Updates the synchronize live casino.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="isSync">If set to <c>true</c> [is synchronize].</param>
+        /// <param name="isSynced">If set to <c>true</c> [is synchronize].</param>
         /// <returns>Command result update sync.</returns>
-        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSync)
+        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSynced)
         {
             var criteria = new UpdateSyncLiveCasinoCriteria
             {
@@ -326,7 +330,7 @@
                 Ip = settingContext.IP,
                 Language = settingContext.Language,
                 SubAccId = settingContext.SubAccId,
-                SyncLiveCS = isSync
+                SyncLiveCS = isSynced
             };
 
             return _settingRepository.InsertOrUpdate(criteria);
@@ -344,7 +348,7 @@
             if (resultInsertAccount.IsSuccessful)
             {
                 _logService.LogManualInsertAccount(settingContext);
-                var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSync: true);
+                var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSynced: true);
                 var disableLiveCasino = false;
 
                 if (!settingContext.IsEdittingSuper)
@@ -391,9 +395,6 @@
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
                         _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
-
-                        var betType = RefData.GetBetTypeName(newGameType.BetTypeId.ToString(), settingContext.Language);
-                        gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
                     }
                 }
             }
@@ -526,13 +527,14 @@
 
             var gameSettingResult = new GameSettingCommandResult(result);
 
+            var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), language);
             if (gameSettingResult.IsSuccessful)
             {
                 gameSettingResult.Id = gameType.Id;
+                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
             }
             else
             {
-                var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), language);
                 gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, betType, gameSettingResult.Message);
             }
 
