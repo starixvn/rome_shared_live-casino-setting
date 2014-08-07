@@ -145,7 +145,7 @@
                 //// Check what setting will be update
                 ICommandResults resultList = new CommandResults();
 
-                if (settingContext.IsEdittingMember)
+                if (settingContext.IsAgentEditingMember)
                 {
                     resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
                 }

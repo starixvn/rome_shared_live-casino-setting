@@ -148,5 +148,12 @@
             }
         }
 
+        public bool IsAgentEditingMember
+        {
+            get
+            {
+                return IsEdittingMember && RoleId == (int)CustRole.Agent;
+            }
+        }
     }
 }

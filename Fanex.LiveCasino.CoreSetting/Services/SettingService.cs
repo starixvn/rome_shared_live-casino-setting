@@ -1,8 +1,8 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
@@ -14,7 +14,6 @@
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
-    using System.Collections;
 
     /// <summary>
     /// Setting service for update position taking setting, commission, member win limit.
@@ -573,9 +572,8 @@
         /// <summary>
         /// Get result details information from general result.
         /// </summary>
-        /// <param name="custIds">Customer id list for mapping username.</param>
-        /// <param name="userNames">User name for showing message information.</param>
-        /// <param name="commandResults">General result for separating.</param>
+        /// <param name="settingContext">Setting context for get list customer information.</param>
+        /// <param name="criteria">Criteria for updating customer setting.</param>
         /// <returns>Result details for showing on web.</returns>
         private IMultipleCommandResults UpdatePtAndComResultDetailsMultiple(SettingContext settingContext, ICriteria criteria)
         {

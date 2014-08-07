@@ -50,13 +50,11 @@
             set;
         }
 
-
         public virtual string OldValue
         {
             get;
             set;
         }
-
 
         public string SignUpIp
         {
