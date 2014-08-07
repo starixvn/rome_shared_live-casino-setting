@@ -42,8 +42,8 @@
         /// <returns>Customer id representative.</returns>
         public int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses)
         {
-            var custIdList = custIds.Split(new char[] { ',' });
-            var custSyncList = custSyncStatuses.Split(new char[] { ',' });
+            var custIdList = custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var custSyncList = custSyncStatuses.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             var firstCustIdNotSync = 0;
 
             for (int i = 0; i < custIds.Length; i++)
