@@ -9,6 +9,7 @@
       <Mapping DataField="MaxWinLiveCasino" ObjectProperty="Max" />
       <Mapping DataField="UplineIsAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
       <Mapping DataField="UplineMaxWinLiveCasino" ObjectProperty="Max" />
+      <Mapping DataField="username2" ObjectProperty="NickName" />
     </Setting>
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />

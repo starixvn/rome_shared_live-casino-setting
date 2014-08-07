@@ -20,7 +20,10 @@
                 @LiveCasinoLang.lblNickname:
             </td>
             <td class="left">
-                {{custInfo.NickName}}
+                @if(LiveCasinoSettings.Settings.SystemId != (int)SystemType.Agency)
+                {
+                    @:{{custInfo.NickName}}
+                }
             </td>
         </tr>
         <tr>

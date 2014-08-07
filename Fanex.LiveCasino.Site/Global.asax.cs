@@ -24,7 +24,11 @@ namespace Fanex.LiveCasino.Site
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            RegisterFilterDependencyInjection();
+        }
 
+        private void RegisterFilterDependencyInjection()
+        {
             var oldProvider = FilterProviders.Providers.Single(
                    f => f is FilterAttributeFilterProvider
                );
@@ -35,5 +39,6 @@ namespace Fanex.LiveCasino.Site
             var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
             FilterProviders.Providers.Add(provider);
         }
+                
     }
 }
