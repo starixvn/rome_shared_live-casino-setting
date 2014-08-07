@@ -7,7 +7,7 @@
         <tbody>
             <tr>
                 <td class="bold left">
-                    @Model.TargetUsernames.Replace(",", ", ").Replace(", ,", ", ")
+                    @(string.Join(", ", Model.TargetUsernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)))
                 </td>
             </tr>
             @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
