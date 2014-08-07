@@ -153,12 +153,15 @@
                 var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
                 resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
-                // Only update when PT and Commission updated successfully, waiting for Ricky implement PtAndCommResults
-                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
+                if (positionTakingAndCommResults.IsSuccessful)
+                {
+                    var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
+                    var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
 
-                resultList.Results.AddRange(winLimitResults);
-                resultList.Results.AddRange(gameSettingResult);
+                    resultList.Results.AddRange(winLimitResults);
+                    resultList.Results.AddRange(gameSettingResult);
+                }
+
                 updateResult.CommandResultsList.Add(resultList);
             }
 

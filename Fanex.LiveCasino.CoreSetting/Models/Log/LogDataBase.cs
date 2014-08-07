@@ -40,27 +40,23 @@
 
         public virtual string SpName
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public virtual string NewValue
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
+
 
         public virtual string OldValue
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
+
 
         public string SignUpIp
         {

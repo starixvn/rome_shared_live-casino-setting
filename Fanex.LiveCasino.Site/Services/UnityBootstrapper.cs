@@ -8,7 +8,7 @@ using Fanex.LiveCasino.CoreSetting.Services;
 
 namespace Fanex.LiveCasino.Site.Services
 {
-    public class UnityBootstrapper
+    public class UnityBootstrapper : IDisposable
     {
         private readonly IUnityContainer container = new UnityContainer();
 
@@ -20,6 +20,23 @@ namespace Fanex.LiveCasino.Site.Services
         public void RegisterTypes()
         {
             container.RegisterType<ILiveCasinoAuthorizationService, LiveCasinoAuthorizationService>();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+
+            return;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                container.Dispose();
+            }
         }
     }
 }
