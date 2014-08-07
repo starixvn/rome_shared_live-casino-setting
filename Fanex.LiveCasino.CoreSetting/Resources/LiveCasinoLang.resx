@@ -315,4 +315,7 @@
   <data name="UnauthorizeMsg" xml:space="preserve">
     <value>Unauthorize Msg</value>
   </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>No information is available!</value>
+  </data>
 </root>

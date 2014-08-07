@@ -7,7 +7,7 @@
         <tbody>
             <tr>
                 <td class="bold left">
-                    @Model.TargetUsernames.Replace(",", ", ")
+                    @Model.TargetUsernames.Replace(",", ", ").Replace(", ,", ", ")
                 </td>
             </tr>
             @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)

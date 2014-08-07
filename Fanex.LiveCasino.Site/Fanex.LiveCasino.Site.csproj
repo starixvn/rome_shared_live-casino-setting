@@ -293,6 +293,7 @@
       <LastGenOutput>LiveCasinoLang.js</LastGenOutput>
     </None>
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfoMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
     <None Include="Test\Chutzpah.json" />
   </ItemGroup>
   <ItemGroup>

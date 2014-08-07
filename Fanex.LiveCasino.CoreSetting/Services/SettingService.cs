@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
@@ -37,28 +38,44 @@
         /// <summary>
         /// Get Representative customer for editing multiple.
         /// </summary>
-        /// <param name="custIds">Customer id list for editing, each customer separate by ','.</param>
-        /// <param name="custSyncStatuses">Customer sync status list for getting first sync customer.</param>
+        /// <param name="settingContext">Setting context for getting customer id list, username list, status list.</param>
         /// <returns>Customer id representative.</returns>
-        public int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses)
+        public int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext)
         {
-            var custIdList = custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var custSyncList = custSyncStatuses.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var firstCustIdNotSync = 0;
+            var custInfoList = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
-            for (int i = 0; i < custIds.Length; i++)
+            //// Edit multiple direct downline. Load setting info of the first selected downline in customer list
+            if (custInfoList.Any() && settingContext.IsEditDirectDownline)
             {
-                if (custSyncList[i] == "1")
+                return Converter.ToInt(custInfoList[0].CustId);
+            }
+
+            //// Super/Master multiple member
+            var newCustIdList = string.Empty;
+            var newUsernameList = string.Empty;
+            var newTargetSyncList = string.Empty;
+            var firstSyncCustId = 0;
+
+            foreach (var custInfo in custInfoList)
+            {
+                if (custInfo.IsSyncLiveCasino)
                 {
-                    return Converter.ToInt(custIdList[i]);
-                }
-                else if (firstCustIdNotSync == 0)
-                {
-                    firstCustIdNotSync = Converter.ToInt(custIdList[i]);
+                    if (firstSyncCustId == 0)
+                    {
+                        firstSyncCustId = custInfo.CustId;
+                    }
+
+                    newCustIdList += custInfo.CustId.ToString() + ",";
+                    newUsernameList += custInfo.UserName + ",";
+                    newTargetSyncList += (custInfo.IsSyncLiveCasino ? "1" : "0") + ",";
                 }
             }
 
-            return firstCustIdNotSync;
+            settingContext.TargetCustIds = newCustIdList.TrimEnd(',');
+            settingContext.TargetUsernames = newUsernameList.TrimEnd(',');
+            settingContext.TargetSyncStatus = newTargetSyncList.TrimEnd(',');
+
+            return firstSyncCustId;
         }
 
         #region Pt and Com

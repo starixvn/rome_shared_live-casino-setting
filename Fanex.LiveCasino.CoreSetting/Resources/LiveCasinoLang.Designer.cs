@@ -592,6 +592,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No information is available!.
+        /// </summary>
+        public static string NoInformation {
+            get {
+                return ResourceManager.GetString("NoInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super.
         /// </summary>
         public static string Super {

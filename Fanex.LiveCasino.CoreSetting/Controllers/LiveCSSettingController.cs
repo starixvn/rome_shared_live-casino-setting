@@ -110,7 +110,12 @@
                 TargetSyncStatus = targetSyncStatus
             };
 
-            settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(targetCustIds, targetSyncStatus);
+            settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
+            if (settingContext.TargetCustId == 0)
+            {
+                return View("~/Areas/LiveCasinoSetting/Views/Common/NoInformation.cshtml");
+            }
+
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 

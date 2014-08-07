@@ -155,5 +155,13 @@
                 return IsEdittingMember && RoleId == (int)CustRole.Agent;
             }
         }
+
+        public bool IsEditDirectDownline
+        {
+            get
+            {
+                return IsEdittingSuper || (RoleId - TargetRoleId) == 1; 
+            }
+        }
     }
 }

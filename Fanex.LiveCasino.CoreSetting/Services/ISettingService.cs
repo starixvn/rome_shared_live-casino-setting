@@ -10,7 +10,7 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
     {
-        int GetRepresentativeCustIdForEditingMultiple(string custIds, string custSyncStatuses);
+        int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext);
 
         #region PT and Com
 
