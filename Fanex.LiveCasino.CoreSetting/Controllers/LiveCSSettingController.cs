@@ -156,10 +156,13 @@
                 if (positionTakingAndCommResults.IsSuccessful)
                 {
                     var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-                    var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
-
                     resultList.Results.AddRange(winLimitResults);
-                    resultList.Results.AddRange(gameSettingResult);
+
+                    if (custSetting.GameSetting != null)
+                    {
+                        var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
+                        resultList.Results.AddRange(gameSettingResult);
+                    }
                 }
 
                 updateResult.CommandResultsList.Add(resultList);
