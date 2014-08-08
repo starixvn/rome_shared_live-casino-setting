@@ -121,7 +121,7 @@
     <value>Agent</value>
   </data>
   <data name="lblAgentComm" xml:space="preserve">
-    <value>Agent Comm</value>
+    <value>Agent Commission</value>
   </data>
   <data name="lblAgentMaxPT" xml:space="preserve">
     <value>Agent Max PT</value>
@@ -133,7 +133,7 @@
     <value>Agent Preset PT</value>
   </data>
   <data name="lblAgentPT" xml:space="preserve">
-    <value>Agent PT</value>
+    <value>Agent Position Taking</value>
   </data>
   <data name="lblCustomerInformation" xml:space="preserve">
     <value>Customer Information</value>
@@ -151,10 +151,10 @@
     <value>Master Auto Preset PT</value>
   </data>
   <data name="lblMasterAutoPT" xml:space="preserve">
-    <value>Master Auto PT</value>
+    <value>Master Auto Position Taking</value>
   </data>
   <data name="lblMasterComm" xml:space="preserve">
-    <value>Master Comm</value>
+    <value>Master Commission</value>
   </data>
   <data name="lblMasterMaxPT" xml:space="preserve">
     <value>Master Max PT</value>
@@ -166,7 +166,7 @@
     <value>Master Preset PT</value>
   </data>
   <data name="lblMasterPT" xml:space="preserve">
-    <value>Master PT</value>
+    <value>Master Position Taking</value>
   </data>
   <data name="lblMemberCommission" xml:space="preserve">
     <value>Member Commission</value>
@@ -202,7 +202,7 @@
     <value>Super Preset PT</value>
   </data>
   <data name="lblSuperPT" xml:space="preserve">
-    <value>Super PT</value>
+    <value>Super Position Taking</value>
   </data>
   <data name="lblUsername" xml:space="preserve">
     <value>Username</value>

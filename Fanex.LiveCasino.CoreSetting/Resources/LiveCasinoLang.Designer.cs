@@ -133,7 +133,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agent Comm.
+        ///   Looks up a localized string similar to Agent Commission.
         /// </summary>
         public static string lblAgentComm {
             get {
@@ -169,7 +169,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agent PT.
+        ///   Looks up a localized string similar to Agent Position Taking.
         /// </summary>
         public static string lblAgentPT {
             get {
@@ -340,7 +340,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Auto PT.
+        ///   Looks up a localized string similar to Master Auto Position Taking.
         /// </summary>
         public static string lblMasterAutoPT {
             get {
@@ -349,7 +349,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Comm.
+        ///   Looks up a localized string similar to Master Commission.
         /// </summary>
         public static string lblMasterComm {
             get {
@@ -385,7 +385,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master PT.
+        ///   Looks up a localized string similar to Master Position Taking.
         /// </summary>
         public static string lblMasterPT {
             get {
@@ -538,7 +538,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super PT.
+        ///   Looks up a localized string similar to Super Position Taking.
         /// </summary>
         public static string lblSuperPT {
             get {

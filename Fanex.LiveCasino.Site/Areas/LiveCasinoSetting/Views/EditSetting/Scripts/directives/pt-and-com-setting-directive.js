@@ -139,7 +139,6 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                         },
                         updateAgentMax: function () {
                             $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
-                            //actions.updateAgentMaxOptions();
                         },
                         updateAgentMin: function () {
                             $scope.agentMaxOptions = fanex.createOptionsFromRange(
