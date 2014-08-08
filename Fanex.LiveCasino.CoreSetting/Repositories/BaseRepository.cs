@@ -21,17 +21,6 @@
         /// <returns>Command results class.</returns>
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
-            return InsertOrUpdate(criteria, null);
-        }
-
-        /// <summary>
-        /// Insert or update with update parameter.
-        /// </summary>
-        /// <param name="criteria">Criteria for update.</param>
-        /// <param name="updatePrameters">Parameter update criteria.</param>
-        /// <returns>Result of updating command.</returns>
-        public ICommandResult InsertOrUpdate(ICriteria criteria, Hashtable updatePrameters)
-        {
             var result = new CommandResult();
 
             if (criteria.IsValid())
@@ -39,13 +28,6 @@
                 using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                 {
                     var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
-                    if (updatePrameters != null)
-                    {
-                        foreach (DictionaryEntry updatePrameter in updatePrameters)
-                        {
-                            parameters[updatePrameter.Key] = updatePrameter.Value;
-                        }
-                    }
 
                     objDb.ExecuteNonQuery(parameters);
 

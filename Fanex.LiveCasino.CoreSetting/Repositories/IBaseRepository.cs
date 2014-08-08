@@ -7,7 +7,5 @@
     public interface IBaseRepository : IDynamicRepository
     {
         ICommandResult InsertOrUpdate(ICriteria criteria);
-
-        ICommandResult InsertOrUpdate(ICriteria criteria, Hashtable updatePrameters);
     }
 }

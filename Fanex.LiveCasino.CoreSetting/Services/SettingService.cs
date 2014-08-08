@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common;
@@ -283,73 +282,20 @@
         /// <returns>Update status and information for showing on web.</returns>
         public IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
-            IMultipleCommandResults updateResults = new MultipleCommandResults();
+            var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
-            switch ((CustRole)settingContext.TargetRoleId)
+            IMultipleCommandResults mainResults = new MultipleCommandResults();
+
+            foreach (var custInfo in custInfoes)
             {
-                case CustRole.Master:
-                    updateResults = UpdateMasterPtAndComSettingMultiple(settingContext, positionTakingAndComSetting);
-                    break;
-
-                case CustRole.Agent:
-                    updateResults = UpdateAgentPtAndComSettingMultiple(settingContext, positionTakingAndComSetting);
-                    break;
-
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
-                    {
-                        case CustRole.Super:
-                            updateResults = SuperUpdateMemberPtAndComSettingMultiple(settingContext, positionTakingAndComSetting);
-                            break;
-
-                        case CustRole.Master:
-                            updateResults = MasterUpdateMemberPtAndComSettingMultiple(settingContext, positionTakingAndComSetting);
-                            break;
-
-                        default:
-                            updateResults = AgentUpdateMemberPtAndComSettingMultiple(settingContext, positionTakingAndComSetting);
-                            break;
-                    }
-
-                    break;
+                settingContext.TargetCustId = custInfo.CustId;
+                var subResult = UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+                subResult.Id = custInfo.CustId;
+                subResult.Name = custInfo.UserName;
+                mainResults.CommandResultsList.Add(subResult);
             }
 
-            return updateResults;
-        }
-
-        public IMultipleCommandResults UpdateMasterPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-
-            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
-        }
-
-        public IMultipleCommandResults UpdateAgentPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-
-            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
-        }
-
-        public IMultipleCommandResults AgentUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-
-            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
-        }
-
-        public IMultipleCommandResults SuperUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-
-            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
-        }
-
-        public IMultipleCommandResults MasterUpdateMemberPtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-
-            return UpdatePtAndComResultDetailsMultiple(settingContext, criteria);
+            return mainResults;
         }
 
         #endregion Pt and Com Multiple Update
@@ -584,34 +530,6 @@
                 Auto_v162mpositiontaking_mem_1101 = (decimal)positionTakingAndComSetting.PositionTaking.Um1
             };
             return criteria;
-        }
-
-        /// <summary>
-        /// Get result details information from general result.
-        /// </summary>
-        /// <param name="settingContext">Setting context for get list customer information.</param>
-        /// <param name="criteria">Criteria for updating customer setting.</param>
-        /// <returns>Result details for showing on web.</returns>
-        private IMultipleCommandResults UpdatePtAndComResultDetailsMultiple(SettingContext settingContext, ICriteria criteria)
-        {
-            IMultipleCommandResults multipleResults = new MultipleCommandResults();
-            List<CustInfo> custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
-            var custIdParameter = new Hashtable();
-
-            foreach (var custInfo in custInfoes)
-            {
-                custIdParameter["custid"] = custInfo.CustId;
-
-                var updateResult = _settingRepository.InsertOrUpdate(criteria, custIdParameter);
-                multipleResults.CommandResultsList.Add(new CommandResults
-                    {
-                        Id = custInfo.CustId,
-                        Name = custInfo.UserName,
-                        Results = GetPtAndComResultDetails(updateResult)
-                    });
-            }
-
-            return multipleResults;
         }
 
         #endregion Private Methods

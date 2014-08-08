@@ -8,6 +8,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
     using Newtonsoft.Json;
@@ -19,16 +20,18 @@
     {
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;
+        private readonly ICommonUtil _commonUtil;
 
         public LiveCSSettingController()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
-        public LiveCSSettingController(ISettingService settingService, IGameSettingService gameSettingService)
+        public LiveCSSettingController(ISettingService settingService, IGameSettingService gameSettingService, ICommonUtil commonUtil)
         {
             _settingService = settingService ?? new SettingService();
             _gameSettingService = gameSettingService ?? new GameSettingService();
+            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -44,7 +47,7 @@
         /// <param name="language">Current language key.</param>
         /// <returns>
         /// Edit customer page.
-        /// </returns>   
+        /// </returns>
         [LiveCasinoAuthorization]
         public ActionResult EditSetting(
             int custId = 0,
@@ -144,33 +147,11 @@
 
             if (settingContext.IsEditMultiple)
             {
+                updateResult = UpdateMultipleCustomerAllSetting(settingContext, custSetting);
             }
             else
             {
-                //// Check what setting will be update
-                ICommandResults resultList = new CommandResults();
-
-                if (settingContext.IsAgentEditingMember)
-                {
-                    resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
-                }
-
-                var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
-                resultList.Results.AddRange(positionTakingAndCommResults.Results);
-
-                if (positionTakingAndCommResults.IsSuccessful)
-                {
-                    var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
-                    resultList.Results.AddRange(winLimitResults);
-
-                    if (custSetting.GameSetting != null)
-                    {
-                        var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
-                        resultList.Results.AddRange(gameSettingResult);
-                    }
-                }
-
-                updateResult.CommandResultsList.Add(resultList);
+                updateResult.CommandResultsList.Add(UpdateSingleCustomerAllSetting(settingContext, custSetting));
             }
 
             return Json(updateResult);
@@ -272,6 +253,64 @@
         }
 
         #endregion Pt and Com setting
+
+        /// <summary>
+        /// Update single customer all setting.
+        /// </summary>
+        /// <param name="settingContext">Current setting context.</param>
+        /// <param name="custSetting">Customer setting information for updating.</param>
+        /// <returns>Update result.</returns>
+        private ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting)
+        {
+            ICommandResults resultList = new CommandResults();
+
+            if (settingContext.IsAgentEditingMember)
+            {
+                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
+            }
+
+            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
+            resultList.Results.AddRange(positionTakingAndCommResults.Results);
+
+            if (positionTakingAndCommResults.IsSuccessful)
+            {
+                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
+                resultList.Results.AddRange(winLimitResults);
+
+                if (custSetting.GameSetting != null)
+                {
+                    var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
+                    resultList.Results.AddRange(gameSettingResult);
+                }
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// Update multiple customer all settting.
+        /// </summary>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="custSetting">Cust setting contains customer setting information.</param>
+        /// <returns>Multiple result return to user.</returns>
+        private IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting)
+        {
+            var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+
+            IMultipleCommandResults mainResults = new MultipleCommandResults();
+
+            foreach (var custInfo in custInfoes)
+            {
+                settingContext.TargetCustId = custInfo.CustId;
+                settingContext.TargetUsername = custInfo.UserName;
+                custSetting.CustInfo.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
+                var subResult = UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                subResult.Id = custInfo.CustId;
+                subResult.Name = custInfo.UserName;
+                mainResults.CommandResultsList.Add(subResult);
+            }
+
+            return mainResults;
+        }
 
         /// <summary>
         /// Get setting object for showing edit form.
