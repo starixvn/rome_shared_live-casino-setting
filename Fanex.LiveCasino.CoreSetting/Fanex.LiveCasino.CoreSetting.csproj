@@ -101,7 +101,6 @@
     <Compile Include="Criteria\PtAndCom\UpdateMasterSettingCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\UpdateSuperSettingCriteria.cs" />
     <Compile Include="Criteria\ResultCriteria.cs" />
-    <Compile Include="Criteria\UpdateDisableLiveCSCriteria.cs" />
     <Compile Include="Criteria\UpdateLiveCasinoStatusCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncLiveCasinoCriteria.cs" />
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />

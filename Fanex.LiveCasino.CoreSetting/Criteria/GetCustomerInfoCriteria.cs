@@ -7,7 +7,7 @@
     /// </summary>
     public class GetCustomerInfoCriteria : CriteriaBase
     {
-        public int Custid { get; set; }
+        public int CustId { get; set; }
 
         public override string GetSettingKey()
         {
@@ -16,7 +16,7 @@
 
         public override bool IsValid()
         {
-            return Custid > 0;
+            return CustId > 0;
         }
     }
 }

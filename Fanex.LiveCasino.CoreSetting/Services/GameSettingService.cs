@@ -57,7 +57,7 @@
         {
             var criteria = new GetCustomerInfoCriteria
             {
-                Custid = custId
+                CustId = custId
             };
             return _settingRepository.GetCustomerInfo(criteria);
         }
@@ -241,7 +241,7 @@
         {
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
-                Custid = settingContext.TargetCustId,
+                CustId = settingContext.TargetCustId,
                 UserID = settingContext.UserIdDoAction,
                 DisabledLiveCS = disableLiveCasino,
                 EnableDownlinesLiveCS = !disableLiveCasino,

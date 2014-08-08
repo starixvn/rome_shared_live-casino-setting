@@ -8,7 +8,7 @@
     /// </summary>
     public class UpdateLiveCasinoStatusCriteria : CriteriaBase
     {
-        public int Custid { get; set; }
+        public int CustId { get; set; }
 
         public bool DisabledLiveCS { get; set; }
 
@@ -29,7 +29,7 @@
 
         public override bool IsValid()
         {
-            return Custid > 0;
+            return CustId > 0;
         }
     }
 }

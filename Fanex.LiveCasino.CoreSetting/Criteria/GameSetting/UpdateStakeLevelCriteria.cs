@@ -19,7 +19,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0;
+            return CustId > 0 && RoleId > 0 && GameTypeId > 0;
         }
 
         public override string GetSettingKey()
