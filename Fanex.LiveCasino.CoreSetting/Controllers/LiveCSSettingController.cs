@@ -37,9 +37,9 @@
         /// <summary>
         /// Edit single customer setting.
         /// </summary>
-        /// <param name="custId">Customer Id is doing action.</param>
-        /// <param name="directUplineId">The direct upline identifier.</param>
-        /// <param name="roleId">Role id of current customer doing action.</param>
+        /// <param name="uplineId">Customer Id is doing action.</param>
+        /// <param name="directUplineId">The direct UPLINE identifier.</param>
+        /// <param name="uplineRoleId">Role id of current customer doing action.</param>
         /// <param name="targetCustId">Target customer is being edited.</param>
         /// <param name="targetRoleId">Target role of customer being edited.</param>
         /// <param name="adminId">Admin id doing action.</param>
@@ -50,9 +50,9 @@
         /// </returns>
         [LiveCasinoAuthorization]
         public ActionResult EditSetting(
-            int custId = 0,
+            int uplineId = 0,
             int directUplineId = 0,
-            int roleId = 0,
+            int uplineRoleId = 0,
             int targetCustId = 0,
             int targetRoleId = 0,
             int adminId = 0,
@@ -61,9 +61,9 @@
         {
             var settingContext = new SettingContext
                 {
-                    CustId = custId,
+                    UplineId = uplineId,
                     DirectUplineId = directUplineId,
-                    RoleId = roleId,
+                    UplineRoleId = uplineRoleId,
                     TargetCustId = targetCustId,
                     TargetRoleId = targetRoleId,
                     FormType = (FormType)formType,
@@ -77,8 +77,8 @@
         /// <summary>
         /// Edit multiple customer.
         /// </summary>
-        /// <param name="custId">Customer id is doing edit.</param>
-        /// <param name="roleId">Customer role id of user is doing edit.</param>
+        /// <param name="uplineId">Customer id is doing edit.</param>
+        /// <param name="uplineRoleId">Customer role id of user is doing edit.</param>
         /// <param name="targetCustIds">List of customer id are being edited.</param>
         /// <param name="targetUsernames">List of customer name are being edited.</param>
         /// <param name="targetSyncStatus">List of sync customer status are being edited.</param>
@@ -89,8 +89,8 @@
         /// <returns>Edit multiple form.</returns>
         [LiveCasinoAuthorization]
         public ActionResult EditSettingMultiple(
-            int custId = 0,
-            int roleId = 0,
+            int uplineId = 0,
+            int uplineRoleId = 0,
             string targetCustIds = "",
             string targetUsernames = "",
             string targetSyncStatus = "",
@@ -101,8 +101,8 @@
         {
             var settingContext = new SettingContext
             {
-                CustId = custId,
-                RoleId = roleId,
+                UplineId = uplineId,
+                UplineRoleId = uplineRoleId,
                 TargetRoleId = targetRoleId,
                 TargetCustIds = targetCustIds,
                 TargetUsernames = targetUsernames,
@@ -283,14 +283,15 @@
                     resultList.Results.AddRange(gameSettingResult);
                 }
             }
+
             return resultList;
         }
 
         /// <summary>
-        /// Update multiple customer all settting.
+        /// Update multiple customer all setting.
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="custSetting">Cust setting contains customer setting information.</param>
+        /// <param name="custSetting">Customer setting contains customer setting information.</param>
         /// <returns>Multiple result return to user.</returns>
         private IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {

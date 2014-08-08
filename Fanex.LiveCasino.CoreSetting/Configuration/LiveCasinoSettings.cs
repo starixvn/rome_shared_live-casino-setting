@@ -9,6 +9,7 @@
     {
         private const string __LIVE_CASINO_SETTINGS = "LiveCasinoSettings";
         private const string __SYSTEM_ID = "SystemId";
+        private const string __UN_AUTHORIZED_URL = "UnAuthorizeUrl";
 
         private static LiveCasinoSettings _settings = ConfigurationManager.GetSection(__LIVE_CASINO_SETTINGS) as LiveCasinoSettings;
 
@@ -25,6 +26,13 @@
         {
             get { return (int)this[__SYSTEM_ID]; }
             set { this[__SYSTEM_ID] = value; }
+        }
+
+        [ConfigurationProperty(__UN_AUTHORIZED_URL, IsRequired = false, DefaultValue = "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized")]
+        public string UnAuthorizeUrl
+        {
+            get { return (string)this[__UN_AUTHORIZED_URL]; }
+            set { this[__UN_AUTHORIZED_URL] = value; }
         }
     }
 }

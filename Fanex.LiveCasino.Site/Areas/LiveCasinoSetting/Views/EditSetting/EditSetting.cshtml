@@ -3,9 +3,9 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "EditSetting";
     var editQueryString = string.Format(
-        "custId={0}&roleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&&targetUsernames={8}&isEditMultiple={9}&directUplineId={10}&targetSyncStatus={11}",
-        Model.CustId,
-        Model.RoleId,
+        "uplineId={0}&uplineRoleId={1}&adminId={2}&targetCustId={3}&targetRoleId={4}&formType={5}&language={6}&targetCustIds={7}&&targetUsernames={8}&isEditMultiple={9}&directUplineId={10}&targetSyncStatus={11}",
+        Model.UplineId,
+        Model.UplineRoleId,
         Model.AdminId,
         Model.TargetCustId,
         Model.TargetRoleId,
@@ -60,7 +60,7 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
     <div class="update-setting col-xs-12">
-        <input type="button" class="btn btn-primary btn-sm" data-ng-click="validateAndUpdateSetting()"
+        <input type="button" class="btn btn-primary btn-sm" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
             value="Update" />
     </div>
 </div>

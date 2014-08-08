@@ -3,6 +3,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
@@ -45,7 +46,7 @@
                 }
                 else
                 {
-                    var notAuthorizedUrl = LiveCasinoAuthenticationService.UnAuthorizedUrl ?? "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized";
+                    var notAuthorizedUrl = LiveCasinoSettings.Settings.UnAuthorizeUrl;
                     filterContext.Result = new RedirectResult(notAuthorizedUrl);
                 }
             }
@@ -61,12 +62,12 @@
             var valueProvider = filterContext.Controller.ValueProvider;
             var settingContext = new SettingContext
             {
-                CustId = Converter.ToInt(GetActionParameterValue(valueProvider, "custId")),
-                RoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "roleId")),
+                UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId")),
+                UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId")),
                 TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId")),
                 TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId")),
-                TargetCustIds = GetActionParameterValue(valueProvider, "targetRoleIds")
+                TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds")
             };
 
             return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
@@ -82,12 +83,12 @@
             var valueProvider = filterContext.Controller.ValueProvider;
             var settingContext = new SettingContext
             {
-                CustId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustId")),
-                RoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.RoleId")),
+                UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
+                UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
                 TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
                 TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
-                TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.targetRoleIds")
+                TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds")
             };
             return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
         }

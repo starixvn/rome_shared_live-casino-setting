@@ -97,16 +97,16 @@
                     return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
                     {
                         CustId = settingContext.TargetCustId,
-                        SRecommend = settingContext.CustId
+                        SRecommend = settingContext.UplineId
                     });
                 case CustRole.Agent:
                     return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
                     {
                         CustId = settingContext.TargetCustId,
-                        MRecommend = settingContext.CustId
+                        MRecommend = settingContext.UplineId
                     });
                 case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
+                    switch ((CustRole)settingContext.UplineRoleId)
                     {
                         case CustRole.Super:
                             return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
@@ -122,7 +122,7 @@
                             return GetSettingForEditMember(new GetSettingForEditMemberCriteria
                             {
                                 CustId = settingContext.TargetCustId,
-                                Recommend = settingContext.CustId
+                                Recommend = settingContext.UplineId
                             });
                     }
             }
@@ -187,7 +187,7 @@
                     break;
 
                 case CustRole.Member:
-                    switch ((CustRole)settingContext.RoleId)
+                    switch ((CustRole)settingContext.UplineRoleId)
                     {
                         case CustRole.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
@@ -424,7 +424,7 @@
                 Custid = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                SRecommend = settingContext.CustId,
+                SRecommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 V162discount_1101 = positionTakingAndComSetting.Commission.Value,
@@ -451,7 +451,7 @@
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                MRecommend = settingContext.CustId,
+                MRecommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 V162discount_1101 = positionTakingAndComSetting.Commission.Value,
@@ -479,7 +479,7 @@
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                Recommend = settingContext.CustId,
+                Recommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
                 V162playerdiscount_1101 = positionTakingAndComSetting.Commission.Value,

@@ -9,8 +9,6 @@
     /// </summary>
     public interface ILiveCasinoAuthorizationService
     {
-        string UnAuthorizedUrl { get; set; }
-
         bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext);
 
         bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext);

@@ -7,7 +7,7 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtAndComSetting")">
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblPositionTakingCommission</span>
-        <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial" data-ng-if="!isReadOnly"></span>
+        <span data-ng-click="updatePtAndComSetting()" class="btn-save-partial" data-ng-if="!isReadOnly"  title="@LiveCasinoLang.lblUpdate"></span>
     </div>
     @switch ((CustRole)Model.TargetRoleId)
     {
@@ -21,7 +21,7 @@
             <edit-agent-pt-and-com></edit-agent-pt-and-com>
             break;
         case CustRole.Member:
-            switch ((CustRole)Model.RoleId)
+            switch ((CustRole)Model.UplineRoleId)
             {
                 case CustRole.Super:
                     <super-edit-member-pt></super-edit-member-pt>

@@ -321,4 +321,7 @@
   <data name="UpdateSuccessfully" xml:space="preserve">
     <value>Updated Successfully.</value>
   </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
 </root>

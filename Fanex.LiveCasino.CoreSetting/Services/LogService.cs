@@ -47,7 +47,7 @@
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
                 UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UserName,
+                UserName = settingContext.UplineUsername,
                 CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
@@ -75,7 +75,7 @@
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
                 UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UserName,
+                UserName = settingContext.UplineUsername,
                 CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
@@ -102,7 +102,7 @@
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
                 UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UserName,
+                UserName = settingContext.UplineUsername,
                 CustSite = settingContext.SiteName
             };
 

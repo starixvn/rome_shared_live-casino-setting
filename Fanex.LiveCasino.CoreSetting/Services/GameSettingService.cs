@@ -139,7 +139,7 @@
                 CustId = settingContext.TargetCustId,
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
-                ModifyUsername = settingContext.UserName,
+                ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
@@ -191,7 +191,7 @@
                 CustId = settingContext.TargetCustId,
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
-                ModifyUsername = settingContext.UserName,
+                ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
@@ -211,7 +211,7 @@
                 {
                     if (!gameTypes.Any())
                     {
-                        gameTypes = GetGameSetting(settingContext.CustId, settingContext.ExchangeId, settingContext.SiteName).ToList();
+                        gameTypes = GetGameSetting(settingContext.UplineId, settingContext.ExchangeId, settingContext.SiteName).ToList();
                     }
 
                     _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
@@ -472,7 +472,7 @@
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
-                ModifyUsername = settingContext.UserName,
+                ModifyUsername = settingContext.UplineUsername,
                 Username = settingContext.TargetUsername,
                 CustSite = settingContext.SiteName
             };

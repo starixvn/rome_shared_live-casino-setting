@@ -61,7 +61,7 @@
             <td class="left">
                 {{custInfo.Fax}}
             </td>
-            @if (Model.TargetRoleId == (int)CustRole.Member && Model.RoleId == (int)CustRole.Agent)
+            @if (Model.IsAgentEditingMember)
             {
                 <td class="right bold">
                     @LiveCasinoLang.lblEnable:

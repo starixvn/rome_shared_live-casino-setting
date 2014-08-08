@@ -16,12 +16,12 @@
         /// <summary>
         /// Gets or sets Current login customer id or customer that is performing.
         /// </summary>
-        public int CustId { get; set; }
+        public int UplineId { get; set; }
 
         /// <summary>
         /// Gets or sets Current login customer user name.
         /// </summary>
-        public string UserName { get; set; }
+        public string UplineUsername { get; set; }
 
         public string TargetUsername { get; set; }
 
@@ -55,7 +55,7 @@
         /// <summary>
         /// Gets or sets Current role id of customer that is performing.
         /// </summary>
-        public int RoleId { get; set; }
+        public int UplineRoleId { get; set; }
 
         /// <summary>
         /// Gets or sets Site name.
@@ -112,7 +112,7 @@
         {
             get
             {
-                return AdminId > 0 ? AdminId : CustId;
+                return AdminId > 0 ? AdminId : UplineId;
             }
         }
 
@@ -152,7 +152,7 @@
         {
             get
             {
-                return IsEdittingMember && RoleId == (int)CustRole.Agent;
+                return IsEdittingMember && UplineRoleId == (int)CustRole.Agent;
             }
         }
 
@@ -160,7 +160,7 @@
         {
             get
             {
-                return IsEdittingSuper || (RoleId - TargetRoleId) == 1; 
+                return IsEdittingSuper || (UplineRoleId - TargetRoleId) == 1; 
             }
         }
     }
