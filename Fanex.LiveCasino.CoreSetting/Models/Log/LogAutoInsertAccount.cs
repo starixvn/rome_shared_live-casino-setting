@@ -50,8 +50,7 @@
 
             foreach (var itemGameType in GameSetting)
             {
-                var stakeLevel = string.Join(",", itemGameType.BettingLimit.Select(x => x.Range.ToString()).ToArray());
-                gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, stakeLevel);
+                gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, itemGameType.CheckedStakeLevelRange);
             }
 
             return gameType;

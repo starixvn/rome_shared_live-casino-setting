@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.GameSetting
 {
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using NSubstitute;
     using NUnit.Framework;
 
     /// <summary>
@@ -11,19 +12,15 @@
         /// <summary>
         /// Determines whether is valid criteria [exchange identifier and site name].
         /// </summary>
-        /// <param name="siteName">Name of the site.</param>
         /// <param name="exchangeId">The exchange identifier.</param>
-        [TestCase("", 0)]
-        [TestCase("", -1)]
-        [TestCase("", 1)]
-        [TestCase("site name", 0)]
-        [TestCase("site name", -1)]
-        public void IsValid_InvalidSiteAndExchangeId_ReturnFalse(string siteName, int exchangeId)
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void IsValid_InvalidExchangeId_ReturnFalse(int exchangeId)
         {
             // Arrange
             var criteria = CreateNewCriteria();
             criteria.ExchangeId = exchangeId;
-            criteria.Site = siteName;
+            criteria.Site = Arg.Any<string>();
 
             // Action
             var actualValue = criteria.IsValid();

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Models;
 
@@ -10,7 +11,25 @@
     /// Common utility class.
     /// </summary>
     public class CommonUtil : ICommonUtil
-    {       
+    {
+        public string CurrentLanguage
+        {
+            get
+            {
+                switch (Thread.CurrentThread.CurrentCulture.Name)
+                {
+                    case "en-US": return "en";
+                    case "zh-TW": return "ch"; // Traditional
+                    case "zh-CN": return "cs"; // Simplified
+                    case "ja-JP": return "jp"; // Japan
+                    case "th-TH": return "th"; // Thai
+                    case "ko-KR": return "ko"; // Korean
+                    case "vi-VN": return "vn"; // Vietnamese
+                    default: return "en";
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the customer information.
         /// </summary>

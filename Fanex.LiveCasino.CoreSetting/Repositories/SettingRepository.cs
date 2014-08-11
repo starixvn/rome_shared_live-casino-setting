@@ -216,43 +216,40 @@
         /// Gets the game setting.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <param name="hasChecked">If set to <c>true</c> [has checked column].</param>
+        /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
         /// <returns>List of game types.</returns>
-        public List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked)
+        public List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
         {
             var gameTypes = new List<GameType>();
             GameType current = null;
 
-            if (criteria.IsValid())
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        var itemGameType = new GameType
                         {
-                            var itemGameType = new GameType
-                            {
-                                Id = reader.ToInt("GameTypeID"),
-                                BetTypeId = reader.ToInt("IBCBetTypeID")
-                            };
+                            Id = reader.ToInt("GameTypeID"),
+                            BetTypeId = reader.ToInt("IBCBetTypeID")
+                        };
 
-                            var itemStakeLevel = new StakeLevel
-                            {
-                                Id = reader.ToInt("StakeLevelID"),
-                                Range = reader.ToString("StakeLevelName"),
-                                IsChecked = hasChecked ? reader.ToBool("IsChecked") : false
-                            };
+                        var itemStakeLevel = new StakeLevel
+                        {
+                            Id = reader.ToInt("StakeLevelID"),
+                            Range = reader.ToString("StakeLevelName"),
+                            IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
+                        };
 
-                            if (current == null || current.Id != itemGameType.Id)
-                            {
-                                gameTypes.Add(itemGameType);
-                                current = itemGameType;
-                                current.BettingLimit = new List<StakeLevel>();
-                            }
-
-                            current.BettingLimit.Add(itemStakeLevel);
+                        if (current == null || current.Id != itemGameType.Id)
+                        {
+                            gameTypes.Add(itemGameType);
+                            current = itemGameType;
+                            current.BettingLimit = new List<StakeLevel>();
                         }
+
+                        current.BettingLimit.Add(itemStakeLevel);
                     }
                 }
             }
@@ -287,7 +284,8 @@
 
                             var itemStakeLevel = new StakeLevel
                             {
-                                Range = reader.ToString("StakeLevelName")
+                                Range = reader.ToString("StakeLevelName"),
+                                IsChecked = true
                             };
 
                             if (current == null || current.Id != itemGameType.Id)

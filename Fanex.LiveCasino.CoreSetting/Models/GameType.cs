@@ -2,15 +2,35 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using LiveCasino.CoreSetting.Utilities;
+    using RemotingRef;
 
     /// <summary>
     /// Gaming type.
     /// </summary>
     public class GameType
     {
+        private readonly ICommonUtil _commonUtil;
+
+        public GameType()
+            : this(null)
+        {
+        }
+
+        public GameType(ICommonUtil commonUtil)
+        {
+            _commonUtil = commonUtil ?? new CommonUtil();
+        }
+
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return RefData.GetBetTypeName(BetTypeId.ToString(), _commonUtil.CurrentLanguage);
+            }
+        }
 
         public int BetTypeId { get; set; }
 

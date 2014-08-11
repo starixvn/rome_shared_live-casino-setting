@@ -38,14 +38,26 @@
             _commonUti = commonUtil ?? new CommonUtil();
         }
 
+        /// <summary>
+        /// Gets the customer site by username.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>Customer site name.</returns>
         public string GetCustomerSiteByUsername(string username)
         {
-            var userInfo = _settingRepository.Get<CustInfo>(new GetCustomerSiteByUsernameCriteria
+            var siteName = string.Empty;
+            var criteria = new GetCustomerSiteByUsernameCriteria
             {
                 Username = username
-            });
+            };
 
-            return userInfo.Site;
+            if (criteria.IsValid())
+            {
+                var userInfo = _settingRepository.Get<CustInfo>(criteria);
+                siteName = userInfo.Site;
+            }
+
+            return siteName;
         }
 
         /// <summary>
@@ -55,11 +67,62 @@
         /// <returns>Customer information.</returns>
         public CustInfo GetCustomerInfo(int custId)
         {
+            var custInfo = new CustInfo();
             var criteria = new GetCustomerInfoCriteria
             {
                 CustId = custId
             };
-            return _settingRepository.GetCustomerInfo(criteria);
+
+            if (criteria.IsValid())
+            {
+                custInfo = _settingRepository.GetCustomerInfo(criteria);
+            }
+
+            return custInfo;
+        }
+
+        /// <summary>
+        /// Gets the game setting by customer identifier.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Game setting of customer.</returns>
+        public List<GameType> GetGameSettingByCustomerId(int custId)
+        {
+            var gameSetting = new List<GameType>();
+            var criteria = new GetGameSettingByCustomerIdCriteria
+            {
+                CustId = custId
+            };
+
+            if (criteria.IsValid())
+            {
+                gameSetting = _settingRepository.GetGameSetting(criteria, true);
+            }
+
+            return gameSetting;
+        }
+
+        /// <summary>
+        /// Gets the game setting by exchange.
+        /// </summary>
+        /// <param name="exchangeId">The exchange identifier.</param>
+        /// <param name="site">The site name.</param>
+        /// <returns>Game setting by exchange and site.</returns>
+        public List<GameType> GetGameSettingByExchange(int exchangeId, string site)
+        {
+            var gameSetting = new List<GameType>();
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
+
+            if (criteria.IsValid())
+            {
+                gameSetting = _settingRepository.GetGameSetting(criteria, false);
+            }
+
+            return gameSetting;
         }
 
         /// <summary>
@@ -68,14 +131,14 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="custInfo">The customer information.</param>
         /// <returns>Game settings.</returns>
-        public IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
+        public List<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
         {
             var gameSettings = new List<GameType>();
 
             if (settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
             {
                 var site = GetCustomerSiteByUsername(custInfo.UserName);
-                gameSettings = GetGameSettingByExchange(custInfo.CurrencyId, site);
+                gameSettings = GetGameSettingByExchange(custInfo.CurrencyId, site).ToList();
 
                 // Check all by default
                 foreach (var gameSettingItem in gameSettings)
@@ -101,18 +164,13 @@
                             gameSettingItem.BettingLimit[i].IsChecked = false;
                         }
                     }
-
-                    gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
                 }
+
+                gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
             }
             else
             {
-                gameSettings = GetGameSettingByCustomerId(settingContext.TargetCustId);
-            }
-
-            foreach (var gameSettingItem in gameSettings)
-            {
-                gameSettingItem.Name = RefData.GetBetTypeName(gameSettingItem.BetTypeId.ToString(), settingContext.Language);
+                gameSettings = GetGameSettingByCustomerId(settingContext.TargetCustId).ToList();
             }
 
             return gameSettings;
@@ -157,7 +215,7 @@
                 {
                     if (!gameTypes.Any())
                     {
-                        gameTypes = GetGameSetting(settingContext.TargetCustId, settingContext.ExchangeId, settingContext.SiteName).ToList();
+                        gameTypes = GetGameSetting(settingContext.TargetCustId, settingContext.TargetUsername, settingContext.ExchangeId).ToList();
                     }
 
                     _logService.LogAutoInsertAccount(settingContext, gameTypes);
@@ -211,7 +269,7 @@
                 {
                     if (!gameTypes.Any())
                     {
-                        gameTypes = GetGameSetting(settingContext.UplineId, settingContext.ExchangeId, settingContext.SiteName).ToList();
+                        gameTypes = GetGameSetting(settingContext.UplineId, settingContext.TargetUsername, settingContext.ExchangeId).ToList();
                     }
 
                     _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
@@ -267,21 +325,32 @@
         /// Updates the manual.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="isSynced">If set to <c>true</c> [is synced].</param>
+        /// <param name="custInfo">The customer information.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResults UpdateManual(SettingContext settingContext, bool isSynced, List<GameType> gameTypes)
+        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             var isInsert = false;
 
-            if (!isSynced)
+            if (!custInfo.IsSyncLiveCasino)
             {
                 isInsert = ManualSyncAccount(settingContext);
+
+                // For case upline is synced with unchecked all stake level
+                if (gameTypes == null)
+                {
+                    CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    if (directUplineInfo.IsSyncLiveCasino)
+                    {
+                        string site = GetCustomerSiteByUsername(custInfo.UserName);
+                        gameTypes = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
+                    }
+                }
             }
 
-            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
+            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId).ToList();
 
             ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
 
@@ -304,7 +373,7 @@
             foreach (var custInfo in custInfos)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var updateResult = (CommandResults)UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameTypes);
+                var updateResult = (CommandResults)UpdateManual(settingContext, custInfo, gameTypes);
 
                 updateResult.Id = custInfo.CustId;
                 updateResult.Name = custInfo.UserName;
@@ -404,11 +473,13 @@
         /// Gets the game setting with time out for waiting replication.
         /// </summary>
         /// <param name="custId">The customer identifier.</param>
+        /// <param name="username">The username.</param>
         /// <param name="exchangeId">The exchange identifier.</param>
-        /// <param name="site">The site name.</param>
         /// <param name="timeOut">The time out.</param>
-        /// <returns>Game settings.</returns>
-        private IList<GameType> GetGameSetting(int custId, int exchangeId, string site, int timeOut = TimeOutReplication)
+        /// <returns>
+        /// Game settings.
+        /// </returns>
+        private List<GameType> GetGameSetting(int custId, string username, int exchangeId, int timeOut = TimeOutReplication)
         {
             var gameTypes = new List<GameType>();
 
@@ -416,7 +487,7 @@
             for (int i = 0; i < timeOut; i++)
             {
                 Thread.Sleep(1000);
-                gameTypes = GetGameSettingByCustomerId(custId);
+                gameTypes = GetGameSettingByCustomerId(custId).ToList();
 
                 if (gameTypes.Any())
                 {
@@ -426,31 +497,11 @@
 
             if (!gameTypes.Any())
             {
-                gameTypes = GetGameSettingByExchange(exchangeId, site);
+                var site = GetCustomerSiteByUsername(username);
+                gameTypes = GetGameSettingByExchange(exchangeId, site).ToList();
             }
 
             return gameTypes;
-        }
-
-        private List<GameType> GetGameSettingByCustomerId(int custId)
-        {
-            var criteria = new GetGameSettingByCustomerIdCriteria
-            {
-                CustId = custId
-            };
-
-            return _settingRepository.GetGameSetting(criteria, true);
-        }
-
-        private List<GameType> GetGameSettingByExchange(int exchangeId, string site)
-        {
-            var criteria = new GetGameSettingByExchangeCriteria
-            {
-                ExchangeId = exchangeId,
-                Site = site
-            };
-
-            return _settingRepository.GetGameSetting(criteria, false);
         }
 
         /// <summary>
@@ -494,10 +545,13 @@
         {
             var results = new CommandResults();
 
-            foreach (var itemGameType in gameTypes)
+            if (gameTypes.Any())
             {
-                var result = UpdateStakeLevel(custId, roleId, itemGameType, language);
-                results.Results.Add(result);
+                foreach (var itemGameType in gameTypes)
+                {
+                    var result = UpdateStakeLevel(custId, roleId, itemGameType, language);
+                    results.Results.Add(result);
+                }
             }
 
             return results;

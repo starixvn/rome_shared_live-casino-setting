@@ -13,7 +13,7 @@
 
         public override bool IsValid()
         {
-            return ExchangeId > 0 && !string.IsNullOrWhiteSpace(Site);
+            return ExchangeId > 0;
         }
 
         public override string GetSettingKey()

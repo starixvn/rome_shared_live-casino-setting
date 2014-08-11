@@ -8,7 +8,7 @@
     /// </summary>
     [TestFixture]
     public class CommonUtilTest
-    {        
+    {
         /// <summary>
         /// Gets the customer information from input string customer id, username and synced status.
         /// </summary>

@@ -22,9 +22,7 @@
 
         PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria);
 
-        ////Dictionary<int, ICommandResult> UpdatePtAndCommSettingMultiple(ICriteria criteria, List<int> custIds);
-
-        List<GameType> GetGameSetting(ICriteria criteria, bool hasChecked);
+        List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn);
 
         ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes);
     }

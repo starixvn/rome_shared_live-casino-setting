@@ -130,7 +130,7 @@
                 OldGameType = isInsert ? null : gameTypeOld
             };
 
-            if (gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)
+            if (gameTypeOld == null || gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)
             {
                 WriteLog(log);
             }

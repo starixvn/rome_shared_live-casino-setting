@@ -12,7 +12,11 @@
 
         string GetCustomerSiteByUsername(string username);
 
-        IList<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
+        List<GameType> GetGameSettingByCustomerId(int custId);
+
+        List<GameType> GetGameSettingByExchange(int exchangeId, string site);
+
+        List<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
 
         ICommandResult InsertAutoAccount(SettingContext settingContext);
 
@@ -20,7 +24,7 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResults UpdateManual(SettingContext settingContext, bool isSynced, List<GameType> gameTypes);
+        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
 
         IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 

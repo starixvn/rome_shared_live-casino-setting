@@ -14,6 +14,6 @@
 
         public PtAndComSetting PtAndComSetting { get; set; }
 
-        public IList<GameType> GameSetting { get; set; }
+        public List<GameType> GameSetting { get; set; }
     }
 }

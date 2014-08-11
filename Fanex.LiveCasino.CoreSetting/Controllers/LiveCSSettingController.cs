@@ -90,6 +90,7 @@
         [LiveCasinoAuthorization]
         public ActionResult EditSettingMultiple(
             int uplineId = 0,
+            int directUplineId = 0,
             int uplineRoleId = 0,
             string targetCustIds = "",
             string targetUsernames = "",
@@ -102,6 +103,7 @@
             var settingContext = new SettingContext
             {
                 UplineId = uplineId,
+                DirectUplineId = directUplineId,
                 UplineRoleId = uplineRoleId,
                 TargetRoleId = targetRoleId,
                 TargetCustIds = targetCustIds,
@@ -220,7 +222,7 @@
             }
             else
             {
-                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo.IsSyncLiveCasino, gameSetting));
+                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo, gameSetting));
             }
 
             return Json(updateResult);
@@ -282,11 +284,9 @@
                 var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
 
-                if (custSetting.GameSetting != null)
-                {
-                    var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo.IsSyncLiveCasino, custSetting.GameSetting.ToList()).Results;
-                    resultList.Results.AddRange(gameSettingResult);
-                }
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting).Results;
+                resultList.Results.AddRange(gameSettingResult);
+
             }
 
             return resultList;
