@@ -250,4 +250,10 @@
   <data name="lblOnGivenCredit" xml:space="preserve">
     <value>충전금액</value>
   </data>
+  <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
+    <value>해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다</value>
+  </data>
+  <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
+    <value>해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다</value>
+  </data>
 </root>

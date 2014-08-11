@@ -47,7 +47,7 @@
                         @LiveCasinoLang.lblConfirmUpdateMemberPT</h4>
                 </div>
                 <div class="modal-body">
-                    <p>@string.Format(LiveCasinoLang.lblHaveChangePositionTaking, Model.IsEdittingMaster ? LiveCasinoLang.Super : LiveCasinoLang.Master)</p>
+                    <p>@(Model.IsEdittingMaster ? LiveCasinoLang.lblHaveChangeMasterPositionTaking : LiveCasinoLang.lblHaveChangeAgentPositionTaking)</p>
                     <p>@LiveCasinoLang.lblChangePTTo:</p>
                      <select 
                         data-ng-model="ptAndComSetting.PositionTaking.NewPresetOnMember" 

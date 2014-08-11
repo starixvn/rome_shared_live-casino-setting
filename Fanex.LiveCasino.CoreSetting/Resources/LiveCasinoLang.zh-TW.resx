@@ -256,4 +256,10 @@
   <data name="lblOnGivenCredit" xml:space="preserve">
     <value>信用額</value>
   </data>
+  <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
+    <value>您已更改於此代理不使用自動佔成.</value>
+  </data>
+  <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
+    <value>您已更改此總代理不再自動佔成.</value>
+  </data>
 </root>

@@ -313,11 +313,20 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have changed this {0} not to take auto position taking..
+        ///   Looks up a localized string similar to You have changed this agent not to take auto position taking..
         /// </summary>
-        public static string lblHaveChangePositionTaking {
+        public static string lblHaveChangeAgentPositionTaking {
             get {
-                return ResourceManager.GetString("lblHaveChangePositionTaking", resourceCulture);
+                return ResourceManager.GetString("lblHaveChangeAgentPositionTaking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have changed this master not to take auto position taking..
+        /// </summary>
+        public static string lblHaveChangeMasterPositionTaking {
+            get {
+                return ResourceManager.GetString("lblHaveChangeMasterPositionTaking", resourceCulture);
             }
         }
         

@@ -23,6 +23,8 @@ language.liveCasino['ko-KR'] = {
 	lblFirstName : "이름",
 	lblGameSetting : "게임셋팅",
 	lblGameType : "게임 형식",
+	lblHaveChangeAgentPositionTaking : "해당 에이전트는 자동 거래조건을 설정 하지 못하게 변경 하였습니다",
+	lblHaveChangeMasterPositionTaking : "해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다",
 	lblLastName : "성",
 	lblMasterAutoPT : "마스터 자동 PT",
 	lblMasterComm : "마스터 수수료",

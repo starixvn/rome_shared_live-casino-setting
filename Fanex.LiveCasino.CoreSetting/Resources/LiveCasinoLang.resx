@@ -246,8 +246,8 @@
   <data name="lblConfirmUpdateMemberPT" xml:space="preserve">
     <value>Confirm Update Member's PT</value>
   </data>
-  <data name="lblHaveChangePositionTaking" xml:space="preserve">
-    <value>You have changed this {0} not to take auto position taking.</value>
+  <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
+    <value>You have changed this master not to take auto position taking.</value>
   </data>
   <data name="lblNo" xml:space="preserve">
     <value>No</value>
@@ -323,5 +323,8 @@
   </data>
   <data name="lblUpdate" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
+    <value>You have changed this agent not to take auto position taking.</value>
   </data>
 </root>

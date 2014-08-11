@@ -23,6 +23,8 @@ language.liveCasino['th-TH'] = {
 	lblFirstName : "ชื่อ",
 	lblGameSetting : "การตั้งค่าเกม",
 	lblGameType : "ประเภทเกม",
+	lblHaveChangeAgentPositionTaking : "คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ",
+	lblHaveChangeMasterPositionTaking : "คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ",
 	lblLastName : "นามสกุล",
 	lblMasterAutoPT : "ค่าแบ่งสู้อัตโนมัติของมาสเตอร์",
 	lblMasterComm : "มาสเตอร์ คอมมิชั่น",

@@ -256,4 +256,10 @@
   <data name="lblOnGivenCredit" xml:space="preserve">
     <value>trong hạn mức tín dụng được cấp</value>
   </data>
+  <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
+    <value>Bạn vừa mới ngăn Agent này lấy Auto PT</value>
+  </data>
+  <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
+    <value>Bạn vừa mới ngăn Master này lấy Auto PT</value>
+  </data>
 </root>

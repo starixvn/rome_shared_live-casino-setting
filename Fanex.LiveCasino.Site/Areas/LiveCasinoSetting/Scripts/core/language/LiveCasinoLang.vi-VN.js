@@ -22,6 +22,8 @@ language.liveCasino['vi-VN'] = {
 	lblFirstName : "Tên",
 	lblGameSetting : "Thiết lập  trò chơi",
 	lblGameType : "Thể loại",
+	lblHaveChangeAgentPositionTaking : "Bạn vừa mới ngăn Agent này lấy Auto PT",
+	lblHaveChangeMasterPositionTaking : "Bạn vừa mới ngăn Master này lấy Auto PT",
 	lblLastName : "Họ",
 	lblMasterAutoPT : "Auto PT của Master",
 	lblMasterComm : "Hoa hồng của Master",

@@ -256,4 +256,10 @@
   <data name="lblOnGivenCredit" xml:space="preserve">
     <value>ไม่มีเครดิต</value>
   </data>
+  <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
+    <value>คุณได้เปลี่ยนเอเย่นท่านนี้ไม่ถือแบ่งสู้อัตโนมัติ</value>
+  </data>
+  <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
+    <value>คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ</value>
+  </data>
 </root>

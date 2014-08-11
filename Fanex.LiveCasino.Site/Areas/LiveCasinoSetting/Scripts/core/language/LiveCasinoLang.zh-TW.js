@@ -23,6 +23,8 @@ language.liveCasino['zh-TW'] = {
 	lblFirstName : "名",
 	lblGameSetting : "游戲設定",
 	lblGameType : "遊戲類型",
+	lblHaveChangeAgentPositionTaking : "您已更改於此代理不使用自動佔成.",
+	lblHaveChangeMasterPositionTaking : "您已更改此總代理不再自動佔成.",
 	lblLastName : "姓",
 	lblMasterAutoPT : "总代理自动占成",
 	lblMasterComm : "總代理佣金",
