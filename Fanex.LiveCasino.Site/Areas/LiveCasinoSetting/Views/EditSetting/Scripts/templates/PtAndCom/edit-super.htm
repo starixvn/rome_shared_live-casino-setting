@@ -18,7 +18,8 @@
                 <select id="ddlS4" 
                 data-ng-model="ptAndComSetting.PositionTaking.S4" 
                 data-ng-options="item.id as item.value for item in superMaxOptions" 
-                data-ng-disabled="isReadOnly"></select>
+                data-ng-disabled="isReadOnly"
+                data-ng-change="updateSuperMax()"></select>
             </td>
             <td>
                 <select id="ddlN4"

@@ -14,7 +14,9 @@
             <td>
                 <select id="ddlA1" data-ng-model="ptAndComSetting.PositionTaking.A1" 
                 data-ng-options="item.id as item.value for item in agentPresetOptions" 
-                data-ng-disabled="isReadOnly"></select>
+                data-ng-disabled="isReadOnly"
+                data-ng-change="agentPresetChange()"
+                ></select>
             </td>
             <td>
                 <select  id="ddlCom"

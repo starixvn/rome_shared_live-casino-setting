@@ -189,12 +189,23 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                     var currentPt = $scope.ptAndComSetting.PositionTaking,
                         currentCom = $scope.ptAndComSetting.Commission;
                     $scope.agentPresetOptions = fanex.createOptionsFromRange(currentPt.A1, currentPt.N2, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
+                    $scope.isAgentPresetOutOfRange = currentPt.A1 < currentPt.A2 || currentPt.A1 > currentPt.N2;
                     $scope.memberCommissionOptions = fanex.createOptionsFromRange(
                                                                     currentCom.Value,
                                                                     0,
                                                                     currentCom.Upline.Value,
-                                                                    fanex.liveCasinoSetting.COM_INTERVAL, 
+                                                                    fanex.liveCasinoSetting.COM_INTERVAL,
                                                                     fanex.liveCasinoSetting.COM_DECIMAL);
+                    $scope.agentPresetChange = function () {
+                        if ($scope.isAgentPresetOutOfRange) {
+                            $scope.agentPresetOptions = fanex.createOptionsFromRange(
+                                                                    currentPt.A1,
+                                                                    currentPt.N2,
+                                                                    currentPt.A2, 
+                                                                    fanex.liveCasinoSetting.PT_INTERVAL);
+                            $scope.isAgentPresetOutOfRange = false;
+                        }
+                    };
                 }
             };
         }

@@ -130,7 +130,6 @@
         [HttpGet, LiveCasinoAuthorization]
         public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
         {
-            settingContext.IP = HttpContext.Request.UserHostAddress;
             return JavaScript(GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
         }
 
@@ -143,6 +142,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -178,9 +178,10 @@
         /// <param name="settingContext">Setting for updating win limit.</param>
         /// <param name="model">Data for update win limit.</param>
         /// <returns>Result after updating win limit.</returns>
-        [HttpPost]
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -208,6 +209,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
             IMultipleCommandResults updateResult = new MultipleCommandResults();
@@ -238,6 +240,7 @@
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
+            settingContext.IP = HttpContext.Request.UserHostAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -264,7 +267,8 @@
         {
             ICommandResults resultList = new CommandResults();
 
-            if (settingContext.IsAgentEditingMember)
+            if (settingContext.IsAgentEditingMember 
+                && custSetting.CustInfo.IsSyncLiveCasino)
             {
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
             }
