@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
+namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
 {
     public class RouteConfig
     {
@@ -16,8 +16,8 @@ namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
                 "LiveCasinoSetting/{controller}/{action}/{id}",
                 new
                 {
-                    controller = "Match",
-                    action = "GetEnableCharts",
+                    controller = "LiveCasinoUser",
+                    action = "UnAuthorized",
                     id = UrlParameter.Optional
                 },
                 new[] 

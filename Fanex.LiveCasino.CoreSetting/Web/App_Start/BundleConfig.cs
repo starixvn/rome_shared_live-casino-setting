@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Optimization;
 
-namespace Fanex.LiveCasino.Site.Areas.LiveCasinoSetting.App_Start
+namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
 {
     public class BundleConfig
     {

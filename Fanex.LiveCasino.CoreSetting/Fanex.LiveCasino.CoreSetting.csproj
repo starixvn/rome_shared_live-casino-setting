@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -51,6 +54,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
@@ -66,11 +73,17 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
@@ -177,8 +190,11 @@
     <Compile Include="Utilities\ICommonUtil.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Models\PtAndComSetting.cs" />
+    <Compile Include="Web\App_Start\BundleConfig.cs" />
+    <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />
     <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
+    <Compile Include="Web\LiveCasinoSettingAreRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
