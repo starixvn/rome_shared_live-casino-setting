@@ -268,7 +268,8 @@
             ICommandResults resultList = new CommandResults();
 
             if (settingContext.IsAgentEditingMember 
-                && custSetting.CustInfo.IsSyncLiveCasino)
+                && custSetting.CustInfo.IsSyncLiveCasino
+                && !custSetting.CustInfo.UplineDisableLiveCasino)
             {
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
             }
