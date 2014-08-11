@@ -1,16 +1,14 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.PtAndCom
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using NUnit.Framework;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using NUnit.Framework;
 
+    /// <summary>
+    /// Test class for agent update member setting criteria.
+    /// </summary>
     [TestFixture]
     public class AgentUpdateMemberSettingCriteriaTest
     {
-
         /// <summary>
         /// Determines whether is valid criteria [customer identifier is zero return false].
         /// </summary>
@@ -128,8 +126,6 @@
             // Assert
             Assert.AreEqual("Acc_CustomerUpdMemberLiveCS_All", settingKey);
         }
-
-
 
         private AgentUpdateMemberSettingCriteria CreateNewCriteria()
         {
