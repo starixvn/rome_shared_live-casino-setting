@@ -115,4 +115,145 @@
   <data name="lblMasterPT" xml:space="preserve">
     <value>ค่าแบ่งสู้ของมาสเตอร์</value>
   </data>
+  <data name="lblYes" xml:space="preserve">
+    <value>ตกลง</value>
+  </data>
+  <data name="lblNo" xml:space="preserve">
+    <value>ไม่</value>
+  </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>ไม่มีข้อมูล</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
+    <value>อัพเดตไม่สำเร็จ เนื่องจาก สถานะของคาซิโนเกมสด ได้ถูกปิดการใช้งาน โดย อัพไลด์</value>
+  </data>
+  <data name="lblEditLiveCasino" xml:space="preserve">
+    <value>แก้ไข คาสิโน เกมสด</value>
+  </data>
+  <data name="lblEditMultipleLiveCasino" xml:space="preserve">
+    <value>แก้ไขคาสิโนสดหลายทาง</value>
+  </data>
+  <data name="lblAgentPT" xml:space="preserve">
+    <value>แบ่งสู้ของเอเย่น</value>
+  </data>
+  <data name="lblChangePTTo" xml:space="preserve">
+    <value>คุณต้องการจะอัพเดทแบ่งสู้บนสมาชิกทั้งหมกหรือไม่</value>
+  </data>
+  <data name="lblSuperMaxPosition" xml:space="preserve">
+    <value>แบ่งสู้สูงสุดของซุปเปรอ์</value>
+  </data>
+  <data name="lblSuperMinPosition" xml:space="preserve">
+    <value>แบ่งสู้ต่ำสุดของซุปเปรอ์</value>
+  </data>
+  <data name="lblSuperPT" xml:space="preserve">
+    <value>แบ่งสู้ของซุปเปรอ์</value>
+  </data>
+  <data name="lblMasterAutoPT" xml:space="preserve">
+    <value>ค่าแบ่งสู้อัตโนมัติของมาสเตอร์</value>
+  </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>ล่าสุด</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>ตัวแทน</value>
+  </data>
+  <data name="lblAgentComm" xml:space="preserve">
+    <value>คอมมิชั่นของเอเย่น</value>
+  </data>
+  <data name="lblAgentMaxPT" xml:space="preserve">
+    <value>ค่าแบ่งสู้สูงสุดของเอเย่น</value>
+  </data>
+  <data name="lblAgentMinPT" xml:space="preserve">
+    <value>ค่าแบ่งสู้ต่ำสุดของเอเย่น</value>
+  </data>
+  <data name="lblAgentPresetPT" xml:space="preserve">
+    <value>เอี่ยของเอเย่นที่ตั้งไว้ก่อนหน้า</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>สมาชิก</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>คอมมิชชั่นของสมาชิก</value>
+  </data>
+  <data name="lblMasterComm" xml:space="preserve">
+    <value>มาสเตอร์ คอมมิชั่น</value>
+  </data>
+  <data name="lblMasterMaxPT" xml:space="preserve">
+    <value>ค่าแบ่งสู้สูงสุดของมาสเตอร์</value>
+  </data>
+  <data name="lblMasterMinPT" xml:space="preserve">
+    <value>ค่าแบ่งสู้ต่ำสุดของมาสเตอร์</value>
+  </data>
+  <data name="lblMasterPresetPT" xml:space="preserve">
+    <value>เอี่ยของมาสเตอร์ที่ตั้งไว้ก่อนหน้า</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>ตัวแทนหลัก</value>
+  </data>
+  <data name="lblSuperPresetPT" xml:space="preserve">
+    <value>เอี่ยของซุปเปรอ์ที่ตั้งไว้ก่อนหน้า</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>สูงสุด</value>
+  </data>
+  <data name="lblSuperCommission" xml:space="preserve">
+    <value>คอมมิชั่นของซุปเปอร์</value>
+  </data>
+  <data name="UnauthorizeMsg" xml:space="preserve">
+    <value>คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>ชื่อผู้ใช้ระบบ</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>โทรศัพท์</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>โทรศัพท์มือถือ</value>
+  </data>
+  <data name="lblMaximumWin" xml:space="preserve">
+    <value>วงเงินชนะสูงสุด</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>นามสกุล</value>
+  </data>
+  <data name="lblEnable" xml:space="preserve">
+    <value>เปิดใช้งาน</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>แฟกซ์</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>ชื่อ</value>
+  </data>
+  <data name="lblCustomerInformation" xml:space="preserve">
+    <value>ข้อมูลลูกค้า</value>
+  </data>
+  <data name="lblCurrentWinLimit" xml:space="preserve">
+    <value>วงเงินชนะปัจจุบัน</value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="lblBettingLimit" xml:space="preserve">
+    <value>จำกัดการเดิมพัน</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>ของ</value>
+  </data>
+  <data name="lblUnlimited" xml:space="preserve">
+    <value>ไม่จำกัด</value>
+  </data>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>การตั้งค่าเกม</value>
+  </data>
+  <data name="lblGameType" xml:space="preserve">
+    <value>ประเภทเกม</value>
+  </data>
+  <data name="lblClickToViewCurrentWinLimit" xml:space="preserve">
+    <value>คลิกเพื่อครวจสอบวงเงินชนะปัจจุบัน</value>
+  </data>
+  <data name="lblOnGivenCredit" xml:space="preserve">
+    <value>ไม่มีเครดิต</value>
+  </data>
 </root>

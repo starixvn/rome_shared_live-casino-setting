@@ -118,4 +118,142 @@
   <data name="lblMasterPT" xml:space="preserve">
     <value>PT của Master</value>
   </data>
+  <data name="lblYes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="lblNo" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>Thông tin chưa được cập nhật</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
+    <value>Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên</value>
+  </data>
+  <data name="lblEditMultipleLiveCasino" xml:space="preserve">
+    <value>Tùy chỉnh đồng loạt cho Live Casino</value>
+  </data>
+  <data name="lblAgentPT" xml:space="preserve">
+    <value>PT của Agent</value>
+  </data>
+  <data name="lblChangePTTo" xml:space="preserve">
+    <value>Bạn có muốn cập nhật giá trị PTcủa tất cả các thành viên</value>
+  </data>
+  <data name="lblSuperMaxPosition" xml:space="preserve">
+    <value>PT lớn nhất của Super</value>
+  </data>
+  <data name="lblSuperMinPosition" xml:space="preserve">
+    <value>PT nhỏ nhất của Super</value>
+  </data>
+  <data name="lblSuperPT" xml:space="preserve">
+    <value>PT của Super</value>
+  </data>
+  <data name="lblMasterAutoPT" xml:space="preserve">
+    <value>Auto PT của Master</value>
+  </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="lblAgentComm" xml:space="preserve">
+    <value>Hoa hồng cho Agent</value>
+  </data>
+  <data name="lblAgentMaxPT" xml:space="preserve">
+    <value>PT lớn nhất của Agent</value>
+  </data>
+  <data name="lblAgentMinPT" xml:space="preserve">
+    <value>PT nhỏ nhất của Agent</value>
+  </data>
+  <data name="lblAgentPresetPT" xml:space="preserve">
+    <value>Giá trị PT trước đó của Agent</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>Hoa hồng của Member</value>
+  </data>
+  <data name="lblMasterComm" xml:space="preserve">
+    <value>Hoa hồng của Master</value>
+  </data>
+  <data name="lblMasterMaxPT" xml:space="preserve">
+    <value>PT lớn nhất của Master</value>
+  </data>
+  <data name="lblMasterMinPT" xml:space="preserve">
+    <value>PT nhỏ nhất của Master</value>
+  </data>
+  <data name="lblMasterPresetPT" xml:space="preserve">
+    <value>Giá trị PT trước đó của Master</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="lblSuperPresetPT" xml:space="preserve">
+    <value>Giá trị PT trước đó của Super</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>Super</value>
+  </data>
+  <data name="lblSuperCommission" xml:space="preserve">
+    <value>Hoa hồng cho Super</value>
+  </data>
+  <data name="UnauthorizeMsg" xml:space="preserve">
+    <value>Bạn không được cho phép sử dụng chức năng này</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>Tài khoản</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>Điện thoại</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>Điện thoại di động</value>
+  </data>
+  <data name="lblMaximumWin" xml:space="preserve">
+    <value>Tiền thắng cược lớn nhất</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>Họ</value>
+  </data>
+  <data name="lblEnable" xml:space="preserve">
+    <value>Cho phép</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="lblCustomerInformation" xml:space="preserve">
+    <value>Thông tin thành viên</value>
+  </data>
+  <data name="lblCurrentWinLimit" xml:space="preserve">
+    <value>Giới hạn thắng cược lớn nhất tại thời điểm hiện tại </value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>Khóa</value>
+  </data>
+  <data name="lblBettingLimit" xml:space="preserve">
+    <value>Giới hạn đặt cược</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="lblUnlimited" xml:space="preserve">
+    <value>Không giới hạn</value>
+  </data>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>Thiết lập  trò chơi</value>
+  </data>
+  <data name="lblGameType" xml:space="preserve">
+    <value>Thể loại</value>
+  </data>
+  <data name="lblClickToViewCurrentWinLimit" xml:space="preserve">
+    <value>Bấm để xem giới hạn thắng cược lớn nhất tại thời điểm hiện tại </value>
+  </data>
+  <data name="lblOnGivenCredit" xml:space="preserve">
+    <value>trong hạn mức tín dụng được cấp</value>
+  </data>
 </root>

@@ -115,4 +115,139 @@
   <data name="lblMasterPT" xml:space="preserve">
     <value>마스터 PT</value>
   </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>가능한 정보가 없습니다</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
+    <value>이 계정은 라이브 카지노 설정이 없거나 업라인에 의해 비활성화되어  라이브 카지노를 활성화할 수 없습니다.</value>
+  </data>
+  <data name="lblEditLiveCasino" xml:space="preserve">
+    <value>라이브 카지노 편집</value>
+  </data>
+  <data name="lblEditMultipleLiveCasino" xml:space="preserve">
+    <value>라이브 카지노 멀티 수정</value>
+  </data>
+  <data name="lblAgentPT" xml:space="preserve">
+    <value>에이전트 포지션 설정</value>
+  </data>
+  <data name="lblChangePTTo" xml:space="preserve">
+    <value>모든회원의 거래조건을 바꾸기를 원하십니까</value>
+  </data>
+  <data name="lblSuperMaxPosition" xml:space="preserve">
+    <value>슈퍼 최대 PT</value>
+  </data>
+  <data name="lblSuperMinPosition" xml:space="preserve">
+    <value>슈퍼 최소PT</value>
+  </data>
+  <data name="lblSuperPT" xml:space="preserve">
+    <value>슈퍼 포지션 설정</value>
+  </data>
+  <data name="lblMasterAutoPT" xml:space="preserve">
+    <value>마스터 자동 PT</value>
+  </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>업데이트</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>에이전트</value>
+  </data>
+  <data name="lblAgentComm" xml:space="preserve">
+    <value>에이전트 수수료</value>
+  </data>
+  <data name="lblAgentMaxPT" xml:space="preserve">
+    <value>에이전트 최대 PT</value>
+  </data>
+  <data name="lblAgentMinPT" xml:space="preserve">
+    <value>에이전트 최소 PT</value>
+  </data>
+  <data name="lblAgentPresetPT" xml:space="preserve">
+    <value>에이전트 프리셋 PT</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>회원</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>회원 수수료</value>
+  </data>
+  <data name="lblMasterComm" xml:space="preserve">
+    <value>마스터 수수료</value>
+  </data>
+  <data name="lblMasterMaxPT" xml:space="preserve">
+    <value>마스터 최대 PT</value>
+  </data>
+  <data name="lblMasterMinPT" xml:space="preserve">
+    <value>마스터 최소 PT</value>
+  </data>
+  <data name="lblMasterPresetPT" xml:space="preserve">
+    <value>마스터 프리셋 PT</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>마스터</value>
+  </data>
+  <data name="lblSuperPresetPT" xml:space="preserve">
+    <value>슈퍼 프리셋 PT</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>슈퍼</value>
+  </data>
+  <data name="lblSuperCommission" xml:space="preserve">
+    <value>슈퍼 수수료</value>
+  </data>
+  <data name="UnauthorizeMsg" xml:space="preserve">
+    <value>해당 기능에 대한 권한이 없습니다.</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>전화</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>핸드폰</value>
+  </data>
+  <data name="lblMaximumWin" xml:space="preserve">
+    <value>최대 지급금액</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>성</value>
+  </data>
+  <data name="lblEnable" xml:space="preserve">
+    <value>활성화</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>팩스</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="lblCustomerInformation" xml:space="preserve">
+    <value>회원정보</value>
+  </data>
+  <data name="lblCurrentWinLimit" xml:space="preserve">
+    <value>현재 지급한도</value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="lblBettingLimit" xml:space="preserve">
+    <value>베팅 한도</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>부터</value>
+  </data>
+  <data name="lblUnlimited" xml:space="preserve">
+    <value>무제한</value>
+  </data>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>게임셋팅</value>
+  </data>
+  <data name="lblGameType" xml:space="preserve">
+    <value>게임 형식</value>
+  </data>
+  <data name="lblClickToViewCurrentWinLimit" xml:space="preserve">
+    <value>현재의 지급금액 한도 보기</value>
+  </data>
+  <data name="lblOnGivenCredit" xml:space="preserve">
+    <value>충전금액</value>
+  </data>
 </root>

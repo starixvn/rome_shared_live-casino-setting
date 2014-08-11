@@ -511,7 +511,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super Max Position.
+        ///   Looks up a localized string similar to Super Max PT.
         /// </summary>
         public static string lblSuperMaxPosition {
             get {
@@ -520,7 +520,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super Min Position.
+        ///   Looks up a localized string similar to Super Min PT.
         /// </summary>
         public static string lblSuperMinPosition {
             get {
@@ -619,7 +619,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unauthorize Msg.
+        ///   Looks up a localized string similar to You are not authorized on this function.
         /// </summary>
         public static string UnauthorizeMsg {
             get {

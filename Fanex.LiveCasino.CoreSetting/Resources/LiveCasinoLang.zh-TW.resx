@@ -115,4 +115,145 @@
   <data name="lblMasterPT" xml:space="preserve">
     <value>总代理占成数</value>
   </data>
+  <data name="lblYes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="lblNo" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>沒資料顯示</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
+    <value>修改失敗，因為上線的娛樂廳狀態以被禁止</value>
+  </data>
+  <data name="lblEditLiveCasino" xml:space="preserve">
+    <value>修改娱乐厅</value>
+  </data>
+  <data name="lblEditMultipleLiveCasino" xml:space="preserve">
+    <value>修改多重真人荷官</value>
+  </data>
+  <data name="lblAgentPT" xml:space="preserve">
+    <value>代理佔成數</value>
+  </data>
+  <data name="lblChangePTTo" xml:space="preserve">
+    <value>您是否要把所有會員佔成數更改為</value>
+  </data>
+  <data name="lblSuperMaxPosition" xml:space="preserve">
+    <value>超級總代理最高佔成</value>
+  </data>
+  <data name="lblSuperMinPosition" xml:space="preserve">
+    <value>超級總代理最低佔成</value>
+  </data>
+  <data name="lblSuperPT" xml:space="preserve">
+    <value>超級總代理佔成數</value>
+  </data>
+  <data name="lblMasterAutoPT" xml:space="preserve">
+    <value>总代理自动占成</value>
+  </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>更改</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>代理</value>
+  </data>
+  <data name="lblAgentComm" xml:space="preserve">
+    <value>代理佣金</value>
+  </data>
+  <data name="lblAgentMaxPT" xml:space="preserve">
+    <value>代理最高占成数</value>
+  </data>
+  <data name="lblAgentMinPT" xml:space="preserve">
+    <value>代理最低占成数</value>
+  </data>
+  <data name="lblAgentPresetPT" xml:space="preserve">
+    <value>代理預定佔成</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>會員</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>會員佣金</value>
+  </data>
+  <data name="lblMasterComm" xml:space="preserve">
+    <value>總代理佣金</value>
+  </data>
+  <data name="lblMasterMaxPT" xml:space="preserve">
+    <value>总代理最高占成数</value>
+  </data>
+  <data name="lblMasterMinPT" xml:space="preserve">
+    <value>总代理最低占成数</value>
+  </data>
+  <data name="lblMasterPresetPT" xml:space="preserve">
+    <value>總代理預定佔成</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>總代理</value>
+  </data>
+  <data name="lblSuperPresetPT" xml:space="preserve">
+    <value>超級總代理預定佔成</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>超級</value>
+  </data>
+  <data name="lblSuperCommission" xml:space="preserve">
+    <value>超級總代理佣金</value>
+  </data>
+  <data name="UnauthorizeMsg" xml:space="preserve">
+    <value>您沒有使用此功能的權限</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>用戶名</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>電話</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>手機</value>
+  </data>
+  <data name="lblMaximumWin" xml:space="preserve">
+    <value>最高贏取倍數</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>姓</value>
+  </data>
+  <data name="lblEnable" xml:space="preserve">
+    <value>啟用</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>傳真</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="lblCustomerInformation" xml:space="preserve">
+    <value>會員資料</value>
+  </data>
+  <data name="lblCurrentWinLimit" xml:space="preserve">
+    <value>當前贏額上限</value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="lblBettingLimit" xml:space="preserve">
+    <value>投注限额</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>之第</value>
+  </data>
+  <data name="lblUnlimited" xml:space="preserve">
+    <value>無限</value>
+  </data>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>游戲設定</value>
+  </data>
+  <data name="lblGameType" xml:space="preserve">
+    <value>遊戲類型</value>
+  </data>
+  <data name="lblClickToViewCurrentWinLimit" xml:space="preserve">
+    <value>點擊查閱目前的百分比</value>
+  </data>
+  <data name="lblOnGivenCredit" xml:space="preserve">
+    <value>信用額</value>
+  </data>
 </root>

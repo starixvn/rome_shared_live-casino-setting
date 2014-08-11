@@ -193,10 +193,10 @@
     <value>Super Commission</value>
   </data>
   <data name="lblSuperMaxPosition" xml:space="preserve">
-    <value>Super Max Position</value>
+    <value>Super Max PT</value>
   </data>
   <data name="lblSuperMinPosition" xml:space="preserve">
-    <value>Super Min Position</value>
+    <value>Super Min PT</value>
   </data>
   <data name="lblSuperPresetPT" xml:space="preserve">
     <value>Super Preset PT</value>
@@ -313,7 +313,7 @@
     <value>Edit Multiple Live Casino</value>
   </data>
   <data name="UnauthorizeMsg" xml:space="preserve">
-    <value>Unauthorize Msg</value>
+    <value>You are not authorized on this function</value>
   </data>
   <data name="NoInformation" xml:space="preserve">
     <value>No information is available!</value>

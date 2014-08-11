@@ -100,4 +100,46 @@
   <data name="lblNickname" xml:space="preserve">
     <value>ニックネーム</value>
   </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>情報がありません</value>
+  </data>
+  <data name="lblUpdate" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>エージェント</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>メンバー</value>
+  </data>
+  <data name="lblMemberCommission" xml:space="preserve">
+    <value>メンバー手数料</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>マスター</value>
+  </data>
+  <data name="lblUsername" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>電話番号</value>
+  </data>
+  <data name="lblMobilePhone" xml:space="preserve">
+    <value>携帯電話番号</value>
+  </data>
+  <data name="lblLastName" xml:space="preserve">
+    <value>氏</value>
+  </data>
+  <data name="lblFax" xml:space="preserve">
+    <value>ファックス</value>
+  </data>
+  <data name="lblFirstName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="lblClose" xml:space="preserve">
+    <value>閉鎖</value>
+  </data>
+  <data name="lblOf" xml:space="preserve">
+    <value>/</value>
+  </data>
 </root>
