@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="AgentUpdateMemberSettingCriteria.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2014.8.4">Created</change>
-// </history>
-
-namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
     using Fanex.NAP.Framework.Data;
 
@@ -20,9 +11,11 @@ namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 
         public int Recommend { get; set; }
 
-        public decimal V162apositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "V162apositiontaking_1101")]
+        public decimal A1 { get; set; }
 
-        public decimal V162playerdiscount_1101 { get; set; }
+        [SpParam(SqlParamName = "V162playerdiscount_1101")]
+        public decimal MemberCommission { get; set; }
 
         public bool V162UpdatePositiontaking_1101
         {

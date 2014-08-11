@@ -58,6 +58,7 @@
     <Compile Include="Criteria\GetCustomerInfoCriteriaTest.cs" />
     <Compile Include="Criteria\GetCustomerSiteByUsernameCriteriaTest.cs" />
     <Compile Include="Criteria\Log\InsertLogUserRunSPCriteriaTest.cs" />
+    <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteriaTest.cs" />
     <Compile Include="Criteria\ResultCriteriaTest.cs" />
     <Compile Include="Criteria\UpdateLiveCasinoStatusCriteriaTest.cs" />
     <Compile Include="Criteria\UpdateSyncLiveCasinoCriteriaTest.cs" />

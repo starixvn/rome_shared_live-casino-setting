@@ -9,12 +9,16 @@
     {
         public int CustId { get; set; }
 
-        public decimal V162mpositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "V162mpositiontaking_1101")]
+        public decimal M1 { get; set; }
 
-        public decimal Auto_v162mpositiontaking_mem_1101 { get; set; }
+        [SpParam(SqlParamName = "Auto_v162mpositiontaking_mem_1101")]
+        public decimal Um1 { get; set; }
 
-        public bool IsAuto_v162mpositiontaking_mem_1101 { get; set; }
+        [SpParam(SqlParamName = "IsAuto_v162mpositiontaking_mem_1101")]
+        public bool Im1 { get; set; }
 
+        [SpParam(SqlParamName = "IsAuto_v162mpositiontaking_1101")]
         public bool IsAuto_v162mpositiontaking_1101 { get; set; }
 
         public bool V162UpdatePositiontaking_1101

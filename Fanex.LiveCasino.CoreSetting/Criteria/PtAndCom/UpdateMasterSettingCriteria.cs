@@ -11,17 +11,23 @@
 
         public int SRecommend { get; set; }
 
-        public decimal V162spositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "V162spositiontaking_1101")]
+        public decimal S3 { get; set; }
 
-        public decimal V162mpositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "V162mpositiontaking_1101")]
+        public decimal M3 { get; set; }
 
-        public bool IsAuto_v162spositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "IsAuto_v162spositiontaking_1101")]
+        public bool Is3 { get; set; }
 
-        public decimal Auto_v162spositiontaking_1101 { get; set; }
+        [SpParam(SqlParamName = "Auto_v162spositiontaking_1101")]
+        public decimal Us3 { get; set; }
 
-        public decimal V162mpositiontaking_1101_min { get; set; }
+        [SpParam(SqlParamName = "V162mpositiontaking_1101_min")]
+        public decimal N3 { get; set; }
 
-        public decimal V162discount_1101 { get; set; }
+        [SpParam(SqlParamName = "V162discount_1101")]
+        public decimal MasterCommission { get; set; }
 
         public bool V162UpdatePositiontaking_1101
         {
@@ -57,6 +63,7 @@
 
         public bool UpdateAllMembers { get; set; }
 
+        [SpParam(SqlParamName = "NewSPositionTaking")]
         public decimal NewSPositionTaking { get; set; }
 
         public int SubAccID { get; set; }
