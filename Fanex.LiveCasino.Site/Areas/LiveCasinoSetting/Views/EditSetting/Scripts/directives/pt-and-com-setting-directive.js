@@ -66,6 +66,10 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                             $scope.updateMasterMax();
                         },
                         updateMasterMax: function () {
+                            if (currentPt.N3 > currentPt.M3) {
+                                currentPt.N3 = currentPt.M3;
+                            }
+
                             $scope.masterMinOptions = fanex.createOptionsFromRange(currentPt.N3, 0, currentPt.M3, fanex.liveCasinoSetting.PT_INTERVAL);
                         },
                         updateMasterMin: function () {
@@ -138,6 +142,10 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                             $scope.updateAgentMax();
                         },
                         updateAgentMax: function () {
+                            if (currentPt.N2 > currentPt.A2) {
+                                currentPt.N2 = currentPt.A2;
+                            }
+
                             $scope.agentMinOptions = fanex.createOptionsFromRange(currentPt.N2, 0, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
                         },
                         updateAgentMin: function () {
