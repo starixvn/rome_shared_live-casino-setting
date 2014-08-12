@@ -128,9 +128,9 @@
         }
 
         /// <summary>
-        /// Determines whether GetSpParams method return data contain parameter name.
+        /// Determines whether Get SP_PARAMS method return data contain parameter name.
         /// </summary>
-        /// <param name="parameterName"></param>
+        /// <param name="parameterName">Parameter name for checking contains.</param>
         [TestCase("CustId")]
         [TestCase("Recommend")]
         [TestCase("V162apositiontaking_1101")]

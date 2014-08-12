@@ -6,7 +6,7 @@
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
-/*global describe, beforeEach, inject, afterEach, it, expect*/
+/*global describe, beforeEach, inject, afterEach, it, expect, spyOn*/
 describe('pt-and-com-setting-service', function () {
     'use strict';
     var httpBackend, ptAndComSettingService, timeOut;
@@ -34,7 +34,10 @@ describe('pt-and-com-setting-service', function () {
         },
             urlRequest = 'request/url',
             ptAndComSetting = {},
-            custSettingScope = {};
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            };
+        spyOn(custSettingScope, 'afterServerReturnSuccess');
 
         // expectGET to make sure this is called once.
         httpBackend.expect('POST', urlRequest).respond(200, result);
@@ -45,7 +48,7 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.mainResult).toEqual(result);
+        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
     });
 
     it('should send the msg and return the response, show result message and then hide', function () {
@@ -61,7 +64,10 @@ describe('pt-and-com-setting-service', function () {
         },
             urlRequest = 'request/url',
             ptAndComSetting = {},
-            custSettingScope = {};
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            };
+            spyOn(custSettingScope, 'afterServerReturnSuccess');
 
         // expectGET to make sure this is called once.
         httpBackend.expect('POST', urlRequest).respond(200, result);
@@ -72,8 +78,30 @@ describe('pt-and-com-setting-service', function () {
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.mainResult).toEqual(result);
-//        timeOut.flush();
-//        expect(custSettingScope.mainResult).toEqual([]);
+        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
     });
+
+    it('should send msg and return the error response, show result message', function () {
+        // set up some data for the http call to return and test later.
+        var urlRequest = 'request/url',
+            ptAndComSetting = {},
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            },
+            errorMessage = 'error message';
+        spyOn(custSettingScope, 'afterServerReturnSuccess');
+
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(403, errorMessage);
+
+        // make the call.
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
+
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
+
+        expect(fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message).toEqual(errorMessage);
+    });
+
+
 });

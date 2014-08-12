@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -78,6 +77,7 @@
         /// Edit multiple customer.
         /// </summary>
         /// <param name="uplineId">Customer id is doing edit.</param>
+        /// <param name="directUplineId">Customer direct up-line id is doing edit.</param>
         /// <param name="uplineRoleId">Customer role id of user is doing edit.</param>
         /// <param name="targetCustIds">List of customer id are being edited.</param>
         /// <param name="targetUsernames">List of customer name are being edited.</param>
@@ -269,7 +269,7 @@
         {
             ICommandResults resultList = new CommandResults();
 
-            if (settingContext.IsAgentEditingMember 
+            if (settingContext.IsAgentEditingMember
                 && custSetting.CustInfo.IsSyncLiveCasino
                 && !custSetting.CustInfo.UplineDisableLiveCasino)
             {
@@ -286,7 +286,6 @@
 
                 var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting).Results;
                 resultList.Results.AddRange(gameSettingResult);
-
             }
 
             return resultList;

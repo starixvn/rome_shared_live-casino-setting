@@ -153,4 +153,18 @@ describe('pt-and-com-setting-controller', function () {
         expect(ptAndComSettingService.updatePtAndComSetting).not.toHaveBeenCalled();
         expect($scope.ptAndComSetting.PositionTaking.UpdateAllMembers).toEqual(isUpdate);
     });
+
+
+    it('should not show popup when form has no auto', function () {
+        //// Arrange
+        custSetting.CustInfo.IsSyncLiveCasino = false;
+        $scope.$parent.validateAndUpdateSetting = function () { return; };
+        spyOn($scope.$parent, 'validateAndUpdateSetting');
+
+        //// Act
+        $scope.updatePtAndComSetting();
+
+        //// Assert
+        expect($scope.$parent.validateAndUpdateSetting).toHaveBeenCalled();
+    });
 });

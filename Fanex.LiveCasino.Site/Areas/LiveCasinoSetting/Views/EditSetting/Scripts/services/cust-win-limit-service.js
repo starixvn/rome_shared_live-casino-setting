@@ -28,15 +28,12 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: winLimitUpdate
             }).success(function (mainResult) {
-                custSettingScope.mainResult = mainResult;
+                custSettingScope.afterServerReturnSuccess(mainResult);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
                     custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
-                }
-                else {
-                    window.console.log(data);
                 }
             });
         };

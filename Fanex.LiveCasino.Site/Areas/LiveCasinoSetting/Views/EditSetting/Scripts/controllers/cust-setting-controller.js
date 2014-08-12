@@ -6,14 +6,15 @@ if (fanex.liveCasinoSetting) {
     [
         '$scope',
         '$http',
+        '$window',
+        '$timeout',
         'CustomerSettingService',
-        function ($scope, $http, customerSettingService) {
+        function ($scope, $http, $window, $timeout, customerSettingService) {
             'use strict';
             $scope.mainResult = {
                 CommandResultsList: []
             };
             $scope.isUpdateAllSetting = false;
-            //$scope.updateLiveCasinoStatus
 
             $scope.validateAndUpdateSetting = function () {
                 $scope.isUpdateAllSetting = true;
@@ -47,7 +48,16 @@ if (fanex.liveCasinoSetting) {
                 $scope.isUpdateAllSetting = false;
             };
 
-            //$scope.update
+            $scope.afterServerReturnSuccess = function (mainResult) {
+                $scope.mainResult = mainResult;
+
+                if (mainResult.IsSuccessful) {
+                    $timeout(function () {
+                        $window.location.href = $window.location.href;
+                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+                }
+            };
+
             $('#tblSetting').show();
         }
         ]);

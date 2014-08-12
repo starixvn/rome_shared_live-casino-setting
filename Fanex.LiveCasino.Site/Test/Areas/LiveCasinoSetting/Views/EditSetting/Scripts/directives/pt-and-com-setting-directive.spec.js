@@ -141,6 +141,17 @@ describe('editMasterPtAndCom', function () {
         expect($scope.masterMaxOptions[$scope.masterMaxOptions.length - 1].value).toEqual(0.4);
         expect($scope.masterMaxOptions[0].value).toEqual(0.79);
     });
+
+    it('should change range of master min when master max change lower than master min', function () {
+        ////N3 changed
+        $scope.ptAndComSetting.PositionTaking.M3 = 0.12;
+        $scope.updateMasterMax();
+
+        //// Then change range of M3
+        expect($scope.masterMinOptions.length).toEqual(13);
+        expect($scope.masterMinOptions[$scope.masterMinOptions.length - 1].value).toEqual(0);
+        expect($scope.masterMinOptions[0].value).toEqual(0.12);
+    });
 });
 
 describe('editAgentPtAndCom', function () {
@@ -207,15 +218,26 @@ describe('editAgentPtAndCom', function () {
     });
 
     it('should change range of agent max when agent min change', function () {
-        ////N3 changed
+        ////N2 changed
         $scope.ptAndComSetting.PositionTaking.N2 = 0.22;
         $scope.ptAndComSetting.PositionTaking.Im2 = false;
         $scope.updateAgentMin();
 
-        //// Then change range of M3
+        //// Then change range of A2
         expect($scope.agentMaxOptions.length).toEqual(26);
         expect($scope.agentMaxOptions[$scope.agentMaxOptions.length - 1].value).toEqual(0.22);
         expect($scope.agentMaxOptions[0].value).toEqual(0.47);
+    });
+
+    it('should change range of agent min when agent max change lower than agent min', function () {
+        ////A2 changed
+        $scope.ptAndComSetting.PositionTaking.A2 = 0.12;
+        $scope.updateAgentMax();
+
+        //// Then change range of N2
+        expect($scope.agentMinOptions.length).toEqual(13);
+        expect($scope.agentMinOptions[$scope.agentMinOptions.length - 1].value).toEqual(0);
+        expect($scope.agentMinOptions[0].value).toEqual(0.12);
     });
 });
 
@@ -233,7 +255,12 @@ describe('superEditMemberPt', function () {
         $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm', '<template-goes-here />');
     }));
 
-    beforeEach(function () {
+//    beforeEach(function () {
+//        
+//    });
+
+    it('should assign right range for member', function () {
+        //// Given
         custSetting.PtAndComSetting.PositionTaking = {
             S1Min: 0.1,
             S1Max: 0.2500,
@@ -245,11 +272,66 @@ describe('superEditMemberPt', function () {
             Is3: true,
             Is1: true
         };
+
+        //// When
         $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
         $scope.$digest();
+
+        //// Then
+        expect($scope.superPTOptions.length).toEqual(16);
+        expect($scope.superPTOptions[0].value).toEqual(0.25);
+        expect($scope.superPTOptions[$scope.superPTOptions.length - 1].value).toEqual(0.1);
+        expect($scope.superAutoPTOptions.length).toEqual(100);
+        expect($scope.superAutoPTOptions[0].value).toEqual(0.99);
     });
 
-    it('should assign right range', function () {
+    it('should add one option out of range for super get position taking on member', function () {
+        //// Given
+        custSetting.PtAndComSetting.PositionTaking = {
+            S1Min: 0.1,
+            S1Max: 0.2500,
+            S4: 0.9900,
+            S1: 0.08,
+            M1: 0.1300,
+            A1: 0.3200,
+            Us1: 0.1200,
+            Is3: true,
+            Is1: true
+        };
+
+        //// When
+        $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
+        $scope.$digest();
+
+        //// Then
+        expect($scope.superPTOptions.length).toEqual(17);
+        expect($scope.superPTOptions[0].value).toEqual(0.25);
+        expect($scope.superPTOptions[$scope.superPTOptions.length - 1].value).toEqual(0.08);
+        expect($scope.superAutoPTOptions.length).toEqual(100);
+        expect($scope.superAutoPTOptions[0].value).toEqual(0.99);
+    });
+
+    it('should remove 0.08 option, and supper range in [0.1:0.25]', function () {
+        //// Given
+        custSetting.PtAndComSetting.PositionTaking = {
+            S1Min: 0.1,
+            S1Max: 0.2500,
+            S4: 0.9900,
+            S1: 0.08,
+            M1: 0.1300,
+            A1: 0.3200,
+            Us1: 0.1200,
+            Is3: true,
+            Is1: true
+        };
+
+        //// When
+        $compile("<super-edit-member-pt></super-edit-member-pt>")($scope);
+        $scope.$digest();
+        $scope.ptAndComSetting.PositionTaking.S1 = 0.12;
+        $scope.superPTChange();
+
+        //// Then
         expect($scope.superPTOptions.length).toEqual(16);
         expect($scope.superPTOptions[0].value).toEqual(0.25);
         expect($scope.superPTOptions[$scope.superPTOptions.length - 1].value).toEqual(0.1);
@@ -272,7 +354,8 @@ describe('masterEditMemberPt', function () {
         $templateCache.put('/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm', '<template-goes-here />');
     }));
 
-    beforeEach(function () {
+    it('should assign right range', function () {
+        //// Given 
         custSetting.PtAndComSetting.PositionTaking = {
             IsDisableAuto: false,
             M1Max: 0.4200,
@@ -284,12 +367,66 @@ describe('masterEditMemberPt', function () {
             Im2: false,
             Im1: true
         };
+
+        //// When
         $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
         $scope.$digest();
+
+        //// Then master on member range in [0.1:0.42], and auto in [0:0.74] 
+        expect($scope.masterPTOptions.length).toEqual(33);
+        expect($scope.masterPTOptions[0].value).toEqual(0.42);
+        expect($scope.masterPTOptions[$scope.masterPTOptions.length - 1].value).toEqual(0.1);
+        expect($scope.masterAutoPTOptions.length).toEqual(75);
+        expect($scope.masterAutoPTOptions[0].value).toEqual(0.74);
     });
 
-    it('should assign right range', function () {
-        //// Then master on member range in [0.1:0.42], and auto in [0:0.74] 
+    it('should render master pt option include 0.08 and range [0.1:0.42]', function () {
+        //// Given 
+        custSetting.PtAndComSetting.PositionTaking = {
+            IsDisableAuto: false,
+            M1Max: 0.4200,
+            M1Min: 0.1,
+            M3: 0.7400,
+            M1: 0.0800,
+            A1: 0.3200,
+            Um1: 0.1300,
+            Im2: false,
+            Im1: true
+        };
+
+        //// When
+        $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
+        $scope.$digest();
+
+        //// Then master on member range in [0.1:0.42] and 0.08, and auto in [0:0.74] 
+        expect($scope.masterPTOptions.length).toEqual(34);
+        expect($scope.masterPTOptions[0].value).toEqual(0.42);
+        expect($scope.masterPTOptions[$scope.masterPTOptions.length - 1].value).toEqual(0.08);
+        expect($scope.masterAutoPTOptions.length).toEqual(75);
+        expect($scope.masterAutoPTOptions[0].value).toEqual(0.74);
+    });
+
+    it('should remove 0.08 of master on member position taking options', function () {
+        //// Given 
+        custSetting.PtAndComSetting.PositionTaking = {
+            IsDisableAuto: false,
+            M1Max: 0.4200,
+            M1Min: 0.1,
+            M3: 0.7400,
+            M1: 0.0800,
+            A1: 0.3200,
+            Um1: 0.1300,
+            Im2: false,
+            Im1: true
+        };
+
+        //// When
+        $compile("<master-edit-member-pt></master-edit-member-pt>")($scope);
+        $scope.$digest();
+        $scope.ptAndComSetting.PositionTaking.M1 = 0.26;
+        $scope.masterPTChange();
+
+        //// Then master on member range in [0.1:0.42]
         expect($scope.masterPTOptions.length).toEqual(33);
         expect($scope.masterPTOptions[0].value).toEqual(0.42);
         expect($scope.masterPTOptions[$scope.masterPTOptions.length - 1].value).toEqual(0.1);
@@ -313,6 +450,11 @@ describe('agentEditMemberPtAndCom', function () {
     }));
 
     beforeEach(function () {
+
+    });
+
+    it('should assign right range', function () {
+        //// Given
         custSetting.PtAndComSetting.PositionTaking = {
             A2: 0.3300,
             A1: 0.3200,
@@ -326,11 +468,10 @@ describe('agentEditMemberPtAndCom', function () {
             }
         };
 
+        //// When
         $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
         $scope.$digest();
-    });
 
-    it('should assign right range', function () {
         //// Then agent on member range in [0.35:0.33]
         expect($scope.agentPresetOptions.length).toEqual(9);
         expect($scope.agentPresetOptions[0].value).toEqual(0.33);
@@ -338,5 +479,43 @@ describe('agentEditMemberPtAndCom', function () {
         //// Then member commission in []
         expect($scope.memberCommissionOptions.length).toEqual(14);
         expect($scope.memberCommissionOptions[0].value).toEqual(0.0065);
+    });
+
+    it('should render agent pt range [0.25:0.33] and include 0.12', function () {
+        //// Given
+        custSetting.PtAndComSetting.PositionTaking = {
+            A2: 0.3300,
+            A1: 0.12,
+            N2: 0.2500
+        };
+
+        //// When
+        $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
+        $scope.$digest();
+
+        //// Then agent on member range in [0.25:0.33] and include 0.12
+        expect($scope.agentPresetOptions.length).toEqual(10);
+        expect($scope.agentPresetOptions[0].value).toEqual(0.33);
+        expect($scope.agentPresetOptions[$scope.agentPresetOptions.length - 1].value).toEqual(0.12);
+    });
+
+    it('should remove 0.12 from agent on member position taking options', function () {
+        //// Given
+        custSetting.PtAndComSetting.PositionTaking = {
+            A2: 0.3300,
+            A1: 0.12,
+            N2: 0.2500
+        };
+
+        //// When
+        $compile("<agent-edit-member-pt-and-com></agent-edit-member-pt-and-com>")($scope);
+        $scope.$digest();
+        $scope.ptAndComSetting.PositionTaking.A1 = 0.26;
+        $scope.agentPresetChange();
+
+        //// Then agent on member range in [0.25:0.33]
+        expect($scope.agentPresetOptions.length).toEqual(9);
+        expect($scope.agentPresetOptions[0].value).toEqual(0.33);
+        expect($scope.agentPresetOptions[$scope.agentPresetOptions.length - 1].value).toEqual(0.25);
     });
 });
