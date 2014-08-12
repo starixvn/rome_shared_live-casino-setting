@@ -4,8 +4,10 @@
     using System.Collections;
     using System.Data;
     using Fanex.Data;
+    using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
@@ -21,10 +23,10 @@
         /// <returns>Command results class.</returns>
         public ICommandResult InsertOrUpdate(ICriteria criteria)
         {
-            var result = new CommandResult();
-
             if (criteria.IsValid())
             {
+                var result = new CommandResult();
+
                 using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                 {
                     var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
@@ -34,9 +36,11 @@
                     var outParameters = objDb.GetOuputParams();
                     result = GetCommandResult(outParameters);
                 }
+
+                return result;
             }
 
-            return result;
+            return new CommandResult { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
         }
 
         /// <summary>

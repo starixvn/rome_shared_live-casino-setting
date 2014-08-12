@@ -2,13 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
+    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.NAP.Framework.Command;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -409,7 +413,7 @@
         /// Inserts the automatic account_ super_ return.
         /// </summary>
         [Test]
-        public void InsertAutoAccount_Super_Return()
+        public void InsertAutoAccount_Super_ReturnNull()
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -420,6 +424,142 @@
 
             // Assert
             Assert.IsNull(actualCommandResult);
+        }
+
+        /// <summary>
+        /// Inserts the automatic account_ insert fail_ do nothing.
+        /// </summary>
+        [Test]
+        public void InsertAutoAccount_InsertFail_DoNothing()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var gameSetting = new List<GameType>();
+
+            settingContext.TargetCustId = 1;
+            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
+            _settingRepository.InsertGameSettingAccount(Arg.Is<InsertAutoAccountCriteria>(x => x.IsValid()), ref gameSetting)
+                              .Returns(x =>
+                              {
+                                  x[1] = new List<GameType>();
+                                  return new GameSettingCommandResult
+                                  {
+                                      Code = "E0001",
+                                      Message = "CustID is null"
+                                  };
+                              });
+
+            // Action
+            var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
+
+            // Assert
+            Assert.IsFalse(actualValue.IsSuccessful);
+        }
+
+        /// <summary>
+        /// Updates the live casino status_ update fail_ return error command result.
+        /// </summary>
+        [Test]
+        public void UpdateLiveCasinoStatus_UpdateFail_ReturnErrorCommandResult()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            settingContext.TargetCustId = -1;
+
+            _settingRepository.InsertOrUpdate(Arg.Is<UpdateLiveCasinoStatusCriteria>(x => !x.IsValid()))
+                              .Returns(new CommandResult { Code = ErrCode.InvalidCriteria });
+
+            // Action
+            var updateResult = _gameSettingService.UpdateLiveCasinoStatus(settingContext, Arg.Any<bool>());
+
+            // Assert
+            Assert.IsFalse(updateResult.IsSuccessful);
+        }
+
+        /// <summary>
+        /// Updates the live casino status_ insert success_ return success command result.
+        /// </summary>
+        [Test]
+        public void UpdateLiveCasinoStatus_InsertSuccess_ReturnSuccessCommandResult()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            settingContext.TargetCustId = 1;
+
+            _settingRepository.InsertOrUpdate(Arg.Is<UpdateLiveCasinoStatusCriteria>(x => x.IsValid()))
+                              .Returns(new CommandResult { Code = 0 });
+
+            // Action
+            var updateResult = _gameSettingService.UpdateLiveCasinoStatus(settingContext, Arg.Any<bool>());
+
+            // Assert
+            Assert.AreEqual(updateResult.Message, LiveCasinoLang.UpdateLiveCasinoStatusSuccess);
+        }
+
+        /// <summary>
+        /// Updates the manual_ customer is synced_ call get game setting before update.
+        /// </summary>
+        [Test]
+        public void UpdateManual_CustomerIsSynced_CallGetGameSettingBeforeUpdate()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custInfo = Substitute.For<CustInfo>();
+
+            settingContext.TargetCustId = 1;
+            custInfo.IsSyncLiveCasino = true;
+
+            // Action
+            _gameSettingService.UpdateManual(settingContext, custInfo, Arg.Any<List<GameType>>());
+
+            // Assert
+            _gameSettingService.Received().GetGameSettingByCustomerId(settingContext.TargetCustId);
+        }
+
+        /// <summary>
+        /// Updates the manual_ when called_ call update stake level.
+        /// </summary>
+        [Test]
+        public void UpdateManual_WhenCalled_CallUpdateStakeLevel()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custInfo = Substitute.For<CustInfo>();
+
+            settingContext.TargetCustId = 1;
+            custInfo.IsSyncLiveCasino = true;
+
+            // Action
+            _gameSettingService.UpdateManual(settingContext, custInfo, Arg.Any<List<GameType>>());
+
+            // Assert
+        }
+
+        /// <summary>
+        /// Updates the manual multiple_ list customer information is empty_ do nothing.
+        /// </summary>
+        [Test]
+        public void UpdateManualMultiple_ListCustInfoIsEmpty_DoNothing()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var gameSetting = Substitute.For<List<GameType>>();
+            var custInfo = Substitute.For<CustInfo>();
+
+            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
+            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
+                       .Returns(new List<CustInfo>()
+                                {
+                                      new CustInfo { CustId = 1, UserName = "master1", IsSyncLiveCasino = false },
+                                      new CustInfo { CustId = 2, UserName = "master2", IsSyncLiveCasino = false },
+                                      new CustInfo { CustId = 3, UserName = "master3", IsSyncLiveCasino = false }
+                                });
+
+            // Action
+            _gameSettingService.UpdateManualMultiple(settingContext, gameSetting);
+
+            // Assert
+            _gameSettingService.Received(4).UpdateManual(settingContext, custInfo, gameSetting);
         }
 
         /// <summary>
@@ -508,6 +648,6 @@
             Assert.AreEqual(expectedCustInfo.Site, actualCustInfo.Site);
             Assert.AreEqual(expectedCustInfo.UplineDisableLiveCasino, actualCustInfo.UplineDisableLiveCasino);
             Assert.AreEqual(expectedCustInfo.UserName, actualCustInfo.UserName);
-        }        
+        }
     }
 }

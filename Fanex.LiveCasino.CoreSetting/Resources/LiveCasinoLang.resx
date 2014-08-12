@@ -327,4 +327,7 @@
   <data name="lblHaveChangeAgentPositionTaking" xml:space="preserve">
     <value>You have changed this agent not to take auto position taking.</value>
   </data>
+  <data name="InvalidCriteriaMsg" xml:space="preserve">
+    <value>Invalid Criteria - Do nothing</value>
+  </data>
 </root>

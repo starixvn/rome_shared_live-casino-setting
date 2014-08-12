@@ -3,10 +3,10 @@
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
-    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Microsoft.Practices.Unity;
 
     /// <summary>
@@ -14,6 +14,8 @@
     /// </summary>
     public class LiveCasinoAuthorizationAttribute : AuthorizeAttribute
     {
+        private readonly ICommonUtil _commonUtil = new CommonUtil();
+
         [Dependency]
         public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
 
@@ -46,7 +48,7 @@
                 }
                 else
                 {
-                    var notAuthorizedUrl = LiveCasinoSettings.Settings.UnAuthorizeUrl;
+                    var notAuthorizedUrl = _commonUtil.LiveCasinoSettings.UnAuthorizeUrl;
                     filterContext.Result = new RedirectResult(notAuthorizedUrl);
                 }
             }

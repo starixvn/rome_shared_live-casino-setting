@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -13,7 +12,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
-    using RemotingRef;
 
     /// <summary>
     /// Game setting service class.
@@ -24,7 +22,7 @@
         private const int TimeOutReplication = 5;
         private readonly ILogService _logService;
         private readonly ISettingRepository _settingRepository;
-        private readonly ICommonUtil _commonUti;
+        private readonly ICommonUtil _commonUtil;
 
         public GameSettingService()
             : this(null, null, null)
@@ -35,7 +33,7 @@
         {
             _settingRepository = settingRepository ?? new SettingRepository();
             _logService = logService ?? new LogService();
-            _commonUti = commonUtil ?? new CommonUtil();
+            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -200,7 +198,7 @@
                 ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
                 Username = settingContext.TargetUsername
@@ -252,7 +250,7 @@
                 ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
                 Username = settingContext.TargetUsername,
@@ -307,7 +305,7 @@
                 Language = settingContext.Language
             };
 
-            ICommandResult updateResult = _settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
             if (updateResult.IsSuccessful)
             {
@@ -350,7 +348,7 @@
                 }
             }
 
-            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId).ToList();
+            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
 
             ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
 
@@ -368,7 +366,7 @@
         public IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResults();
-            List<CustInfo> custInfos = _commonUti.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            List<CustInfo> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -402,7 +400,9 @@
                 SyncLiveCS = isSynced
             };
 
-            return _settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+
+            return updateResult;
         }
 
         /// <summary>
@@ -522,13 +522,15 @@
                 RoleId = settingContext.TargetRoleId,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
                 ModifyUsername = settingContext.UplineUsername,
                 Username = settingContext.TargetUsername,
                 CustSite = settingContext.SiteName
             };
 
-            return _settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+
+            return updateResult;
         }
 
         /// <summary>
@@ -545,7 +547,7 @@
         {
             var results = new CommandResults();
 
-            if (gameTypes.Any())
+            if (gameTypes != null && gameTypes.Any())
             {
                 foreach (var itemGameType in gameTypes)
                 {
@@ -577,19 +579,18 @@
                 StakeLevelList = gameType.CheckedStakeLevelId
             };
 
-            var result = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
-            var gameSettingResult = new GameSettingCommandResult(result);
+            var gameSettingResult = new GameSettingCommandResult(updateResult);
 
-            var betType = RefData.GetBetTypeName(gameType.BetTypeId.ToString(), language);
             if (gameSettingResult.IsSuccessful)
             {
                 gameSettingResult.Id = gameType.Id;
-                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, betType);
+                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, gameType.Name);
             }
             else
             {
-                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, betType, gameSettingResult.Message);
+                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, gameType.Name, gameSettingResult.Message);
             }
 
             return gameSettingResult;

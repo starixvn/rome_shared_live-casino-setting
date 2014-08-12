@@ -86,11 +86,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Constant\ErrCode.cs" />
+    <Compile Include="Controllers\BaseController.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Configuration\LiveCasinoSettings.cs" />
-    <Compile Include="Controllers\LiveCasinoUserController.cs" />
+    <Compile Include="Controllers\LiveCasinoUserController.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controllers\LiveCSSettingController.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />

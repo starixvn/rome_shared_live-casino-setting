@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Threading;
     using Fanex.Common;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
@@ -12,6 +14,8 @@
     /// </summary>
     public class CommonUtil : ICommonUtil
     {
+        private const string __LIVE_CASINO_SETTINGS = "LiveCasinoSettings";
+
         public string CurrentLanguage
         {
             get
@@ -27,6 +31,14 @@
                     case "vi-VN": return "vn"; // Vietnamese
                     default: return "en";
                 }
+            }
+        }
+
+        public LiveCasinoSettings LiveCasinoSettings
+        {
+            get
+            {
+                return ConfigurationManager.GetSection(__LIVE_CASINO_SETTINGS) as LiveCasinoSettings;
             }
         }
 

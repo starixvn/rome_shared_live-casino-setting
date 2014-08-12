@@ -86,7 +86,9 @@
         /// <param name="adminId">Admin id is doing action.</param>
         /// <param name="formType">Current form type.</param>
         /// <param name="language">Current language.</param>
-        /// <returns>Edit multiple form.</returns>
+        /// <returns>
+        /// Edit multiple form.
+        /// </returns>
         [LiveCasinoAuthorization]
         public ActionResult EditSettingMultiple(
             int uplineId = 0,

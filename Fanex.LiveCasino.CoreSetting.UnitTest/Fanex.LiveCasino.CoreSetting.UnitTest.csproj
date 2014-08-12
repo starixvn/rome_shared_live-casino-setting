@@ -41,6 +41,7 @@
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\LiveCasinoSettingsTest.cs" />
     <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteriaTest.cs" />
     <Compile Include="Criteria\GameSetting\InsertManualAccountCriteriaTest.cs" />
     <Compile Include="Criteria\GameSetting\InsertFromExistingAccountCriteriaTest.cs" />
@@ -71,6 +73,15 @@
     <Compile Include="Utilities\CommonUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Configuration\MissingUnAuthorizeUrlWebTest.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\MissingSystemIdWebTest.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration\WebTest.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

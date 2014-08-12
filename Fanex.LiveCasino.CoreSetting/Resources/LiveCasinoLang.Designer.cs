@@ -106,6 +106,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Criteria - Do nothing.
+        /// </summary>
+        public static string InvalidCriteriaMsg {
+            get {
+                return ResourceManager.GetString("InvalidCriteriaMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10X.
         /// </summary>
         public static string lbl10X {

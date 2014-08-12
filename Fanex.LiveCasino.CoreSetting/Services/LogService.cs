@@ -2,12 +2,12 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Configuration;
-    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Command;
 
     /// <summary>
@@ -16,15 +16,17 @@
     public class LogService : ILogService
     {
         private readonly ISettingRepository _settingRepository;
+        private readonly ICommonUtil _commonUtil;
 
         public LogService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public LogService(ISettingRepository settingRepository)
+        public LogService(ISettingRepository settingRepository, ICommonUtil commonUtil)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
+            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -42,7 +44,7 @@
                 CustUserName = settingContext.TargetUsername,
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
-                SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
                 SubAccId = settingContext.SubAccId,
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
@@ -70,7 +72,7 @@
                 CustUserName = settingContext.TargetUsername,
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
-                SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
                 SubAccId = settingContext.SubAccId,
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
@@ -97,7 +99,7 @@
                 CustUserName = settingContext.TargetUsername,
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
-                SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
                 SubAccId = settingContext.SubAccId,
                 SubAccName = settingContext.SubAccName,
                 SuperId = settingContext.SuperId,
@@ -155,7 +157,9 @@
                 Duration = 0
             };
 
-            return _settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+
+            return updateResult;
         }
 
         /// <summary>
