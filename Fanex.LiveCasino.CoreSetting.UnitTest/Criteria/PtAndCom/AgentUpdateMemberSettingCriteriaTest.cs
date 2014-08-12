@@ -127,6 +127,32 @@
             Assert.AreEqual("Acc_CustomerUpdMemberLiveCS_All", settingKey);
         }
 
+        /// <summary>
+        /// Determines whether GetSpParams method return data contain parameter name.
+        /// </summary>
+        /// <param name="parameterName"></param>
+        [TestCase("CustId")]
+        [TestCase("Recommend")]
+        [TestCase("V162apositiontaking_1101")]
+        [TestCase("V162playerdiscount_1101")]
+        [TestCase("V162UpdatePositiontaking_1101")]
+        [TestCase("V162UpdateCommission_1101")]
+        [TestCase("SubAccID")]
+        [TestCase("IP")]
+        [TestCase("UserId")]
+        [TestCase("Language")]
+        public void GetSpParams_WhenCalled_ContainParameters(string parameterName)
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+
+            // Action
+            var paramters = criteria.GetSpParams();
+
+            // Assert
+            Assert.IsTrue(paramters.ContainsKey(parameterName));
+        }
+
         private AgentUpdateMemberSettingCriteria CreateNewCriteria()
         {
             return new AgentUpdateMemberSettingCriteria();
