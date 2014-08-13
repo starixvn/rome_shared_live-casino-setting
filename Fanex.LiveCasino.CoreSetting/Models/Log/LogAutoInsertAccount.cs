@@ -48,9 +48,12 @@
         {
             var gameType = string.Empty;
 
-            foreach (var itemGameType in GameSetting)
+            if (GameSetting != null)
             {
-                gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, itemGameType.CheckedStakeLevelRange);
+                foreach (var itemGameType in GameSetting)
+                {
+                    gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, itemGameType.CheckedStakeLevelRange);
+                }
             }
 
             return gameType;
@@ -67,21 +70,21 @@
             string trackingValue = string.Format(
                                             TrackingTemplate,
                                             SpName,
-                                            CustId,
-                                            CustUserName,
+                                            CustInfo.CustId,
+                                            CustInfo.UserName,
                                             CasinoNo,
                                             ExchangeId,
                                             SuperId,
                                             MasterId,
                                             AgentId,
-                                            RoleId,
+                                            CustInfo.RoleId,
                                             SignUpIp,
-                                            UserId,
+                                            Modifier.CustId,
                                             SignUpForm,
                                             Language,
                                             ErrCode,
                                             ErrMsg,
-                                            RoleId == 4 ? string.Empty : string.Format(TrackingSubAcc, SubAccId, SubAccName),
+                                            TrackingSubAccount,
                                             gameTypeLog,
                                             SpName);
 

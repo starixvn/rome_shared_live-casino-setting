@@ -40,7 +40,7 @@
         {
             get
             {
-                return string.Join(",", BettingLimit.Where(x => x.IsChecked).Select(x => x.Id.ToString()).ToArray());
+                return BettingLimit != null ? string.Join(",", BettingLimit.Where(x => x.IsChecked).Select(x => x.Id.ToString()).ToArray()) : string.Empty;
             }
         }
 
@@ -48,7 +48,7 @@
         {
             get
             {
-                return string.Join(",", BettingLimit.Where(x => x.IsChecked).Select(x => x.Range.ToString()).ToArray());
+                return BettingLimit != null ? string.Join(",", BettingLimit.Where(x => x.IsChecked).Select(x => x.Range.ToString()).ToArray()) : string.Empty;
             }
         }
     }

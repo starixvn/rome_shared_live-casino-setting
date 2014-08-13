@@ -4,32 +4,26 @@
 
     public interface ILogData
     {
-        int UserId { get; set; }
+        LogActions Action { get; set; }
 
-        int RoleId { get; set; }
+        CustInfo CustInfo { get; set; }
+
+        CustInfo SubAccount { get; set; }
+
+        CustInfo Modifier { get; set; }
 
         string ErrCode { get; set; }
 
         string ErrMsg { get; set; }
 
-        string SignUpIp { get; set; }
-
         string Language { get; set; }
-
-        int CustId { get; set; }
-
-        string SpName { get; }
-
-        string SubAccName { get; set; }
-
-        int SubAccId { get; set; }
-
-        LogActions Action { get; set; }
 
         string NewValue { get; }
 
         string OldValue { get; }
 
-        bool IsValid { get; }
+        string SignUpIp { get; set; }
+
+        string SpName { get; }
     }
 }

@@ -13,9 +13,7 @@
 
         public string CasinoNo { get; set; }
 
-        public string CustSite { get; set; }
-
-        public string CustUserName { get; set; }
+        public string CustSite { get; set; }        
 
         public int ExchangeId { get; set; }
 
@@ -28,21 +26,21 @@
                 return string.Format(
                     TrackingTemplate,
                    SpName,
-                   CustId,
-                   CustUserName,
+                   CustInfo.CustId,
+                   CustInfo.UserName,
                    CasinoNo,
                    ExchangeId,
                    SuperId,
                    MasterId,
                    AgentId,
-                   RoleId,
+                   CustInfo.RoleId,
                    SignUpIp,
-                   UserId,
+                   Modifier.CustId,
                    SignUpForm,
                    Language,
                    ErrCode,
                    ErrMsg,
-                   RoleId == 4 ? string.Empty : string.Format(TrackingSubAcc, SubAccId, SubAccName),
+                   TrackingTemplate,
                    CustSite);
             }
         }
@@ -65,8 +63,6 @@
             }
         }
 
-        public int SuperId { get; set; }
-
-        public string UserName { get; set; }
+        public int SuperId { get; set; }        
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
-    using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
@@ -10,9 +9,22 @@
     {
         protected const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
 
-        public int UserId { get; set; }
+        public LogDataBase()
+        {
+            CustInfo = new CustInfo();
+            SubAccount = new CustInfo();
+            Modifier = new CustInfo();
+        }
 
-        public int RoleId { get; set; }
+        public LogActions Action { get; set; }
+
+        public CustInfo CustInfo { get; set; }
+
+        public CustInfo SubAccount { get; set; }
+
+        public CustInfo Modifier { get; set; }
+
+        public string CopiedFrom { get; set; }
 
         public string ErrCode { get; set; }
 
@@ -20,52 +32,29 @@
 
         public string Language { get; set; }
 
-        public int CustId { get; set; }
+        public virtual string NewValue { get; set; }
 
-        public string SubAccName { get; set; }
+        public virtual string OldValue { get; set; }
 
-        public int SubAccId { get; set; }
+        public string SignUpIp { get; set; }
 
-        public LogActions Action { get; set; }
+        public virtual string SpName { get; set; }
 
-        public int ActionId
+        public string TrackingSubAccount
         {
-            get { return Converter.ToInt(this.Action); }
-        }
+            get
+            {
+                var tracking = string.Empty;
 
-        public virtual bool IsValid
-        {
-            get { return true; }
-        }
+                if (CustInfo != null
+                    && SubAccount != null
+                    && CustInfo.RoleId == (int)CustRole.Super)
+                {
+                    tracking = string.Format(TrackingSubAcc, SubAccount.CustId, SubAccount.UserName);
+                }
 
-        public virtual string SpName
-        {
-            get;
-            set;
-        }
-
-        public virtual string NewValue
-        {
-            get;
-            set;
-        }
-
-        public virtual string OldValue
-        {
-            get;
-            set;
-        }
-
-        public string SignUpIp
-        {
-            get;
-            set;
-        }
-
-        public string CopiedFrom
-        {
-            get;
-            set;
+                return tracking;
+            }
         }
     }
 }

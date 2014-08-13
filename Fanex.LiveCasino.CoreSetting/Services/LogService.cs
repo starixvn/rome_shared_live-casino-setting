@@ -38,18 +38,28 @@
         {
             var log = new LogAutoInsertAccount
             {
-                Action = GetInsertManualLogAction(settingContext.TargetRoleId),
+                Action = GetInsertAutoLogAction(settingContext.TargetRoleId),
                 AgentId = settingContext.AgentId,
-                CustId = settingContext.TargetCustId,
-                CustUserName = settingContext.TargetUsername,
+                CustInfo = new CustInfo
+                {
+                    CustId = settingContext.TargetCustId,
+                    UserName = settingContext.TargetUsername,
+                    RoleId = (byte)settingContext.TargetRoleId
+                },
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccId = settingContext.SubAccId,
-                SubAccName = settingContext.SubAccName,
+                SubAccount = new CustInfo
+                {
+                    CustId = settingContext.SubAccId,
+                    UserName = settingContext.SubAccName
+                },
                 SuperId = settingContext.SuperId,
-                UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UplineUsername,
+                Modifier = new CustInfo
+                {
+                    CustId = settingContext.UserIdDoAction,
+                    UserName = settingContext.UplineUsername
+                },
                 CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
@@ -66,18 +76,28 @@
         {
             var log = new LogInsertFromExistingAccount
             {
-                Action = GetInsertManualLogAction(settingContext.TargetRoleId),
+                Action = GetInsertFromExistingLogAction(settingContext.TargetRoleId),
                 AgentId = settingContext.AgentId,
-                CustId = settingContext.TargetCustId,
-                CustUserName = settingContext.TargetUsername,
+                CustInfo = new CustInfo
+                {
+                    CustId = settingContext.TargetCustId,
+                    UserName = settingContext.TargetUsername,
+                    RoleId = (byte)settingContext.TargetRoleId
+                },
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccId = settingContext.SubAccId,
-                SubAccName = settingContext.SubAccName,
+                SubAccount = new CustInfo
+                {
+                    CustId = settingContext.SubAccId,
+                    UserName = settingContext.SubAccName
+                },
                 SuperId = settingContext.SuperId,
-                UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UplineUsername,
+                Modifier = new CustInfo
+                {
+                    CustId = settingContext.UserIdDoAction,
+                    UserName = settingContext.UplineUsername
+                },
                 CustSite = settingContext.SiteName,
                 GameSetting = gameTypes
             };
@@ -95,16 +115,26 @@
             {
                 Action = GetInsertManualLogAction(settingContext.TargetRoleId),
                 AgentId = settingContext.AgentId,
-                CustId = settingContext.TargetCustId,
-                CustUserName = settingContext.TargetUsername,
+                CustInfo = new CustInfo
+                {
+                    CustId = settingContext.TargetCustId,
+                    UserName = settingContext.TargetUsername,
+                    RoleId = (byte)settingContext.TargetRoleId
+                },
                 ExchangeId = settingContext.ExchangeId,
                 SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccId = settingContext.SubAccId,
-                SubAccName = settingContext.SubAccName,
+                SubAccount = new CustInfo
+                {
+                    CustId = settingContext.SubAccId,
+                    UserName = settingContext.SubAccName
+                },
                 SuperId = settingContext.SuperId,
-                UserId = settingContext.UserIdDoAction,
-                UserName = settingContext.UplineUsername,
+                Modifier = new CustInfo
+                {
+                    CustId = settingContext.UserIdDoAction,
+                    UserName = settingContext.UplineUsername
+                },
                 CustSite = settingContext.SiteName
             };
 
@@ -123,11 +153,19 @@
             var log = new LogUpdateStakeLevel
             {
                 Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
-                CustId = settingContext.TargetCustId,
+                CustInfo = new CustInfo
+                {
+                    CustId = settingContext.TargetCustId,
+                    UserName = settingContext.TargetUsername,
+                    RoleId = (byte)settingContext.TargetRoleId
+                },
                 SignUpIp = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                RoleId = settingContext.TargetRoleId,
+                Modifier = new CustInfo
+                {
+                    CustId = settingContext.UserIdDoAction,
+                    UserName = settingContext.UplineUsername
+                },
                 NewGameType = gameTypeNew,
                 OldGameType = isInsert ? null : gameTypeOld
             };
@@ -147,8 +185,8 @@
         {
             var criteria = new InsertLogUserRunSPCriteria
             {
-                UserId = logData.UserId,
-                CustId = logData.CustId,
+                UserId = logData.Modifier.CustId,
+                CustId = logData.CustInfo.CustId,
                 SpName = logData.SpName,
                 Doing = string.Empty,
                 ActionId = (int)logData.Action,
