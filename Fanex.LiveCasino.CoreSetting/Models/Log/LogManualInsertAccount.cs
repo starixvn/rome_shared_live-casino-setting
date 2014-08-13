@@ -16,7 +16,7 @@
             get
             {
                 return string.Format(
-                    TrackingTemplate,
+                   TrackingTemplate,
                    SpName,
                    SettingContext.TargetCustId,
                    SettingContext.TargetUsername,
@@ -32,7 +32,7 @@
                    SettingContext.Language,
                    ErrCode,
                    ErrMsg,
-                   TrackingTemplate,
+                   TrackingSubAccount,
                    SettingContext.SiteName);
             }
         }

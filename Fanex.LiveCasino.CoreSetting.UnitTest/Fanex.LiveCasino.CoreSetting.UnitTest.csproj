@@ -68,7 +68,15 @@
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteriaTest.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\Command\CommandResultsTest.cs" />
+    <Compile Include="Models\Command\GameSettingCommandResultTest.cs" />
+    <Compile Include="Models\Command\PtAndComCommandResultTest.cs" />
+    <Compile Include="Models\Command\MultipleCommandResultsTest.cs" />
+    <Compile Include="Models\Command\WinLimitCommandResultTest.cs" />
     <Compile Include="Models\Log\LogAutoInsertAccountTest.cs" />
+    <Compile Include="Models\Log\LogDataBaseTest.cs" />
+    <Compile Include="Models\Log\LogInsertFromExistingAccountTest.cs" />
+    <Compile Include="Models\Log\LogManualInsertAccountTest.cs" />
+    <Compile Include="Models\Log\LogUpdateStakeLevelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameSettingServiceTest.cs" />
     <Compile Include="Services\LogServiceTest.cs" />

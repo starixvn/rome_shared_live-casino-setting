@@ -7,12 +7,12 @@
     /// </summary>
     public class LogDataBase : ILogData
     {
-        protected const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
+        private const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
 
         public LogDataBase()
         {
             SettingContext = new SettingContext();
-        }        
+        }
 
         public LogActions Action { get; set; }
 
