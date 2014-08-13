@@ -2,8 +2,9 @@
 /*jshint -W101,-W106,-W044,-W098*/
 
 language.liveCasino['zh-TW'] = {
-	_101 : "佣金已更新成功",
-	_103 : "佔成數設定已更新成功",
+	_101 : "佣金: 修改成功",
+	_102 : "最低佔成: 修改成功",
+	_103 : "佔成數: 修改成功",
 	Agent : "代理",
 	lblAgentComm : "代理佣金",
 	lblAgentMaxPT : "代理最高占成数",
@@ -56,5 +57,6 @@ language.liveCasino['zh-TW'] = {
 	NoInformation : "沒資料顯示",
 	Super : "超級",
 	UnauthorizeMsg : "您沒有使用此功能的權限",
+	UpdateLiveCasinoStatusSuccess : "狀態: 修改成功",
 	UpdateLiveCasinoStatusUnSuccess : "修改失敗，因為上線的娛樂廳狀態以被禁止"
 };

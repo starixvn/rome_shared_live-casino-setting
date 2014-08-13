@@ -2,6 +2,7 @@
 /*jshint -W101,-W106,-W044,-W098*/
 
 language.liveCasino['ja-JP'] = {
+	_101 : "手数料: Updated successfully",
 	Agent : "エージェント",
 	lblClose : "閉鎖",
 	lblFax : "ファックス",
@@ -16,5 +17,6 @@ language.liveCasino['ja-JP'] = {
 	lblUsername : "ユーザー名",
 	Master : "マスター",
 	Member : "メンバー",
-	NoInformation : "情報がありません"
+	NoInformation : "情報がありません",
+	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully"
 };

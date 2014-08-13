@@ -2,8 +2,9 @@
 /*jshint -W101,-W106,-W044,-W098*/
 
 language.liveCasino['ko-KR'] = {
-	_101 : "수수료가 성공적으로 업데이트되었습니다.",
-	_103 : "포지션 설정이 성공적으로 업데이트되었습니다.",
+	_101 : "수수료: 성공적으로 업데이트하였습니다.",
+	_102 : "최소 포지션: 성공적으로 업데이트하였습니다.",
+	_103 : "거래 조건: 성공적으로 업데이트하였습니다.",
 	Agent : "에이전트",
 	lblAgentComm : "에이전트 수수료",
 	lblAgentMaxPT : "에이전트 최대 PT",
@@ -54,5 +55,6 @@ language.liveCasino['ko-KR'] = {
 	NoInformation : "가능한 정보가 없습니다",
 	Super : "슈퍼",
 	UnauthorizeMsg : "해당 기능에 대한 권한이 없습니다.",
+	UpdateLiveCasinoStatusSuccess : "상황: 성공적으로 업데이트하였습니다.",
 	UpdateLiveCasinoStatusUnSuccess : "이 계정은 라이브 카지노 설정이 없거나 업라인에 의해 비활성화되어  라이브 카지노를 활성화할 수 없습니다."
 };

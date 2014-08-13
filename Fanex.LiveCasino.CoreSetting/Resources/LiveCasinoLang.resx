@@ -217,19 +217,19 @@
     <value>Super</value>
   </data>
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
-    <value>Updated Status Successfully.</value>
+    <value>Status: updated successfully.</value>
   </data>
   <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
     <value>Updated Status unsuccessfully because Live Casino status has been disabled at upline.</value>
   </data>
   <data name="_101" xml:space="preserve">
-    <value>Commission is updated successfully.</value>
+    <value>Commission: updated successfully.</value>
   </data>
   <data name="_102" xml:space="preserve">
-    <value>Updated Min Position Successfully.</value>
+    <value>Min Position: updated successfully.</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>Position taking is updated successfully.</value>
+    <value>Position taking: updated successfully.</value>
   </data>
   <data name="_104" xml:space="preserve">
     <value>Updated Win Limit Successfully.</value>

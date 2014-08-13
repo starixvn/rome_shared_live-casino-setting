@@ -142,4 +142,10 @@
   <data name="lblOf" xml:space="preserve">
     <value>/</value>
   </data>
+  <data name="_101" xml:space="preserve">
+    <value>手数料: Updated successfully</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>状態: Updated successfully</value>
+  </data>
 </root>

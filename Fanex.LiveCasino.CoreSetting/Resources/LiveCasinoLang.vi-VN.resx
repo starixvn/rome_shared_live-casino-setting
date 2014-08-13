@@ -98,10 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_101" xml:space="preserve">
-    <value>Tiền hoa hồng được cập nhật thành công</value>
+    <value>Hoa hồng: Câp nhật thành công</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>PT được cập nhật thành công</value>
+    <value>Position Taking: Câp nhật thành công</value>
   </data>
   <data name="lblSuperAutoPT" xml:space="preserve">
     <value>Auto PT của Super</value>
@@ -261,5 +261,11 @@
   </data>
   <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
     <value>Bạn vừa mới ngăn Master này lấy Auto PT</value>
+  </data>
+  <data name="_102" xml:space="preserve">
+    <value>Giá trị PT nhỏ nhất: Câp nhật thành công</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>Trạng thái: Câp nhật thành công</value>
   </data>
 </root>

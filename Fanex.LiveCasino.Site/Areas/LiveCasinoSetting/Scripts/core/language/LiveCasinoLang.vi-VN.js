@@ -2,8 +2,9 @@
 /*jshint -W101,-W106,-W044,-W098*/
 
 language.liveCasino['vi-VN'] = {
-	_101 : "Tiền hoa hồng được cập nhật thành công",
-	_103 : "PT được cập nhật thành công",
+	_101 : "Hoa hồng: Câp nhật thành công",
+	_102 : "Giá trị PT nhỏ nhất: Câp nhật thành công",
+	_103 : "Position Taking: Câp nhật thành công",
 	Agent : "Agent",
 	lblAgentComm : "Hoa hồng cho Agent",
 	lblAgentMaxPT : "PT lớn nhất của Agent",
@@ -56,5 +57,6 @@ language.liveCasino['vi-VN'] = {
 	NoInformation : "Thông tin chưa được cập nhật",
 	Super : "Super",
 	UnauthorizeMsg : "Bạn không được cho phép sử dụng chức năng này",
+	UpdateLiveCasinoStatusSuccess : "Trạng thái: Câp nhật thành công",
 	UpdateLiveCasinoStatusUnSuccess : "Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên"
 };

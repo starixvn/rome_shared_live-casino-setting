@@ -61,7 +61,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commission is updated successfully..
+        ///   Looks up a localized string similar to Commission: updated successfully..
         /// </summary>
         public static string _101 {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated Min Position Successfully..
+        ///   Looks up a localized string similar to Min Position: updated successfully..
         /// </summary>
         public static string _102 {
             get {
@@ -79,7 +79,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position taking is updated successfully..
+        ///   Looks up a localized string similar to Position taking: updated successfully..
         /// </summary>
         public static string _103 {
             get {
@@ -673,7 +673,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated Status Successfully..
+        ///   Looks up a localized string similar to Status: updated successfully..
         /// </summary>
         public static string UpdateLiveCasinoStatusSuccess {
             get {

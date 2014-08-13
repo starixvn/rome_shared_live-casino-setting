@@ -98,10 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_101" xml:space="preserve">
-    <value>佣金已更新成功</value>
+    <value>佣金: 修改成功</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>佔成數設定已更新成功</value>
+    <value>佔成數: 修改成功</value>
   </data>
   <data name="lblSuperAutoPT" xml:space="preserve">
     <value>超級總代理自動佔成</value>
@@ -261,5 +261,11 @@
   </data>
   <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
     <value>您已更改此總代理不再自動佔成.</value>
+  </data>
+  <data name="_102" xml:space="preserve">
+    <value>最低佔成: 修改成功</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>狀態: 修改成功</value>
   </data>
 </root>

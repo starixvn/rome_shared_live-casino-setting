@@ -98,10 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_101" xml:space="preserve">
-    <value>수수료가 성공적으로 업데이트되었습니다.</value>
+    <value>수수료: 성공적으로 업데이트하였습니다.</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>포지션 설정이 성공적으로 업데이트되었습니다.</value>
+    <value>거래 조건: 성공적으로 업데이트하였습니다.</value>
   </data>
   <data name="lblSuperAutoPT" xml:space="preserve">
     <value>슈퍼 자동 PT</value>
@@ -255,5 +255,11 @@
   </data>
   <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
     <value>해당 마스터의 자동 거래조건을 설정 하지 못하게 변경 하였습니다</value>
+  </data>
+  <data name="_102" xml:space="preserve">
+    <value>최소 포지션: 성공적으로 업데이트하였습니다.</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>상황: 성공적으로 업데이트하였습니다.</value>
   </data>
 </root>

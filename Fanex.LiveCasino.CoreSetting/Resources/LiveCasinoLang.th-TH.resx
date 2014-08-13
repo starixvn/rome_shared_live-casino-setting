@@ -98,10 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_101" xml:space="preserve">
-    <value>ค่าคอมมิชชั่น ได้อัพเดทเรียบร้อยแล้ว</value>
+    <value>คอมมิชชั่น: อัพเดทเสร็จสมบูรณ์</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>การตั้งค่าแบ่งสู้ ได้อัพเดทเรียบร้อยแล้ว</value>
+    <value>ค่าความเสี่ยง: อัพเดทเสร็จสมบูรณ์</value>
   </data>
   <data name="lblSuperAutoPT" xml:space="preserve">
     <value>แบ่งสู้อัตโนมัติของซุปเปอร์</value>
@@ -261,5 +261,11 @@
   </data>
   <data name="lblHaveChangeMasterPositionTaking" xml:space="preserve">
     <value>คุณได้ทำการเปลี่ยนตัวแทนหลักและ ไม่ได้เลือกตำแหน่งอัตโนมัติ</value>
+  </data>
+  <data name="_102" xml:space="preserve">
+    <value>ค่าความเสี่ยง ขั้นต่ำ: อัพเดทเสร็จสมบูรณ์</value>
+  </data>
+  <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
+    <value>สถานะ: อัพเดทเสร็จสมบูรณ์</value>
   </data>
 </root>
