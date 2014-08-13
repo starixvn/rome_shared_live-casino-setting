@@ -225,7 +225,9 @@
     <Content Include="Test\Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.spec.js" />
     <Content Include="Test\Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.spec.js" />
     <Content Include="Test\Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.spec.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
