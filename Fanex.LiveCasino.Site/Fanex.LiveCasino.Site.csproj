@@ -160,6 +160,7 @@
     <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
@@ -195,6 +196,7 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />

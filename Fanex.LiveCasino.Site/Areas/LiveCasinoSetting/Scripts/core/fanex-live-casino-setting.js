@@ -103,3 +103,29 @@ fanex.liveCasinoSetting.errorResult = {
 };
 fanex.liveCasinoSetting.rootUrl = document.getElementById('LiveCasinoRoot').value;
 
+
+fanex.liveCasinoSetting.config(function ($httpProvider) {
+    'use strict';
+    $httpProvider.responseInterceptors.push('loadingInterceptor');
+
+    var spinnerFunction = function spinnerFunction(data) {
+        try { $.blockUI(); } catch (e) { }
+        return data;
+    };
+
+    $httpProvider.defaults.transformRequest.push(spinnerFunction);
+});
+
+fanex.liveCasinoSetting.factory('loadingInterceptor', function ($q) {
+    'use strict';
+    return function (promise) {
+        return promise.then(function (response) {
+            try { $.unblockUI(); } catch (e) { }
+            return response;
+        }, function (response) {
+            try { $.unblockUI(); } catch (e) { }
+            return $q.reject(response);
+        });
+    };
+});
+

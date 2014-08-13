@@ -45,7 +45,7 @@ body
     border-collapse: collapse;
 }
 
-.edit-setting-livecs .cust-info, .edit-setting-livecs .pt-setting,.edit-setting-livecs .win-limit
+.edit-setting-livecs .cust-info, .edit-setting-livecs .pt-setting, .edit-setting-livecs .win-limit
 {
     width: 100%;
 }
@@ -80,8 +80,9 @@ body
 }
 
 
-.edit-setting-livecs .update-setting {
-	padding: 2px 0px 0px 4px;
+.edit-setting-livecs .update-setting
+{
+    padding: 2px 0px 0px 4px;
 }
 
 /*PT Style*/
@@ -119,8 +120,9 @@ label.clearfix
     margin-bottom: 10px;
 }
 
-.edit-setting-livecs .updated-result .main-message-icon {
-	width: 24px;
+.edit-setting-livecs .updated-result .main-message-icon
+{
+    width: 24px;
     height: 24px;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -128,32 +130,36 @@ label.clearfix
     position: absolute;
 }
 
-.edit-setting-livecs .updated-result .main-icon-success {
-	background-image: url(Images/Success.gif);
+.edit-setting-livecs .updated-result .main-icon-success
+{
+    background-image: url(Images/Success.gif);
 }
 
-.edit-setting-livecs .updated-result .main-icon-error {
-	background-image: url(Images/error-icon.gif);
+.edit-setting-livecs .updated-result .main-icon-error
+{
+    background-image: url(Images/error-icon.gif);
 }
 
-.edit-setting-livecs .updated-result .main-message {
-	display: inline-block;
-	margin-left: 25px;
+.edit-setting-livecs .updated-result .main-message
+{
+    display: inline-block;
+    margin-left: 25px;
 }
 
-.edit-setting-livecs .updated-result .main-message .message-user-name {
-	color: Blue;
-	font-weight: bold;
+.edit-setting-livecs .updated-result .main-message .message-user-name
+{
+    color: Blue;
+    font-weight: bold;
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message 
+.edit-setting-livecs .updated-result .main-message .sub-message
 {
     position: relative;
-	
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message-icon {
-	width: 16px;
+.edit-setting-livecs .updated-result .main-message .sub-message-icon
+{
+    width: 16px;
     height: 16px;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -162,31 +168,42 @@ label.clearfix
     left: 5px;
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-success {
-	background-image: url(Images/tick.png);
+.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-success
+{
+    background-image: url(Images/tick.png);
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-error {
-	background-image: url(Images/cross.png);
+.edit-setting-livecs .updated-result .main-message .sub-message .sub-icon-error
+{
+    background-image: url(Images/cross.png);
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .message-content {
-	display: inline-block;
-	margin-left: 21px;
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content
+{
+    display: inline-block;
+    margin-left: 21px;
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .message-content-success 
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-success
 {
     color: #2d9d3b;
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .message-content-error 
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-error
 {
     color: #DF2267;
 }
 
-.edit-setting-livecs .updated-result .main-message .sub-message .message-content-unauthorized {
-	margin-left: 5px;
+.edit-setting-livecs .updated-result .main-message .sub-message .message-content-unauthorized
+{
+    margin-left: 5px;
 }
 
 
+/*Loading css*/
+.block-ui-loading
+{
+    width: 64px;
+    height: 64px;
+    background: url(Images/loader3.gif) no-repeat;
+}

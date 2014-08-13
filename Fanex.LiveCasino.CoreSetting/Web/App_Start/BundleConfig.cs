@@ -20,6 +20,7 @@ namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
         {
             bundles.Add(new ScriptBundle("~/areasjs/livecasino/core")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/jquery-2.1.1.js")
+                .Include("~/areas/LiveCasinoSetting/scripts/libs/jquery.blockUI.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/numeral.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/angular.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/libs/angular-sanitize.js")
