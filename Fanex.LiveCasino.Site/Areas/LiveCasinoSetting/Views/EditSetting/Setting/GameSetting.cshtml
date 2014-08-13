@@ -22,8 +22,8 @@
                 <td class="right">
                     {{item.Name}}
                 </td>
-                <td>
-                    <span data-ng-repeat="betLimitItem in item.BettingLimit">
+                <td class="betting-limit-container">
+                    <span data-ng-repeat="betLimitItem in item.BettingLimit" class="betting-limit-item">
                         <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
                         @if (Model.TargetRoleId != (int)CustRole.Member)
                         {

@@ -5,6 +5,11 @@ body
     font-size: 12px;
 }
 
+table td {
+	height: 24px;
+}
+
+
 .edit-setting-livecs
 {
     width: 850px;
@@ -206,4 +211,11 @@ label.clearfix
     width: 64px;
     height: 64px;
     background: url(Images/loader3.gif) no-repeat;
+}
+
+.game-setting .betting-limit-container {
+	padding: 2px 0px 4px 0px;
+}
+.game-setting .betting-limit-item {
+	margin: 0px 6px 0px 6px;
 }
