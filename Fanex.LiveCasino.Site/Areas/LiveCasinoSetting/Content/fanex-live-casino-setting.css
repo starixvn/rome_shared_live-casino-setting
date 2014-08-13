@@ -9,6 +9,10 @@ table td {
 	height: 24px;
 }
 
+select:disabled {
+	color: Gray;
+	cursor: not-allowed;
+}
 
 .edit-setting-livecs
 {
@@ -87,7 +91,7 @@ table td {
 
 .edit-setting-livecs .update-setting
 {
-    padding: 2px 0px 0px 4px;
+    margin-top: 4px;
 }
 
 /*PT Style*/
@@ -214,8 +218,8 @@ label.clearfix
 }
 
 .game-setting .betting-limit-container {
-	padding: 2px 0px 4px 0px;
+	padding: 2px 0px 4px 6px;
 }
 .game-setting .betting-limit-item {
-	margin: 0px 6px 0px 6px;
+	margin: 0px 12px 0px 0px;
 }
