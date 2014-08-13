@@ -16,6 +16,7 @@
     <div id="mainContainer" class="main-content">
         @RenderBody()
     </div>
+    @Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
     @Scripts.Render("~/areasjs/livecasino/core")
     @RenderSection("scripts", false)
 </body>
