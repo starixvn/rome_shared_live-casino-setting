@@ -39,29 +39,9 @@
             var log = new LogAutoInsertAccount
             {
                 Action = GetInsertAutoLogAction(settingContext.TargetRoleId),
-                AgentId = settingContext.AgentId,
-                CustInfo = new CustInfo
-                {
-                    CustId = settingContext.TargetCustId,
-                    UserName = settingContext.TargetUsername,
-                    RoleId = (byte)settingContext.TargetRoleId
-                },
-                ExchangeId = settingContext.ExchangeId,
-                SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccount = new CustInfo
-                {
-                    CustId = settingContext.SubAccId,
-                    UserName = settingContext.SubAccName
-                },
-                SuperId = settingContext.SuperId,
-                Modifier = new CustInfo
-                {
-                    CustId = settingContext.UserIdDoAction,
-                    UserName = settingContext.UplineUsername
-                },
-                CustSite = settingContext.SiteName,
-                GameSetting = gameTypes
+                GameSetting = gameTypes,
+                SettingContext = settingContext
             };
 
             WriteLog(log);
@@ -77,29 +57,9 @@
             var log = new LogInsertFromExistingAccount
             {
                 Action = GetInsertFromExistingLogAction(settingContext.TargetRoleId),
-                AgentId = settingContext.AgentId,
-                CustInfo = new CustInfo
-                {
-                    CustId = settingContext.TargetCustId,
-                    UserName = settingContext.TargetUsername,
-                    RoleId = (byte)settingContext.TargetRoleId
-                },
-                ExchangeId = settingContext.ExchangeId,
-                SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccount = new CustInfo
-                {
-                    CustId = settingContext.SubAccId,
-                    UserName = settingContext.SubAccName
-                },
-                SuperId = settingContext.SuperId,
-                Modifier = new CustInfo
-                {
-                    CustId = settingContext.UserIdDoAction,
-                    UserName = settingContext.UplineUsername
-                },
-                CustSite = settingContext.SiteName,
-                GameSetting = gameTypes
+                GameSetting = gameTypes,
+                SettingContext = settingContext
             };
 
             WriteLog(log);
@@ -114,28 +74,8 @@
             var log = new LogManualInsertAccount
             {
                 Action = GetInsertManualLogAction(settingContext.TargetRoleId),
-                AgentId = settingContext.AgentId,
-                CustInfo = new CustInfo
-                {
-                    CustId = settingContext.TargetCustId,
-                    UserName = settingContext.TargetUsername,
-                    RoleId = (byte)settingContext.TargetRoleId
-                },
-                ExchangeId = settingContext.ExchangeId,
-                SignUpIp = settingContext.IP,
                 SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
-                SubAccount = new CustInfo
-                {
-                    CustId = settingContext.SubAccId,
-                    UserName = settingContext.SubAccName
-                },
-                SuperId = settingContext.SuperId,
-                Modifier = new CustInfo
-                {
-                    CustId = settingContext.UserIdDoAction,
-                    UserName = settingContext.UplineUsername
-                },
-                CustSite = settingContext.SiteName
+                SettingContext = settingContext
             };
 
             WriteLog(log);
@@ -153,19 +93,7 @@
             var log = new LogUpdateStakeLevel
             {
                 Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
-                CustInfo = new CustInfo
-                {
-                    CustId = settingContext.TargetCustId,
-                    UserName = settingContext.TargetUsername,
-                    RoleId = (byte)settingContext.TargetRoleId
-                },
-                SignUpIp = settingContext.IP,
-                Language = settingContext.Language,
-                Modifier = new CustInfo
-                {
-                    CustId = settingContext.UserIdDoAction,
-                    UserName = settingContext.UplineUsername
-                },
+                SettingContext = settingContext,
                 NewGameType = gameTypeNew,
                 OldGameType = isInsert ? null : gameTypeOld
             };
@@ -185,8 +113,8 @@
         {
             var criteria = new InsertLogUserRunSPCriteria
             {
-                UserId = logData.Modifier.CustId,
-                CustId = logData.CustInfo.CustId,
+                UserId = logData.SettingContext.UserIdDoAction,
+                CustId = logData.SettingContext.TargetCustId,
                 SpName = logData.SpName,
                 Doing = string.Empty,
                 ActionId = (int)logData.Action,

@@ -51,14 +51,14 @@
             var trackingValue = string.Format(
                 TrackingTemplate,
                  SpName,
-                 CustInfo.CustId,
+                 SettingContext.TargetCustId,
                  TrackingSubAccount,
                  gameType.Id,
                  gameType.BetTypeId,
                  gameType.CheckedStakeLevelRange,
-                 SignUpIp,
-                 Language,
-                 CustInfo.RoleId,
+                 SettingContext.IP,
+                 SettingContext.Language,
+                 SettingContext.TargetRoleId,
                  ErrCode,
                  ErrMsg);
 

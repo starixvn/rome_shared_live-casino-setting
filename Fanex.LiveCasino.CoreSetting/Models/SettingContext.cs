@@ -108,6 +108,8 @@
 
         public string TargetSyncStatus { get; set; }
 
+        public int SystemId { get; set; }
+
         public int UserIdDoAction
         {
             get
@@ -160,7 +162,7 @@
         {
             get
             {
-                return IsEdittingSuper || (UplineRoleId - TargetRoleId) == 1; 
+                return IsEdittingSuper || (UplineRoleId - TargetRoleId) == 1;
             }
         }
     }

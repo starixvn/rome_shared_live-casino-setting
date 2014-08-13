@@ -11,18 +11,12 @@
 
         public LogDataBase()
         {
-            CustInfo = new CustInfo();
-            SubAccount = new CustInfo();
-            Modifier = new CustInfo();
-        }
+            SettingContext = new SettingContext();
+        }        
 
         public LogActions Action { get; set; }
 
-        public CustInfo CustInfo { get; set; }
-
-        public CustInfo SubAccount { get; set; }
-
-        public CustInfo Modifier { get; set; }
+        public SettingContext SettingContext { get; set; }
 
         public string CopiedFrom { get; set; }
 
@@ -30,13 +24,9 @@
 
         public string ErrMsg { get; set; }
 
-        public string Language { get; set; }
-
         public virtual string NewValue { get; set; }
 
         public virtual string OldValue { get; set; }
-
-        public string SignUpIp { get; set; }
 
         public virtual string SpName { get; set; }
 
@@ -46,11 +36,9 @@
             {
                 var tracking = string.Empty;
 
-                if (CustInfo != null
-                    && SubAccount != null
-                    && CustInfo.RoleId == (int)CustRole.Super)
+                if (SettingContext.IsEdittingSuper)
                 {
-                    tracking = string.Format(TrackingSubAcc, SubAccount.CustId, SubAccount.UserName);
+                    tracking = string.Format(TrackingSubAcc, SettingContext.SubAccId, SettingContext.SubAccName);
                 }
 
                 return tracking;

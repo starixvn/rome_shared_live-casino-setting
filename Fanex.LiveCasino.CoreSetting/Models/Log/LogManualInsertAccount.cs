@@ -9,15 +9,7 @@
                                                 " SCustID=\"{5}\" MCustID=\"{6}\" ACustID=\"{7}\" RoleID=\"{8}\" SignupIP=\"{9}\" SignupBy=\"{10}\"" +
                                                 " AddFrom=\"{11}\" Lang=\"{12}\" ErrCode=\"{13}\" ErrMsg=\"{14}\" {15} CustSite=\"{16}\" />";
 
-        public int AgentId { get; set; }
-
         public string CasinoNo { get; set; }
-
-        public string CustSite { get; set; }        
-
-        public int ExchangeId { get; set; }
-
-        public int MasterId { get; set; }
 
         public override string NewValue
         {
@@ -26,22 +18,22 @@
                 return string.Format(
                     TrackingTemplate,
                    SpName,
-                   CustInfo.CustId,
-                   CustInfo.UserName,
+                   SettingContext.TargetCustId,
+                   SettingContext.TargetUsername,
                    CasinoNo,
-                   ExchangeId,
-                   SuperId,
-                   MasterId,
-                   AgentId,
-                   CustInfo.RoleId,
-                   SignUpIp,
-                   Modifier.CustId,
+                   SettingContext.ExchangeId,
+                   SettingContext.SuperId,
+                   SettingContext.MasterId,
+                   SettingContext.AgentId,
+                   SettingContext.TargetCustId,
+                   SettingContext.IP,
+                   SettingContext.UserIdDoAction,
                    SignUpForm,
-                   Language,
+                   SettingContext.Language,
                    ErrCode,
                    ErrMsg,
                    TrackingTemplate,
-                   CustSite);
+                   SettingContext.SiteName);
             }
         }
 
@@ -62,7 +54,5 @@
                 return "TP_User_Customer_ManualInsertAccount";
             }
         }
-
-        public int SuperId { get; set; }        
     }
 }

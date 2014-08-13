@@ -6,23 +6,15 @@
     {
         LogActions Action { get; set; }
 
-        CustInfo CustInfo { get; set; }
-
-        CustInfo SubAccount { get; set; }
-
-        CustInfo Modifier { get; set; }
+        SettingContext SettingContext { get; set; }
 
         string ErrCode { get; set; }
 
-        string ErrMsg { get; set; }
-
-        string Language { get; set; }
+        string ErrMsg { get; set; }        
 
         string NewValue { get; }
 
-        string OldValue { get; }
-
-        string SignUpIp { get; set; }
+        string OldValue { get; }        
 
         string SpName { get; }
     }

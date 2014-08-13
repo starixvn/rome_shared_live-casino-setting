@@ -1,9 +1,9 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Log
 {
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using NSubstitute;
-    using NUnit.Framework;
+    using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
+    using NUnit.Framework;
 
     /// <summary>
     /// Testing LogAutoInsertAccount class.
@@ -34,18 +34,21 @@
             // Arrange
             var logModel = CreateNewInstance();
 
-            // Assert            
+            // Assert
             Assert.IsNullOrEmpty(logModel.OldValue);
         }
 
+        /// <summary>
+        /// News the value_ game setting is null_ return game setting tracking empty.
+        /// </summary>
         [Test]
-        public void NewValue_GameSettingIsNull_ReturnEmpty()
+        public void NewValue_GameSettingIsNull_ReturnGameSettingTrackingEmpty()
         {
             // Arrange
             var logModel = CreateNewInstance();
             logModel.GameSetting = null;
 
-            // Assert       
+            // Assert
             string expectedValue = string.Format(
                                            TrackingTemplate,
                                            logModel.SpName,
@@ -65,6 +68,42 @@
                                            string.Empty,
                                            string.Empty,
                                            string.Empty,
+                                           logModel.SpName);
+            Assert.AreEqual(expectedValue, logModel.NewValue);
+        }
+
+        /// <summary>
+        /// News the value_ game setting_ return value.
+        /// </summary>
+        [Test]
+        public void NewValue_GameSetting_ReturnValue()
+        {
+            // Arrange
+            var logModel = CreateNewInstance();
+            logModel.GameSetting = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
+
+            // Assert
+            string expectedGameTypeTracking = string.Format(GameTypeTemplate, 1, 1, string.Empty);
+
+            string expectedValue = string.Format(
+                                           TrackingTemplate,
+                                           logModel.SpName,
+                                           0,
+                                           string.Empty,
+                                           string.Empty,
+                                           0,
+                                           0,
+                                           0,
+                                           0,
+                                           0,
+                                           string.Empty,
+                                           0,
+                                           0,
+                                           string.Empty,
+                                           string.Empty,
+                                           string.Empty,
+                                           string.Empty,
+                                           expectedGameTypeTracking,
                                            logModel.SpName);
             Assert.AreEqual(expectedValue, logModel.NewValue);
         }

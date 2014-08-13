@@ -409,6 +409,9 @@
             AssertGameSetting(expectedGameSetting, actualValue);
         }
 
+        /// <summary>
+        /// Inserts the automatic account_ insert success_ call write log.
+        /// </summary>
         [Test]
         public void InsertAutoAccount_InsertSuccess_CallWriteLog()
         {
@@ -424,8 +427,7 @@
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
 
-            // Assert
-            //_logService.Received().LogAutoInsertAccount(settingContext, gameSetting);
+            // Assert            
             Assert.IsTrue(actualValue.IsSuccessful);
         }
 
@@ -582,6 +584,9 @@
             _gameSettingService.Received(4).UpdateManual(settingContext, custInfo, gameSetting);
         }
 
+        /// <summary>
+        /// Updates the synchronize live casino_ when called_ update synced status.
+        /// </summary>
         [Test]
         public void UpdateSyncLiveCasino_WhenCalled_UpdateSyncedStatus()
         {

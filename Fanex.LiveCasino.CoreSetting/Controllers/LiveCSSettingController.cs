@@ -67,7 +67,8 @@
                     TargetRoleId = targetRoleId,
                     FormType = (FormType)formType,
                     AdminId = adminId,
-                    Language = language
+                    Language = language,
+                    SystemId = _commonUtil.LiveCasinoSettings.SystemId
                 };
 
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
@@ -114,7 +115,8 @@
                 AdminId = adminId,
                 Language = language,
                 IsEditMultiple = true,
-                TargetSyncStatus = targetSyncStatus
+                TargetSyncStatus = targetSyncStatus,
+                SystemId = _commonUtil.LiveCasinoSettings.SystemId
             };
 
             settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
