@@ -10,11 +10,11 @@
 
         string ErrCode { get; set; }
 
-        string ErrMsg { get; set; }        
+        string ErrMsg { get; set; }
 
         string NewValue { get; }
 
-        string OldValue { get; }        
+        string OldValue { get; }
 
         string SpName { get; }
     }

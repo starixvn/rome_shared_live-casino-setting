@@ -1,0 +1,274 @@
+﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Controllers
+{
+    using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Controllers;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.Services;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.LiveCasino.CoreSetting.ViewModels;
+    using Fanex.NAP.Framework.Data;
+    using NSubstitute;
+    using NUnit.Framework;
+
+    /// <summary>
+    /// Testing LiveCSSettingController class.
+    /// </summary>
+    [TestFixture]
+    public class LiveCSSettingControllerTest
+    {
+        private ISettingService _settingService;
+        private IGameSettingService _gameSettingService;
+        private ICommonUtil _commonUtil;
+        private LiveCSSettingController _controller;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _settingService = Substitute.For<ISettingService>();
+            _gameSettingService = Substitute.For<IGameSettingService>();
+            _commonUtil = Substitute.For<ICommonUtil>();
+            _controller = Substitute.For<LiveCSSettingController>(_settingService, _gameSettingService, _commonUtil);
+        }
+
+        [Test]
+        public void GetCurrentWinLimit_WhenCalled_CallGetCurrentWinLimit()
+        {
+            // Arrange
+            var custId = 1;
+
+            // Action
+            _controller.GetCurrentWinLimit(custId);
+
+            // Assert
+            _settingService.Received().GetCurrentWinLimit(custId);
+        }
+
+        [Test]
+        public void UpdateWinLimit_SingleUpdate_CallUpdateWinLimit()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var memberWinLimit = Substitute.For<MemberWinLimit>();
+
+            settingContext.IsEditMultiple = false;
+            // Action
+            _controller.UpdateWinLimit(settingContext, memberWinLimit);
+
+            // Assert
+            _settingService.Received().UpdateWinLimit(settingContext, memberWinLimit);
+        }
+
+        [Test]
+        public void UpdateWinLimit_MultipleUpdate_CallUpdateWinLimitMultiple()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var memberWinLimit = Substitute.For<MemberWinLimit>();
+
+            settingContext.IsEditMultiple = true;
+            // Action
+            _controller.UpdateWinLimit(settingContext, memberWinLimit);
+
+            // Assert
+            _settingService.Received().UpdateWinLimitMultiple(settingContext, memberWinLimit);
+        }
+
+        [Test]
+        public void UpdateGameSetting_SingleUpdate_CallUpdateManual()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var gameSetting = Substitute.For<List<GameType>>();
+
+            settingContext.IsEditMultiple = false;
+
+            // Action
+            _controller.UpdateGameSetting(settingContext, gameSetting);
+
+            // Assert
+            _gameSettingService.Received().UpdateManual(settingContext, Arg.Any<CustInfo>(), gameSetting);
+        }
+
+        [Test]
+        public void UpdateGameSetting_MultipleUpdate_CallUpdateManualMultiple()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var gameSetting = Substitute.For<List<GameType>>();
+
+            settingContext.IsEditMultiple = true;
+            // Action
+            _controller.UpdateGameSetting(settingContext, gameSetting);
+
+            // Assert
+            _gameSettingService.Received().UpdateManualMultiple(settingContext, gameSetting);
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_CallUpdatePtAndComSetting()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            settingContext.IsEditMultiple = false;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                           .Returns(new CommandResults
+                           {
+                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+                           });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _settingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateWinLimit()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            settingContext.IsEditMultiple = false;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                           .Returns(new CommandResults
+                           {
+                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+                           });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _settingService.DidNotReceive().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateManual()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            settingContext.IsEditMultiple = false;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                           .Returns(new CommandResults
+                           {
+                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+                           });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateManual()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            custSettingViewModel.CustInfo = new CustInfo();
+            custSettingViewModel.CustInfo.MemberWinLimit = new MemberWinLimit();
+            settingContext.IsEditMultiple = false;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                         .Returns(new CommandResults
+                         {
+                             Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+                         });
+            _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+                            .Returns(new CommandResults
+                            {
+                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                            });
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+                               .Returns(new CommandResults
+                               {
+                                   Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                               });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateWinLimit()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            custSettingViewModel.CustInfo = new CustInfo();
+            custSettingViewModel.CustInfo.MemberWinLimit = new MemberWinLimit();
+            settingContext.IsEditMultiple = false;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                           .Returns(new CommandResults
+                           {
+                               Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+                           });
+            _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+                            .Returns(new CommandResults
+                            {
+                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                            });
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+                               .Returns(new CommandResults
+                                {
+                                    Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _settingService.Received().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
+        }
+
+        [Test]
+        public void UpdateLiveCasinoSetting_UpdateSingleAndIsEditMemberNotSyncedAndUplineEnableLC_CallUpdateLiveCasinoStatus()
+        {
+            // Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var custSettingViewModel = Substitute.For<CustSettingViewModel>();
+
+            custSettingViewModel.CustInfo = new CustInfo();
+            custSettingViewModel.CustInfo.IsSyncLiveCasino = true;
+            custSettingViewModel.CustInfo.UplineDisableLiveCasino = false;
+            settingContext.IsEditMultiple = false;
+            settingContext.TargetRoleId = (int)CustRole.Member;
+            settingContext.UplineRoleId = (int)CustRole.Agent;
+            _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
+                           .Returns(new CommandResults
+                           {
+                               Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+                           });
+            _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+                            .Returns(new CommandResults
+                            {
+                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                            });
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+                               .Returns(new CommandResults
+                               {
+                                   Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                               });
+
+            // Action
+            _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
+
+            // Assert
+            _gameSettingService.Received().UpdateLiveCasinoStatus(Arg.Any<SettingContext>(), Arg.Any<bool>());
+        }
+    }
+}

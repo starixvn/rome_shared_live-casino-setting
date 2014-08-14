@@ -5,11 +5,11 @@
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.NAP.Framework.Command;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -33,9 +33,9 @@
 
         [Test]
         public void LogService_WhenCalled_NewDefaultValue()
-        {         
+        {
             // Action
-            _logService = new LogService();                       
+            _logService = new LogService();
         }
 
         /// <summary>

@@ -1,10 +1,9 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     public interface IGameSettingService
     {

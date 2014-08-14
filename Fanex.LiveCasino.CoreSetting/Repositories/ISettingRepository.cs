@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     public interface ISettingRepository : IBaseRepository

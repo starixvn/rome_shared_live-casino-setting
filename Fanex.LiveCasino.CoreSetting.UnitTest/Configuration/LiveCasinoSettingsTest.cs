@@ -34,7 +34,7 @@
             var actualConfig = GetValidConfiguration();
             actualConfig.SystemId = SYSTEMID;
 
-            // Assert            
+            // Assert
             Assert.AreEqual(SYSTEMID, actualConfig.SystemId);
         }
 
@@ -70,11 +70,11 @@
             var actualConfig = GetValidConfiguration();
             actualConfig.UnAuthorizeUrl = UNAUTHORIZEURL;
 
-            // Assert            
+            // Assert
             Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizeUrl);
         }
 
-        [Test]        
+        [Test]
         public void UnAuthorizeUrl_MissingConfiguration_ReturnDefaultValue()
         {
             // Action

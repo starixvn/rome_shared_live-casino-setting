@@ -8,6 +8,8 @@
     {
         string CurrentLanguage { get; }
 
+        string IPAddress { get; }
+
         LiveCasinoSettings LiveCasinoSettings { get; }
 
         List<CustInfo> GetCustomerInfo(string custIds, string usernames, string syncStatus);

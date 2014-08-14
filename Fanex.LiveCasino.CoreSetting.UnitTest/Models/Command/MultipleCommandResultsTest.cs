@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
     using NUnit.Framework;
 
     /// <summary>

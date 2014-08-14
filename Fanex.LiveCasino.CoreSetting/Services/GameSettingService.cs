@@ -11,7 +11,7 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Game setting service class.

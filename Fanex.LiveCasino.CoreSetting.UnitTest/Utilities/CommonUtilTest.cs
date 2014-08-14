@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Utilities
 {
-    using System;
     using System.Globalization;
     using System.Linq;
     using System.Threading;
@@ -90,7 +89,7 @@
             Assert.AreEqual(false, listCustomer.FirstOrDefault().IsSyncLiveCasino);
         }
 
-        [Test]        
+        [Test]
         public void LiveCasinoSettings_NotFoundConfig_ReturnNull()
         {
             // Arrange

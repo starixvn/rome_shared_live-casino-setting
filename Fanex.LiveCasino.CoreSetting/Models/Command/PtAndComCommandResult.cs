@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
     using Fanex.Common;
-    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Position taking And Commission CommandResult.

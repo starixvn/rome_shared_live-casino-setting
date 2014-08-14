@@ -148,7 +148,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
         {
-            settingContext.IP = HttpContext.Request.UserHostAddress;
+            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -187,7 +187,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            settingContext.IP = HttpContext.Request.UserHostAddress;
+            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -215,7 +215,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
-            settingContext.IP = HttpContext.Request.UserHostAddress;
+            settingContext.IP = _commonUtil.IPAddress;
             var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
             IMultipleCommandResults updateResult = new MultipleCommandResults();
@@ -246,7 +246,7 @@
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
-            settingContext.IP = HttpContext.Request.UserHostAddress;
+            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)

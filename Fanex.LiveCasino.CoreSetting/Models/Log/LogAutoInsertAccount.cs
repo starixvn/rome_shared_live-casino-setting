@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Log insert account when up line is synced Live Casino setting.

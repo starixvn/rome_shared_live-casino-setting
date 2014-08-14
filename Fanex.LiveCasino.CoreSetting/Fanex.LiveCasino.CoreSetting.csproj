@@ -128,6 +128,7 @@
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
+    <Compile Include="Models\Command\CommandResult.cs" />
     <Compile Include="Models\Command\CommandResults.cs" />
     <Compile Include="Models\Command\IMultipleCommandResults.cs" />
     <Compile Include="Models\Command\MultipleCommandResults.cs" />

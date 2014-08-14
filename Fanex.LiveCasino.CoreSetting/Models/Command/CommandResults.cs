@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Class contain list command results.

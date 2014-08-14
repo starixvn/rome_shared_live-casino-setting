@@ -1,9 +1,8 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
-    using System.Web;
     using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Models;
-    
+
     /// <summary>
     /// Authentication Service.
     /// </summary>

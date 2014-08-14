@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Command
 {
     using Fanex.LiveCasino.CoreSetting.Models.Command;
-    using Fanex.NAP.Framework.Command;
     using NUnit.Framework;
 
     /// <summary>

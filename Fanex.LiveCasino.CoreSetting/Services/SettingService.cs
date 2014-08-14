@@ -12,7 +12,6 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -343,7 +342,7 @@
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             });
-            
+
             var winLimitResult = new WinLimitCommandResult(result);
 
             if (winLimitResult.IsSuccessful)

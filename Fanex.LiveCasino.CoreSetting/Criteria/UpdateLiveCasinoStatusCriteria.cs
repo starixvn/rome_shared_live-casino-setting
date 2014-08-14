@@ -1,6 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
-    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>

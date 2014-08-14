@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
     using System.Collections.Generic;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     public interface ICommandResults
     {

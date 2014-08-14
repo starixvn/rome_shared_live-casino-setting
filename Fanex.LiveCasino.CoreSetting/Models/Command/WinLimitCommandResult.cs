@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
     using System;
-    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Win limit command result class.

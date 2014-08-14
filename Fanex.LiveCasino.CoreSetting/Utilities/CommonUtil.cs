@@ -5,6 +5,7 @@
     using System.Configuration;
     using System.Linq;
     using System.Threading;
+    using System.Web;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -31,6 +32,27 @@
                     case "vi-VN": return "vn"; // Vietnamese
                     default: return "en";
                 }
+            }
+        }
+
+        public string IPAddress
+        {
+            get
+            {
+                HttpContext context = HttpContext.Current;
+
+                string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+                if (!string.IsNullOrEmpty(ipAddress))
+                {
+                    string[] addresses = ipAddress.Split(',');
+                    if (addresses.Length != 0)
+                    {
+                        return addresses[0];
+                    }
+                }
+
+                return context.Request.ServerVariables["REMOTE_ADDR"];
             }
         }
 

@@ -1,8 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
 {
-    using System;
-    using Fanex.NAP.Framework.Command;
-
     /// <summary>
     /// Game setting command result class.
     /// </summary>

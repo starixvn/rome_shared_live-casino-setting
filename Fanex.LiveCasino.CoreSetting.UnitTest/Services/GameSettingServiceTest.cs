@@ -12,7 +12,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.NAP.Framework.Command;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -427,7 +426,7 @@
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
 
-            // Assert            
+            // Assert
             Assert.IsTrue(actualValue.IsSuccessful);
         }
 
