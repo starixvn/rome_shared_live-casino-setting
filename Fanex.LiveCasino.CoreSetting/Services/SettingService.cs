@@ -304,12 +304,26 @@
 
         #region Win Limit
 
+        /// <summary>
+        /// Gets the current win limit.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Current member win limit.</returns>
         public CurrentMemberWin GetCurrentWinLimit(int custId)
         {
-            return _settingRepository.Get<CurrentMemberWin>(new GetCustomerWinLimitCriteria
+            var criteria = new GetCustomerWinLimitCriteria
             {
                 CustId = custId
-            });
+            };
+
+            var currentWinLimit = new CurrentMemberWin();
+
+            if (criteria.IsValid())
+            {
+                currentWinLimit = _settingRepository.Get<CurrentMemberWin>(criteria);
+            }
+
+            return currentWinLimit;
         }
 
         /// <summary>
@@ -329,8 +343,7 @@
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             });
-
-            var commandResults = new CommandResults();
+            
             var winLimitResult = new WinLimitCommandResult(result);
 
             if (winLimitResult.IsSuccessful)
@@ -338,6 +351,7 @@
                 winLimitResult.Message = LiveCasinoLang.UpdatedWinLimitSuccessfully;
             }
 
+            var commandResults = new CommandResults();
             commandResults.Results.Add(winLimitResult);
 
             return commandResults;
