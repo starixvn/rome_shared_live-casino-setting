@@ -5,10 +5,8 @@
     /// <summary>
     /// Super Update Member Setting Criteria.
     /// </summary>
-    public class SuperUpdateMemberSettingCriteria : CriteriaBase
+    public class SuperUpdateMemberSettingCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
         public decimal S1 { get; set; }
 
@@ -45,11 +43,6 @@
         public override string GetSettingKey()
         {
             return "Acc_CustomerUpdMemberLiveCS_SAg";
-        }
-
-        public override bool IsValid()
-        {
-            return CustId > 0;
         }
     }
 }

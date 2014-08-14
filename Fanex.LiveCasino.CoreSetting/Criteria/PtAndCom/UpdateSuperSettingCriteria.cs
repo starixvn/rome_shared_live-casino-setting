@@ -5,18 +5,16 @@
     /// <summary>
     /// Update Super Setting Criteria.
     /// </summary>
-    public class UpdateSuperSettingCriteria : CriteriaBase
+    public class UpdateSuperSettingCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
-        public decimal V162spositiontaking_1101 { get; set; }
+        public decimal S4 { get; set; }
 
         [SpParam(SqlParamName = "V162spositiontaking_1101_min")]
-        public decimal V162spositiontaking_1101_min { get; set; }
+        public decimal N4 { get; set; }
 
         [SpParam(SqlParamName = "V162discount_1101")]
-        public decimal V162discount_1101 { get; set; }
+        public decimal SuperCommission { get; set; }
 
         public bool V162UpdatePositiontaking_1101
         {
@@ -55,7 +53,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && UserId > 0;
+            return base.IsValid() && UserId > 0;
         }
     }
 }

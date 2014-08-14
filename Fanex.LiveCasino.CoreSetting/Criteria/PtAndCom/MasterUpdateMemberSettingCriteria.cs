@@ -5,10 +5,8 @@
     /// <summary>
     /// Master Update Member Setting Criteria.
     /// </summary>
-    public class MasterUpdateMemberSettingCriteria : CriteriaBase
+    public class MasterUpdateMemberSettingCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         [SpParam(SqlParamName = "V162mpositiontaking_1101")]
         public decimal M1 { get; set; }
 
@@ -19,7 +17,7 @@
         public bool Im1 { get; set; }
 
         [SpParam(SqlParamName = "IsAuto_v162mpositiontaking_1101")]
-        public bool IsAuto_v162mpositiontaking_1101 { get; set; }
+        public bool Im2 { get; set; }
 
         public bool V162UpdatePositiontaking_1101
         {
@@ -54,7 +52,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 & UserId > 0;
+            return base.IsValid() && UserId > 0;
         }
     }
 }

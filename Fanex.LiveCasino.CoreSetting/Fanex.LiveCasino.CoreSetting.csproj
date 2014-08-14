@@ -108,6 +108,7 @@
     <Compile Include="Criteria\Log\InsertLogUserRunSPCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditAgentCriteria.cs" />
+    <Compile Include="Criteria\PtAndCom\CustomerCriteriaBase.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMasterCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMemberCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditSuperCriteria.cs" />

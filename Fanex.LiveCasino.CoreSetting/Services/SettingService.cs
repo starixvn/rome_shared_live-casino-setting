@@ -91,7 +91,7 @@
                 case CustRole.Super:
                     return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
                     {
-                        Custid = settingContext.TargetCustId
+                        CustId = settingContext.TargetCustId
                     });
                 case CustRole.Master:
                     return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
@@ -222,9 +222,9 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.UserIdDoAction,
-                V162discount_1101 = positionTakingAndComSetting.Commission.Value,
-                V162spositiontaking_1101 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
-                V162spositiontaking_1101_min = (decimal)positionTakingAndComSetting.PositionTaking.N4,
+                SuperCommission = positionTakingAndComSetting.Commission.Value,
+                S4 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
+                N4 = (decimal)positionTakingAndComSetting.PositionTaking.N4,
             });
 
             return GetPtAndComResultDetails(commandResult);
@@ -435,7 +435,7 @@
         {
             return new UpdateMasterSettingCriteria
             {
-                Custid = settingContext.TargetCustId,
+                CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 SRecommend = settingContext.UplineId,
@@ -448,7 +448,7 @@
                 Us3 = (decimal)positionTakingAndComSetting.PositionTaking.Us3,
                 UpdateAllMembers = (bool)positionTakingAndComSetting.PositionTaking.UpdateAllMembers,
                 S3 = (decimal)positionTakingAndComSetting.PositionTaking.S3,
-                NewSPositionTaking = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
+                NewSuperPositionTakingOnMember = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
             };
         }
 
@@ -541,7 +541,8 @@
                 SubAccID = settingContext.SubAccId,
                 M1 = (decimal)positionTakingAndComSetting.PositionTaking.M1,
                 Im1 = (bool)positionTakingAndComSetting.PositionTaking.Im1,
-                Um1 = (decimal)positionTakingAndComSetting.PositionTaking.Um1
+                Um1 = (decimal)positionTakingAndComSetting.PositionTaking.Um1,
+                Im2 = (bool)positionTakingAndComSetting.PositionTaking.Im2
             };
             return criteria;
         }

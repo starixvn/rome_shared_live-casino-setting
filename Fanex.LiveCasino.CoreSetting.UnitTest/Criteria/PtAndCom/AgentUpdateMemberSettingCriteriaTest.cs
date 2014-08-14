@@ -10,40 +10,6 @@
     public class AgentUpdateMemberSettingCriteriaTest
     {
         /// <summary>
-        /// Determines whether is valid criteria [customer identifier is zero return false].
-        /// </summary>
-        [Test]
-        public void IsValid_CustIdIsZero_ReturnFalse()
-        {
-            // Arrange
-            var criteria = CreateNewCriteria();
-            criteria.CustId = 0;
-
-            // Action
-            var actualValue = criteria.IsValid();
-
-            // Assert
-            Assert.IsFalse(actualValue);
-        }
-
-        /// <summary>
-        /// Determines whether is valid criteria [customer identifier is negative return false].
-        /// </summary>
-        [Test]
-        public void IsValid_CustIdIsNegative_ReturnFalse()
-        {
-            // Arrange
-            var criteria = CreateNewCriteria();
-            criteria.CustId = -1;
-
-            // Action
-            var actualValue = criteria.IsValid();
-
-            // Assert
-            Assert.IsFalse(actualValue);
-        }
-
-        /// <summary>
         /// Determines whether is valid criteria [recommend id is zero then return false].
         /// </summary>
         [Test]
@@ -150,7 +116,7 @@
             var paramters = criteria.GetSpParams();
 
             // Assert
-            Assert.IsTrue(paramters.ContainsKey(parameterName));
+            Assert.IsTrue(paramters.ContainsKey(parameterName.ToLower()));
         }
 
         private AgentUpdateMemberSettingCriteria CreateNewCriteria()

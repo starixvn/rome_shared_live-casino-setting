@@ -5,10 +5,8 @@
     /// <summary>
     /// Update Master Setting Criteria.
     /// </summary>
-    public class UpdateMasterSettingCriteria : CriteriaBase
+    public class UpdateMasterSettingCriteria : CustomerCriteriaBase
     {
-        public int Custid { get; set; }
-
         public int SRecommend { get; set; }
 
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
@@ -64,7 +62,7 @@
         public bool UpdateAllMembers { get; set; }
 
         [SpParam(SqlParamName = "NewSPositionTaking")]
-        public decimal NewSPositionTaking { get; set; }
+        public decimal NewSuperPositionTakingOnMember { get; set; }
 
         public int SubAccID { get; set; }
 
@@ -81,7 +79,7 @@
 
         public override bool IsValid()
         {
-            return Custid > 0 && SRecommend > 0 & UserId > 0;
+            return base.IsValid() && SRecommend > 0 && UserId > 0;
         }
     }
 }

@@ -6,10 +6,8 @@
     /// <summary>
     /// Get Setting For Edit Master Criteria.
     /// </summary>
-    public class GetSettingForEditMasterCriteria : CriteriaBase
+    public class GetSettingForEditMasterCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public int SRecommend { get; set; }
 
         public override string GetSettingKey()
@@ -19,7 +17,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && SRecommend > 0;
+            return base.IsValid() && SRecommend > 0;
         }
     }
 }

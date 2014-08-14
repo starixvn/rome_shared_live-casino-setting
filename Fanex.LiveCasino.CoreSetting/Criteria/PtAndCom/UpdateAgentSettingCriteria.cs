@@ -5,10 +5,8 @@
     /// <summary>
     /// Update Agent Setting Criteria.
     /// </summary>
-    public class UpdateAgentSettingCriteria : CriteriaBase
+    public class UpdateAgentSettingCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public int MRecommend { get; set; }
 
         [SpParam(SqlParamName = "V162mpositiontaking_1101")]
@@ -81,7 +79,7 @@
 
         public override bool IsValid()
         {
-            return CustId > 0 && MRecommend > 0 && UserId > 0;
+            return base.IsValid() && MRecommend > 0 && UserId > 0;
         }
     }
 }
