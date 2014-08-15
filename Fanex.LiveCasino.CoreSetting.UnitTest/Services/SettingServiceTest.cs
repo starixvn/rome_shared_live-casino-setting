@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.LiveCasino.CoreSetting.Constant;
+    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -277,6 +278,37 @@
 
             //// Assert
             Assert.AreEqual(1, representativeCustId);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting Edit Super Return Super Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_EditSuper_ReturnSuperSettingCriteria()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Super
+            };
+            var superPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    S4 = (decimal)0.2,
+                    N4 = (decimal)0.2
+                }
+            };
+            _settingRepository.GetSettingForEditSuper(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(superPtAndComSetting, positionTakingAndCommSetting);
         }
 
         #endregion Postion Taking Test

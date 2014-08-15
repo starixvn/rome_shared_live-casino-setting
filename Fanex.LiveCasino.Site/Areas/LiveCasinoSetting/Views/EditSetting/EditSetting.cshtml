@@ -46,7 +46,9 @@
         </div>
     </div>
     <div class="setting-header bold col-xs-12">
-        @(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)
+        <span class="setting-header-first-icon"></span>
+        <span class="setting-header-text">@(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)</span>
+        <span class="setting-header-last-icon"></span>
     </div>
     @if (Model.IsEditMultiple)
     {
@@ -60,8 +62,8 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
     <div class="update-setting col-xs-12">
-        <input type="button" class="btn btn-primary btn-sm" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
-            value="Update" />
+        <input type="button" class="update-setting-submit" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
+            value="@LiveCasinoLang.lblUpdate" />
     </div>
 </div>
 <div class="live-casino-loading">

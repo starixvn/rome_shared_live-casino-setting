@@ -105,6 +105,20 @@ select:disabled {
     margin-top: 4px;
 }
 
+.edit-setting-livecs .update-setting-submit
+{
+    background: url("Images/btn-update-setting.jpg") no-repeat scroll center center transparent;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    height: 24px;
+    margin-top: 6px;
+    text-align: center;
+    width: 122px;
+}
+
 /*PT Style*/
 .pt-setting table, .pt-setting tr, .pt-setting td, .pt-setting th
 {
@@ -246,3 +260,35 @@ label.clearfix
 .game-setting .game-setting-name {
 	padding-right: 4px;
 }
+
+.setting-header .setting-header-first-icon 
+{
+    float: left;
+    display: inline-block;
+	height: 23px;
+    width: 24px;
+	background: url(Images/left-header.png) no-repeat right bottom;
+}
+
+.setting-header .setting-header-text
+{
+    float: left;
+    height: 23px;
+    min-width: 120px;
+    font-weight: bold;
+    color: #fff;
+    text-align: left;
+    padding-top: 3px;
+	background: url(Images/center-header.png) repeat-x bottom;
+}
+
+.setting-header .setting-header-last-icon 
+{
+    float: left;
+	background: url(Images/right-header.png) no-repeat right bottom;
+	height: 23px;
+    width: 5px;
+}
+
+
+
