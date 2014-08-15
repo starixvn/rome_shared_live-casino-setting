@@ -10,16 +10,16 @@
             </td>
         </tr>
         <tr>
-            <td class="right bold">
-                @LiveCasinoLang.lblUsername:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblUsername
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.UserName}}
             </td>
-            <td class="right bold">
-                @LiveCasinoLang.lblNickname:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblNickname
             </td>
-            <td class="left">
+            <td class="left info-value">
                 @if(Model.SystemId != (int)SystemType.Agency)
                 {
                     @:{{custInfo.NickName}}
@@ -27,46 +27,46 @@
             </td>
         </tr>
         <tr>
-            <td class="right bold">
-                @LiveCasinoLang.lblFirstName:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblFirstName
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.FirstName}}
             </td>
-            <td class="right bold">
-                @LiveCasinoLang.lblLastName:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblLastName
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.LastName}}
             </td>
         </tr>
         <tr>
-            <td class="right bold">
-                @LiveCasinoLang.lblPhone:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblPhone
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.Phone}}
             </td>
-            <td class="right bold">
-                @LiveCasinoLang.lblMobilePhone:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblMobilePhone
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.Mobile}}
             </td>
         </tr>
         <tr>
-            <td class="right bold">
-                @LiveCasinoLang.lblFax:
+            <td class="right bold info-lable">
+                @LiveCasinoLang.lblFax
             </td>
-            <td class="left">
+            <td class="left info-value">
                 {{custInfo.Fax}}
             </td>
             @if (Model.IsAgentEditingMember)
             {
-                <td class="right bold">
-                    @LiveCasinoLang.lblEnable:
+                <td class="right bold info-lable">
+                    @LiveCasinoLang.lblEnable
                 </td>
-                <td class="left">
+                <td class="left info-value">
                     <input type="checkbox" data-ng-model="enableLiveCasino" data-ng-disabled="disableCheckBoxLiveCasino" />
                 </td>
             }

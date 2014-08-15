@@ -64,6 +64,17 @@ select:disabled {
     width: 25%;
 }
 
+.edit-setting-livecs .cust-info .info-lable
+{
+    padding-right: 4px;
+}
+
+.edit-setting-livecs .cust-info .info-value
+{
+    padding-left: 4px;
+}
+
+
 .edit-setting-livecs .pt-setting
 {
     clear: both;
@@ -115,6 +126,10 @@ label.clearfix
 {
     border-left: 1px solid gray;
     border-right: 1px solid gray;
+}
+.pt-container select
+{
+    width: 70px;
 }
 
 .win-limit .checkbox-inline
@@ -218,8 +233,16 @@ label.clearfix
 }
 
 .game-setting .betting-limit-container {
-	padding: 2px 0px 4px 6px;
+	padding: 2px 0px 4px 3px;
 }
 .game-setting .betting-limit-item {
 	margin: 0px 12px 0px 0px;
+}
+
+.game-setting .betting-limit-item input[type="checkbox"], .win-limit input[type="checkbox"] {
+	margin: 2px 0px 0px -14px;
+}
+
+.game-setting .game-setting-name {
+	padding-right: 4px;
 }
