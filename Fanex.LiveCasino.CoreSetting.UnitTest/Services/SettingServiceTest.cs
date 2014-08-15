@@ -4,6 +4,7 @@
     using System.Linq;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -12,7 +13,6 @@
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using NSubstitute;
     using NUnit.Framework;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Testing GameSettingService class.
@@ -154,12 +154,12 @@
         }
 
         /// <summary>
-        /// Get first customer id when edit direct downline.
+        /// Get first customer id when edit direct down line.
         /// </summary>
         [Test]
         public void GetRepresentativeCustIdForEditingMultiple_WhenEditDirectDownLine_ReturnFirstCustomerId()
         {
-            //// Arrange 
+            //// Arrange
             var settingContext = new SettingContext
             {
                 UplineRoleId = (int)CustRole.Super,
@@ -180,12 +180,12 @@
         }
 
         /// <summary>
-        /// Get first customer id when edit direct downline.
+        /// Get first customer id when edit direct down line.
         /// </summary>
         [Test]
         public void GetRepresentativeCustIdForEditingMultiple_WhenHasNoCustomer_Return0()
         {
-            //// Arrange 
+            //// Arrange
             var settingContext = new SettingContext();
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
                        .Returns(new List<CustInfo>());
@@ -198,13 +198,13 @@
         }
 
         /// <summary>
-        /// Get reprenset customer id when edit non direct downline customer and first customer edit is synched 
+        /// Get representative customer id when edit non direct down line customer and first customer edit is synched
         /// return first synched customer id.
         /// </summary>
         [Test]
         public void GetRepresentativeCustIdForEditingMultiple_EditNonDirectDownlineAndFirstMemberSynced_ReturnCustomerIdSyned()
         {
-            //// Arrange 
+            //// Arrange
             var settingContext = new SettingContext
             {
                 UplineRoleId = (int)CustRole.Super,
@@ -225,13 +225,13 @@
         }
 
         /// <summary>
-        /// Get representative customer id when edit non direct downline and no member is synched live casino,
+        /// Get representative customer id when edit non direct down line and no member is synched live casino,
         /// and return 0.
         /// </summary>
         [Test]
         public void GetRepresentativeCustIdForEditingMultiple_EditNonDirectDownlineAndNoMemberSynced_Return0()
         {
-            //// Arrange 
+            //// Arrange
             var settingContext = new SettingContext
             {
                 UplineRoleId = (int)CustRole.Super,
@@ -251,16 +251,15 @@
             Assert.AreEqual(0, representativeCustId);
         }
 
-
-
         #region Postion Taking Test
+
         /// <summary>
-        /// Get first customer id when edit direct downline.
+        /// Get first customer id when edit direct down line.
         /// </summary>
         [Test]
         public void GetRepresentativeCustIdForEditingMultiple_EditDirectDownLine_ReturnFirstCustomerId()
         {
-            //// Arrange 
+            //// Arrange
             var settingContext = new SettingContext
                 {
                     UplineRoleId = (int)CustRole.Super,
@@ -280,7 +279,7 @@
             Assert.AreEqual(1, representativeCustId);
         }
 
-        #endregion
+        #endregion Postion Taking Test
 
         private void AssertCurrentWinLimit(CurrentMemberWin expectedValue, CurrentMemberWin actualValue)
         {
