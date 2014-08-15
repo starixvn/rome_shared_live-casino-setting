@@ -12,6 +12,7 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -280,6 +281,8 @@
             Assert.AreEqual(1, representativeCustId);
         }
 
+        #region Get Customer Commission and Position Taking setting
+
         /// <summary>
         /// Get PT And Commission Setting Edit Super Return Super Setting Criteria.
         /// </summary>
@@ -483,6 +486,150 @@
             Assert.IsNull(positionTakingAndCommSetting);
         }
 
+        #endregion Get Customer Commission and Position Taking setting
+
+        #region Update cusomter position taking and commission setting
+
+        /// <summary>
+        /// Update customer position taking and commission setting return command results.
+        /// </summary>
+        /// <param name="uplineRoleId">Up line role id for testing.</param>
+        /// <param name="targetRoleId">Target role id for testing.</param>
+        [TestCase(0, (int)CustRole.Super)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
+        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResults(int uplineRoleId, int targetRoleId)
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                UplineRoleId = uplineRoleId,
+                TargetRoleId = targetRoleId
+            };
+            var custPtAndComSetting = new PtAndComSetting
+            {
+                PositionTaking = GetDummyPositionTaking()
+            };
+            var updateResult = new List<ICommandResult>
+            {
+                new PtAndComCommandResult
+                {
+                    Code = 1,
+                    Message = string.Empty
+                }
+            };
+            var updatedResult = new CommandResult
+            {
+                Code = "1",
+                Message = string.Empty
+            };
+            _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(updatedResult);
+
+            //// Act
+            var mainResult = _settingService.UpdatePtAndComSetting(settingContext, custPtAndComSetting);
+
+            //// Assert
+            Assert.AreEqual(updateResult[0].Code, mainResult.Results[0].Code);
+        }
+
+        /// <summary>
+        /// Update customer position taking and commission setting return command results.
+        /// </summary>
+        /// <param name="uplineRoleId">Up line role id for testing.</param>
+        /// <param name="targetRoleId">Target role id for testing.</param>
+        [TestCase(0, (int)CustRole.Super)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
+        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResultsWithMessage(int uplineRoleId, int targetRoleId)
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                UplineRoleId = uplineRoleId,
+                TargetRoleId = targetRoleId
+            };
+            var custPtAndComSetting = new PtAndComSetting
+            {
+                PositionTaking = GetDummyPositionTaking()
+            };
+            var updateResult = new List<ICommandResult>
+            {
+                new PtAndComCommandResult
+                {
+                    Code = -101,
+                    Message = "Commission: updated successfully."
+                }
+            };
+            var updatedResult = new CommandResult
+            {
+                Code = "-101",
+                Message = string.Empty
+            };
+            _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(updatedResult);
+
+            //// Act
+            var mainResult = _settingService.UpdatePtAndComSetting(settingContext, custPtAndComSetting);
+
+            //// Assert
+            Assert.AreEqual(updateResult[0].Code, mainResult.Results[0].Code);
+            Assert.AreEqual(updateResult[0].Message, mainResult.Results[0].Message);
+        }
+
+        /// <summary>
+        /// Update multiple customer position taking and commission setting, return multiple command result.
+        /// </summary>
+        /// <param name="uplineRoleId">Up line role id for updating.</param>
+        /// <param name="targetRoleId">Target role id for updating.</param>
+        [TestCase(0, (int)CustRole.Super)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
+        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        public void UpdatePtAndComSettingMultiple_SettingContextAndPtComSetting_MultipleCommandResults(int uplineRoleId, int targetRoleId)
+        {
+            //// Arrange
+            var custInfoList = new List<CustInfo>()
+                       {
+                           new CustInfo { CustId = 1, UserName = "name 1" },
+                           new CustInfo { CustId = 2, UserName = "name 2" }
+                       };
+            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
+                       .Returns(custInfoList);
+            var settingContext = new SettingContext
+            {
+                UplineRoleId = uplineRoleId,
+                TargetRoleId = targetRoleId
+            };
+            var custPtAndComSetting = new PtAndComSetting
+            {
+                PositionTaking = GetDummyPositionTaking()
+            };
+            var multipleResults = GetDummyMultipleCommand(custInfoList);
+
+            _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(new CommandResult
+            {
+                Code = "1",
+                Message = string.Empty
+            });
+
+            //// Act
+            var mainResult = _settingService.UpdatePtAndComSettingMultiple(settingContext, custPtAndComSetting);
+
+            //// Assert
+            Assert.AreEqual(mainResult.CommandResultsList.Count, multipleResults.CommandResultsList.Count);
+            Assert.AreEqual(mainResult.CommandResultsList[0].Id, multipleResults.CommandResultsList[0].Id);
+            Assert.AreEqual(mainResult.CommandResultsList[0].Name, multipleResults.CommandResultsList[0].Name);
+        }
+
+        #endregion Update cusomter position taking and commission setting
+
         #endregion Postion Taking Test
 
         private void AssertCurrentWinLimit(CurrentMemberWin expectedValue, CurrentMemberWin actualValue)
@@ -503,6 +650,90 @@
             result.WinPercent = currentMemberWin.WinPercent;
 
             return result;
+        }
+
+        /// <summary>
+        /// Get dummy position taking for testing.
+        /// </summary>
+        /// <returns>Return position taking object for testing.</returns>
+        private PositionTaking GetDummyPositionTaking()
+        {
+            return new PositionTaking
+            {
+                M4 = (decimal)0.1,
+                A1 = (decimal)0.1,
+                A2 = (decimal)0.1,
+                A4 = (decimal)0.1,
+                L2 = (decimal)0.1,
+                L3 = (decimal)0.1,
+                L4 = (decimal)0.1,
+                M1 = (decimal)0.1,
+                M1Max = (decimal)0.1,
+                M1Min = (decimal)0.1,
+                M2 = (decimal)0.1,
+                M3 = (decimal)0.1,
+                N1 = (decimal)0.1,
+                N2 = (decimal)0.1,
+                N3 = (decimal)0.1,
+                N4 = (decimal)0.1,
+                NewPresetOnMember = (decimal)0.1,
+                S1 = (decimal)0.1,
+                S1Max = (decimal)0.1,
+                S1Min = (decimal)0.1,
+                S3 = (decimal)0.1,
+                S4 = (decimal)0.1,
+                Um1 = (decimal)0.1,
+                Um2 = (decimal)0.1,
+                Us1 = (decimal)0.1,
+                Us3 = (decimal)0.1,
+                UpdateAllMembers = true,
+                IsDisableAuto = true,
+                Is3 = true,
+                Is1 = true,
+                Im2 = true,
+                Im1 = true
+            };
+        }
+
+        /// <summary>
+        /// Get dummy multiple result for testing.
+        /// </summary>
+        /// <param name="custInfoList">Customer information list for get results.</param>
+        /// <returns>Multiple command results from multiple customer.</returns>
+        private IMultipleCommandResults GetDummyMultipleCommand(List<CustInfo> custInfoList)
+        {
+            return new MultipleCommandResults
+            {
+                CommandResultsList = new List<ICommandResults>
+                {
+                    new CommandResults
+                    {
+                        Id = custInfoList[0].CustId,
+                        Name = custInfoList[0].UserName,
+                        Results = new List<ICommandResult>
+                        {
+                            new CommandResult
+                            {
+                                Code = "1",
+                                Message = string.Empty
+                            }
+                        }
+                    },
+                    new CommandResults
+                    {
+                        Id = custInfoList[1].CustId,
+                        Name = custInfoList[1].UserName,
+                        Results = new List<ICommandResult>
+                        {
+                            new CommandResult
+                            {
+                                Code = "1",
+                                Message = string.Empty
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }

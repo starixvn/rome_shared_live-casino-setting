@@ -5,6 +5,12 @@
     /// </summary>
     public class PtAndComSetting
     {
+        public PtAndComSetting()
+        {
+            Commission = new Commission();
+            PositionTaking = new PositionTaking();
+        }
+
         public Commission Commission { get; set; }
 
         public PositionTaking PositionTaking { get; set; }
