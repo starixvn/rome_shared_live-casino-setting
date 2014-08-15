@@ -284,7 +284,7 @@
         /// Get PT And Commission Setting Edit Super Return Super Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_EditSuper_ReturnSuperSettingCriteria()
+        public void GetPtAndComSetting_EditSuper_ReturnSuperSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -309,6 +309,178 @@
 
             //// Assert
             Assert.AreEqual(superPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting Edit master Return master Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_EditMaster_ReturnMasterSetting()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Master
+            };
+            var masterPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    S3 = (decimal)0.2
+                }
+            };
+            _settingRepository.GetSettingForEditMaster(Arg.Any<GetSettingForEditMasterCriteria>()).Returns(masterPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(masterPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting Edit agent Return agent Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_EditAgent_ReturnAgentSetting()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Agent
+            };
+            var agentPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    M2 = (decimal)0.2
+                }
+            };
+            _settingRepository.GetSettingForEditAgent(Arg.Any<GetSettingForEditAgentCriteria>()).Returns(agentPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(agentPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting for agent Edit member Return member Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_AgentEditMember_ReturnMemberSetting()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Member,
+                UplineRoleId = (int)CustRole.Agent
+            };
+            var memberPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    A1 = (decimal)0.1
+                }
+            };
+            _settingRepository.GetSettingForEditMember(Arg.Any<GetSettingForEditMemberCriteria>()).Returns(memberPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting for super Edit member Return member Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_SuperEditMember_ReturnMemberSetting()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Member,
+                UplineRoleId = (int)CustRole.Super
+            };
+            var memberPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    S1 = (decimal)0.1
+                }
+            };
+            _settingRepository.GetSettingForSuperEditMember(Arg.Any<GetSettingForSuperEditMemberCriteria>())
+                .Returns(memberPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting for master Edit member Return member Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_MasterEditMember_ReturnMemberSetting()
+        {
+            //// Arrange
+            var settingContext = new SettingContext
+            {
+                TargetRoleId = (int)CustRole.Member,
+                UplineRoleId = (int)CustRole.Master
+            };
+            var memberPtAndComSetting = new PtAndComSetting
+            {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.2
+                },
+                PositionTaking = new PositionTaking
+                {
+                    M1 = (decimal)0.1
+                }
+            };
+            _settingRepository.GetSettingForMasterEditMember(Arg.Any<GetSettingForMasterEditMemberCriteria>())
+                .Returns(memberPtAndComSetting);
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
+        }
+
+        /// <summary>
+        /// Get PT And Commission Setting for agent Edit member Return member Setting Criteria.
+        /// </summary>
+        [Test]
+        public void GetPtAndComSetting_EditUnknownCustomer_ReturnNull()
+        {
+            //// Arrange
+            var settingContext = new SettingContext();
+            var memberPtAndComSetting = new PtAndComSetting();
+
+            //// Act
+            var positionTakingAndCommSetting = _settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.IsNull(positionTakingAndCommSetting);
         }
 
         #endregion Postion Taking Test
