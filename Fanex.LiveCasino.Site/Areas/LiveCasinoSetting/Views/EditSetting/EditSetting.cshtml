@@ -19,7 +19,7 @@
 }
 @section modeldata
 {
-    <script type="text/javascript" src="~/LiveCasinoSetting/LiveCSSetting/GetSettingForUpdate?@(editQueryString)"></script>
+    <script type="text/javascript" src="@(Url.Content("~/LiveCasinoSetting/LiveCSSetting/GetSettingForUpdate"))?@(editQueryString)"></script>
 }
 <div id="tblSetting" 
     data-ng-app="fanex.liveCasinoSetting" 
