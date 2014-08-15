@@ -41,9 +41,14 @@
         public int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext)
         {
             var custInfoList = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            
+            if (!custInfoList.Any())
+            {
+                return 0;
+            }
 
             //// Edit multiple direct downline. Load setting info of the first selected downline in customer list
-            if (custInfoList.Any() && settingContext.IsEditDirectDownline)
+            if (settingContext.IsEditDirectDownline)
             {
                 return Converter.ToInt(custInfoList[0].CustId);
             }
