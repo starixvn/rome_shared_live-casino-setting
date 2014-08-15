@@ -32,6 +32,9 @@
             _controller = Substitute.For<LiveCSSettingController>(_settingService, _gameSettingService, _commonUtil);
         }
 
+        /// <summary>
+        /// Gets the current win limit_ when called_ call get current win limit.
+        /// </summary>
         [Test]
         public void GetCurrentWinLimit_WhenCalled_CallGetCurrentWinLimit()
         {
@@ -45,6 +48,9 @@
             _settingService.Received().GetCurrentWinLimit(custId);
         }
 
+        /// <summary>
+        /// Updates the win limit_ single update_ call update win limit.
+        /// </summary>
         [Test]
         public void UpdateWinLimit_SingleUpdate_CallUpdateWinLimit()
         {
@@ -53,6 +59,7 @@
             var memberWinLimit = Substitute.For<MemberWinLimit>();
 
             settingContext.IsEditMultiple = false;
+
             // Action
             _controller.UpdateWinLimit(settingContext, memberWinLimit);
 
@@ -60,6 +67,9 @@
             _settingService.Received().UpdateWinLimit(settingContext, memberWinLimit);
         }
 
+        /// <summary>
+        /// Updates the win limit_ multiple update_ call update win limit multiple.
+        /// </summary>
         [Test]
         public void UpdateWinLimit_MultipleUpdate_CallUpdateWinLimitMultiple()
         {
@@ -68,6 +78,7 @@
             var memberWinLimit = Substitute.For<MemberWinLimit>();
 
             settingContext.IsEditMultiple = true;
+
             // Action
             _controller.UpdateWinLimit(settingContext, memberWinLimit);
 
@@ -75,6 +86,9 @@
             _settingService.Received().UpdateWinLimitMultiple(settingContext, memberWinLimit);
         }
 
+        /// <summary>
+        /// Updates the game setting_ single update_ call update manual.
+        /// </summary>
         [Test]
         public void UpdateGameSetting_SingleUpdate_CallUpdateManual()
         {
@@ -91,6 +105,9 @@
             _gameSettingService.Received().UpdateManual(settingContext, Arg.Any<CustInfo>(), gameSetting);
         }
 
+        /// <summary>
+        /// Updates the game setting_ multiple update_ call update manual multiple.
+        /// </summary>
         [Test]
         public void UpdateGameSetting_MultipleUpdate_CallUpdateManualMultiple()
         {
@@ -99,6 +116,7 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.IsEditMultiple = true;
+
             // Action
             _controller.UpdateGameSetting(settingContext, gameSetting);
 
@@ -106,6 +124,9 @@
             _gameSettingService.Received().UpdateManualMultiple(settingContext, gameSetting);
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and PT COM fail_ call update PT and COM setting.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_CallUpdatePtAndComSetting()
         {
@@ -127,6 +148,9 @@
             _settingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and PT COM fail_ dot not call update win limit.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateWinLimit()
         {
@@ -148,6 +172,9 @@
             _settingService.DidNotReceive().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and PT COM fail_ dot not call update manual.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateManual()
         {
@@ -169,6 +196,9 @@
             _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and PT COM success_ call update manual.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateManual()
         {
@@ -187,12 +217,12 @@
             _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
                             .Returns(new CommandResults
                             {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
             _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                {
-                                   Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                   Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                                });
 
             // Action
@@ -202,6 +232,9 @@
             _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and PT COM success_ call update win limit.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateWinLimit()
         {
@@ -220,12 +253,12 @@
             _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
                             .Returns(new CommandResults
                             {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
             _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                 {
-                                    Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                    Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                                 });
 
             // Action
@@ -235,6 +268,9 @@
             _settingService.Received().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
         }
 
+        /// <summary>
+        /// Updates the live casino setting_ update single and is edit member not synced and up line enable l c_ call update live casino status.
+        /// </summary>
         [Test]
         public void UpdateLiveCasinoSetting_UpdateSingleAndIsEditMemberNotSyncedAndUplineEnableLC_CallUpdateLiveCasinoStatus()
         {
@@ -256,12 +292,12 @@
             _settingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
                             .Returns(new CommandResults
                             {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
             _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                {
-                                   Results = new List<ICommandResult>() { new CommandResult { Code = "" } }
+                                   Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                                });
 
             // Action
@@ -269,6 +305,11 @@
 
             // Assert
             _gameSettingService.Received().UpdateLiveCasinoStatus(Arg.Any<SettingContext>(), Arg.Any<bool>());
+        }
+
+        [Test]
+        public void UpdateMultipleCustomerAllSetting_WhenCalled_CallUpdateSingleCustomerAllSetting()
+        {
         }
     }
 }

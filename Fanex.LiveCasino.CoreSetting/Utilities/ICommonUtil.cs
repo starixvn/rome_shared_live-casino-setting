@@ -13,5 +13,7 @@
         LiveCasinoSettings LiveCasinoSettings { get; }
 
         List<CustInfo> GetCustomerInfo(string custIds, string usernames, string syncStatus);
+
+        void Sleep(int millisecondsTimeout);
     }
 }

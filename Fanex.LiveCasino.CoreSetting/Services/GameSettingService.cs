@@ -486,7 +486,7 @@
             // Waiting for replication
             for (int i = 0; i < timeOut; i++)
             {
-                Thread.Sleep(1000);
+                _commonUtil.Sleep(1000);
                 gameTypes = GetGameSettingByCustomerId(custId).ToList();
 
                 if (gameTypes.Any())

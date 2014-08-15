@@ -103,5 +103,10 @@
 
             return list;
         }
+
+        public void Sleep(int millisecondsTimeout)
+        {
+            Thread.Sleep(millisecondsTimeout);
+        }
     }
 }
