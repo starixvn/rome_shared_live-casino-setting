@@ -511,6 +511,14 @@
             };
             var custPtAndComSetting = new PtAndComSetting
             {
+                Commission = new Commission
+                {
+                    Value = (decimal)0.1,
+                    Upline = new Commission
+                    {
+                        Value = (decimal)0.1
+                    }
+                },
                 PositionTaking = GetDummyPositionTaking()
             };
             var updateResult = new List<ICommandResult>
