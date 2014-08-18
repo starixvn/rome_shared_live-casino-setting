@@ -48,7 +48,8 @@ namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
         {
             bundles.Add(new StyleBundle("~/areascss/livecasino/css")
                 .Include("~/areas/LiveCasinoSetting/content/bootstrap.css")
-                .Include("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css"));
+                .Include("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")
+                .Include("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting-override.css"));
         }
     }
 }
