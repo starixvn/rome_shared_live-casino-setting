@@ -330,4 +330,7 @@
   <data name="InvalidCriteriaMsg" xml:space="preserve">
     <value>Invalid Criteria - Do nothing</value>
   </data>
+  <data name="InvalidCriteria" xml:space="preserve">
+    <value>Invalid Criteria.</value>
+  </data>
 </root>

@@ -253,8 +253,6 @@
             Assert.AreEqual(0, representativeCustId);
         }
 
-        #region Postion Taking Test
-
         /// <summary>
         /// Get first customer id when edit direct down line.
         /// </summary>
@@ -263,10 +261,10 @@
         {
             //// Arrange
             var settingContext = new SettingContext
-                {
-                    UplineRoleId = (int)CustRole.Super,
-                    TargetRoleId = (int)CustRole.Master
-                };
+            {
+                UplineRoleId = (int)CustRole.Super,
+                TargetRoleId = (int)CustRole.Master
+            };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
                        .Returns(new List<CustInfo>()
                        {
@@ -281,13 +279,21 @@
             Assert.AreEqual(1, representativeCustId);
         }
 
+        #region Postion Taking Test
+
         #region Get Customer Commission and Position Taking setting
+
+        ////[Test]
+        ////public void GetPtAndComSetting_WhenEditCustomer_ReturnDefaultPtAndCommSetting()
+        ////{
+
+        ////}
 
         /// <summary>
         /// Get PT And Commission Setting Edit Super Return Super Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_EditSuper_ReturnSuperSetting()
+        public void GetPtAndComSetting_WhenEditSuper_ReturnSuperSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -318,7 +324,7 @@
         /// Get PT And Commission Setting Edit master Return master Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_EditMaster_ReturnMasterSetting()
+        public void GetPtAndComSetting_WhenEditMaster_ReturnMasterSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -348,7 +354,7 @@
         /// Get PT And Commission Setting Edit agent Return agent Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_EditAgent_ReturnAgentSetting()
+        public void GetPtAndComSetting_WhenEditAgent_ReturnAgentSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -378,7 +384,7 @@
         /// Get PT And Commission Setting for agent Edit member Return member Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_AgentEditMember_ReturnMemberSetting()
+        public void GetPtAndComSetting_WhenAgentEditMember_ReturnMemberSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -409,7 +415,7 @@
         /// Get PT And Commission Setting for super Edit member Return member Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_SuperEditMember_ReturnMemberSetting()
+        public void GetPtAndComSetting_WhenSuperEditMember_ReturnMemberSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -441,7 +447,7 @@
         /// Get PT And Commission Setting for master Edit member Return member Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_MasterEditMember_ReturnMemberSetting()
+        public void GetPtAndComSetting_WhenMasterEditMember_ReturnMemberSetting()
         {
             //// Arrange
             var settingContext = new SettingContext
@@ -473,7 +479,7 @@
         /// Get PT And Commission Setting for agent Edit member Return member Setting Criteria.
         /// </summary>
         [Test]
-        public void GetPtAndComSetting_EditUnknownCustomer_ReturnNull()
+        public void GetPtAndComSetting_WhenEditUnknownCustomer_ReturnNull()
         {
             //// Arrange
             var settingContext = new SettingContext();
