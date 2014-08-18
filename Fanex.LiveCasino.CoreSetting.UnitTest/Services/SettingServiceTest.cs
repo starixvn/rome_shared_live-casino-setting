@@ -283,11 +283,31 @@
 
         #region Get Customer Commission and Position Taking setting
 
-        ////[Test]
-        ////public void GetPtAndComSetting_WhenEditCustomer_ReturnDefaultPtAndCommSetting()
-        ////{
+        /// <summary>
+        /// Get Position taking and commission setting when invalid criteria then return default position taking and commission setting default.
+        /// </summary>
+        /// <param name="uplineRoleId">Up line role ID for getting setting.</param>
+        /// <param name="targetRoleId">Target role ID for getting setting.</param>
+        [TestCase(0, (int)CustRole.Super)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
+        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
+        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        public void GetPtAndComSetting_whenInvalidCriteria_ReturnDefaultPtAndCommSetting(int uplineRoleId, int targetRoleId)
+        {
+            var settingContext = new SettingContext
+            {
+                UplineRoleId = uplineRoleId,
+                TargetRoleId = targetRoleId
+            };
+            var settingService = new SettingService(new SettingRepository(), Substitute.For<CommonUtil>());
 
-        ////}
+            var positionTakingAndCommSetting = settingService.GetPtAndComSetting(settingContext);
+
+            //// Assert
+            Assert.IsNull(positionTakingAndCommSetting);
+        }
 
         /// <summary>
         /// Get PT And Commission Setting Edit Super Return Super Setting Criteria.

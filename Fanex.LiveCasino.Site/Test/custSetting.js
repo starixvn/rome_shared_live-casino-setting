@@ -64,4 +64,4 @@ var custSetting = {
         }
     },
     "GameSetting": []
-}; 
+};

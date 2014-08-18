@@ -101,7 +101,9 @@ fanex.liveCasinoSetting.errorResult = {
     IsSuccessful: false,
     isUnAuthorized: true
 };
-fanex.liveCasinoSetting.rootUrl = document.getElementById('LiveCasinoRoot').value;
+
+
+fanex.liveCasinoSetting.rootUrl = document.getElementById('LiveCasinoRoot') ? document.getElementById('LiveCasinoRoot').value : '/';
 
 
 fanex.liveCasinoSetting.config(function ($httpProvider) {

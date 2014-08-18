@@ -35,136 +35,136 @@ describe('pt-and-com-setting-controller', function () {
     }));
 
     it('should show popup when super change from is auto preset to not', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: true
         };
 
-        //// Act
+        //// When
         $scope.ptAndComSetting.PositionTaking.Is3 = false;
         var isEditOnMember = $scope.isEditPresetOnMember();
-        //// Assert
+        //// Then
 
         expect(isEditOnMember).toEqual(true);
     });
 
     it('should not show popup when super change from not auto to take auto', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: false
         };
 
-        //// Act
+        //// When
         $scope.ptAndComSetting.PositionTaking.Is3 = true;
         var isEditOnMember = $scope.isEditPresetOnMember();
-        //// Assert
+        //// Then
 
         expect(isEditOnMember).toEqual(false);
     });
 
     it('should show popup when master change from is auto preset to not', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
         custSetting.PtAndComSetting.PositionTaking = {
             Im2: true
         };
 
-        //// Act
+        //// When
         $scope.ptAndComSetting.PositionTaking.Im2 = false;
         var isEditOnMember = $scope.isEditPresetOnMember();
-        //// Assert
+        //// Then
 
         expect(isEditOnMember).toEqual(true);
     });
 
     it('should not show popup when master change from is not auto to take auto', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
         custSetting.PtAndComSetting.PositionTaking = {
             Im2: false
         };
 
-        //// Act
+        //// When
         $scope.ptAndComSetting.PositionTaking.Im2 = true;
         var isEditOnMember = $scope.isEditPresetOnMember();
-        //// Assert
+        //// Then
 
         expect(isEditOnMember).toEqual(false);
     });
 
     it('should not show popup when form has no auto', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Member;
 
-        //// Act
+        //// When
         var isEditOnMember = $scope.isEditPresetOnMember();
-        //// Assert
+        //// Then
         expect(isEditOnMember).toEqual(false);
     });
 
     it('should update setting', function () {
-        //// Act
+        //// When
         $scope.updatePtAndComSetting();
 
-        //// Assert
+        //// Then
         expect(ptAndComSettingService.updatePtAndComSetting).toHaveBeenCalled();
     });
 
     it('should not update setting and show popup when update setting', function () {
-        //// Arrange
+        //// Given
         custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: true
         };
 
-        //// Act
+        //// When
         $scope.updatePtAndComSetting();
 
-        //// Assert
+        //// Then
         expect(ptAndComSettingService.updatePtAndComSetting).not.toHaveBeenCalled();
     });
 
     it('should update setting after choose preset on member', function () {
-        //// Arrange 
+        //// Given 
         $scope.$parent.isUpdateAllSetting = false;
         var isUpdate = false;
 
-        //// Act
+        //// When
         $scope.updatePresetOnMember(isUpdate);
 
-        //// Assert
+        //// Then
         expect(ptAndComSettingService.updatePtAndComSetting).toHaveBeenCalled();
         expect($scope.ptAndComSetting.PositionTaking.UpdateAllMembers).toEqual(isUpdate);
     });
 
     it('should update all setting after choose preset on member', function () {
-        //// Arrange 
+        //// Given 
         $scope.$parent.isUpdateAllSetting = true;
         var isUpdate = true;
         $scope.$parent.updateAllSetting = function () { return; };
         spyOn($scope.$parent, 'updateAllSetting');
 
-        //// Act
+        //// When
         $scope.updatePresetOnMember(isUpdate);
 
-        //// Assert
+        //// Then
         expect(ptAndComSettingService.updatePtAndComSetting).not.toHaveBeenCalled();
         expect($scope.ptAndComSetting.PositionTaking.UpdateAllMembers).toEqual(isUpdate);
     });
 
 
     it('should not show popup when form has no auto', function () {
-        //// Arrange
+        //// Given
         custSetting.CustInfo.IsSyncLiveCasino = false;
         $scope.$parent.validateAndUpdateSetting = function () { return; };
         spyOn($scope.$parent, 'validateAndUpdateSetting');
 
-        //// Act
+        //// When
         $scope.updatePtAndComSetting();
 
-        //// Assert
+        //// Then
         expect($scope.$parent.validateAndUpdateSetting).toHaveBeenCalled();
     });
 });

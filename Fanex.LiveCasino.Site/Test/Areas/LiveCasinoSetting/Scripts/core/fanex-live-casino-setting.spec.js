@@ -6,7 +6,7 @@
 describe('Fanex.Core', function () {
     'use strict';
     it('should be clone object.', function () {
-        //// Arrange
+        //// Given
         var needBeCloneObject = {
             propertyA: 1,
             propertyB: '1',
@@ -14,83 +14,83 @@ describe('Fanex.Core', function () {
                 propertyC: 1
             }
         };
-        //// Act
+        //// When
         var clonedObject = fanex.cloneObject(needBeCloneObject);
 
-        //// Assert
+        //// Then
         expect(clonedObject).toEqual(needBeCloneObject);
     });
 
     it('should not contains clone function', function () {
-        //// Arrange
+        //// Given
         var needBeCloneObject = {
             clone: null
         };
 
-        //// Act
+        //// When
         var clonedObject = fanex.cloneObject(needBeCloneObject);
 
-        //// Assert
+        //// Then
         expect(clonedObject.clone).toBeUndefined();
     });
 
     it('should round number with 2 decimals', function () {
-        //// Arrange
+        //// Given
         var notRoundedNumber = 1.22222;
 
-        //// Act
+        //// When
         var roundedNumber = fanex.roundNumber(notRoundedNumber, 2);
 
-        //// Assert
+        //// Then
         expect(roundedNumber).toEqual(1.22);
     });
 
     it('should create range from 0.1 to 0.2 with 2 decimals', function () {
-        //// Arange
+        //// Given
         var from = 0.1,
             to = 0.2,
             decimals = 2,
             current = 0.1,
             gap = 0.01;
 
-        //// Act
+        //// When
         var options = fanex.createOptionsFromRange(current, from, to, gap, decimals);
 
-        //// Assert
+        //// Then
         expect(options.length).toEqual(11);
         expect(options[options.length - 1].value).toEqual(current);
         expect(options[0].value).toEqual(to);
     });
 
     it('should create range from 0.1 to 0.2 and current must lower than range', function () {
-        //// Arange
+        //// Given
         var from = 0.1,
             to = 0.2,
             decimals = 2,
             current = 0.01,
             gap = 0.01;
 
-        //// Act
+        //// When
         var options = fanex.createOptionsFromRange(current, from, to, gap, decimals);
 
-        //// Assert
+        //// Then
         expect(options.length).toEqual(12);
         expect(options[options.length - 1].value).toEqual(current);
         expect(options[0].value).toEqual(to);
     });
 
     it('should create range from 0.1 to 0.2 and current must lower than range', function () {
-        //// Arange
+        //// Given
         var from = 0.1,
             to = 0.2,
             decimals = 2,
             current = 0.21,
             gap = 0.01;
 
-        //// Act
+        //// When
         var options = fanex.createOptionsFromRange(current, from, to, gap, decimals);
 
-        //// Assert
+        //// Then
         expect(options.length).toEqual(12);
         expect(options[0].value).toEqual(current);
     });

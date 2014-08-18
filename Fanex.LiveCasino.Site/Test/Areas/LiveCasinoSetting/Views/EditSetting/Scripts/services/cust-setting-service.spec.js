@@ -1,26 +1,107 @@
-﻿/* File Created: July 21, 2014 */
-/*global custSetting*/
-if (fanex.liveCasinoSetting) {
-    fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', '$timeout', '$window', function ($http, $timeout, $window) {
-        'use strict';
-        var me = this;
+﻿/// <reference path="../../../../../../custSetting.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
+/// <reference path="../../../../../../angular-mocks.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" />
+/// <reference path="../../../../Scripts/core/fanex-live-casino-setting.spec.js" />
+/// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-setting-service.js" />
+/*global describe, beforeEach, inject, afterEach, it, expect, spyOn*/
 
-        me.custSetting = custSetting;
-        me.updateAllSetting = function (custSettingForUpdate, scope) {
-            $http({
-                method: 'POST',
-                url: $('#tblSetting').data('update-href'),
-                headers: { 'Content-Type': 'application/json' },
-                data: custSettingForUpdate
-            }).
-            success(function (result) {
-                scope.commandResults = result.CommandResults;
-                if (result.IsSuccessful) {
-                    $timeout(function () {
-                        $window.localtion.href = $window.location.href;
-                    }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
+describe('cust-setting-service', function () {
+    'use strict';
+    var httpBackend, customerSettingService, timeOut;
+
+    beforeEach(module("fanex.liveCasinoSetting"));
+
+    beforeEach(inject(function ($httpBackend, $timeout, _CustomerSettingService_) {
+        customerSettingService = _CustomerSettingService_;
+        httpBackend = $httpBackend;
+        timeOut = $timeout;
+    }));
+
+    afterEach(function () {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
+
+    it('should update customer setting and return the response.', function () {
+        // Given 
+        var result = {
+            CommandResultsList: [],
+            IsSuccessful: false
+        },
+            urlRequest = 'request/url',
+            custSetting = {},
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            };
+        spyOn(custSettingScope, 'afterServerReturnSuccess');
+
+        //// when
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(200, result);
+
+        // make the call.
+        customerSettingService.updateAllSetting(urlRequest, custSetting, custSettingScope);
+
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
+
+        //// Then
+        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
+    });
+
+    it('should send the msg and return the response, show result message and then hide', function () {
+        // set up some data for the http call to return and test later.
+        var result = {
+            CommandResultsList: [
+                {
+                    ErrCode: 0,
+                    Message: 'success'
                 }
-            });
-        };
-    } ]);
-}
+            ],
+            IsSuccessful: true
+        },
+            urlRequest = 'request/url',
+            custSetting = {},
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            };
+        spyOn(custSettingScope, 'afterServerReturnSuccess');
+
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(200, result);
+
+        // make the call.
+        customerSettingService.updateAllSetting(urlRequest, custSetting, custSettingScope);
+
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
+
+        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
+    });
+
+    it('should send msg and return the error response, show result message', function () {
+        // set up some data for the http call to return and test later.
+        var urlRequest = 'request/url',
+            custSetting = {},
+            custSettingScope = {
+                afterServerReturnSuccess: function () { }
+            },
+            errorMessage = 'error message';
+        spyOn(custSettingScope, 'afterServerReturnSuccess');
+
+        // expectGET to make sure this is called once.
+        httpBackend.expect('POST', urlRequest).respond(403, errorMessage);
+
+        // make the call.
+        customerSettingService.updateAllSetting(urlRequest, custSetting, custSettingScope);
+
+        // flush the backend to "execute" the request to do the expectedGET assertion.
+        httpBackend.flush();
+
+        expect(fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message).toEqual(errorMessage);
+    });
+});

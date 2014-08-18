@@ -6,10 +6,10 @@ if (fanex.liveCasinoSetting) {
         var me = this;
 
         me.custSetting = custSetting;
-        me.updateAllSetting = function (custSettingForUpdate, scope) {
+        me.updateAllSetting = function (updateAllSettingUrl, custSettingForUpdate, scope) {
             $http({
                 method: 'POST',
-                url: $('#tblSetting').data('update-href'),
+                url: updateAllSettingUrl,
                 headers: { 'Content-Type': 'application/json' },
                 data: custSettingForUpdate
             }).

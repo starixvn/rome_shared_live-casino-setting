@@ -6,31 +6,31 @@
 describe('Livecasino language', function () {
     'use strict';
     it('should get language value from key', function () {
-        //// Arrange 
+        //// Given 
 
-        //// Acc
+        //// When
         var resultString = language.getString("_101");
 
-        //// Assert
-        expect(resultString).toEqual("Commission is updated successfully.");
+        //// Then
+        expect(resultString).toEqual("Commission: updated successfully.");
     });
 
     it('should get default language when current language has no information', function () {
-        //// Arrange
+        //// Given
         language.setLanguageCode('zh-CN');
 
-        //// Acc
+        //// When
         var resultString = language.getString("_101");
 
-        //// Assert
-        expect(resultString).toEqual("佣金已更新成功");
+        //// Then
+        expect(resultString).toEqual("佣金: 修改成功");
     });
 
     it('should get key if there is no langauge', function () {
-        //// Acc
+        //// When
         var resultString = language.getString("_1011");
 
-        //// Assert
+        //// Then
         expect(resultString).toEqual("_1011");
     });
 });

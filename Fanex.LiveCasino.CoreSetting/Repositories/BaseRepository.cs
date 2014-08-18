@@ -51,7 +51,7 @@
         /// <returns>Position taking and commission setting models.</returns>
         protected PtAndComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PtAndComSetting> mapSetting)
         {
-            var positionTakingAndComSetting = new PtAndComSetting();
+            PtAndComSetting positionTakingAndComSetting = null;
 
             if (criteria.IsValid())
             {

@@ -11,6 +11,7 @@ if (fanex.liveCasinoSetting) {
         'CustomerSettingService',
         function ($scope, $http, $window, $timeout, customerSettingService) {
             'use strict';
+            var updateAllSettingUrl = $('#tblSetting').data('update-href');
             $scope.mainResult = {
                 CommandResultsList: []
             };
@@ -44,7 +45,7 @@ if (fanex.liveCasinoSetting) {
                     gameSetting: gameSettingScope.gameSetting
                 };
 
-                customerSettingService.updateAllSetting(custSettingForUpdate, $scope);
+                customerSettingService.updateAllSetting(updateAllSettingUrl, custSettingForUpdate, $scope);
                 $scope.isUpdateAllSetting = false;
             };
 

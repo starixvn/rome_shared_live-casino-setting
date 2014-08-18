@@ -19,21 +19,21 @@ describe('cust-info-controller', function () {
     }));
 
     it('should enable live casino', function () {
-        //// Arrange
+        //// Given
         custSetting.CustInfo.DisableLiveCasino = true;
 
-        //// Assert
+        //// Then
         expect($scope.enableLiveCasino).toBe(true);
     });
 
     it('should be get customer information after changed', function () {
-        //// Arrange
+        //// Given
         $scope.enableLiveCasino = true;
 
-        //// Act
+        //// When
         var custInfo = $scope.getCustInfo();
 
-        //// Assert
+        //// Then
         expect(custInfo).not.toBeNull();
         expect(custInfo.DisableLiveCasino).toEqual(false);
     });
