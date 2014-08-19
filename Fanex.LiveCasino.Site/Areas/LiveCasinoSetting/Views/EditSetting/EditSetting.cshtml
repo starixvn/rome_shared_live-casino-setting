@@ -46,9 +46,14 @@
         </div>
     </div>
     <div class="setting-header bold col-xs-12">
-        <span class="setting-header-first-icon"></span>
-        <span class="setting-header-text">@(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)</span>
+        <span class="setting-header-first-icon"></span><span class="setting-header-text">@(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)</span>
         <span class="setting-header-last-icon"></span>
+    </div>
+    <div class="warning-result col-xs-12" data-ng-show="mainResult.Warning.IsShow">
+        <div class="sub-message-icon sub-icon-warning">
+        </div>
+        <div class="message-content message-content-warning">{{mainResult.Warning.Message}}            
+        </div>
     </div>
     @if (Model.IsEditMultiple)
     {

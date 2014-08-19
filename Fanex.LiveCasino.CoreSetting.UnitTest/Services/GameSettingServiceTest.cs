@@ -203,7 +203,7 @@
         }
 
         /// <summary>
-        /// Gets the game setting when target customer is not synced then return direct upline game setting.
+        /// Gets the game setting when target customer is not synced then return direct up line game setting.
         /// </summary>
         /// <param name="targetRoleId">The target role identifier.</param>
         [TestCase(CustRole.Master)]
@@ -294,7 +294,7 @@
         }
 
         /// <summary>
-        /// Gets the game setting when member is not synced then return direct upline game setting with lowest stake level is checked.
+        /// Gets the game setting when member is not synced then return direct up line game setting with lowest stake level is checked.
         /// </summary>
         [Test]
         public void GetGameSetting_MemberIsNotSynced_ReturnDirectUplineGameSettingWithLowestStakeLevelIsChecked()
@@ -402,6 +402,10 @@
             AssertCommandResult(expectedCommandResult, actualCommandResult);
         }
 
+        /// <summary>
+        /// Inserts the automatic account_ insert success and game setting not empty_ call write log.
+        /// </summary>
+        /// <param name="targetRoleId">The target role identifier.</param>
         [TestCase(CustRole.Master)]
         [TestCase(CustRole.Agent)]
         [TestCase(CustRole.Member)]
@@ -937,6 +941,9 @@
             // Assert
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert fail return do not call write log.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertFailReturnDoNotCallWriteLog()
         {
@@ -955,6 +962,9 @@
             _logService.DidNotReceive().LogManualInsertAccount(Arg.Any<SettingContext>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert fail return do not update synchronize live casino.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertFailReturnDoNotUpdateSyncLiveCasino()
         {
@@ -973,6 +983,9 @@
             _settingRepository.DidNotReceive().InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert fail return do not update live casino status.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertFailReturnDoNotUpdateLiveCasinoStatus()
         {
@@ -991,6 +1004,9 @@
             _settingRepository.DidNotReceive().InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert success call write log.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessCallWriteLog()
         {
@@ -1012,6 +1028,9 @@
             _logService.Received().LogManualInsertAccount(Arg.Any<SettingContext>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert success call update synchronize live casino.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessCallUpdateSyncLiveCasino()
         {
@@ -1033,6 +1052,10 @@
             _settingRepository.Received().InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert success 
+        /// and update synchronize live casino fail dot not call update live casino status.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoFailDotNotCallUpdateLiveCasinoStatus()
         {
@@ -1054,6 +1077,10 @@
             _settingRepository.DidNotReceive().InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced_ call insert manual account and insert success 
+        /// and update synchronize live casino success call update live casino status.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoSuccessCallUpdateLiveCasinoStatus()
         {
@@ -1075,8 +1102,12 @@
             _settingRepository.Received().InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced and not super_ call insert manual account 
+        /// and insert success and update synchronize live casino success call update live casino status_ will cal get customer information.
+        /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSyncedAndNotSuper_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoSuccessCallUpdateLiveCasinoStatus_WillCalGetCustomerInfo()
+        public void UpdateManual_CustomerIsNotSyncedAndNotSuper_CallInsertManualAccountAndSuccessAndUpdateSyncLCSuccessCallUpdateLCStatus_WillCalGetCustomerInfo()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
@@ -1099,8 +1130,12 @@
             _settingRepository.Received().GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced and is super_ call insert manual account 
+        /// and insert success and update synchronize live casino success call update live casino status_ will not cal get customer information.
+        /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSyncedAndIsSuper_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoSuccessCallUpdateLiveCasinoStatus_WillNotCalGetCustomerInfo()
+        public void UpdateManual_CustomerIsNotSyncedAndIsSuper_CallInsertManualAccountAndSuccessAndUpdateSyncLCSuccessCallUpdateLCStatus_WillNotCalGetCustomerInfo()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
@@ -1122,6 +1157,9 @@
             _settingRepository.DidNotReceive().GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>());
         }
 
+        /// <summary>
+        /// Updates the manual_ customer is not synced and game setting is null_ call get customer info_ direct up line.
+        /// </summary>
         [Test]
         public void UpdateManual_CustomerIsNotSyncedAndGameSettingIsNull_CallGetCustomerInfo_DirectUpline()
         {

@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting*/
+/*global custSetting, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustGameSettingController',
     [
@@ -10,6 +10,7 @@ if (fanex.liveCasinoSetting) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
             $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
+
             $scope.updateGameSetting = function () {
                 if (!custSetting.CustInfo.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting();
@@ -27,6 +28,30 @@ if (fanex.liveCasinoSetting) {
                 }
 
                 customerGameSettingService.updateGameSetting($scope.gameSetting, $scope.$parent);
+            };
+
+            $scope.checkShowWarningUncheckedAll = function () {
+                var isShowWarning = false;
+                angular.forEach($scope.gameSetting, function (gameType) {
+                    var isUncheckedAll = true;
+                    angular.forEach(gameType.BettingLimit, function (stakeLevel) {
+                        if (stakeLevel.IsChecked) {
+                            isUncheckedAll = false;
+                            return;
+                        }
+                    });
+
+                    if (isUncheckedAll) {
+                        isShowWarning = true;
+                        return;
+                    }
+                });
+
+                var message = language.getString('WarningUncheckAllStakeLevelMsg');
+                $scope.$parent.mainResult.Warning = {
+                    IsShow: isShowWarning,
+                    Message: message
+                };                
             };
         }
         ]);

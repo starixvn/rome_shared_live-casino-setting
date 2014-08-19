@@ -5,13 +5,15 @@ body
     font-size: 12px;
 }
 
-table td {
-	height: 24px;
+table td
+{
+    height: 24px;
 }
 
-select:disabled {
-	color: Gray;
-	cursor: not-allowed;
+select:disabled
+{
+    color: Gray;
+    cursor: not-allowed;
 }
 
 .edit-setting-livecs
@@ -151,6 +153,34 @@ label.clearfix
     padding-left: 19px;
 }
 
+/*Warning message*/
+.edit-setting-livecs .warning-result
+{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.edit-setting-livecs .warning-result .sub-message-icon
+{
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: inline-block;
+    position: absolute;
+}
+
+.edit-setting-livecs .warning-result .sub-icon-warning
+{
+    background-image: url(Images/warning.png);
+}
+
+.edit-setting-livecs .warning-result .message-content-warning
+{
+    display: inline-block;
+    margin-left: 21px;
+    color: #C28F06;
+}
 
 /*Result message*/
 .edit-setting-livecs .updated-result
@@ -246,28 +276,32 @@ label.clearfix
     background: url(Images/loader3.gif) no-repeat;
 }
 
-.game-setting .betting-limit-container {
-	padding: 2px 0px 4px 3px;
+.game-setting .betting-limit-container
+{
+    padding: 2px 0px 4px 3px;
 }
-.game-setting .betting-limit-item {
-	margin: 0px 12px 0px 0px;
-}
-
-.game-setting .betting-limit-item input[type="checkbox"], .win-limit input[type="checkbox"] {
-	margin: 2px 0px 0px -14px;
+.game-setting .betting-limit-item
+{
+    margin: 0px 12px 0px 0px;
 }
 
-.game-setting .game-setting-name {
-	padding-right: 4px;
+.game-setting .betting-limit-item input[type="checkbox"], .win-limit input[type="checkbox"]
+{
+    margin: 2px 0px 0px -14px;
 }
 
-.setting-header .setting-header-first-icon 
+.game-setting .game-setting-name
+{
+    padding-right: 4px;
+}
+
+.setting-header .setting-header-first-icon
 {
     float: left;
     display: inline-block;
-	height: 23px;
+    height: 23px;
     width: 24px;
-	background: url(Images/left-header.png) no-repeat right bottom;
+    background: url(Images/left-header.png) no-repeat right bottom;
 }
 
 .setting-header .setting-header-text
@@ -279,14 +313,14 @@ label.clearfix
     color: #fff;
     text-align: left;
     padding-top: 3px;
-	background: url(Images/center-header.png) repeat-x bottom;
+    background: url(Images/center-header.png) repeat-x bottom;
 }
 
-.setting-header .setting-header-last-icon 
+.setting-header .setting-header-last-icon
 {
     float: left;
-	background: url(Images/right-header.png) no-repeat right bottom;
-	height: 23px;
+    background: url(Images/right-header.png) no-repeat right bottom;
+    height: 23px;
     width: 5px;
 }
 

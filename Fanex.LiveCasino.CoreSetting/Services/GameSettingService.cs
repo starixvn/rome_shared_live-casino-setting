@@ -173,11 +173,7 @@
         {
             if (settingContext.IsEdittingSuper)
             {
-                return new CommandResult
-                {
-                    Code = ErrCode.InvalidCustomer,
-                    Message = LiveCasinoLang.InvalidCustomer
-                };
+                return new CommandResult { Code = ErrCode.InvalidCustomer, Message = LiveCasinoLang.InvalidCustomer };
             }
 
             var criteria = new InsertAutoAccountCriteria
