@@ -336,5 +336,7 @@
   <data name="InvalidCustomer" xml:space="preserve">
     <value>Invalid customer</value>
   </data>
-
+  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>Unchecking all stake levels will affect and apply to all downlines</value>
+  </data>
 </root>

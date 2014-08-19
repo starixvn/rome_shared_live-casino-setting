@@ -58,5 +58,6 @@ language.liveCasino['vi-VN'] = {
 	Super : "Super",
 	UnauthorizeMsg : "Bạn không được cho phép sử dụng chức năng này",
 	UpdateLiveCasinoStatusSuccess : "Trạng thái: Câp nhật thành công",
-	UpdateLiveCasinoStatusUnSuccess : "Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên"
+	UpdateLiveCasinoStatusUnSuccess : "Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên",
+	WarningUncheckAllStakeLevelMsg : "Không chọn bất kỳ cấp độ đặt cược sẽ ành hưởng đến tất cả những thành viên cấp dưới"
 };

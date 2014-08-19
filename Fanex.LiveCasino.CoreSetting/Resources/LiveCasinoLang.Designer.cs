@@ -716,5 +716,14 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
                 return ResourceManager.GetString("UpdateSuccessfully", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unchecking all stake levels will affect and apply to all downlines.
+        /// </summary>
+        public static string WarningUncheckAllStakeLevelMsg {
+            get {
+                return ResourceManager.GetString("WarningUncheckAllStakeLevelMsg", resourceCulture);
+            }
+        }
     }
 }

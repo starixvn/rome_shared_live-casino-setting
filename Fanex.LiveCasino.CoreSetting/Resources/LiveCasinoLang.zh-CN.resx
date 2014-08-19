@@ -268,4 +268,7 @@
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>状态: 修改成功</value>
   </data>
+  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>移除所有投注组合将影响与应用到所有的下线</value>
+  </data>
 </root>

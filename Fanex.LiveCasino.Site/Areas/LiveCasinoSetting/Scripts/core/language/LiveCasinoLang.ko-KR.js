@@ -56,5 +56,6 @@ language.liveCasino['ko-KR'] = {
 	Super : "슈퍼",
 	UnauthorizeMsg : "해당 기능에 대한 권한이 없습니다.",
 	UpdateLiveCasinoStatusSuccess : "상황: 성공적으로 업데이트하였습니다.",
-	UpdateLiveCasinoStatusUnSuccess : "이 계정은 라이브 카지노 설정이 없거나 업라인에 의해 비활성화되어  라이브 카지노를 활성화할 수 없습니다."
+	UpdateLiveCasinoStatusUnSuccess : "이 계정은 라이브 카지노 설정이 없거나 업라인에 의해 비활성화되어  라이브 카지노를 활성화할 수 없습니다.",
+	WarningUncheckAllStakeLevelMsg : "체크박스에 모든 베팅금액 레벨을 미선택시 모든 다운라인에 적용"
 };

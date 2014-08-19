@@ -268,4 +268,7 @@
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>สถานะ: อัพเดทเสร็จสมบูรณ์</value>
   </data>
+  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>ยกเลิกทุกระดับการเดิมพัน ดาวน์ไลด์ ทั้งหมดจะได้รับผลกระทบ</value>
+  </data>
 </root>

@@ -262,4 +262,7 @@
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>상황: 성공적으로 업데이트하였습니다.</value>
   </data>
+  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>체크박스에 모든 베팅금액 레벨을 미선택시 모든 다운라인에 적용</value>
+  </data>
 </root>

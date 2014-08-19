@@ -268,4 +268,7 @@
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>Trạng thái: Câp nhật thành công</value>
   </data>
+  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>Không chọn bất kỳ cấp độ đặt cược sẽ ành hưởng đến tất cả những thành viên cấp dưới  </value>
+  </data>
 </root>

@@ -18,5 +18,6 @@ language.liveCasino['ja-JP'] = {
 	Master : "マスター",
 	Member : "メンバー",
 	NoInformation : "情報がありません",
-	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully"
+	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully",
+	WarningUncheckAllStakeLevelMsg : "Un-check all stake levels will be effected to all downlines as well."
 };

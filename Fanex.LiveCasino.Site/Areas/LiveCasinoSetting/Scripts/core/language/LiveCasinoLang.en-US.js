@@ -7,7 +7,9 @@ language.liveCasino['en-US'] = {
 	_103 : "Position taking: updated successfully.",
 	_104 : "Updated Win Limit Successfully.",
 	Agent : "Agent",
+	InvalidCriteria : "Invalid Criteria.",
 	InvalidCriteriaMsg : "Invalid Criteria - Do nothing",
+	InvalidCustomer : "Invalid customer",
 	lbl10X : "10X",
 	lbl3X : "3X",
 	lbl5X : "5X",
@@ -72,5 +74,6 @@ language.liveCasino['en-US'] = {
 	UpdateLiveCasinoGameSettingSuccess : "Updated {0} Game Setting Successfully.",
 	UpdateLiveCasinoStatusSuccess : "Status: updated successfully.",
 	UpdateLiveCasinoStatusUnSuccess : "Updated Status unsuccessfully because Live Casino status has been disabled at upline.",
-	UpdateSuccessfully : "Updated Successfully."
+	UpdateSuccessfully : "Updated Successfully.",
+	WarningUncheckAllStakeLevelMsg : "Unchecking all stake levels will affect and apply to all downlines"
 };

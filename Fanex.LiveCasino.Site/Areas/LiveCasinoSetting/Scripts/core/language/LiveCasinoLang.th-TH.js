@@ -58,5 +58,6 @@ language.liveCasino['th-TH'] = {
 	Super : "สูงสุด",
 	UnauthorizeMsg : "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้",
 	UpdateLiveCasinoStatusSuccess : "สถานะ: อัพเดทเสร็จสมบูรณ์",
-	UpdateLiveCasinoStatusUnSuccess : "อัพเดตไม่สำเร็จ เนื่องจาก สถานะของคาซิโนเกมสด ได้ถูกปิดการใช้งาน โดย อัพไลด์"
+	UpdateLiveCasinoStatusUnSuccess : "อัพเดตไม่สำเร็จ เนื่องจาก สถานะของคาซิโนเกมสด ได้ถูกปิดการใช้งาน โดย อัพไลด์",
+	WarningUncheckAllStakeLevelMsg : "ยกเลิกทุกระดับการเดิมพัน ดาวน์ไลด์ ทั้งหมดจะได้รับผลกระทบ"
 };

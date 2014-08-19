@@ -58,5 +58,6 @@ language.liveCasino['zh-CN'] = {
 	Super : "超级",
 	UnauthorizeMsg : "您没有使用此功能的权限",
 	UpdateLiveCasinoStatusSuccess : "状态: 修改成功",
-	UpdateLiveCasinoStatusUnSuccess : "修改失败，因为上线的娱乐厅状态以被禁止"
+	UpdateLiveCasinoStatusUnSuccess : "修改失败，因为上线的娱乐厅状态以被禁止",
+	WarningUncheckAllStakeLevelMsg : "移除所有投注组合将影响与应用到所有的下线"
 };
