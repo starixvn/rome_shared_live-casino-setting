@@ -333,4 +333,8 @@
   <data name="InvalidCriteria" xml:space="preserve">
     <value>Invalid Criteria.</value>
   </data>
+  <data name="InvalidCustomer" xml:space="preserve">
+    <value>Invalid customer</value>
+  </data>
+
 </root>

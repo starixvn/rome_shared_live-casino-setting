@@ -124,6 +124,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid customer.
+        /// </summary>
+        public static string InvalidCustomer {
+            get {
+                return ResourceManager.GetString("InvalidCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10X.
         /// </summary>
         public static string lbl10X {

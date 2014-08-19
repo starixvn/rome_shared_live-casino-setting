@@ -20,15 +20,20 @@
         /// <returns>Customer information.</returns>
         public CustInfo GetCustomerInfo(ICriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            if (criteria.IsValid())
             {
-                var custInfo = objectDb.QueryEntity<CustInfo, MemberWinLimit, MemberWinLimit, CustInfo>(
-                    (ci, mw, smw) => { ci.MemberWinLimit = mw; mw.Upline = smw; return ci; },
-                    "isAutoResetLiveCasino,UplineIsAutoResetLiveCasino",
-                    criteria.GetSpParams());
+                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    var custInfo = objectDb.QueryEntity<CustInfo, MemberWinLimit, MemberWinLimit, CustInfo>(
+                        (ci, mw, smw) => { ci.MemberWinLimit = mw; mw.Upline = smw; return ci; },
+                        "isAutoResetLiveCasino,UplineIsAutoResetLiveCasino",
+                        criteria.GetSpParams());
 
-                return custInfo;
+                    return custInfo;
+                }
             }
+
+            return new CustInfo();
         }
 
         /// <summary>
@@ -221,33 +226,36 @@
             var gameTypes = new List<GameType>();
             GameType current = null;
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            if (criteria.IsValid())
             {
-                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    while (reader.Read())
+                    using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                     {
-                        var itemGameType = new GameType
+                        while (reader.Read())
                         {
-                            Id = reader.ToInt("GameTypeID"),
-                            BetTypeId = reader.ToInt("IBCBetTypeID")
-                        };
+                            var itemGameType = new GameType
+                            {
+                                Id = reader.ToInt("GameTypeID"),
+                                BetTypeId = reader.ToInt("IBCBetTypeID")
+                            };
 
-                        var itemStakeLevel = new StakeLevel
-                        {
-                            Id = reader.ToInt("StakeLevelID"),
-                            Range = reader.ToString("StakeLevelName"),
-                            IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
-                        };
+                            var itemStakeLevel = new StakeLevel
+                            {
+                                Id = reader.ToInt("StakeLevelID"),
+                                Range = reader.ToString("StakeLevelName"),
+                                IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
+                            };
 
-                        if (current == null || current.Id != itemGameType.Id)
-                        {
-                            gameTypes.Add(itemGameType);
-                            current = itemGameType;
-                            current.BettingLimit = new List<StakeLevel>();
+                            if (current == null || current.Id != itemGameType.Id)
+                            {
+                                gameTypes.Add(itemGameType);
+                                current = itemGameType;
+                                current.BettingLimit = new List<StakeLevel>();
+                            }
+
+                            current.BettingLimit.Add(itemStakeLevel);
                         }
-
-                        current.BettingLimit.Add(itemStakeLevel);
                     }
                 }
             }

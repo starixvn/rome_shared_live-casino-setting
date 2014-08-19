@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
+    using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -65,16 +65,12 @@
         /// <returns>Customer information.</returns>
         public CustInfo GetCustomerInfo(int custId)
         {
-            var custInfo = new CustInfo();
             var criteria = new GetCustomerInfoCriteria
             {
                 CustId = custId
             };
 
-            if (criteria.IsValid())
-            {
-                custInfo = _settingRepository.GetCustomerInfo(criteria);
-            }
+            CustInfo custInfo = _settingRepository.GetCustomerInfo(criteria);
 
             return custInfo;
         }
@@ -86,16 +82,12 @@
         /// <returns>Game setting of customer.</returns>
         public List<GameType> GetGameSettingByCustomerId(int custId)
         {
-            var gameSetting = new List<GameType>();
             var criteria = new GetGameSettingByCustomerIdCriteria
             {
                 CustId = custId
             };
 
-            if (criteria.IsValid())
-            {
-                gameSetting = _settingRepository.GetGameSetting(criteria, true);
-            }
+            List<GameType> gameSetting = _settingRepository.GetGameSetting(criteria, hasCheckedColumn: true);
 
             return gameSetting;
         }
@@ -108,17 +100,13 @@
         /// <returns>Game setting by exchange and site.</returns>
         public List<GameType> GetGameSettingByExchange(int exchangeId, string site)
         {
-            var gameSetting = new List<GameType>();
             var criteria = new GetGameSettingByExchangeCriteria
             {
                 ExchangeId = exchangeId,
                 Site = site
             };
 
-            if (criteria.IsValid())
-            {
-                gameSetting = _settingRepository.GetGameSetting(criteria, false);
-            }
+            List<GameType> gameSetting = _settingRepository.GetGameSetting(criteria, hasCheckedColumn: false);
 
             return gameSetting;
         }
@@ -185,7 +173,11 @@
         {
             if (settingContext.IsEdittingSuper)
             {
-                return null;
+                return new CommandResult
+                {
+                    Code = ErrCode.InvalidCustomer,
+                    Message = LiveCasinoLang.InvalidCustomer
+                };
             }
 
             var criteria = new InsertAutoAccountCriteria
@@ -337,7 +329,7 @@
                 isInsert = ManualSyncAccount(settingContext);
 
                 // For case upline is synced with unchecked all stake level
-                if (gameTypes == null)
+                if (gameTypes == null || !gameTypes.Any())
                 {
                     CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
