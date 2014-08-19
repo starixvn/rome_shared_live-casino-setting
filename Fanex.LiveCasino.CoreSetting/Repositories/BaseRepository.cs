@@ -51,10 +51,10 @@
         /// <returns>Position taking and commission setting models.</returns>
         protected PtAndComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PtAndComSetting> mapSetting)
         {
-            PtAndComSetting positionTakingAndComSetting = null;
-
             if (criteria.IsValid())
             {
+                PtAndComSetting positionTakingAndComSetting = new PtAndComSetting();
+
                 using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                 {
                     using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
@@ -65,9 +65,13 @@
                         }
                     }
                 }
-            }
 
-            return positionTakingAndComSetting;
+                return positionTakingAndComSetting;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
