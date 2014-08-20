@@ -68,10 +68,8 @@
 
                 return positionTakingAndComSetting;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>

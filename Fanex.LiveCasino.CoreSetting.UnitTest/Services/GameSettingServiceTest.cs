@@ -33,7 +33,7 @@
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
             _commonUtil = Substitute.For<ICommonUtil>();
-            _gameSettingService = Substitute.For<GameSettingService>(_settingRepository, _logService, _commonUtil);
+            _gameSettingService = new GameSettingService(_settingRepository, _logService, _commonUtil);
         }
 
         /// <summary>
@@ -86,13 +86,12 @@
                 UserName = "supertest1"
             };
 
-            _settingRepository.GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>())
-                              .Returns(expectedCustInfo);
+            _settingRepository.GetCustomerInfo(new GetCustomerInfoCriteria()).ReturnsForAnyArgs(expectedCustInfo);
 
             // Action
             CustInfo actualCustInfo = _gameSettingService.GetCustomerInfo(custId);
 
-            // Assert
+            // Assert            
             AssertCustInfo(expectedCustInfo, actualCustInfo);
         }
 
@@ -423,8 +422,8 @@
             settingContext.TargetCustId = 1;
             settingContext.TargetRoleId = targetRoleId;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
-            _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
+            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
+            _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() 
@@ -437,30 +436,34 @@
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
-                              .Returns(new CommandResult { Code = 1 });            
-            _commonUtil.Sleep(Arg.Any<int>());
+            _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
+                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+            _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());
+            _commonUtil.Sleep(0);
 
             // Action
             ICommandResult actualCommandResult = _gameSettingService.InsertAutoAccount(settingContext);
 
             // Assert                 
-            _logService.Received().LogAutoInsertAccount(Arg.Any<SettingContext>(), Arg.Any<List<GameType>>());
+            _logService.ReceivedWithAnyArgs().LogAutoInsertAccount(new SettingContext(), new List<GameType>());
         }
 
-        /// <summary>
-        /// Inserts the automatic account_ insert success and return game setting list empty_ call get game setting asynchronous.
-        /// </summary>
-        [Test]
-        public void InsertAutoAccount_InsertSuccessAndReturnGameSettingListEmpty_CallGetGameSettingAsync()
+        [TestCase(CustRole.Master)]
+        [TestCase(CustRole.Agent)]
+        [TestCase(CustRole.Member)]
+        public void InsertAutoAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSetting(int targetRoleId)
         {
             // Arrange
-            var settingContext = Substitute.For<SettingContext>();
+            var settingContext = new SettingContext();
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
-            _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
+            settingContext.TargetRoleId = targetRoleId;
+
+            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
+            var agr0 = Arg.Any<InsertAutoAccountCriteria>();
+            var agr1 = Arg.Any<InsertAutoAccountCriteria>();
+            _settingRepository.InsertGameSettingAccount(agr0, ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>();
@@ -469,16 +472,17 @@
                                       Code = string.Empty
                                   };
                               });
-            _settingRepository.GetGameSetting(Arg.Any<GetGameSettingByCustomerIdCriteria>(), Arg.Any<bool>())
+            _settingRepository.GetGameSetting(new GetGameSettingByCustomerIdCriteria(), hasCheckedColumn: true)
                               .ReturnsForAnyArgs(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).ReturnsForAnyArgs(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(Arg.Any<int>());
+            _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
+                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+            _commonUtil.Sleep(0);
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
 
             // Assert
-            _settingRepository.Received().GetGameSetting(Arg.Any<GetGameSettingByCustomerIdCriteria>(), true);
+            _settingRepository.ReceivedWithAnyArgs().GetGameSetting(new GetGameSettingByCustomerIdCriteria { CustId = 1 }, hasCheckedColumn: true);
         }
 
         /// <summary>
