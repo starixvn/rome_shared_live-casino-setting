@@ -88,7 +88,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated Win Limit Successfully..
+        ///   Looks up a localized string similar to Maximum Win: updated successfully..
         /// </summary>
         public static string _104 {
             get {
@@ -102,15 +102,6 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         public static string Agent {
             get {
                 return ResourceManager.GetString("Agent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid Criteria..
-        /// </summary>
-        public static string InvalidCriteria {
-            get {
-                return ResourceManager.GetString("InvalidCriteria", resourceCulture);
             }
         }
         
@@ -367,7 +358,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Auto Preset PT.
+        ///   Looks up a localized string similar to Auto Master Preset.
         /// </summary>
         public static string lblMasterAutoPresetPT {
             get {
@@ -520,7 +511,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Super Auto Preset PT.
+        ///   Looks up a localized string similar to Auto Super Preset.
         /// </summary>
         public static string lblSuperAutoPresetPT {
             get {
@@ -601,7 +592,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update failed..
+        ///   Looks up a localized string similar to Updated unsuccessfully.
         /// </summary>
         public static string lblUpdateFailed {
             get {
@@ -673,7 +664,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updated Win Limit Successfully..
+        ///   Looks up a localized string similar to Maximum Win: updated successfully..
         /// </summary>
         public static string UpdatedWinLimitSuccessfully {
             get {

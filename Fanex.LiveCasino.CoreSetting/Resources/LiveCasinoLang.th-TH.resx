@@ -271,4 +271,22 @@
   <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>ยกเลิกทุกระดับการเดิมพัน ดาวน์ไลด์ ทั้งหมดจะได้รับผลกระทบ</value>
   </data>
+  <data name="lblUpdateFailed" xml:space="preserve">
+    <value>อัพเดทไม่สำเร็จ</value>
+  </data>
+  <data name="_104" xml:space="preserve">
+    <value>วงเงินชนะสูงสุด: อัพเดทเสร็จสมบูรณ์</value>
+  </data>
+  <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
+    <value>วงเงินชนะสูงสุด: อัพเดทเสร็จสมบูรณ์</value>
+  </data>
+  <data name="lblDailyAutoResetLimit" xml:space="preserve">
+    <value>รีเซทร์อัตโนมัติรายวัน ( 12นาฬิกา GMT+8)</value>
+  </data>
+  <data name="lblMasterAutoPresetPT" xml:space="preserve">
+    <value>แบ่งสู้อัตโนมัติของมาสเตอร์</value>
+  </data>
+  <data name="lblSuperAutoPresetPT" xml:space="preserve">
+    <value>ระบบอัตโนมัติ ประสิทธิภาพสูงที่ได้ติดตั้งไว้ก่อนแล้ว</value>
+  </data>
 </root>

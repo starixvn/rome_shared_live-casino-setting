@@ -148,7 +148,7 @@
     <value>Last Name</value>
   </data>
   <data name="lblMasterAutoPresetPT" xml:space="preserve">
-    <value>Master Auto Preset PT</value>
+    <value>Auto Master Preset</value>
   </data>
   <data name="lblMasterAutoPT" xml:space="preserve">
     <value>Master Auto Position Taking</value>
@@ -184,7 +184,7 @@
     <value>Position Taking/Commission</value>
   </data>
   <data name="lblSuperAutoPresetPT" xml:space="preserve">
-    <value>Super Auto Preset PT</value>
+    <value>Auto Super Preset</value>
   </data>
   <data name="lblSuperAutoPT" xml:space="preserve">
     <value>Super Auto PT</value>
@@ -232,7 +232,7 @@
     <value>Position taking: updated successfully.</value>
   </data>
   <data name="_104" xml:space="preserve">
-    <value>Updated Win Limit Successfully.</value>
+    <value>Maximum Win: updated successfully.</value>
   </data>
   <data name="lblEnable" xml:space="preserve">
     <value>Enable</value>
@@ -289,7 +289,7 @@
     <value>Unlimited</value>
   </data>
   <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
-    <value>Updated Win Limit Successfully.</value>
+    <value>Maximum Win: updated successfully.</value>
   </data>
   <data name="lblBettingLimit" xml:space="preserve">
     <value>Betting Limit</value>
@@ -330,9 +330,6 @@
   <data name="InvalidCriteriaMsg" xml:space="preserve">
     <value>Invalid Criteria - Do nothing</value>
   </data>
-  <data name="InvalidCriteria" xml:space="preserve">
-    <value>Invalid Criteria.</value>
-  </data>
   <data name="InvalidCustomer" xml:space="preserve">
     <value>Invalid customer</value>
   </data>
@@ -340,6 +337,6 @@
     <value>Unchecking all stake levels will affect and apply to all downlines</value>
   </data>
   <data name="lblUpdateFailed" xml:space="preserve">
-    <value>Update failed.</value>
+    <value>Updated unsuccessfully</value>
   </data>
 </root>

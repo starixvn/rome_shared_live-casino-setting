@@ -271,4 +271,22 @@
   <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>移除所有投注組合將影響與應用到所有的下線</value>
   </data>
+  <data name="lblUpdateFailed" xml:space="preserve">
+    <value>更新不成功</value>
+  </data>
+  <data name="_104" xml:space="preserve">
+    <value>最高赢取倍数: 修改成功</value>
+  </data>
+  <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
+    <value>最高赢取倍数: 修改成功</value>
+  </data>
+  <data name="lblDailyAutoResetLimit" xml:space="preserve">
+    <value>每日限額自動重設. (GMT+8中午12時正)</value>
+  </data>
+  <data name="lblMasterAutoPresetPT" xml:space="preserve">
+    <value>總代理自動佔成</value>
+  </data>
+  <data name="lblSuperAutoPresetPT" xml:space="preserve">
+    <value>超級總代自動佔成</value>
+  </data>
 </root>

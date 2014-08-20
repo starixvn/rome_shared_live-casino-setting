@@ -265,4 +265,22 @@
   <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>체크박스에 모든 베팅금액 레벨을 미선택시 모든 다운라인에 적용</value>
   </data>
+  <data name="lblUpdateFailed" xml:space="preserve">
+    <value>업데이트 성공</value>
+  </data>
+  <data name="_104" xml:space="preserve">
+    <value>최대 지급금액: 성공적으로 업데이트하였습니다.</value>
+  </data>
+  <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
+    <value>최대 지급금액: 성공적으로 업데이트하였습니다.</value>
+  </data>
+  <data name="lblDailyAutoResetLimit" xml:space="preserve">
+    <value>제한된 자동 새로설정 ( 낮 12시 GMT +8)</value>
+  </data>
+  <data name="lblMasterAutoPresetPT" xml:space="preserve">
+    <value>자동으로 마스터 미리 조정하기</value>
+  </data>
+  <data name="lblSuperAutoPresetPT" xml:space="preserve">
+    <value>자동으로 슈퍼 미리 조정하기</value>
+  </data>
 </root>

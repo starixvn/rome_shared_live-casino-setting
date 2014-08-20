@@ -107,7 +107,7 @@
     <value>Auto PT của Super</value>
   </data>
   <data name="lblSuperAutoPresetPT" xml:space="preserve">
-    <value>Giá trị Auto PT trước đó của Super</value>
+    <value>Auto Super Preset</value>
   </data>
   <data name="lblPositionTakingCommission" xml:space="preserve">
     <value>Position Taking/Hoa hồng</value>
@@ -270,5 +270,20 @@
   </data>
   <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>Không chọn bất kỳ cấp độ đặt cược sẽ ành hưởng đến tất cả những thành viên cấp dưới  </value>
+  </data>
+  <data name="lblUpdateFailed" xml:space="preserve">
+    <value>Câp nhật không thành công</value>
+  </data>
+  <data name="_104" xml:space="preserve">
+    <value>Tiền thắng cược lớn nhất: Câp nhật thành công</value>
+  </data>
+  <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
+    <value>Tiền thắng cược lớn nhất: Câp nhật thành công</value>
+  </data>
+  <data name="lblDailyAutoResetLimit" xml:space="preserve">
+    <value>Tự động reset giới hạn chuyển khoản  mỗi ngày (12 trưa GMT+8)</value>
+  </data>
+  <data name="lblMasterAutoPresetPT" xml:space="preserve">
+    <value>Auto Master Preset</value>
   </data>
 </root>
