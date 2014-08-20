@@ -524,7 +524,7 @@
                 S1 = (decimal)positionTakingAndComSetting.PositionTaking.S1,
                 Is1 = (bool)positionTakingAndComSetting.PositionTaking.Is1,
                 Us1 = (decimal)positionTakingAndComSetting.PositionTaking.Us1,
-                IsUpdateSuperPt = (!(bool)positionTakingAndComSetting.PositionTaking.Is3)
+                IsUpdateSuperPt = !(bool)positionTakingAndComSetting.PositionTaking.Is3
             };
             return criteria;
         }
