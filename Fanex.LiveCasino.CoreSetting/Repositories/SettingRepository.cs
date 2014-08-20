@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.Common.Extensions;
+    using Fanex.Common;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -24,10 +25,39 @@
             {
                 using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    var custInfo = objectDb.QueryEntity<CustInfo, MemberWinLimit, MemberWinLimit, CustInfo>(
-                        (ci, mw, smw) => { ci.MemberWinLimit = mw; mw.Upline = smw; return ci; },
-                        "isAutoResetLiveCasino,UplineIsAutoResetLiveCasino",
-                        criteria.GetSpParams());
+                    var custInfo = new CustInfo();
+                    var parameters = criteria.GetSpParams();
+
+                    using (var reader = objectDb.ExecuteReader(parameters))
+                    {
+                        if (reader.Read())
+                        {
+                            custInfo.CurrencyId = reader.To<byte>("currency");
+                            custInfo.CustId = Converter.To<int>(parameters["custid"]);
+                            custInfo.DisableLiveCasino = reader.To<bool>("DisableLiveCasino");
+                            custInfo.Fax = reader.To<string>("fax");
+                            custInfo.FirstName = reader.To<string>("firstname");
+                            custInfo.IsSyncLiveCasino = reader.To<bool>("SyncLiveCasino");
+                            custInfo.LastName = reader.To<string>("lastname");
+                            custInfo.Mobile = reader.To<string>("mobilephone");
+                            custInfo.NickName = reader.To<string>("username2");
+                            custInfo.Phone = reader.To<string>("phone");
+                            custInfo.RoleId = reader.To<byte>("roleid");
+                            custInfo.Site = reader.To<string>("site");
+                            custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
+                            custInfo.UserName = reader.To<string>("username");
+                            custInfo.MemberWinLimit = new MemberWinLimit
+                            {
+                                IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
+                                Max = reader.To<float>("MaxWinLiveCasino"),
+                                Upline = new MemberWinLimit
+                                {
+                                    IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
+                                    Max = reader.To<float>("UplineMaxWinLiveCasino")
+                                }
+                            };
+                        }
+                    }
 
                     return custInfo;
                 }
