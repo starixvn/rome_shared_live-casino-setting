@@ -43,7 +43,7 @@ if (fanex.liveCasinoSetting) {
                     settingContext: custSetting.SettingContext,
                     custInfo: custInfo,
                     ptAndComSetting: ptAndComScope.ptAndComSetting,
-                    gameSetting: gameSettingScope.gameSetting
+                    gameSetting: gameSettingScope.getGameSetting()
                 };
 
                 customerSettingService.updateAllSetting(updateAllSettingUrl, custSettingForUpdate, $scope);

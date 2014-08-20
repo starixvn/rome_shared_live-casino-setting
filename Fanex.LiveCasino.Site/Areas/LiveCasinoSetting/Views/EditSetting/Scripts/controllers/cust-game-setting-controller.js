@@ -10,12 +10,7 @@ if (fanex.liveCasinoSetting) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
 
-            $scope.updateGameSetting = function () {
-                if (!custSetting.CustInfo.IsSyncLiveCasino) {
-                    $scope.$parent.validateAndUpdateSetting();
-                    return;
-                }
-
+            $scope.getGameSetting = function () {
                 if (custSetting.SettingContext.TargetRoleId === fanex.liveCasinoSetting.custRole.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
                         var gameType = $scope.gameSetting[i];
@@ -26,7 +21,16 @@ if (fanex.liveCasinoSetting) {
                     }
                 }
 
-                customerGameSettingService.updateGameSetting($scope.gameSetting, $scope.$parent);
+                return $scope.gameSetting;
+            };
+
+            $scope.updateGameSetting = function () {
+                if (!custSetting.CustInfo.IsSyncLiveCasino) {
+                    $scope.$parent.validateAndUpdateSetting();
+                    return;
+                }
+
+                customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
             };
 
             $scope.checkShowWarningUncheckedAll = function () {
@@ -50,7 +54,7 @@ if (fanex.liveCasinoSetting) {
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
                     Message: message
-                };                
+                };
             };
         }
         ]);
