@@ -448,6 +448,10 @@
             _logService.ReceivedWithAnyArgs().LogAutoInsertAccount(new SettingContext(), new List<GameType>());
         }
 
+        /// <summary>
+        /// Inserts the automatic account_ insert success and game setting empty_ asynchronous call get game setting.
+        /// </summary>
+        /// <param name="targetRoleId">The target role identifier.</param>
         [TestCase(CustRole.Master)]
         [TestCase(CustRole.Agent)]
         [TestCase(CustRole.Member)]

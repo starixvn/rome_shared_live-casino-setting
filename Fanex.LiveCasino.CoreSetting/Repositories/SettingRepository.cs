@@ -1,8 +1,8 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
     using System.Collections.Generic;
-    using Fanex.Common.Extensions;
     using Fanex.Common;
+    using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Models;
