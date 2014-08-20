@@ -106,7 +106,7 @@ fanex.liveCasinoSetting.errorResult = {
 fanex.liveCasinoSetting.rootUrl = document.getElementById('LiveCasinoRoot') ? document.getElementById('LiveCasinoRoot').value : '/';
 
 
-fanex.liveCasinoSetting.config(function ($httpProvider) {
+fanex.liveCasinoSetting.config([ '$httpProvider', function ($httpProvider) {
     'use strict';
     $httpProvider.responseInterceptors.push('loadingInterceptor');
 
@@ -116,9 +116,9 @@ fanex.liveCasinoSetting.config(function ($httpProvider) {
     };
 
     $httpProvider.defaults.transformRequest.push(spinnerFunction);
-});
+}]);
 
-fanex.liveCasinoSetting.factory('loadingInterceptor', function ($q) {
+fanex.liveCasinoSetting.factory('loadingInterceptor', [ '$q', function ($q) {
     'use strict';
     return function (promise) {
         return promise.then(function (response) {
@@ -129,5 +129,5 @@ fanex.liveCasinoSetting.factory('loadingInterceptor', function ($q) {
             return $q.reject(response);
         });
     };
-});
+}]);
 

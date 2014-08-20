@@ -32,16 +32,16 @@ namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-CN.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.zh-TW.js")
                 .Include("~/areas/LiveCasinoSetting/scripts/core/fanex-live-casino-setting.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-win-limit-service.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-game-setting-service.js")
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-info-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-setting-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-win-limit-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/pt-and-com-setting-controller.js")
                 .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/controllers/cust-game-setting-controller.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-setting-service.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-win-limit-service.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/cust-game-setting-service.js")
-                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/services/pt-and-com-setting-service.js"));
+                .Include("~/areas/LiveCasinoSetting/views/editsetting/scripts/directives/pt-and-com-setting-directive.js"));
         }
 
         private static void RegisterStyleSheetBundles(BundleCollection bundles)
