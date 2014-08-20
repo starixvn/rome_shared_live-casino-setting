@@ -226,7 +226,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.UserIdDoAction,
-                SuperCommission = positionTakingAndComSetting.Commission.Value,
+                SuperCommission = (decimal)positionTakingAndComSetting.Commission.Value,
                 S4 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
                 N4 = (decimal)positionTakingAndComSetting.PositionTaking.N4,
             });
@@ -445,7 +445,7 @@
                 SRecommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                MasterCommission = positionTakingAndComSetting.Commission.Value,
+                MasterCommission = (decimal)positionTakingAndComSetting.Commission.Value,
                 M3 = (decimal)positionTakingAndComSetting.PositionTaking.M3,
                 N3 = (decimal)positionTakingAndComSetting.PositionTaking.N3,
                 Is3 = (bool)positionTakingAndComSetting.PositionTaking.Is3,
@@ -472,7 +472,7 @@
                 MRecommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                AgentCommission = positionTakingAndComSetting.Commission.Value,
+                AgentCommission = (decimal)positionTakingAndComSetting.Commission.Value,
                 M2 = (decimal)positionTakingAndComSetting.PositionTaking.M2,
                 N2 = (decimal)positionTakingAndComSetting.PositionTaking.N2,
                 Im2 = (bool)positionTakingAndComSetting.PositionTaking.Im2,
@@ -500,7 +500,7 @@
                 Recommend = settingContext.UplineId,
                 UserId = settingContext.UserIdDoAction,
                 SubAccID = settingContext.SubAccId,
-                MemberCommission = positionTakingAndComSetting.Commission.Value,
+                MemberCommission = (decimal)positionTakingAndComSetting.Commission.Value,
                 A1 = (decimal)positionTakingAndComSetting.PositionTaking.A1
             };
             return criteria;

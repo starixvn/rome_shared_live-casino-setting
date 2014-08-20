@@ -16,6 +16,7 @@ if (fanex.liveCasinoSetting) {
                 CommandResultsList: []
             };
             $scope.isUpdateAllSetting = false;
+            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
 
             $scope.validateAndUpdateSetting = function () {
                 $scope.isUpdateAllSetting = true;
@@ -53,6 +54,7 @@ if (fanex.liveCasinoSetting) {
                 $scope.mainResult = mainResult;
 
                 if (mainResult.IsSuccessful) {
+                    $scope.isReadOnly = true;
                     $timeout(function () {
                         $window.location.href = $window.location.href;
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);

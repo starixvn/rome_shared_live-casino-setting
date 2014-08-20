@@ -1,5 +1,5 @@
 /* File Created: July 21, 2014 */
-/*global custSetting*/
+/*global custSetting, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', function ($http) {
         'use strict';
@@ -19,8 +19,11 @@ if (fanex.liveCasinoSetting) {
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = data;
-                    scope.mainResult = fanex.liveCasinoSetting.errorResult;
                 }
+                else {
+                    fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
+                }
+                scope.mainResult = fanex.liveCasinoSetting.errorResult;
             });
         };
     } ]);

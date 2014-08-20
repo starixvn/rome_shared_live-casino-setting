@@ -339,4 +339,7 @@
   <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>Unchecking all stake levels will affect and apply to all downlines</value>
   </data>
+  <data name="lblUpdateFailed" xml:space="preserve">
+    <value>Update failed.</value>
+  </data>
 </root>

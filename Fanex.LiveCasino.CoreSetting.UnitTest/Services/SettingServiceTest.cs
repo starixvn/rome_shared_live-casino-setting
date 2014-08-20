@@ -324,12 +324,12 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = (float)0.2
                 },
                 PositionTaking = new PositionTaking
                 {
-                    S4 = (decimal)0.2,
-                    N4 = (decimal)0.2
+                    S4 = (float)0.2,
+                    N4 = (float)0.2
                 }
             };
             _settingRepository.GetSettingForEditSuper(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
@@ -355,11 +355,11 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = 0.2f
                 },
                 PositionTaking = new PositionTaking
                 {
-                    S3 = (decimal)0.2
+                    S3 = (float)0.2
                 }
             };
             _settingRepository.GetSettingForEditMaster(Arg.Any<GetSettingForEditMasterCriteria>()).Returns(masterPtAndComSetting);
@@ -385,11 +385,11 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = (float)0.2
                 },
                 PositionTaking = new PositionTaking
                 {
-                    M2 = (decimal)0.2
+                    M2 = (float)0.2
                 }
             };
             _settingRepository.GetSettingForEditAgent(Arg.Any<GetSettingForEditAgentCriteria>()).Returns(agentPtAndComSetting);
@@ -416,11 +416,11 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = (float)0.2
                 },
                 PositionTaking = new PositionTaking
                 {
-                    A1 = (decimal)0.1
+                    A1 = (float)0.1
                 }
             };
             _settingRepository.GetSettingForEditMember(Arg.Any<GetSettingForEditMemberCriteria>()).Returns(memberPtAndComSetting);
@@ -447,11 +447,11 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = (float)0.2
                 },
                 PositionTaking = new PositionTaking
                 {
-                    S1 = (decimal)0.1
+                    S1 = (float)0.1
                 }
             };
             _settingRepository.GetSettingForSuperEditMember(Arg.Any<GetSettingForSuperEditMemberCriteria>())
@@ -479,11 +479,11 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.2
+                    Value = (float)0.2
                 },
                 PositionTaking = new PositionTaking
                 {
-                    M1 = (decimal)0.1
+                    M1 = (float)0.1
                 }
             };
             _settingRepository.GetSettingForMasterEditMember(Arg.Any<GetSettingForMasterEditMemberCriteria>())
@@ -539,10 +539,10 @@
             {
                 Commission = new Commission
                 {
-                    Value = (decimal)0.1,
+                    Value = 0.1f,
                     Upline = new Commission
                     {
-                        Value = (decimal)0.1
+                        Value = 0.1f
                     }
                 },
                 PositionTaking = GetDummyPositionTaking()
@@ -694,32 +694,32 @@
         {
             return new PositionTaking
             {
-                M4 = (decimal)0.1,
-                A1 = (decimal)0.1,
-                A2 = (decimal)0.1,
-                A4 = (decimal)0.1,
-                L2 = (decimal)0.1,
-                L3 = (decimal)0.1,
-                L4 = (decimal)0.1,
-                M1 = (decimal)0.1,
-                M1Max = (decimal)0.1,
-                M1Min = (decimal)0.1,
-                M2 = (decimal)0.1,
-                M3 = (decimal)0.1,
-                N1 = (decimal)0.1,
-                N2 = (decimal)0.1,
-                N3 = (decimal)0.1,
-                N4 = (decimal)0.1,
-                NewPresetOnMember = (decimal)0.1,
-                S1 = (decimal)0.1,
-                S1Max = (decimal)0.1,
-                S1Min = (decimal)0.1,
-                S3 = (decimal)0.1,
-                S4 = (decimal)0.1,
-                Um1 = (decimal)0.1,
-                Um2 = (decimal)0.1,
-                Us1 = (decimal)0.1,
-                Us3 = (decimal)0.1,
+                M4 = (float)0.1,
+                A1 = (float)0.1,
+                A2 = (float)0.1,
+                A4 = (float)0.1,
+                L2 = (float)0.1,
+                L3 = (float)0.1,
+                L4 = (float)0.1,
+                M1 = (float)0.1,
+                M1Max = (float)0.1,
+                M1Min = (float)0.1,
+                M2 = (float)0.1,
+                M3 = (float)0.1,
+                N1 = (float)0.1,
+                N2 = (float)0.1,
+                N3 = (float)0.1,
+                N4 = (float)0.1,
+                NewPresetOnMember = (float)0.1,
+                S1 = (float)0.1,
+                S1Max = (float)0.1,
+                S1Min = (float)0.1,
+                S3 = (float)0.1,
+                S4 = (float)0.1,
+                Um1 = (float)0.1,
+                Um2 = (float)0.1,
+                Us1 = (float)0.1,
+                Us3 = (float)0.1,
                 UpdateAllMembers = true,
                 IsDisableAuto = true,
                 Is3 = true,

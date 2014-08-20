@@ -48,7 +48,6 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         $scope.presetOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
-        $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
         me.updatePtAndCommUrl = $('#tblPtComSetting').data('update-href');
 
         //// Action

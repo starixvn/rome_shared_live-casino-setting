@@ -310,37 +310,37 @@
         /// <summary>
         /// Update PT And COM Setting When Call Update Single Called Update Single Customer PT And COM Setting.
         /// </summary>
-        //[Test]
-        //public void UpdatePtAndComSetting_WhenCallUpdateSingle_CalledUpdateSingleCustomerPtAndComSetting()
-        //{
-        //    //// Arrange
-        //    var settingContext = Substitute.For<SettingContext>();
-        //    var positionTakingAndComSetting = Substitute.For<PtAndComSetting>();
+        [Test]
+        public void UpdatePtAndComSetting_WhenCallUpdateSingle_CalledUpdateSingleCustomerPtAndComSetting()
+        {
+            //// Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var positionTakingAndComSetting = Substitute.For<PtAndComSetting>();
 
-        //    //// Act
-        //    _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+            //// Act
+            _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
 
-        //    //// Assert
-        //    _settingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
-        //}
+            //// Assert
+            _settingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
+        }
 
         /// <summary>
         /// Update PT And COM Setting When Call Update multiple Called Update multiple Customer PT And COM Setting.
         /// </summary>
-        //[Test]
-        //public void UpdatePtAndComSettingMultiple_WhenCallUpdateMultiple_CalledUpdateMultipleCustomerPtAndComSetting()
-        //{
-        //    //// Arrange
-        //    var settingContext = Substitute.For<SettingContext>();
-        //    var positionTakingAndComSetting = Substitute.For<PtAndComSetting>();
-        //    settingContext.IsEditMultiple = true;
+        [Test]
+        public void UpdatePtAndComSettingMultiple_WhenCallUpdateMultiple_CalledUpdateMultipleCustomerPtAndComSetting()
+        {
+            //// Arrange
+            var settingContext = Substitute.For<SettingContext>();
+            var positionTakingAndComSetting = Substitute.For<PtAndComSetting>();
+            settingContext.IsEditMultiple = true;
 
-        //    //// Act
-        //    _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+            //// Act
+            _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
 
-        //    //// Assert
-        //    _settingService.Received().UpdatePtAndComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
-        //}
+            //// Assert
+            _settingService.Received().UpdatePtAndComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>());
+        }
 
         [Test]
         public void UpdateMultipleCustomerAllSetting_WhenCalled_CallUpdateSingleCustomerAllSetting()

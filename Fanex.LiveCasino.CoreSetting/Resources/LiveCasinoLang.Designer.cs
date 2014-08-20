@@ -601,6 +601,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update failed..
+        /// </summary>
+        public static string lblUpdateFailed {
+            get {
+                return ResourceManager.GetString("lblUpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string lblUsername {

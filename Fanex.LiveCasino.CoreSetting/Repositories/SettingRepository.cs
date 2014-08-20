@@ -49,18 +49,18 @@
                 {
                     ptAndComSetting.Commission = new Commission
                     {
-                        Value = reader.ToDecimal("v162sdiscount_1101"),
+                        Value = reader.ToFloat("v162sdiscount_1101"),
                         Upline = new Commission
                         {
-                            Value = reader.ToDecimal("v162sdicount_1101_max")
+                            Value = reader.ToFloat("v162sdicount_1101_max")
                         }
                     };
 
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
-                        S4 = reader.To<decimal>("v162spositiontaking_1101"),
-                        L4 = reader.To<decimal>("v162spositiontaking_1101_max"),
-                        N4 = reader.To<decimal>("v162spositiontaking_1101_min")
+                        S4 = reader.To<float>("v162spositiontaking_1101"),
+                        L4 = reader.To<float>("v162spositiontaking_1101_max"),
+                        N4 = reader.To<float>("v162spositiontaking_1101_min")
                     };
                 });
         }
@@ -78,21 +78,21 @@
                 {
                     ptAndComSetting.Commission = new Commission
                     {
-                        Value = reader.ToDecimal("v162discount_1101"),
+                        Value = reader.ToFloat("v162discount_1101"),
                         Upline = new Commission
                         {
-                            Value = reader.ToDecimal("v162discount_1101_max")
+                            Value = reader.ToFloat("v162discount_1101_max")
                         }
                     };
 
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
-                        S4 = reader.To<decimal>("v162spositiontaking_1101_max"),
-                        N3 = reader.To<decimal>("v162mpositiontaking_1101_min"),
+                        S4 = reader.To<float>("v162spositiontaking_1101_max"),
+                        N3 = reader.To<float>("v162mpositiontaking_1101_min"),
                         Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
-                        Us3 = reader.To<decimal>("auto_v162spostiontaking_1101"),
-                        S3 = reader.To<decimal>("v162spositiontaking_1101"),
-                        M3 = reader.To<decimal>("v162mpositiontaking_1101"),
+                        Us3 = reader.To<float>("auto_v162spostiontaking_1101"),
+                        S3 = reader.To<float>("v162spositiontaking_1101"),
+                        M3 = reader.To<float>("v162mpositiontaking_1101"),
                         NewPresetOnMember = 0,
                         UpdateAllMembers = false
                     };
@@ -112,22 +112,22 @@
                 {
                     ptAndComSetting.Commission = new Commission
                     {
-                        Value = reader.ToDecimal("v162discount_1101"),
+                        Value = reader.ToFloat("v162discount_1101"),
                         Upline = new Commission
                         {
-                            Value = reader.ToDecimal("v162discount_1101_max")
+                            Value = reader.ToFloat("v162discount_1101_max")
                         }
                     };
 
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
-                        M2 = reader.To<decimal>("v162mpositiontaking_1101"),
+                        M2 = reader.To<float>("v162mpositiontaking_1101"),
                         Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
-                        Um2 = reader.To<decimal>("auto_v162mpositiontaking_1101"),
-                        A2 = reader.To<decimal>("v162apositiontaking_1101"),
-                        M3 = reader.To<decimal>("v162mpositiontaking_1101_max"),
-                        N2 = reader.To<decimal>("v162apositiontaking_1101_min"),
+                        Um2 = reader.To<float>("auto_v162mpositiontaking_1101"),
+                        A2 = reader.To<float>("v162apositiontaking_1101"),
+                        M3 = reader.To<float>("v162mpositiontaking_1101_max"),
+                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
                         NewPresetOnMember = 0,
                         UpdateAllMembers = false
                     };
@@ -147,18 +147,18 @@
                 {
                     ptAndComSetting.Commission = new Commission
                     {
-                        Value = reader.ToDecimal("v162playerdiscount_1101"),
+                        Value = reader.ToFloat("v162playerdiscount_1101"),
                         Upline = new Commission
                         {
-                            Value = reader.ToDecimal("v162playerdiscount_1101_max")
+                            Value = reader.ToFloat("v162playerdiscount_1101_max")
                         }
                     };
 
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
-                        A1 = reader.To<decimal>("v162apositiontaking_1101"),
-                        A2 = reader.To<decimal>("v162apositiontaking_1101_max"),
-                        N2 = reader.To<decimal>("v162apositiontaking_1101_min"),
+                        A1 = reader.To<float>("v162apositiontaking_1101"),
+                        A2 = reader.To<float>("v162apositiontaking_1101_max"),
+                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
                     };
                 });
         }
@@ -176,15 +176,15 @@
                 {
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
-                        S1 = reader.To<decimal>("v162spositiontaking_1101"),
-                        S1Max = reader.To<decimal>("v162spositiontaking_1101_max"),
-                        S1Min = reader.To<decimal>("v162spositiontaking_1101_min"),
-                        M1 = reader.To<decimal>("v162mpositiontaking_1101"),
-                        A1 = reader.To<decimal>("v162apositiontaking_1101"),
-                        Us1 = reader.To<decimal>("auto_v162spositiontaking_1101_mem"),
+                        S1 = reader.To<float>("v162spositiontaking_1101"),
+                        S1Max = reader.To<float>("v162spositiontaking_1101_max"),
+                        S1Min = reader.To<float>("v162spositiontaking_1101_min"),
+                        M1 = reader.To<float>("v162mpositiontaking_1101"),
+                        A1 = reader.To<float>("v162apositiontaking_1101"),
+                        Us1 = reader.To<float>("auto_v162spositiontaking_1101_mem"),
                         Is1 = reader.To<bool>("isauto_v162spositiontaking_1101_mem"),
                         Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
-                        S4 = reader.To<decimal>("auto_v162spositiontaking_1101_max")
+                        S4 = reader.To<float>("auto_v162spositiontaking_1101_max")
                     };
                 });
         }
@@ -203,14 +203,14 @@
                     ptAndComSetting.PositionTaking = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
-                        M1 = reader.To<decimal>("v162mpositiontaking_1101"),
-                        A1 = reader.To<decimal>("V162apositiontaking_1101"),
-                        Um1 = reader.To<decimal>("auto_v162mpositiontaking_1101_mem"),
+                        M1 = reader.To<float>("v162mpositiontaking_1101"),
+                        A1 = reader.To<float>("V162apositiontaking_1101"),
+                        Um1 = reader.To<float>("auto_v162mpositiontaking_1101_mem"),
                         Im1 = reader.To<bool>("isauto_v162mpositiontaking_1101_mem"),
-                        M1Max = reader.To<decimal>("v162mpositiontaking_1101_max"),
-                        M1Min = reader.To<decimal>("v162mpositiontaking_1101_min"),
+                        M1Max = reader.To<float>("v162mpositiontaking_1101_max"),
+                        M1Min = reader.To<float>("v162mpositiontaking_1101_min"),
                         Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
-                        M3 = reader.To<decimal>("auto_v162mpositiontaking_1101_max")
+                        M3 = reader.To<float>("auto_v162mpositiontaking_1101_max")
                     };
                 });
         }

@@ -68,7 +68,7 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
     <div class="update-setting col-xs-12">
         <input type="button" class="update-setting-submit" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
-            value="@LiveCasinoLang.lblUpdate" />
+            value="@LiveCasinoLang.lblUpdate" data-ng-show="!isReadOnly" />
     </div>
 </div>
 <div class="live-casino-loading">

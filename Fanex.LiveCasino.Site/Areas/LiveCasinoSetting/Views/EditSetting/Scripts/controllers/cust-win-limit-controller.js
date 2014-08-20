@@ -11,7 +11,6 @@ if (fanex.liveCasinoSetting) {
             $scope.maxWinLimitModel = fanex.cloneObject(custSetting.CustInfo.MemberWinLimit);
             var memberWinLimit = custSetting.CustInfo.MemberWinLimit;
             $scope.isShowCurrentWinLimit = false;
-            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             $scope.maxWinLimits = [{ lable: language.getString("lbl3X"), value: 3 },
                                    { lable: language.getString("lbl5X"), value: 5 },
                                    { lable: language.getString("lbl10X"), value: 10 },

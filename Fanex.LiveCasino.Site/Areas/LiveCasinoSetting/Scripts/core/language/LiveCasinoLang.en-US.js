@@ -62,6 +62,7 @@ language.liveCasino['en-US'] = {
 	lblSuperPT : "Super Position Taking",
 	lblUnlimited : "Unlimited",
 	lblUpdate : "Update",
+	lblUpdateFailed : "Update failed.",
 	lblUsername : "Username",
 	lblYes : "Yes",
 	Master : "Master",

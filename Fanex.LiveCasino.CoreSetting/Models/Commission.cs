@@ -5,7 +5,7 @@
     /// </summary>
     public class Commission
     {
-        public decimal Value { get; set; }
+        public float Value { get; set; }
 
         public Commission Upline { get; set; }
     }

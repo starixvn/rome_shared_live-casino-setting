@@ -7,15 +7,15 @@
     {
         public bool? IsDisableAuto { get; set; }
 
-        public decimal? S1Min { get; set; }
+        public float? S1Min { get; set; }
 
-        public decimal? S1Max { get; set; }
+        public float? S1Max { get; set; }
 
-        public decimal? M1Max { get; set; }
+        public float? M1Max { get; set; }
 
-        public decimal? M1Min { get; set; }
+        public float? M1Min { get; set; }
 
-        public decimal? NewPresetOnMember { get; set; }
+        public float? NewPresetOnMember { get; set; }
 
         public bool? UpdateAllMembers { get; set; }
     }

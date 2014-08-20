@@ -4,7 +4,7 @@
     data-update-href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSetting")">
     <div class="pt-title">
         <span class="pt-title-text">@LiveCasinoLang.lblGameSetting</span> <span data-ng-click="updateGameSetting()"
-            data-ng-if="!isReadOnly" class="btn-save-partial" title="@LiveCasinoLang.lblUpdate"></span>
+            data-ng-if="!$parent.isReadOnly" class="btn-save-partial" title="@LiveCasinoLang.lblUpdate"></span>
     </div>
     <table class="game-setting col-xs-12">
         <thead>
@@ -29,7 +29,7 @@
                         {
                             <label class="checkbox-inline">
                                 <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
-                                    data-ng-disabled="isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                    data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
                                 {{betLimitItem.Range}}
                             </label>
                         }
@@ -37,7 +37,7 @@
                         { 
                             <label class="radio-inline">
                                 <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
-                                    data-ng-disabled="isReadOnly" value="{{betLimitItem.Id}}" />
+                                    data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
                                 {{betLimitItem.Range}}
                             </label>
                         }

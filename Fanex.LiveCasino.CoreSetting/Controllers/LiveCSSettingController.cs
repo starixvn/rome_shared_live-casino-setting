@@ -244,7 +244,7 @@
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, [ModelBinder(typeof(CustomJsonModelBinder<PtAndComSetting>))] PtAndComSetting ptAndComSetting)
+        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
         {
             settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();

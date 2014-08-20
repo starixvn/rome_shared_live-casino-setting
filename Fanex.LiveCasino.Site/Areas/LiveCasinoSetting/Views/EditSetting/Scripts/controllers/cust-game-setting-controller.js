@@ -9,7 +9,6 @@ if (fanex.liveCasinoSetting) {
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
-            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
 
             $scope.updateGameSetting = function () {
                 if (!custSetting.CustInfo.IsSyncLiveCasino) {
