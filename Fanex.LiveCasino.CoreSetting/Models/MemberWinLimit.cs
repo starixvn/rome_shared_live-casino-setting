@@ -5,11 +5,11 @@
     /// </summary>
     public class MemberWinLimit
     {
-        public decimal Max { get; set; }
+        public float Max { get; set; }
 
         public bool IsAutoReset { get; set; }
 
-        public decimal Current { get; set; }
+        public float Current { get; set; }
 
         public MemberWinLimit Upline { get; set; }
     }

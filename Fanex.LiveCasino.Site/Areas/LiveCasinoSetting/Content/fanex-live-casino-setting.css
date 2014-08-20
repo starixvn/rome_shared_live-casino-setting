@@ -148,6 +148,11 @@ label.clearfix
     width: 70px;
 }
 
+.pt-container select#maxWinLimit
+{
+    width: 80px;
+}
+
 .win-limit .checkbox-inline
 {
     padding-left: 19px;

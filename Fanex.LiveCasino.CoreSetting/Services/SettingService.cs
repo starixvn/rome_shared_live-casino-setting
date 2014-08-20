@@ -341,7 +341,7 @@
             var result = (CommandResult)_settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.TargetCustId,
-                MaxWinLimit = memberWinLimit.Max,
+                MaxWinLimit = (decimal)memberWinLimit.Max,
                 IsAutoDailyReset = memberWinLimit.IsAutoReset,
                 UserId = settingContext.UserIdDoAction,
                 Ip = settingContext.IP,

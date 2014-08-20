@@ -5,12 +5,12 @@
     /// </summary>
     public class CurrentMemberWin
     {
-        public decimal Balance { get; set; }
+        public float Balance { get; set; }
 
-        public decimal MaxWinCredit { get; set; }
+        public float MaxWinCredit { get; set; }
 
-        public decimal WinPercent { get; set; }
+        public float WinPercent { get; set; }
 
-        public decimal MaxWinLiveCasino { get; set; }
+        public float MaxWinLiveCasino { get; set; }
     }
 }
