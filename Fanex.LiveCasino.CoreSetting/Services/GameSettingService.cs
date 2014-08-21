@@ -139,20 +139,20 @@
             {
                 gameSettings = GetGameSettingByCustomerId(settingContext.DirectUplineId);
 
-                if (settingContext.IsEdittingMember)
+                gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
+
+                // Check all by default
+                foreach (var gameSettingItem in gameSettings)
                 {
-                    // Check all by default
-                    foreach (var gameSettingItem in gameSettings)
+                    gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
+                    if (settingContext.IsEdittingMember)
                     {
-                        gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
                         for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
                         {
                             gameSettingItem.BettingLimit[i].IsChecked = false;
                         }
                     }
                 }
-
-                gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
             }
             else
             {
@@ -197,6 +197,14 @@
 
             if (result.IsSuccessful)
             {
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
+
+                if (updateSyncResult.IsSuccessful)
+                {
+                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
+                }
+
                 Task.Factory.StartNew(() =>
                 {
                     if (!gameTypes.Any())
@@ -206,14 +214,6 @@
 
                     _logService.LogAutoInsertAccount(settingContext, gameTypes);
                 });
-
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
-
-                if (updateSyncResult.IsSuccessful)
-                {
-                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
-                    UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
-                }
             }
 
             return result;
@@ -251,6 +251,14 @@
 
             if (result.IsSuccessful)
             {
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
+
+                if (updateSyncResult.IsSuccessful)
+                {
+                    var fromCustInfo = GetCustomerInfo(settingContext.OldCustId);
+                    UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
+                }
+
                 Task.Factory.StartNew(() =>
                 {
                     if (!gameTypes.Any())
@@ -260,14 +268,6 @@
 
                     _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
                 });
-
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
-
-                if (updateSyncResult.IsSuccessful)
-                {
-                    var fromCustInfo = GetCustomerInfo(settingContext.OldCustId);
-                    UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
-                }
             }
 
             return result;

@@ -41,7 +41,7 @@
         public int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext)
         {
             var custInfoList = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
-            
+
             if (!custInfoList.Any())
             {
                 return 0;
@@ -320,12 +320,7 @@
                 CustId = custId
             };
 
-            var currentWinLimit = new CurrentMemberWin();
-
-            if (criteria.IsValid())
-            {
-                currentWinLimit = _settingRepository.GetCurrentMemberWin(criteria);
-            }
+            var currentWinLimit = (CurrentMemberWin)_settingRepository.GetCurrentMemberWin(criteria);
 
             return currentWinLimit;
         }

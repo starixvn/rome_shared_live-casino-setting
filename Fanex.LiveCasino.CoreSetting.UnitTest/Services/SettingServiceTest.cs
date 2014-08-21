@@ -32,23 +32,7 @@
             _settingRepository = Substitute.For<ISettingRepository>();
             _commonUtil = Substitute.For<ICommonUtil>();
             _settingService = Substitute.For<SettingService>(_settingRepository, _commonUtil);
-        }
-
-        /// <summary>
-        /// Gets the current win limit_ invalid customer id_ return new object.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        [TestCase(-1)]
-        [TestCase(0)]
-        public void GetCurrentWinLimit_InvalidCustId_ReturnNewObject(int custId)
-        {
-            // Action
-            var actualValue = _settingService.GetCurrentWinLimit(custId);
-
-            // Assert
-            var expectedValue = new CurrentMemberWin();
-            AssertCurrentWinLimit(expectedValue, actualValue);
-        }
+        }        
 
         /// <summary>
         /// Gets the current win limit_ valid customer id_ return current member win.
@@ -66,7 +50,7 @@
                 WinPercent = 1
             };
 
-            _settingRepository.Get<CurrentMemberWin>(Arg.Is<GetCustomerWinLimitCriteria>(x => x.IsValid()))
+            _settingRepository.GetCurrentMemberWin(Arg.Is<GetCustomerWinLimitCriteria>(x => x.IsValid()))
                               .Returns(CloneCurrentMemberWin(expectedCurrentMemberWin));
 
             // Action
