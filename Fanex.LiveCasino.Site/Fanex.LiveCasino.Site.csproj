@@ -158,10 +158,15 @@
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting-override.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
     <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button-left.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-title-header.jpg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\btn-update-setting.jpg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\center-header.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn-hover.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\left-header.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
@@ -169,6 +174,7 @@
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\warning.png" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js">
       <DependentUpon>LiveCasinoLang.tt</DependentUpon>

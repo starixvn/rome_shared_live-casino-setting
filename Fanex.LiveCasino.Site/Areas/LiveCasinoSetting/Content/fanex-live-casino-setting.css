@@ -107,7 +107,7 @@ select:disabled
     margin-top: 4px;
 }
 
-.edit-setting-livecs .update-setting-submit
+.edit-setting-livecs .update-setting-accounting-submit
 {
     background: url("Images/btn-update-setting.jpg") no-repeat scroll center center transparent;
     border: 0 none;
@@ -119,6 +119,58 @@ select:disabled
     margin-top: 6px;
     text-align: center;
     width: 122px;
+}
+
+.edit-setting-livecs .update-setting-agency-submit
+{
+    background: url("Images/agency-button.gif") no-repeat right top;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: 700;
+    height: 22px;
+    min-width: 64px;
+    padding: 0 24px 2px 12px;
+    float: left;
+}
+.edit-setting-livecs .update-setting-agency-submit:hover
+{
+    background-position: 100% -22px;
+    color: #000;
+    cursor: pointer;
+}
+.edit-setting-livecs .update-setting-agency-submit-left 
+{
+    background: url("Images/agency-button-left.gif") no-repeat left top;
+	height: 22px;
+    padding: 0 0 0 3px;
+    display: inline-block;
+    float: left;
+}
+
+.edit-setting-livecs .update-setting-ext-acc-submit
+{
+    background: url("Images/ext-acc-btn.png") repeat-x scroll 5px center;
+    color: #fff;
+    cursor: pointer;
+    width: 80px;
+    height: 30px;
+    border: none ;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    text-indent: 0 ;
+    margin-bottom: 3px;
+}
+
+.edit-setting-livecs .update-setting-ext-acc-submit:hover
+{
+    background: url("Images/ext-acc-btn-hover.png") repeat-x scroll 5px center;
 }
 
 /*PT Style*/
@@ -300,7 +352,7 @@ label.clearfix
     padding-right: 4px;
 }
 
-.setting-header .setting-header-first-icon
+.setting-header-accounting .setting-header-first-icon
 {
     float: left;
     display: inline-block;
@@ -309,7 +361,7 @@ label.clearfix
     background: url(Images/left-header.png) no-repeat right bottom;
 }
 
-.setting-header .setting-header-text
+.setting-header-accounting .setting-header-text
 {
     float: left;
     height: 23px;
@@ -321,12 +373,23 @@ label.clearfix
     background: url(Images/center-header.png) repeat-x bottom;
 }
 
-.setting-header .setting-header-last-icon
+.setting-header-accounting .setting-header-last-icon
 {
     float: left;
     background: url(Images/right-header.png) no-repeat right bottom;
     height: 23px;
     width: 5px;
+}
+
+.setting-header-agency .setting-header-text
+{
+    background: url('Images/agency-title-header.jpg') no-repeat scroll left bottom transparent;
+    color: #9D1C1C;
+    padding-left: 12px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    display: inline-block;
+    width: 100%;
 }
 
 
