@@ -81,7 +81,7 @@ fanex.liveCasinoSetting.custRole = {
     Member: 1
 };
 //// Constant
-fanex.liveCasinoSetting.UN_AUTHORIZED_CODE = 403;
+fanex.liveCasinoSetting.UN_AUTHORIZED_CODE = 401;
 fanex.liveCasinoSetting.PT_INTERVAL = 0.01;
 fanex.liveCasinoSetting.COM_INTERVAL = 0.0005;
 fanex.liveCasinoSetting.COM_DECIMAL = 4;

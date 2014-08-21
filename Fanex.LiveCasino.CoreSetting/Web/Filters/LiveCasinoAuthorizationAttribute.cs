@@ -37,13 +37,10 @@
 
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {
-                    filterContext.Result = new HttpStatusCodeResult(403, LiveCasinoLang.UnauthorizeMsg);
-
-                    response.Buffer = true;
-                    response.StatusCode = 403; // Unauthorized status code
+                    response.Clear();
                     response.Write(LiveCasinoLang.UnauthorizeMsg);
-                    response.Flush();
-                    response.Close();
+                    filterContext.Result = new HttpUnauthorizedResult();
+                    filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
                     response.End();
                 }
                 else
