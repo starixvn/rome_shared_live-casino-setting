@@ -289,4 +289,13 @@
   <data name="lblSuperAutoPresetPT" xml:space="preserve">
     <value>超級總代自動佔成</value>
   </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>修改成功</value>
+  </data>
+  <data name="UpdatedUnsuccessfully" xml:space="preserve">
+    <value>更新不成功</value>
+  </data>
+  <data name="lblMemberWinLimit" xml:space="preserve">
+    <value>會員的贏額上限</value>
+  </data>
 </root>

@@ -574,11 +574,11 @@
             if (gameSettingResult.IsSuccessful)
             {
                 gameSettingResult.Id = gameType.Id;
-                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingSuccess, gameType.Name);
+                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdateSuccessfully);
             }
             else
             {
-                gameSettingResult.Message = string.Format(LiveCasinoLang.UpdateLiveCasinoGameSettingFail, gameType.Name, gameSettingResult.Message);
+                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
             }
 
             return gameSettingResult;

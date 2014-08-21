@@ -67,6 +67,36 @@
         }
 
         /// <summary>
+        /// Gets the current member win.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Current member win limit.</returns>
+        public CurrentMemberWin GetCurrentMemberWin(ICriteria criteria)
+        {
+            var currentMemberWin = new CurrentMemberWin();
+
+            if (criteria.IsValid())
+            {
+                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    var parameters = criteria.GetSpParams();
+                    using (var reader = objectDb.ExecuteReader(parameters))
+                    {
+                        if (reader.Read())
+                        {
+                            currentMemberWin.Balance = reader.To<float>("Balance");
+                            currentMemberWin.MaxWinCredit = reader.To<float>("MaxWinCredit");
+                            currentMemberWin.MaxWinLiveCasino = reader.To<float>("MaxWinLiveCasino");
+                            currentMemberWin.WinPercent = reader.To<float>("LCSWinPercent");
+                        }
+                    }
+                }
+            }
+
+            return currentMemberWin;
+        }
+
+        /// <summary>
         /// Gets the setting for edit super.
         /// </summary>
         /// <param name="criteria">The criteria.</param>

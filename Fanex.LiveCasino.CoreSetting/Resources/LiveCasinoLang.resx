@@ -255,9 +255,6 @@
   <data name="lblYes" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="lblMaximumWinLimit" xml:space="preserve">
-    <value>Maximum Win Limit</value>
-  </data>
   <data name="lblMaximumWin" xml:space="preserve">
     <value>Maximum Win</value>
   </data>
@@ -276,15 +273,6 @@
   <data name="lblCurrentWinLimit" xml:space="preserve">
     <value>Current Win Limit</value>
   </data>
-  <data name="lbl10X" xml:space="preserve">
-    <value>10X</value>
-  </data>
-  <data name="lbl3X" xml:space="preserve">
-    <value>3X</value>
-  </data>
-  <data name="lbl5X" xml:space="preserve">
-    <value>5X</value>
-  </data>
   <data name="lblUnlimited" xml:space="preserve">
     <value>Unlimited</value>
   </data>
@@ -299,12 +287,6 @@
   </data>
   <data name="lblGameType" xml:space="preserve">
     <value>Game Type</value>
-  </data>
-  <data name="UpdateLiveCasinoGameSettingFail" xml:space="preserve">
-    <value>Updated Game Setting {0} fail because {1}.</value>
-  </data>
-  <data name="UpdateLiveCasinoGameSettingSuccess" xml:space="preserve">
-    <value>Updated {0} Game Setting Successfully.</value>
   </data>
   <data name="lblEditLiveCasino" xml:space="preserve">
     <value>Edit Live Casino</value>
@@ -338,5 +320,11 @@
   </data>
   <data name="lblUpdateFailed" xml:space="preserve">
     <value>Updated unsuccessfully</value>
+  </data>
+  <data name="UpdatedUnsuccessfully" xml:space="preserve">
+    <value>Updated unsuccessfully</value>
+  </data>
+  <data name="lblMemberWinLimit" xml:space="preserve">
+    <value>Member Win Limit</value>
   </data>
 </root>

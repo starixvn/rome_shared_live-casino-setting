@@ -7,6 +7,7 @@ language.liveCasino['ja-JP'] = {
 	lblClose : "閉鎖",
 	lblFax : "ファックス",
 	lblFirstName : "名",
+	lblGameSetting : "Game Setting",
 	lblLastName : "氏",
 	lblMemberCommission : "メンバー手数料",
 	lblMobilePhone : "携帯電話番号",
@@ -18,6 +19,5 @@ language.liveCasino['ja-JP'] = {
 	Master : "マスター",
 	Member : "メンバー",
 	NoInformation : "情報がありません",
-	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully",
-	WarningUncheckAllStakeLevelMsg : "Un-check all stake levels will be effected to all downlines as well."
+	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully"
 };

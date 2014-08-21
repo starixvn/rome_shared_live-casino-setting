@@ -124,33 +124,6 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 10X.
-        /// </summary>
-        public static string lbl10X {
-            get {
-                return ResourceManager.GetString("lbl10X", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 3X.
-        /// </summary>
-        public static string lbl3X {
-            get {
-                return ResourceManager.GetString("lbl3X", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5X.
-        /// </summary>
-        public static string lbl5X {
-            get {
-                return ResourceManager.GetString("lbl5X", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Agent Commission.
         /// </summary>
         public static string lblAgentComm {
@@ -430,20 +403,20 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win Limit.
-        /// </summary>
-        public static string lblMaximumWinLimit {
-            get {
-                return ResourceManager.GetString("lblMaximumWinLimit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Member Commission.
         /// </summary>
         public static string lblMemberCommission {
             get {
                 return ResourceManager.GetString("lblMemberCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member Win Limit.
+        /// </summary>
+        public static string lblMemberWinLimit {
+            get {
+                return ResourceManager.GetString("lblMemberWinLimit", resourceCulture);
             }
         }
         
@@ -664,29 +637,20 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated unsuccessfully.
+        /// </summary>
+        public static string UpdatedUnsuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatedUnsuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum Win: updated successfully..
         /// </summary>
         public static string UpdatedWinLimitSuccessfully {
             get {
                 return ResourceManager.GetString("UpdatedWinLimitSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated Game Setting {0} fail because {1}..
-        /// </summary>
-        public static string UpdateLiveCasinoGameSettingFail {
-            get {
-                return ResourceManager.GetString("UpdateLiveCasinoGameSettingFail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updated {0} Game Setting Successfully..
-        /// </summary>
-        public static string UpdateLiveCasinoGameSettingSuccess {
-            get {
-                return ResourceManager.GetString("UpdateLiveCasinoGameSettingSuccess", resourceCulture);
             }
         }
         

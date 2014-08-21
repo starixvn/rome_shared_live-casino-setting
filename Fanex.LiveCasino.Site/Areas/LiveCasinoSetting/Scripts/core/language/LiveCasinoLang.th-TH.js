@@ -38,6 +38,7 @@ language.liveCasino['th-TH'] = {
 	lblMasterPT : "ค่าแบ่งสู้ของมาสเตอร์",
 	lblMaximumWin : "วงเงินชนะสูงสุด",
 	lblMemberCommission : "คอมมิชชั่นของสมาชิก",
+	lblMemberWinLimit : "วงเงินชนะของสมาชิก",
 	lblMobilePhone : "โทรศัพท์มือถือ",
 	lblNickname : "ชื่อเล่น",
 	lblNo : "ไม่",
@@ -62,8 +63,10 @@ language.liveCasino['th-TH'] = {
 	NoInformation : "ไม่มีข้อมูล",
 	Super : "สูงสุด",
 	UnauthorizeMsg : "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้",
+	UpdatedUnsuccessfully : "อัพเดทไม่สำเร็จ",
 	UpdatedWinLimitSuccessfully : "วงเงินชนะสูงสุด: อัพเดทเสร็จสมบูรณ์",
 	UpdateLiveCasinoStatusSuccess : "สถานะ: อัพเดทเสร็จสมบูรณ์",
 	UpdateLiveCasinoStatusUnSuccess : "อัพเดตไม่สำเร็จ เนื่องจาก สถานะของคาซิโนเกมสด ได้ถูกปิดการใช้งาน โดย อัพไลด์",
+	UpdateSuccessfully : "อัพเดทเสร็จสมบูรณ์",
 	WarningUncheckAllStakeLevelMsg : "ยกเลิกทุกระดับการเดิมพัน ดาวน์ไลด์ ทั้งหมดจะได้รับผลกระทบ"
 };

@@ -37,6 +37,7 @@ language.liveCasino['vi-VN'] = {
 	lblMasterPT : "PT của Master",
 	lblMaximumWin : "Tiền thắng cược lớn nhất",
 	lblMemberCommission : "Hoa hồng của Member",
+	lblMemberWinLimit : "Giới hạn tiền thắng cược của Member",
 	lblMobilePhone : "Điện thoại di động",
 	lblNickname : "Biệt danh",
 	lblNo : "Không",
@@ -61,8 +62,10 @@ language.liveCasino['vi-VN'] = {
 	NoInformation : "Thông tin chưa được cập nhật",
 	Super : "Super",
 	UnauthorizeMsg : "Bạn không được cho phép sử dụng chức năng này",
+	UpdatedUnsuccessfully : "Câp nhật không thành công",
 	UpdatedWinLimitSuccessfully : "Tiền thắng cược lớn nhất: Câp nhật thành công",
 	UpdateLiveCasinoStatusSuccess : "Trạng thái: Câp nhật thành công",
 	UpdateLiveCasinoStatusUnSuccess : "Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên",
+	UpdateSuccessfully : "Câp nhật thành công",
 	WarningUncheckAllStakeLevelMsg : "Không chọn bất kỳ cấp độ đặt cược sẽ ành hưởng đến tất cả những thành viên cấp dưới"
 };

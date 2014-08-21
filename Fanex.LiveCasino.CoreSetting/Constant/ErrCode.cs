@@ -14,5 +14,10 @@
         /// The invalid customer Error Code = 888888.
         /// </summary>
         public const int InvalidCustomer = 888888;
+
+        /// <summary>
+        /// The update game setting fail Error Code = 777777.
+        /// </summary>
+        public const int UpdateGameSettingFail = 777777;        
     }
 }

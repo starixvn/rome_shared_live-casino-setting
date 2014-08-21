@@ -286,4 +286,13 @@
   <data name="lblMasterAutoPresetPT" xml:space="preserve">
     <value>Auto Master Preset</value>
   </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>Câp nhật thành công</value>
+  </data>
+  <data name="UpdatedUnsuccessfully" xml:space="preserve">
+    <value>Câp nhật không thành công</value>
+  </data>
+  <data name="lblMemberWinLimit" xml:space="preserve">
+    <value>Giới hạn tiền thắng cược của Member</value>
+  </data>
 </root>

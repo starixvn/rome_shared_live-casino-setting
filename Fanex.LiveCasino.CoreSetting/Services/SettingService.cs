@@ -324,7 +324,7 @@
 
             if (criteria.IsValid())
             {
-                currentWinLimit = _settingRepository.Get<CurrentMemberWin>(criteria);
+                currentWinLimit = _settingRepository.GetCurrentMemberWin(criteria);
             }
 
             return currentWinLimit;

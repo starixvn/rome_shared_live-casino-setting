@@ -148,7 +148,7 @@
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
     <value>状態: Updated successfully</value>
   </data>
-  <data name="WarningUncheckAllStakeLevelMsg" xml:space="preserve">
-    <value>Un-check all stake levels will be effected to all downlines as well.</value>
+  <data name="lblGameSetting" xml:space="preserve">
+    <value>Game Setting</value>
   </data>
 </root>

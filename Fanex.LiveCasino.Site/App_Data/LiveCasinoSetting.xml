@@ -1,16 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Live Casino - GET PT Setting">
-    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBAGE.bodb02.bodbAdminNet">
-      <Mapping DataField="mobilephone" ObjectProperty="Mobile" />
-      <Mapping DataField="currency" ObjectProperty="CurrencyId" />
-      <Mapping DataField="SyncLiveCasino" ObjectProperty="IsSyncLiveCasino" />
-      <Mapping DataField="isAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
-      <Mapping DataField="MaxWinLiveCasino" ObjectProperty="Max" />
-      <Mapping DataField="UplineIsAutoResetLiveCasino" ObjectProperty="IsAutoReset" />
-      <Mapping DataField="UplineMaxWinLiveCasino" ObjectProperty="Max" />
-      <Mapping DataField="username2" ObjectProperty="NickName" />
-    </Setting>
+    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -47,11 +38,9 @@
     <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LV_BackupDB"  Plain="1"/>
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LV_BackupDB" Plain="1" />
     <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"  />
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Live Casino - Win Limit">
-    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02.BODBDownlineNet"  >
-      <Mapping DataField="LCSWinPercent" ObjectProperty="WinPercent"></Mapping>
-    </Setting>
+    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02.BODBDownlineNet" />
   </Function>
 </Functions>

@@ -289,4 +289,13 @@
   <data name="lblSuperAutoPresetPT" xml:space="preserve">
     <value>ระบบอัตโนมัติ ประสิทธิภาพสูงที่ได้ติดตั้งไว้ก่อนแล้ว</value>
   </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>อัพเดทเสร็จสมบูรณ์</value>
+  </data>
+  <data name="UpdatedUnsuccessfully" xml:space="preserve">
+    <value>อัพเดทไม่สำเร็จ</value>
+  </data>
+  <data name="lblMemberWinLimit" xml:space="preserve">
+    <value>วงเงินชนะของสมาชิก</value>
+  </data>
 </root>

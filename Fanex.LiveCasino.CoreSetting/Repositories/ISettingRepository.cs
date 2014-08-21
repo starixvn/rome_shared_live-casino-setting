@@ -9,6 +9,8 @@
     {
         CustInfo GetCustomerInfo(ICriteria criteria);
 
+        CurrentMemberWin GetCurrentMemberWin(ICriteria criteria);
+
         PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria);
 
         PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria);

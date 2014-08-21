@@ -283,4 +283,16 @@
   <data name="lblSuperAutoPresetPT" xml:space="preserve">
     <value>자동으로 슈퍼 미리 조정하기</value>
   </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>성공적으로 업데이트하였습니다.</value>
+  </data>
+  <data name="UpdatedUnsuccessfully" xml:space="preserve">
+    <value>업데이트 성공</value>
+  </data>
+  <data name="lblYes" xml:space="preserve">
+    <value>예</value>
+  </data>
+  <data name="lblMemberWinLimit" xml:space="preserve">
+    <value>회원의  지급한도</value>
+  </data>
 </root>

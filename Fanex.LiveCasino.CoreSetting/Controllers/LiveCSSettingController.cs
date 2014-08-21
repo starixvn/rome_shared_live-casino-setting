@@ -3,9 +3,11 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
@@ -283,13 +285,22 @@
             var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
-            if (positionTakingAndCommResults.IsSuccessful)
+            if (custSetting.CustInfo.IsSyncLiveCasino
+                || (!custSetting.CustInfo.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
             {
                 var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
 
                 var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting).Results;
                 resultList.Results.AddRange(gameSettingResult);
+            }
+            else
+            {
+                resultList.Results.Add(new CommandResult
+                {
+                    Code = ErrCode.UpdateGameSettingFail,
+                    Message = string.Format("{0}: {1}", LiveCasinoLang.lblGameSetting, LiveCasinoLang.UpdatedUnsuccessfully)
+                });
             }
 
             return resultList;

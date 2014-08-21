@@ -38,6 +38,7 @@ language.liveCasino['zh-CN'] = {
 	lblMasterPT : "总代理占成数",
 	lblMaximumWin : "最高赢取倍数",
 	lblMemberCommission : "会员佣金",
+	lblMemberWinLimit : "会员的赢额上限",
 	lblMobilePhone : "手机",
 	lblNickname : "昵称",
 	lblNo : "无",
@@ -62,8 +63,10 @@ language.liveCasino['zh-CN'] = {
 	NoInformation : "没资料显示",
 	Super : "超级",
 	UnauthorizeMsg : "您没有使用此功能的权限",
+	UpdatedUnsuccessfully : "更新不成功",
 	UpdatedWinLimitSuccessfully : "最高赢取倍数: 修改成功",
 	UpdateLiveCasinoStatusSuccess : "状态: 修改成功",
 	UpdateLiveCasinoStatusUnSuccess : "修改失败，因为上线的娱乐厅状态以被禁止",
+	UpdateSuccessfully : "修改成功",
 	WarningUncheckAllStakeLevelMsg : "移除所有投注组合将影响与应用到所有的下线"
 };
