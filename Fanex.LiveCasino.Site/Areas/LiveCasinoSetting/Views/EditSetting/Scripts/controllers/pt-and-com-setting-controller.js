@@ -16,8 +16,12 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 case fanex.liveCasinoSetting.custRole.Master:
                     if (custSetting.PtAndComSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
-                        currentPt.NewPresetOnMember = currentPt.S3;
-                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(currentPt.S3, 0, currentPt.S3, fanex.liveCasinoSetting.PT_INTERVAL);
+                        currentPt.NewPresetOnMember = fanex.roundNumber(currentPt.S4 - currentPt.M3);
+                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(
+                                                            currentPt.NewPresetOnMember,
+                                                            0,
+                                                            currentPt.NewPresetOnMember, 
+                                                            fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
@@ -29,8 +33,12 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 case fanex.liveCasinoSetting.custRole.Agent:
                     if (custSetting.PtAndComSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
-                        currentPt.NewPresetOnMember = currentPt.M2;
-                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(currentPt.M2, 0, currentPt.M2, fanex.liveCasinoSetting.PT_INTERVAL);
+                        currentPt.NewPresetOnMember = fanex.roundNumber(currentPt.M3 - currentPt.A2);
+                        $scope.presetOnMemberOptions = fanex.createOptionsFromRange(
+                                                            currentPt.NewPresetOnMember,
+                                                            0,
+                                                            currentPt.NewPresetOnMember, 
+                                                            fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
