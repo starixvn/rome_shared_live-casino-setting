@@ -87,15 +87,14 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypeOld">The game type old.</param>
         /// <param name="gameTypeNew">The game type new.</param>
-        /// <param name="isInsert">If set to <c>true</c> [is insert].</param>
-        public void LogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false)
+        public void LogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew)
         {
             var log = new LogUpdateStakeLevel
             {
                 Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
                 SettingContext = settingContext,
                 NewGameType = gameTypeNew,
-                OldGameType = isInsert ? null : gameTypeOld
+                OldGameType = gameTypeOld
             };
 
             if (gameTypeOld == null || gameTypeNew.CheckedStakeLevelId != gameTypeOld.CheckedStakeLevelId)

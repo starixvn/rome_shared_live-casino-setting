@@ -13,7 +13,7 @@
 
         void LogManualInsertAccount(SettingContext settingContext);
 
-        void LogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew, bool isInsert = false);
+        void LogManualUpdateStakeLevel(SettingContext settingContext, GameType gameTypeOld, GameType gameTypeNew);
 
         ICommandResult WriteLog(ILogData logData);
     }

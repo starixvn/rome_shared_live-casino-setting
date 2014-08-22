@@ -318,29 +318,52 @@
         /// </returns>
         public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
-            var isInsert = false;
+            var isInsertAccount = false;
 
             if (!custInfo.IsSyncLiveCasino)
             {
-                isInsert = ManualSyncAccount(settingContext);
+                isInsertAccount = ManualSyncAccount(settingContext);
 
-                // For case upline is synced with unchecked all stake level
-                if (gameTypes == null || !gameTypes.Any())
+                if (!settingContext.IsEdittingSuper)
                 {
                     CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
                     {
-                        string site = GetCustomerSiteByUsername(custInfo.UserName);
-                        gameTypes = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
+                        List<GameType> directUplineGameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
+
+                        if (gameTypes == null)
+                        {
+                            gameTypes = directUplineGameTypes;
+                        }
+                        else if (gameTypes.Count < directUplineGameTypes.Count)
+                        {
+                            var gameTypeUncheckeds = new List<GameType>();
+
+                            foreach (var itemGameType in directUplineGameTypes)
+                            {
+                                var foundedGameType = gameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
+                                if (foundedGameType == null)
+                                {
+                                    gameTypeUncheckeds.Add(itemGameType);
+                                }
+                            }
+
+                            gameTypes.AddRange(gameTypeUncheckeds);
+                            gameTypes = gameTypes.OrderBy(x => x.Id).ToList();
+                        }
                     }
                 }
             }
 
-            List<GameType> gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
+            var gameTypeOlds = new List<GameType>();
+            if (!isInsertAccount)
+            {
+                gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
+            }
 
             ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
 
-            WriteLogUpdateStakeLevel(settingContext, gameTypes, isInsert, gameTypeOlds, resultUpdateStakeLevels);
+            WriteLogUpdateStakeLevel(settingContext, gameTypes, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
         }
@@ -428,13 +451,11 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <param name="isInsert">If set to <c>true</c> [is insert].</param>
         /// <param name="gameTypeOlds">The game type olds.</param>
         /// <param name="resultUpdateStakeLevels">The result update stake levels.</param>
         private void WriteLogUpdateStakeLevel(
             SettingContext settingContext,
             List<GameType> gameTypes,
-            bool isInsert,
             List<GameType> gameTypeOlds,
             ICommandResults resultUpdateStakeLevels)
         {
@@ -451,7 +472,7 @@
                     if (newGameType != null)
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
-                        _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType, isInsert);
+                        _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType);
                     }
                 }
             }
