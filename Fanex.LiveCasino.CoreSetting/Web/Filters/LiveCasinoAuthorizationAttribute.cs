@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
     using System;
+    using System.Collections.Specialized;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
@@ -8,7 +9,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Microsoft.Practices.Unity;
 
     /// <summary>
     /// Live casino authorization filter.
@@ -65,15 +65,28 @@
         private bool IsAuthorizedRead(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContext = new SettingContext
+            var formCollection = filterContext.HttpContext.Request.Form;
+            var settingContext = new SettingContext();
+            if (formCollection.Count > 0)
             {
-                UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId")),
-                UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId")),
-                AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId")),
-                TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId")),
-                TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId")),
-                TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds")
-            };
+                settingContext.UplineId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
+                settingContext.UplineRoleId = Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
+                settingContext.AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId"));
+                settingContext.TargetCustId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
+                settingContext.TargetRoleId = Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
+                settingContext.TargetCustIds = GetFormValue(formCollection, "targetCustIds");
+                settingContext.TargetUsernames = GetFormValue(formCollection, "targetUsernames");
+            }
+            else
+            {
+                settingContext.UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
+                settingContext.UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
+                settingContext.AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId"));
+                settingContext.TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
+                settingContext.TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
+                settingContext.TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds");
+                settingContext.TargetUsernames = GetActionParameterValue(valueProvider, "targetUsernames");
+            }
 
             return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
         }
@@ -103,6 +116,11 @@
             return valueProvider.GetValue(parameterName) != null
                                 ? valueProvider.GetValue(parameterName).AttemptedValue
                                 : string.Empty;
+        }
+
+        private string GetFormValue(NameValueCollection formCollection, string formKey)
+        {
+            return formCollection[formKey] ?? string.Empty;
         }
     }
 }

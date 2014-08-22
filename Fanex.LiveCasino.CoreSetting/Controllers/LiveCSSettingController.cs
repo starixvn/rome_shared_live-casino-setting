@@ -73,6 +73,8 @@
                     SystemId = _commonUtil.LiveCasinoSettings.SystemId
                 };
 
+            SetCustSettingJavascriptObject(settingContext);
+
             return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
@@ -127,18 +129,9 @@
                 return View("~/Areas/LiveCasinoSetting/Views/Common/NoInformation.cshtml");
             }
 
-            return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
-        }
+            SetCustSettingJavascriptObject(settingContext);
 
-        /// <summary>
-        /// Get JAVASCRIPT string for editing customer.
-        /// </summary>
-        /// <param name="settingContext">Current setting context for loading data.</param>
-        /// <returns>JAVASCRIPT string.</returns>
-        [HttpGet, LiveCasinoAuthorization]
-        public JavaScriptResult GetSettingForUpdate(SettingContext settingContext)
-        {
-            return JavaScript(GetSettingJavascriptObjectForUpdate(settingContext, "custSetting"));
+            return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
         }
 
         /// <summary>
@@ -369,6 +362,11 @@
             }
 
             return string.Empty;
+        }
+
+        private void SetCustSettingJavascriptObject(SettingContext settingContext)
+        {
+            ViewBag.CustSettingViewModel = GetSettingJavascriptObjectForUpdate(settingContext, "custSetting");
         }
     }
 }
