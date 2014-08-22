@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
+    using System;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
@@ -16,7 +17,6 @@
     {
         private readonly ICommonUtil _commonUtil = new CommonUtil();
 
-        [Dependency]
         public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
 
         public bool IsHost { get; set; }
@@ -29,24 +29,30 @@
         {
             base.OnAuthorization(filterContext);
 
-            var isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);
-
-            if (!isAuthorized)
+            if (!string.IsNullOrEmpty(_commonUtil.LiveCasinoSettings.AuthorizationServiceType))
             {
-                HttpResponseBase response = filterContext.HttpContext.Response;
+                var authorizationType = Type.GetType(_commonUtil.LiveCasinoSettings.AuthorizationServiceType);
+                LiveCasinoAuthenticationService = Activator.CreateInstance(authorizationType) as ILiveCasinoAuthorizationService;
 
-                if (filterContext.HttpContext.Request.IsAjaxRequest())
+                var isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);
+
+                if (!isAuthorized)
                 {
-                    response.Clear();
-                    response.Write(LiveCasinoLang.UnauthorizeMsg);
-                    filterContext.Result = new HttpUnauthorizedResult();
-                    filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                    response.End();
-                }
-                else
-                {
-                    var notAuthorizedUrl = _commonUtil.LiveCasinoSettings.UnAuthorizeUrl;
-                    filterContext.Result = new RedirectResult(notAuthorizedUrl);
+                    HttpResponseBase response = filterContext.HttpContext.Response;
+
+                    if (filterContext.HttpContext.Request.IsAjaxRequest())
+                    {
+                        response.Clear();
+                        response.Write(LiveCasinoLang.UnauthorizeMsg);
+                        filterContext.Result = new HttpUnauthorizedResult();
+                        filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                        response.End();
+                    }
+                    else
+                    {
+                        var notAuthorizedUrl = _commonUtil.LiveCasinoSettings.UnAuthorizeUrl;
+                        filterContext.Result = new RedirectResult(notAuthorizedUrl);
+                    }
                 }
             }
         }

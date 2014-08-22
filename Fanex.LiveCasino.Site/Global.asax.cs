@@ -24,21 +24,21 @@ namespace Fanex.LiveCasino.Site
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-            RegisterFilterDependencyInjection();
+            ////RegisterFilterDependencyInjection();
         }
 
-        private void RegisterFilterDependencyInjection()
-        {
-            var oldProvider = FilterProviders.Providers.Single(
-                   f => f is FilterAttributeFilterProvider
-               );
-            FilterProviders.Providers.Remove(oldProvider);
+        ////private void RegisterFilterDependencyInjection()
+        ////{
+        ////    var oldProvider = FilterProviders.Providers.Single(
+        ////           f => f is FilterAttributeFilterProvider
+        ////       );
+        ////    FilterProviders.Providers.Remove(oldProvider);
 
-            var unityBootstrapper = new UnityBootstrapper();
-            unityBootstrapper.RegisterTypes();
-            var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
-            FilterProviders.Providers.Add(provider);
-        }
+        ////    var unityBootstrapper = new UnityBootstrapper();
+        ////    unityBootstrapper.RegisterTypes();
+        ////    var provider = new UnityFilterAttributeFilterProvider(unityBootstrapper.ContainerInstance);
+        ////    FilterProviders.Providers.Add(provider);
+        ////}
                 
     }
 }

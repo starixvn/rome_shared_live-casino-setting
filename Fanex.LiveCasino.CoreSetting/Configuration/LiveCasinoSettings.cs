@@ -8,7 +8,8 @@
     public class LiveCasinoSettings : ConfigurationSection
     {
         private const string __SYSTEM_ID = "SystemId";
-        private const string __UN_AUTHORIZED_URL = "UnAuthorizeUrl";
+        private const string __UN_AUTHORIZED_URL = "UnAuthorizedUrl";
+        private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
 
         [ConfigurationProperty(__SYSTEM_ID, IsRequired = true)]
         public int SystemId
@@ -22,6 +23,13 @@
         {
             get { return (string)this[__UN_AUTHORIZED_URL]; }
             set { this[__UN_AUTHORIZED_URL] = value; }
+        }
+
+        [ConfigurationProperty(__AUTHORIZATION_SERVICE_TYPE, IsRequired = false, DefaultValue = "")]
+        public string AuthorizationServiceType
+        {
+            get { return (string)this[__AUTHORIZATION_SERVICE_TYPE]; }
+            set { this[__AUTHORIZATION_SERVICE_TYPE] = value; }
         }
     }
 }
