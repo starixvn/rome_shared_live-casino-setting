@@ -319,7 +319,6 @@
         public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             var isInsertAccount = false;
-
             if (!custInfo.IsSyncLiveCasino)
             {
                 isInsertAccount = ManualSyncAccount(settingContext);
@@ -329,27 +328,29 @@
                     CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
                     {
-                        List<GameType> directUplineGameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
-
                         if (gameTypes == null)
                         {
-                            gameTypes = directUplineGameTypes;
+                            string site = GetCustomerSiteByUsername(custInfo.UserName);
+                            gameTypes = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
                         }
-                        else if (gameTypes.Count < directUplineGameTypes.Count)
+                        else
                         {
-                            var gameTypeUncheckeds = new List<GameType>();
-
-                            foreach (var itemGameType in directUplineGameTypes)
+                            List<GameType> directUplineGameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
+                            if (gameTypes.Count < directUplineGameTypes.Count)
                             {
-                                var foundedGameType = gameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
-                                if (foundedGameType == null)
+                                var gameTypeUncheckeds = new List<GameType>();
+                                foreach (var itemGameType in directUplineGameTypes)
                                 {
-                                    gameTypeUncheckeds.Add(itemGameType);
+                                    var foundedGameType = gameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
+                                    if (foundedGameType == null)
+                                    {
+                                        gameTypeUncheckeds.Add(itemGameType);
+                                    }
                                 }
-                            }
 
-                            gameTypes.AddRange(gameTypeUncheckeds);
-                            gameTypes = gameTypes.OrderBy(x => x.Id).ToList();
+                                gameTypes.AddRange(gameTypeUncheckeds);
+                                gameTypes = gameTypes.OrderBy(x => x.Id).ToList();
+                            }
                         }
                     }
                 }
@@ -362,7 +363,6 @@
             }
 
             ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
-
             WriteLogUpdateStakeLevel(settingContext, gameTypes, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
