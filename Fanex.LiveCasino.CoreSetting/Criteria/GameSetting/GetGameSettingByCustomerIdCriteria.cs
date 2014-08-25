@@ -19,6 +19,6 @@
         public override string GetSettingKey()
         {
             return "TP_Admin_StakeLevel_GetCustStakeLevelMulti";
-        }
+        }        
     }
 }

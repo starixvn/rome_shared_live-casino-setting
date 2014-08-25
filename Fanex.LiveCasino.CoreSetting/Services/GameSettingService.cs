@@ -318,12 +318,11 @@
         /// </returns>
         public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
-            var isInsertAccount = false;
+            var gameTypeOlds = new List<GameType>();
             if (!custInfo.IsSyncLiveCasino)
             {
-                isInsertAccount = ManualSyncAccount(settingContext);
-
-                if (!settingContext.IsEdittingSuper)
+                var insertCommandResult = ManualSyncAccount(settingContext);
+                if (!settingContext.IsEdittingSuper && insertCommandResult.IsSuccessful)
                 {
                     CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
@@ -355,9 +354,7 @@
                     }
                 }
             }
-
-            var gameTypeOlds = new List<GameType>();
-            if (!isInsertAccount)
+            else
             {
                 gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
             }
@@ -421,7 +418,7 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <returns>Insert successfully.</returns>
-        private bool ManualSyncAccount(SettingContext settingContext)
+        private ICommandResult ManualSyncAccount(SettingContext settingContext)
         {
             ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
 
@@ -443,7 +440,7 @@
                 }
             }
 
-            return resultInsertAccount.IsSuccessful;
+            return resultInsertAccount;
         }
 
         /// <summary>
