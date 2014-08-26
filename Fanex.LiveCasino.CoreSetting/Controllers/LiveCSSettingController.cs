@@ -44,6 +44,7 @@
         /// <param name="targetCustId">Target customer is being edited.</param>
         /// <param name="targetRoleId">Target role of customer being edited.</param>
         /// <param name="adminId">Admin id doing action.</param>
+        /// <param name="subAccId">Sub account id for doing action.</param>
         /// <param name="formType">Current Form.</param>
         /// <param name="language">Current language key.</param>
         /// <returns>
@@ -57,6 +58,7 @@
             int targetCustId = 0,
             int targetRoleId = 0,
             int adminId = 0,
+            int subAccId = 0,
             int formType = (int)FormType.Edit,
             string language = "E")
         {
@@ -70,6 +72,7 @@
                     FormType = (FormType)formType,
                     AdminId = adminId,
                     Language = language,
+                    SubAccId = subAccId,
                     SystemId = _commonUtil.LiveCasinoSettings.SystemId
                 };
 
@@ -89,6 +92,7 @@
         /// <param name="targetSyncStatus">List of sync customer status are being edited.</param>
         /// <param name="targetRoleId">Target customer role id of Customer is being edited.</param>
         /// <param name="adminId">Admin id is doing action.</param>
+        /// <param name="subAccId">Sub account id for doing action.</param>
         /// <param name="formType">Current form type.</param>
         /// <param name="language">Current language.</param>
         /// <returns>
@@ -104,6 +108,7 @@
             string targetSyncStatus = "",
             int targetRoleId = 0,
             int adminId = 0,
+            int subAccId = 0,
             int formType = (int)FormType.Edit,
             string language = "E")
         {
@@ -119,6 +124,7 @@
                 AdminId = adminId,
                 Language = language,
                 IsEditMultiple = true,
+                SubAccId = subAccId,
                 TargetSyncStatus = targetSyncStatus,
                 SystemId = _commonUtil.LiveCasinoSettings.SystemId
             };
