@@ -3,14 +3,15 @@
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
 
     /// <summary>
     /// Base controller for handle pre-request.
     /// </summary>
     public class BaseController : Controller
     {
-        private static readonly CultureInfo DefaultCulture = CultureInfo.CreateSpecificCulture("en-US");
-        private static readonly string LanguageKey = "Fanex.LiveCasino.CoreSetting.Language";
+        private readonly CultureInfo _defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
+        private readonly ICommonUtil _commonUtil = new CommonUtil();
 
         /// <summary>
         /// Set current language.
@@ -18,14 +19,15 @@
         /// <param name="filterContext">Current filter context.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var currentLanguage = Session[LanguageKey] != null ? Session[LanguageKey].ToString() : string.Empty;
+            var currentLanguageKey = _commonUtil.LiveCasinoSettings.LanguageSessionKey;
+            var currentLanguage = Session[currentLanguageKey] != null ? Session[currentLanguageKey].ToString() : string.Empty;
 
             if (!string.IsNullOrEmpty(currentLanguage))
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(currentLanguage);
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(currentLanguage);
-                Thread.CurrentThread.CurrentCulture.DateTimeFormat = DefaultCulture.DateTimeFormat;
-                Thread.CurrentThread.CurrentCulture.NumberFormat = DefaultCulture.NumberFormat;
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat = _defaultCulture.DateTimeFormat;
+                Thread.CurrentThread.CurrentCulture.NumberFormat = _defaultCulture.NumberFormat;
             }
 
             base.OnActionExecuting(filterContext);

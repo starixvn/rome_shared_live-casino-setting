@@ -200,7 +200,6 @@
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />
-    <Compile Include="Web\Filters\UnityFilterAttributeFilterProvider.cs" />
     <Compile Include="Web\LiveCasinoSettingAreRegistration.cs" />
   </ItemGroup>
   <ItemGroup>

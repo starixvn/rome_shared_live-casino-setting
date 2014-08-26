@@ -10,6 +10,7 @@
         private const string __SYSTEM_ID = "SystemId";
         private const string __UN_AUTHORIZED_URL = "UnAuthorizedUrl";
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
+        private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
 
         [ConfigurationProperty(__SYSTEM_ID, IsRequired = true)]
         public int SystemId
@@ -30,6 +31,13 @@
         {
             get { return (string)this[__AUTHORIZATION_SERVICE_TYPE]; }
             set { this[__AUTHORIZATION_SERVICE_TYPE] = value; }
+        }
+
+        [ConfigurationProperty(__LANGUAGE_SESSION_KEY, IsRequired = false, DefaultValue = "")]
+        public string LanguageSessionKey
+        {
+            get { return (string)this[__LANGUAGE_SESSION_KEY]; }
+            set { this[__LANGUAGE_SESSION_KEY] = value; }
         }
     }
 }
