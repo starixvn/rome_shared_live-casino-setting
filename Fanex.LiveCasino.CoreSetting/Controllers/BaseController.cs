@@ -3,11 +3,13 @@
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
+    using System.Web.SessionState;
     using Fanex.LiveCasino.CoreSetting.Utilities;
 
     /// <summary>
     /// Base controller for handle pre-request.
     /// </summary>
+    [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
         private readonly CultureInfo _defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
