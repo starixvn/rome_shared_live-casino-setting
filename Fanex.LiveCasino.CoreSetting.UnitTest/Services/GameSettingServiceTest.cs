@@ -691,7 +691,7 @@
 
             // Assert
             _settingRepository.ReceivedWithAnyArgs().InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting);
-        }        
+        }
 
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting not empty_ call write log.
@@ -1023,27 +1023,7 @@
 
             // Assert
             Assert.IsFalse(updateResult.IsSuccessful);
-        }
-
-        /// <summary>
-        /// Updates the manual_ customer is synced_ call get game setting before update.
-        /// </summary>
-        [Test]
-        public void UpdateManual_CustomerIsSynced_CallGetGameSettingBeforeUpdate()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var custInfo = Substitute.For<CustInfo>();
-
-            settingContext.TargetCustId = 1;
-            custInfo.IsSyncLiveCasino = true;
-
-            // Action
-            _gameSettingService.UpdateManual(settingContext, custInfo, Arg.Any<List<GameType>>());
-
-            // Assert
-            _gameSettingService.Received().GetGameSettingByCustomerId(settingContext.TargetCustId);
-        }
+        }        
 
         /// <summary>
         /// Updates the manual_ when called_ call update stake level.
@@ -1068,12 +1048,14 @@
         /// Updates the manual_ customer is not synced_ call insert manual account and insert fail return do not call write log.
         /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertFailReturnDoNotCallWriteLog()
+        public void UpdateManual_SuperIsNotSynced_CallInsertManualAccountAndInsertFailReturnDoNotCallWriteLog()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
             var custInfo = Substitute.For<CustInfo>();
             var gameSetting = Substitute.For<List<GameType>>();
+
+            settingContext.TargetRoleId = (int)CustRole.Super;
 
             _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
@@ -1131,18 +1113,18 @@
         /// Updates the manual_ customer is not synced_ call insert manual account and insert success call write log.
         /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessCallWriteLog()
+        public void UpdateManual_SuperIsNotSynced_CallInsertManualAccountAndInsertSuccessCallWriteLog()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
             var custInfo = Substitute.For<CustInfo>();
             var gameSetting = Substitute.For<List<GameType>>();
 
+            settingContext.TargetRoleId = (int)CustRole.Super;
+
             _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });            
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });            
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1155,12 +1137,14 @@
         /// Updates the manual_ customer is not synced_ call insert manual account and insert success call update synchronize live casino.
         /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessCallUpdateSyncLiveCasino()
+        public void UpdateManual_SuperIsNotSynced_CallInsertManualAccountAndInsertSuccessCallUpdateSyncLiveCasino()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
             var custInfo = Substitute.For<CustInfo>();
             var gameSetting = Substitute.For<List<GameType>>();
+
+            settingContext.TargetRoleId = (int)CustRole.Super;
 
             _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
@@ -1180,14 +1164,16 @@
         /// and update synchronize live casino fail dot not call update live casino status.
         /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoFailDotNotCallUpdateLiveCasinoStatus()
+        public void UpdateManual_SuperIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoFailDotNotCallUpdateLiveCasinoStatus()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
             var custInfo = Substitute.For<CustInfo>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
+            settingContext.TargetRoleId = (int)CustRole.Super;
+
+            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
@@ -1205,14 +1191,16 @@
         /// and update synchronize live casino success call update live casino status.
         /// </summary>
         [Test]
-        public void UpdateManual_CustomerIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoSuccessCallUpdateLiveCasinoStatus()
+        public void UpdateManual_SuperIsNotSynced_CallInsertManualAccountAndInsertSuccessAndUpdateSyncLiveCasinoSuccessCallUpdateLiveCasinoStatus()
         {
             // Arragen
             var settingContext = Substitute.For<SettingContext>();
             var custInfo = Substitute.For<CustInfo>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
+            settingContext.TargetRoleId = (int)CustRole.Super;
+
+            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
@@ -1279,60 +1267,7 @@
             // Assert
             _settingRepository.DidNotReceive().GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>());
         }
-
-        /// <summary>
-        /// Updates the manual_ customer is not synced and game setting is null_ call get customer info_ direct up line.
-        /// </summary>
-        [Test]
-        public void UpdateManual_CustomerIsNotSyncedAndGameSettingIsNull_CallGetCustomerInfo_DirectUpline()
-        {
-            // Arragen
-            var settingContext = Substitute.For<SettingContext>();
-            var custInfo = Substitute.For<CustInfo>();
-            var gameSetting = Substitute.For<List<GameType>>();
-
-            settingContext.TargetRoleId = (int)CustRole.Super;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>()).Returns(new CustInfo { IsSyncLiveCasino = true });
-
-            // Action
-            var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
-
-            // Assert
-            _settingRepository.Received().GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>());
-        }
-
-        /// <summary>
-        /// Updates the manual multiple_ list customer information is empty_ do nothing.
-        /// </summary>
-        [Test]
-        public void UpdateManualMultiple_ListCustInfoIsEmpty_DoNothing()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var gameSetting = Substitute.For<List<GameType>>();
-            var custInfo = Substitute.For<CustInfo>();
-
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
-                                {
-                                      new CustInfo { CustId = 1, UserName = "master1", IsSyncLiveCasino = false },
-                                      new CustInfo { CustId = 2, UserName = "master2", IsSyncLiveCasino = false },
-                                      new CustInfo { CustId = 3, UserName = "master3", IsSyncLiveCasino = false }
-                                });
-
-            // Action
-            _gameSettingService.UpdateManualMultiple(settingContext, gameSetting);
-
-            // Assert
-            _gameSettingService.Received(4).UpdateManual(settingContext, custInfo, gameSetting);
-        }
-
+        
         /// <summary>
         /// Updates the synchronize live casino_ when called_ update synced status.
         /// </summary>

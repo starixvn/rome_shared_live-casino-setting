@@ -135,6 +135,8 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
+            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
                            {
@@ -159,6 +161,8 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
+            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
                            {
@@ -183,6 +187,8 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
+            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
                            {
