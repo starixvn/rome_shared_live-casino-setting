@@ -61,7 +61,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commission: updated successfully..
+        ///   Looks up a localized string similar to Commission: Updated successfully..
         /// </summary>
         public static string _101 {
             get {
@@ -70,7 +70,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Min Position: updated successfully..
+        ///   Looks up a localized string similar to Min Position: Updated successfully..
         /// </summary>
         public static string _102 {
             get {
@@ -79,7 +79,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position taking: updated successfully..
+        ///   Looks up a localized string similar to Position taking: Updated successfully..
         /// </summary>
         public static string _103 {
             get {
@@ -88,7 +88,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win: updated successfully..
+        ///   Looks up a localized string similar to Maximum Win: Updated successfully..
         /// </summary>
         public static string _104 {
             get {
@@ -646,7 +646,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Win: updated successfully..
+        ///   Looks up a localized string similar to Maximum Win: Updated successfully..
         /// </summary>
         public static string UpdatedWinLimitSuccessfully {
             get {
@@ -655,7 +655,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status: updated successfully..
+        ///   Looks up a localized string similar to Status: Updated successfully..
         /// </summary>
         public static string UpdateLiveCasinoStatusSuccess {
             get {

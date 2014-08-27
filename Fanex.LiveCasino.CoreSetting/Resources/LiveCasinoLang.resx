@@ -217,22 +217,22 @@
     <value>Super</value>
   </data>
   <data name="UpdateLiveCasinoStatusSuccess" xml:space="preserve">
-    <value>Status: updated successfully.</value>
+    <value>Status: Updated successfully.</value>
   </data>
   <data name="UpdateLiveCasinoStatusUnSuccess" xml:space="preserve">
     <value>Updated Status unsuccessfully because Live Casino status has been disabled at upline.</value>
   </data>
   <data name="_101" xml:space="preserve">
-    <value>Commission: updated successfully.</value>
+    <value>Commission: Updated successfully.</value>
   </data>
   <data name="_102" xml:space="preserve">
-    <value>Min Position: updated successfully.</value>
+    <value>Min Position: Updated successfully.</value>
   </data>
   <data name="_103" xml:space="preserve">
-    <value>Position taking: updated successfully.</value>
+    <value>Position taking: Updated successfully.</value>
   </data>
   <data name="_104" xml:space="preserve">
-    <value>Maximum Win: updated successfully.</value>
+    <value>Maximum Win: Updated successfully.</value>
   </data>
   <data name="lblEnable" xml:space="preserve">
     <value>Enable</value>
@@ -277,7 +277,7 @@
     <value>Unlimited</value>
   </data>
   <data name="UpdatedWinLimitSuccessfully" xml:space="preserve">
-    <value>Maximum Win: updated successfully.</value>
+    <value>Maximum Win: Updated successfully.</value>
   </data>
   <data name="lblBettingLimit" xml:space="preserve">
     <value>Betting Limit</value>
