@@ -16,7 +16,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
             data: ptAndComUpdateModel
         }).
             success(function (mainResult) {
-                custSettingScope.afterServerReturnSuccess(mainResult);
+                custSettingScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {

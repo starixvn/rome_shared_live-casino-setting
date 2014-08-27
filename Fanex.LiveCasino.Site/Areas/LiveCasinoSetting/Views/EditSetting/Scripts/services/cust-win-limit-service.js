@@ -28,7 +28,7 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: winLimitUpdate
             }).success(function (mainResult) {
-                custSettingScope.afterServerReturnSuccess(mainResult);
+                custSettingScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {

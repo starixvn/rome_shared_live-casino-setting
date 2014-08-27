@@ -50,16 +50,21 @@ if (fanex.liveCasinoSetting) {
                 $scope.isUpdateAllSetting = false;
             };
 
-            $scope.afterServerReturnSuccess = function (mainResult) {
+            $scope.afterServerReturnSuccess = function (mainResult, isUpdatePatial) {
                 $scope.mainResult = mainResult;
 
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if ($window.parent.actionAfterUpdatedLiveCasinoSetting) {
-                            $window.parent.actionAfterUpdatedLiveCasinoSetting();
+                        if ($window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
+                            $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePatial);
                         }
                         else {
+                            if (!isUpdatePatial
+                                && $window.parent.actionAfterUpdatedLiveCasinoSetting) {
+                                $window.parent.actionAfterUpdatedLiveCasinoSetting(isUpdatePatial);
+                            }
+
                             $window.location.href = $window.location.href;
                         }
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);

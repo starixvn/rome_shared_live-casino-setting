@@ -14,7 +14,7 @@ if (fanex.liveCasinoSetting) {
                 data: custSettingForUpdate
             }).
             success(function (mainResult) {
-                scope.afterServerReturnSuccess(mainResult);
+                scope.afterServerReturnSuccess(mainResult, false);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {

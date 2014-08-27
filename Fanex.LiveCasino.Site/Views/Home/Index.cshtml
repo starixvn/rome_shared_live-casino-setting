@@ -63,7 +63,11 @@
 
 
 <script type="text/javascript">
-    window.actionAfterUpdatedLiveCasinoSetting = function () {
+    window.actionAfterUpdatedLiveCasinoSettingMultiple = function (isUpdatePatial) {
+        document.getElementById("target").submit();
+    };
+
+    window.actionAfterUpdatedLiveCasinoSetting = function (isUpdatePatial) {
         document.getElementById("target").submit();
     };
 </script>
