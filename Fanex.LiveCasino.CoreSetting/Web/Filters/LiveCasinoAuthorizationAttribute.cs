@@ -71,9 +71,11 @@
             {
                 settingContext.UplineId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
                 settingContext.UplineRoleId = Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
+                settingContext.SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId"));
                 settingContext.TargetCustId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
                 settingContext.TargetRoleId = Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
+                settingContext.TargetUsername = GetFormValue(formCollection, "targetUsername");
                 settingContext.TargetCustIds = GetFormValue(formCollection, "targetCustIds");
                 settingContext.TargetUsernames = GetFormValue(formCollection, "targetUsernames");
             }
@@ -81,9 +83,11 @@
             {
                 settingContext.UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
                 settingContext.UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
+                settingContext.SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId"));
                 settingContext.TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
                 settingContext.TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
+                settingContext.TargetUsername = GetActionParameterValue(valueProvider, "targetUsername");
                 settingContext.TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds");
                 settingContext.TargetUsernames = GetActionParameterValue(valueProvider, "targetUsernames");
             }
@@ -103,10 +107,14 @@
             {
                 UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
                 UplineRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
                 TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
+                TargetUsername = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
                 TargetRoleId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
-                TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds")
+                TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
+                TargetUsernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
+                TargetSyncStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")
             };
             return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
         }
