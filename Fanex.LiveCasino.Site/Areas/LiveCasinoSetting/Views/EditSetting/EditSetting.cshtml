@@ -19,6 +19,7 @@
 @section modeldata
 {
     <script type="text/javascript">
+        var currentLaguageKey = '@(Model.LangKey)';
         @(Html.Raw(ViewBag.CustSettingViewModel ?? string.Empty))
     </script>
 }

@@ -73,7 +73,8 @@
                     AdminId = adminId,
                     Language = language,
                     SubAccId = subAccId,
-                    SystemId = _commonUtil.LiveCasinoSettings.SystemId
+                    SystemId = _commonUtil.LiveCasinoSettings.SystemId,
+                    LangKey = GetLanguageKey()
                 };
 
             SetCustSettingJavascriptObject(settingContext);
@@ -126,7 +127,8 @@
                 IsEditMultiple = true,
                 SubAccId = subAccId,
                 TargetSyncStatus = targetSyncStatus,
-                SystemId = _commonUtil.LiveCasinoSettings.SystemId
+                SystemId = _commonUtil.LiveCasinoSettings.SystemId,
+                LangKey = GetLanguageKey()
             };
 
             settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -373,6 +375,13 @@
         private void SetCustSettingJavascriptObject(SettingContext settingContext)
         {
             ViewBag.CustSettingViewModel = GetSettingJavascriptObjectForUpdate(settingContext, "custSetting");
+        }
+
+        private string GetLanguageKey()
+        {
+            return HttpContext.Session[_commonUtil.LiveCasinoSettings.LanguageSessionKey] != null ?
+                HttpContext.Session[_commonUtil.LiveCasinoSettings.LanguageSessionKey].ToString() :
+                "en-US";
         }
     }
 }
