@@ -56,13 +56,14 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if ($window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
+                        if (custSetting.SettingContext.IsEditMultiple 
+                            && $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePatial);
                         }
                         else {
                             if (!isUpdatePatial
-                                && $window.parent.actionAfterUpdatedLiveCasinoSetting) {
-                                $window.parent.actionAfterUpdatedLiveCasinoSetting(isUpdatePatial);
+                                && $window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
+                                $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePatial);
                             }
 
                             $window.location.href = $window.location.href;
