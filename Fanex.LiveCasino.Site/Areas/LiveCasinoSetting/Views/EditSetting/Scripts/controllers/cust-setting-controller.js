@@ -56,8 +56,8 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if ($window.parent.reloadPageAfterUpdatedMultiple) {
-                            $window.parent.reloadPageAfterUpdatedMultiple();
+                        if ($window.parent.actionAfterUpdatedLiveCasinoSetting) {
+                            $window.parent.actionAfterUpdatedLiveCasinoSetting();
                         }
                         else {
                             $window.location.href = $window.location.href;
