@@ -1,8 +1,8 @@
 ﻿/*global currentLaguageKey*/
 var language = language || {};
 
-language.defaultCode = currentLaguageKey || 'en-US';
-language.code = language.defaultCode;
+language.defaultCode = 'en-US';
+language.code = currentLaguageKey || language.defaultCode;
 
 language.setLanguageCode = function (languageCode) {
     'use strict';
