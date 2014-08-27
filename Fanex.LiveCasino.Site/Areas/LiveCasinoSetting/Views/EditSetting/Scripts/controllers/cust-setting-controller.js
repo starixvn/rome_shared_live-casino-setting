@@ -56,7 +56,12 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        $window.location.href = $window.location.href;
+                        if ($window.parent.reloadPageAfterUpdatedMultiple) {
+                            $window.parent.reloadPageAfterUpdatedMultiple();
+                        }
+                        else {
+                            $window.location.href = $window.location.href;
+                        }
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             };

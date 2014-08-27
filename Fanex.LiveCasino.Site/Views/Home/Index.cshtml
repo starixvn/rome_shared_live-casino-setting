@@ -8,7 +8,7 @@
     var totalTargetCustId = string.Empty;
     var totalTargetSyncStatus = string.Empty;
     var totalTargetUsernames = string.Empty;
-    for (int i = 0; i < 200; i++)
+    for (int i = 0; i < 5; i++)
     {
         totalTargetCustId += targetCustId + ",";
         totalTargetSyncStatus += targetSyncStatus + ",";
@@ -16,17 +16,6 @@
     }
     }
 
-<form id="target" method="post" target="_blank" action="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple")">
-
-  <input type="hidden" name="uplineId" value="1176086" />
-  <input type="hidden" name="targetCustIds" value="@(totalTargetCustId)" />
-  <input type="hidden" name="targetSyncStatus" value="@(totalTargetSyncStatus)" />
-  <input type="hidden" name="targetUsernames" value="@(totalTargetUsernames)" />
-  <input type="hidden" name="uplineRoleId" value="2" />
-  <input type="hidden" name="targetRoleId" value="1" />
-
-  <input type="submit" value="Go">
-</form>
 
 @*<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176086&targetCustIds=" + totalTargetCustId + "&targetSyncStatus=" + totalTargetSyncStatus + "&targetUsernames=" + totalTargetUsernames + "&uplineRoleId=2&targetRoleId=1")">Test Max Query String For Edit Multiple</a> <br />*@
 
@@ -71,3 +60,24 @@
 <a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=15760622&directUplineId=15760622&uplineRoleId=2&adminId=8&targetCustId=15760623&targetRoleId=1&roleId=1&subAccId=645027")">Agent Edit Member</a> <br />
 <a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14521687&directUplineId=14542639&uplineRoleId=4&adminId=8&targetCustId=14542645&targetRoleId=1&subAccId=645025")">Super Edit Member</a> <br />
 <a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542629&directUplineId=14542639&uplineRoleId=3&adminId=8&targetCustId=14542645&targetRoleId=1&subAccId=645026")">Master Edit Member</a> <br />
+
+
+<script type="text/javascript">
+    window.reloadPageAfterUpdatedMultiple = function () {
+        document.getElementById("target").submit();
+    };
+</script>
+<form id="target" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple")">
+
+  <input type="hidden" name="uplineId" value="1176086" />
+  <input type="hidden" name="targetCustIds" value="@(totalTargetCustId)" />
+  <input type="hidden" name="targetSyncStatus" value="@(totalTargetSyncStatus)" />
+  <input type="hidden" name="targetUsernames" value="@(totalTargetUsernames)" />
+  <input type="hidden" name="uplineRoleId" value="2" />
+  <input type="hidden" name="targetRoleId" value="1" />
+
+  <input type="submit" value="Go">
+</form>
+<iframe id="demoIframe" name="demoIframe" style="width:100%;height: 500px">
+
+</iframe>
