@@ -68,5 +68,6 @@ language.liveCasino['zh-CN'] = {
 	UpdateLiveCasinoStatusSuccess : "状态: 修改成功",
 	UpdateLiveCasinoStatusUnSuccess : "修改失败，因为上线的娱乐厅状态以被禁止",
 	UpdateSuccessfully : "修改成功",
-	WarningUncheckAllStakeLevelMsg : "移除所有投注组合将影响与应用到所有的下线"
+	WarningUncheckAllStakeLevelMsg : "移除所有投注组合将影响与应用到所有的下线",
+	WarningUplineUncheckAllStakeLevelMsg : "没有任何投注限额，因为上线没有设置投注限额，所以影响到下线的设置。因此, 投注限额将默认设置为上线的最低投注限额"
 };

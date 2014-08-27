@@ -9,9 +9,28 @@ if (fanex.liveCasinoSetting) {
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(custSetting.GameSetting);
+            var uplineUncheckedAllMsg = '';
+
+            if (custSetting.SettingContext.IsEdittingMember && custSetting.CustInfo.IsSyncLiveCasino) {
+                angular.forEach($scope.gameSetting, function (gameType) {
+                    if (gameType.CheckedStakeLevelId === '') {
+                        gameType.BettingLimit[0].IsChecked = true;
+                        gameType.CheckedStakeLevelId = String(gameType.BettingLimit[0].Id);
+                        uplineUncheckedAllMsg += gameType.Name + ', ';
+                    }
+                });
+
+                if (uplineUncheckedAllMsg !== '') {
+                    uplineUncheckedAllMsg = '{' + uplineUncheckedAllMsg.slice(0, -2) + '} ' + language.getString('WarningUplineUncheckAllStakeLevelMsg');
+                    $scope.$parent.mainResult.Warning = {
+                        IsShow: true,
+                        Message: uplineUncheckedAllMsg
+                    };
+                }
+            }
 
             $scope.getGameSetting = function () {
-                if (custSetting.SettingContext.TargetRoleId === fanex.liveCasinoSetting.custRole.Member) {
+                if (custSetting.SettingContext.IsEdittingMember) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
                         var gameType = $scope.gameSetting[i];
                         for (var j = 0; j < gameType.BettingLimit.length; j++) {

@@ -689,5 +689,14 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
                 return ResourceManager.GetString("WarningUncheckAllStakeLevelMsg", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default.
+        /// </summary>
+        public static string WarningUplineUncheckAllStakeLevelMsg {
+            get {
+                return ResourceManager.GetString("WarningUplineUncheckAllStakeLevelMsg", resourceCulture);
+            }
+        }
     }
 }

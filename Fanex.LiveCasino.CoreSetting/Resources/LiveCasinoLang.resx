@@ -327,4 +327,7 @@
   <data name="lblMemberWinLimit" xml:space="preserve">
     <value>Member Win Limit</value>
   </data>
+  <data name="WarningUplineUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default</value>
+  </data>
 </root>

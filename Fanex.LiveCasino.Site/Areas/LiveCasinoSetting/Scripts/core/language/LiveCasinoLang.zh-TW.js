@@ -68,5 +68,6 @@ language.liveCasino['zh-TW'] = {
 	UpdateLiveCasinoStatusSuccess : "狀態: 修改成功",
 	UpdateLiveCasinoStatusUnSuccess : "修改失敗，因為上線的娛樂廳狀態以被禁止",
 	UpdateSuccessfully : "修改成功",
-	WarningUncheckAllStakeLevelMsg : "移除所有投注組合將影響與應用到所有的下線"
+	WarningUncheckAllStakeLevelMsg : "移除所有投注組合將影響與應用到所有的下線",
+	WarningUplineUncheckAllStakeLevelMsg : "沒有任何投註限額，因為上線沒有設置投註限額，所以影響到下線的設置。因此, 投註限額將默認設置為上線的最低投註限額"
 };

@@ -298,4 +298,7 @@
   <data name="lblMemberWinLimit" xml:space="preserve">
     <value>會員的贏額上限</value>
   </data>
+  <data name="WarningUplineUncheckAllStakeLevelMsg" xml:space="preserve">
+    <value>沒有任何投註限額，因為上線沒有設置投註限額，所以影響到下線的設置。因此, 投註限額將默認設置為上線的最低投註限額</value>
+  </data>
 </root>
