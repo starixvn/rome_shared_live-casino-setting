@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common;
+    using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -393,6 +394,13 @@
         private List<ICommandResult> GetPtAndComResultDetails(ICommandResult commandResult)
         {
             List<ICommandResult> resultDetails = new List<ICommandResult>();
+
+            if (commandResult.Code != null
+                && Converter.ToString2(commandResult.Code) == ErrCode.InvalidCriteria.ToString())
+            {
+                resultDetails.Add(commandResult);
+                return resultDetails;
+            }
 
             string[] errCodes = commandResult.Code.Split('\a');
             string[] errMsgs = commandResult.Message.Split('\a');

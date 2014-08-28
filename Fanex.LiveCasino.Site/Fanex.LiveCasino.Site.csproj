@@ -167,9 +167,11 @@
     <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn-hover.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn.png" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\header-popup-background.jpg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\left-header.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
+    <Content Include="Areas\LiveCasinoSetting\Content\Images\popup-background.jpg" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\right-header.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
     <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />

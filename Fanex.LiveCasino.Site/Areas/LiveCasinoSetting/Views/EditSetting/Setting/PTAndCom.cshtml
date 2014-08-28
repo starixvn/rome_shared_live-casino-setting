@@ -38,12 +38,12 @@
 
 
     <div id="presetOnMemberModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
+        <div class="modal-dialog custom-modal-dialog">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-header custom-modal-header">
+                    <button type="button" class="close custom-close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">
+                    <span class="modal-title custom-modal-title">
                         @if (Model.SystemId != (int)SystemType.Agency)
                         {
                             @LiveCasinoLang.lblConfirmUpdateMemberPT
@@ -52,9 +52,9 @@
                         {
                             @: &nbsp;
                         }
-                    </h4>
+                    </span>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body custom-modal-body">
                     <p>@(Model.IsEdittingMaster ? LiveCasinoLang.lblHaveChangeMasterPositionTaking : LiveCasinoLang.lblHaveChangeAgentPositionTaking)</p>
                     <p>@LiveCasinoLang.lblChangePTTo:</p>
                      <select 
@@ -62,11 +62,9 @@
                         data-ng-options="item.id as item.value for item in presetOnMemberOptions">
                         </select>
                     </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(true)"  data-dismiss="modal">
-                        @LiveCasinoLang.lblYes</button>
-                    <button type="button" class="btn btn-primary" data-ng-click="updatePresetOnMember(false)" data-dismiss="modal">
-                        @LiveCasinoLang.lblNo</button>
+                <div class="modal-footer custom-modal-footer">
+                    <input type="button" class="custom-btn" data-ng-click="updatePresetOnMember(true)"  data-dismiss="modal" value="@LiveCasinoLang.lblYes" />
+                    <input type="button" class="custom-btn" data-ng-click="updatePresetOnMember(false)" data-dismiss="modal" value="@LiveCasinoLang.lblNo"/>
                 </div>
             </div>
             <!-- /.modal-content -->

@@ -400,5 +400,59 @@ label.clearfix
     width: 100%;
 }
 
+/*popup layout*/
+#presetOnMemberModal .custom-modal-dialog 
+{
+	width: 400px;
+}
 
+#presetOnMemberModal .custom-modal-content 
+{
+    border-radius: 0px;
+	background: #f5f6f8 url(Images/popup-background.jpg) repeat-x fixed 50% top;
+}
+
+#presetOnMemberModal .custom-modal-content p 
+{
+	margin: 0 0 3px;
+}
+
+#presetOnMemberModal .custom-modal-header 
+{
+    color: #ffffff;
+    height: 22px;
+    padding: 3px;
+    background: #000000 url(Images/header-popup-background.jpg) repeat scroll 0 0;
+}
+
+#presetOnMemberModal .custom-close
+{
+	margin-top: -7px;
+	opacity: 1;
+}
+
+#presetOnMemberModal .custom-modal-title 
+{
+	
+}
+
+#presetOnMemberModal .custom-modal-body 
+{
+	text-align: center;
+	font-size: 11px;
+	padding: 8px;
+}
+
+#presetOnMemberModal .custom-modal-footer 
+{
+    padding: 4px;
+	text-align: center;
+	border-top: none;
+	margin-bottom: 10px;
+}
+
+#presetOnMemberModal .custom-btn
+{
+    margin-right: 3px;
+}
 
