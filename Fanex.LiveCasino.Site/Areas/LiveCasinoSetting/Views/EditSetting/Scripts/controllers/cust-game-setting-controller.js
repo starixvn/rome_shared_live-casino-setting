@@ -45,7 +45,7 @@ if (fanex.liveCasinoSetting) {
 
             $scope.updateGameSetting = function () {
                 if (!custSetting.CustInfo.IsSyncLiveCasino) {
-                    $scope.$parent.validateAndUpdateSetting();
+                    $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.GameSetting);
                     return;
                 }
 

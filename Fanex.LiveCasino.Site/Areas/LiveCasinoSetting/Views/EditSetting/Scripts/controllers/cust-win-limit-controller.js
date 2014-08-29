@@ -70,7 +70,7 @@ if (fanex.liveCasinoSetting) {
 
             $scope.updateWinLimitSetting = function () {
                 if (!custSetting.CustInfo.IsSyncLiveCasino) {
-                    $scope.$parent.validateAndUpdateSetting();
+                    $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.WinLimit);
                     return;
                 }
 

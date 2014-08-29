@@ -80,6 +80,13 @@ fanex.liveCasinoSetting.custRole = {
     Agent: 2,
     Member: 1
 };
+
+fanex.liveCasinoSetting.updateType = {
+    AllSetting: 4,
+    WinLimit: 3,
+    GameSetting: 2,
+    PositionTakingAndCommission: 1
+};
 //// Constant
 fanex.liveCasinoSetting.UN_AUTHORIZED_CODE = 401;
 fanex.liveCasinoSetting.PT_INTERVAL = 0.01;

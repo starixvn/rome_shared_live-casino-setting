@@ -147,16 +147,17 @@
         /// </summary>
         /// <param name="settingContext">Setting context for update current customer.</param>
         /// <param name="custSetting">Customer setting for update data.</param>
+        /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting)
+        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting, int updateType = (int)UpdateType.AllSetting)
         {
             settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = UpdateMultipleCustomerAllSetting(settingContext, custSetting);
+                updateResult = UpdateMultipleCustomerAllSetting(settingContext, custSetting, updateType);
             }
             else
             {
@@ -312,8 +313,9 @@
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="custSetting">Customer setting contains customer setting information.</param>
+        /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
-        private IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting)
+        private IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting, int updateType)
         {
             var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
@@ -324,13 +326,45 @@
                 settingContext.TargetCustId = custInfo.CustId;
                 settingContext.TargetUsername = custInfo.UserName;
                 custSetting.CustInfo.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
-                var subResult = UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, custSetting, updateType);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
             }
 
             return mainResults;
+        }
+
+        /// <summary>
+        /// Depend on status of current customer, we decide to update just part of setting or all setting
+        /// This handle for updating multiple customer.
+        /// </summary>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="custSetting">Customer setting.</param>
+        /// <param name="updateType">Update form type.</param>
+        /// <returns>Command result after updating.</returns>
+        private ICommandResults UpdateEachCustomerInMultipleEdit(SettingContext settingContext, CustSettingViewModel custSetting, int updateType)
+        {
+            var isSync = custSetting.CustInfo.IsSyncLiveCasino;
+            switch (updateType)
+            {
+                case (int)UpdateType.PositionTakingAndCommission:
+                    return isSync ? 
+                            _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting) 
+                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                case (int)UpdateType.WinLimit:
+                    return isSync ?
+                            _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit)
+                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                case (int)UpdateType.GameSetting:
+                    return isSync ?
+                            _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting)
+                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                case (int)UpdateType.AllSetting:
+                    return UpdateSingleCustomerAllSetting(settingContext, custSetting);
+                default:
+                    return new CommandResults();
+            }
         }
 
         /// <summary>
