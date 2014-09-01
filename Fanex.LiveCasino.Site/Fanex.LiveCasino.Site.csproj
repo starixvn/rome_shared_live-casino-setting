@@ -208,7 +208,7 @@
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-2.1.1.js" />
+    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
     <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />

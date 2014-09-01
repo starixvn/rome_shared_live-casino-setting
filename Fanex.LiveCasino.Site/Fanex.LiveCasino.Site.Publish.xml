@@ -1,126 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="\\10.18.200.209\Web\RnD\LiveCasinoCoreSetting" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Logging.dll" publishTime="09/01/2014 10:51:36" />
     <file relUrl="bin/EntityFramework.xml" publishTime="07/18/2014 11:10:44" />
-    <file relUrl="bin/Fanex.LiveCasino.CoreSetting.dll" publishTime="08/25/2014 15:28:32" />
+    <file relUrl="bin/Fanex.Logging.dll" publishTime="09/01/2014 10:51:36" />
+    <file relUrl="bin/Fanex.LiveCasino.CoreSetting.dll" publishTime="09/01/2014 13:49:13" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/Success.gif" publishTime="08/06/2014 10:07:19" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/bootstrap.js" publishTime="07/28/2014 14:53:51" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml" publishTime="08/25/2014 16:07:51" />
     <file relUrl="Areas/LiveCasinoSetting/Views/Common/NoInformation.cshtml" publishTime="08/07/2014 14:23:34" />
     <file relUrl="Areas/LiveCasinoSetting/Content/fonts/glyphicons-halflings-regular.svg" publishTime="07/28/2014 14:54:45" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/center-header.png" publishTime="08/15/2014 14:58:31" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/Images/ext-acc-btn.png" publishTime="08/21/2014 12:32:14" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/Web.config" publishTime="08/07/2014 12:36:09" />
-    <file relUrl="bin/zh-CN/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
+    <file relUrl="bin/WebGrease.dll" publishTime="07/18/2014 11:10:50" />
+    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.spec.js" publishTime="08/18/2014 13:36:58" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.js" publishTime="08/13/2014 14:32:33" />
+    <file relUrl="bin/zh-CN/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:13" />
+    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="07/18/2014 11:10:50" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.th-TH.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.zh-TW.js" publishTime="08/21/2014 15:59:00" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.zh-TW.js" publishTime="08/27/2014 11:28:08" />
     <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="06/09/2014 17:08:40" />
     <file relUrl="bin/Newtonsoft.Json.dll" publishTime="04/17/2012 01:12:34" />
     <file relUrl="bin/Microsoft.Practices.Unity.dll" publishTime="06/09/2014 17:08:40" />
     <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="07/18/2014 10:40:50" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/numeral.js" publishTime="07/25/2014 13:37:56" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-setting-controller.js" publishTime="08/21/2014 08:34:31" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-setting-controller.js" publishTime="08/29/2014 17:05:44" />
     <file relUrl="Test/angular-mocks.js" publishTime="07/30/2014 13:36:07" />
-    <file relUrl="bin/IBCFile.dll" publishTime="07/28/2014 17:43:37" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-super.htm" publishTime="08/26/2014 08:47:34" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/right-header.png" publishTime="08/15/2014 14:58:36" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.zh-CN.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml" publishTime="08/20/2014 13:54:01" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.zh-CN.js" publishTime="08/27/2014 11:28:08" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml" publishTime="09/01/2014 13:46:40" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.ja-JP.js" publishTime="08/21/2014 15:59:00" />
     <file relUrl="Global.asax" publishTime="07/21/2014 21:07:54" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/fanex-live-casino-setting-override.css" publishTime="08/18/2014 11:25:54" />
+    <file relUrl="Views/Home/Index.cshtml" publishTime="08/29/2014 17:09:04" />
     <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-info-controller.spec.js" publishTime="08/18/2014 13:45:09" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/Images/agency-button-left.gif" publishTime="08/21/2014 12:07:36" />
     <file relUrl="App_Data/LiveCasinoSetting.xml" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/Images/save.png" publishTime="07/29/2014 14:40:06" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-win-limit-controller.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="bin/RemotingRef.dll" publishTime="07/28/2014 17:43:37" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/agent-edit-member.htm" publishTime="08/11/2014 10:19:48" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/loader3.gif" publishTime="08/13/2014 17:10:11" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="07/18/2014 10:40:50" />
     <file relUrl="bin/System.Web.WebPages.dll" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="bin/ja-JP/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="06/09/2014 17:08:40" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-agent.htm" publishTime="08/20/2014 14:54:42" />
     <file relUrl="bin/System.Web.Mvc.xml" publishTime="07/18/2014 10:40:50" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/infoMsg.gif" publishTime="08/06/2014 10:07:19" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" publishTime="08/04/2014 14:13:37" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-win-limit-service.js" publishTime="08/21/2014 16:03:27" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/pt-and-com-setting-controller.js" publishTime="08/21/2014 08:45:46" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-win-limit-service.js" publishTime="08/27/2014 12:26:12" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/pt-and-com-setting-controller.js" publishTime="08/29/2014 16:38:16" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-setting-service.js" publishTime="08/27/2014 12:26:48" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/agency-title-header.jpg" publishTime="08/21/2014 10:45:00" />
     <file relUrl="bin/SPSRemoting.dll" publishTime="07/28/2014 17:43:37" />
     <file relUrl="bin/Fanex.Common.dll" publishTime="06/09/2014 17:08:39" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.en-US.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="bin/Fanex.LiveCasino.Site.dll" publishTime="08/25/2014 15:28:34" />
-    <file relUrl="bin/zh-TW/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.en-US.js" publishTime="08/27/2014 11:28:08" />
+    <file relUrl="bin/Fanex.LiveCasino.Site.dll" publishTime="09/01/2014 13:49:14" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/warning.png" publishTime="08/19/2014 17:11:02" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/fanex-live-casino-setting.css" publishTime="08/26/2014 08:50:36" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/fanex-live-casino-setting.css" publishTime="09/01/2014 13:52:16" />
     <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="07/18/2014 10:40:50" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" publishTime="08/06/2014 10:07:21" />
     <file relUrl="Test/Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.spec.js" publishTime="08/18/2014 13:44:40" />
+    <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="06/09/2014 17:08:40" />
     <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="08/15/2014 14:14:10" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml" publishTime="09/01/2014 12:54:14" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/jquery.blockUI.js" publishTime="08/13/2014 17:10:11" />
     <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.spec.js" publishTime="08/12/2014 09:50:50" />
-    <file relUrl="bin/EntityFramework.dll" publishTime="07/18/2014 11:10:44" />
-    <file relUrl="bin/th-TH/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml" publishTime="08/20/2014 10:27:47" />
-    <file relUrl="bin/vi-VN/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.js" publishTime="08/13/2014 14:32:33" />
+    <file relUrl="bin/th-TH/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:13" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml" publishTime="08/28/2014 12:24:52" />
+    <file relUrl="bin/vi-VN/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:13" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfoMultiple.cshtml" publishTime="08/08/2014 11:26:48" />
     <file relUrl="packages.config" publishTime="08/05/2014 16:31:27" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfo.cshtml" publishTime="08/15/2014 14:14:21" />
     <file relUrl="Test/custSetting.js" publishTime="08/18/2014 13:39:24" />
     <file relUrl="Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml" publishTime="08/07/2014 14:23:42" />
-    <file relUrl="Test/Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.spec.js" publishTime="08/18/2014 13:43:29" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-game-setting-service.js" publishTime="08/21/2014 16:03:16" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/agency-button-left.gif" publishTime="08/21/2014 12:07:36" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-game-setting-service.js" publishTime="08/27/2014 12:26:44" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/error-icon.gif" publishTime="08/06/2014 10:07:19" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/Images/left-header.png" publishTime="08/15/2014 14:58:38" />
     <file relUrl="bin/System.Web.Mvc.dll" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="Web.config" publishTime="08/26/2014 08:50:57" />
+    <file relUrl="Web.config" publishTime="09/01/2014 13:45:30" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/edit-master.htm" publishTime="08/08/2014 17:36:28" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/cross.png" publishTime="08/06/2014 10:07:19" />
     <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.vi-VN.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="bin/System.Web.Optimization.dll" publishTime="07/18/2014 11:10:50" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" publishTime="08/21/2014 16:03:31" />
-    <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-setting-service.spec.js" publishTime="08/18/2014 17:28:58" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/angular.js" publishTime="07/21/2014 21:07:54" />
-    <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="06/09/2014 17:08:40" />
-    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" publishTime="07/22/2014 10:00:12" />
-    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-setting-controller.spec.js" publishTime="08/04/2014 14:11:27" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/tick.png" publishTime="08/06/2014 10:07:19" />
+    <file relUrl="bin/RemotingRef.dll" publishTime="07/28/2014 17:43:37" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" publishTime="08/27/2014 13:58:39" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/angular.js" publishTime="07/21/2014 21:07:54" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/popup-background.jpg" publishTime="08/28/2014 11:55:01" />
+    <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="07/18/2014 10:40:50" />
+    <file relUrl="bin/Fanex.LiveCasino.Site.pdb" publishTime="09/01/2014 13:49:14" />
+    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="07/18/2014 10:40:50" />
+    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-setting-controller.spec.js" publishTime="08/04/2014 14:11:27" />
+    <file relUrl="bin/ja-JP/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:13" />
     <file relUrl="bin/System.Web.Razor.dll" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="07/21/2014 21:07:54" />
-    <file relUrl="Areas/LiveCasinoSetting/Content/Images/ext-acc-btn-hover.png" publishTime="08/21/2014 12:32:41" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="09/01/2014 13:32:36" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" publishTime="08/27/2014 12:26:00" />
     <file relUrl="bin/System.Web.Providers.dll" publishTime="07/18/2014 11:10:49" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-setting-service.js" publishTime="08/21/2014 16:03:23" />
+    <file relUrl="bin/System.Web.Optimization.dll" publishTime="07/18/2014 11:10:50" />
     <file relUrl="Views/Web.config" publishTime="07/21/2014 21:07:54" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/CustomerInfoMultiple.cshtml" publishTime="08/08/2014 11:26:48" />
-    <file relUrl="bin/Fanex.LiveCasino.Site.pdb" publishTime="08/25/2014 15:28:34" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.ko-KR.js" publishTime="08/21/2014 15:59:00" />
-    <file relUrl="bin/WebGrease.dll" publishTime="07/18/2014 11:10:50" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/libs/jquery-1.11.1.js" publishTime="09/01/2014 13:48:51" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml" publishTime="08/21/2014 15:59:00" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="07/18/2014 11:10:44" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/ext-acc-btn.png" publishTime="08/21/2014 12:32:14" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/fanex-live-casino-setting-override.css" publishTime="08/18/2014 11:25:54" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/save.png" publishTime="07/29/2014 14:40:06" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-info-controller.js" publishTime="08/04/2014 14:12:48" />
     <file relUrl="Views/_ViewStart.cshtml" publishTime="07/21/2014 21:07:54" />
     <file relUrl="bin/Fanex.Data.dll" publishTime="06/09/2014 17:08:39" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.ja-JP.js" publishTime="08/21/2014 15:59:00" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/Web.config" publishTime="08/07/2014 12:36:09" />
+    <file relUrl="Test/Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.spec.js" publishTime="08/18/2014 13:43:29" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/super-edit-member.htm" publishTime="08/05/2014 14:45:50" />
     <file relUrl="Areas/LiveCasinoSetting/Content/bootstrap.css" publishTime="07/28/2014 14:54:13" />
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="07/18/2014 10:40:50" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml" publishTime="08/22/2014 16:28:04" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-game-setting-controller.js" publishTime="08/21/2014 08:34:31" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml" publishTime="08/25/2014 16:07:51" />
-    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="06/09/2014 17:08:40" />
-    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="07/18/2014 11:10:50" />
+    <file relUrl="bin/zh-TW/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:14" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/left-header.png" publishTime="08/15/2014 14:58:38" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-game-setting-controller.js" publishTime="08/29/2014 16:59:11" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.ko-KR.js" publishTime="08/21/2014 15:59:00" />
+    <file relUrl="bin/IBCFile.dll" publishTime="07/28/2014 17:43:37" />
     <file relUrl="Dependencies/T4Toolbox.10.0.dll" publishTime="08/05/2014 16:40:58" />
     <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/templates/PtAndCom/master-edit-member.htm" publishTime="08/05/2014 14:45:50" />
-    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.spec.js" publishTime="08/18/2014 13:36:58" />
+    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/cust-win-limit-controller.js" publishTime="08/29/2014 16:37:50" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/btn-update-setting.jpg" publishTime="08/15/2014 15:19:31" />
-    <file relUrl="bin/ko-KR/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="08/25/2014 15:28:33" />
-    <file relUrl="Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml" publishTime="08/21/2014 15:59:00" />
+    <file relUrl="bin/ko-KR/Fanex.LiveCasino.CoreSetting.resources.dll" publishTime="09/01/2014 13:49:13" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/header-popup-background.jpg" publishTime="08/28/2014 11:55:46" />
+    <file relUrl="Areas/LiveCasinoSetting/Content/Images/ext-acc-btn-hover.png" publishTime="08/21/2014 12:32:41" />
     <file relUrl="Areas/LiveCasinoSetting/Content/Images/agency-button.gif" publishTime="08/21/2014 10:53:16" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.js" publishTime="08/25/2014 15:27:52" />
-    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" publishTime="08/21/2014 15:59:06" />
-    <file relUrl="Views/Home/Index.cshtml" publishTime="08/25/2014 10:10:47" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/language/LiveCasinoLang.js" publishTime="09/01/2014 11:26:21" />
+    <file relUrl="Areas/LiveCasinoSetting/Scripts/core/fanex-live-casino-setting.js" publishTime="09/01/2014 10:51:39" />
+    <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/cust-setting-service.spec.js" publishTime="08/18/2014 17:28:58" />
     <file relUrl="Test/Areas/LiveCasinoSetting/Views/EditSetting/Scripts/controllers/pt-and-com-setting-controller.spec.js" publishTime="08/18/2014 13:42:37" />
     <file relUrl="Views/Shared/Error.cshtml" publishTime="07/21/2014 21:07:54" />
-    <file relUrl="bin/Fanex.LiveCasino.CoreSetting.pdb" publishTime="08/25/2014 15:28:32" />
+    <file relUrl="bin/Fanex.LiveCasino.CoreSetting.pdb" publishTime="09/01/2014 13:49:13" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="07/18/2014 10:40:50" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.dll" publishTime="06/09/2014 17:08:40" />
   </publishProfile>

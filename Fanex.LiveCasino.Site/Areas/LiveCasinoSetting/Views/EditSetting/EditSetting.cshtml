@@ -5,7 +5,7 @@
 }
 @section css
 {
-    @if(Model.SystemId == (int)SystemType.Accounting)
+    @if (Model.SystemId == (int)SystemType.Accounting)
     {
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/bootstrap.css")" />
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")" />
@@ -69,8 +69,13 @@
                 </div>
                                                   break;
             case (int)SystemType.ExtAccounting:
-                                                  buttonClass = "update-setting-ext-acc-submit";
-                                                  break;
+                <div class="update-setting col-xs-12">
+                    <input type="button" class="update-setting-ext-acc-submit" data-ng-click="validateAndUpdateSetting()"  title="@LiveCasinoLang.lblUpdate"
+                        value="@LiveCasinoLang.lblUpdate" data-ng-show="!isReadOnly" />
+                </div>
+                
+              buttonClass = "update-setting-ext-acc-submit";
+              break;
         }
     }
 
