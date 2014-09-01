@@ -9,6 +9,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Resources;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -16,6 +17,18 @@
     /// </summary>
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
+        protected readonly ICommonUtil CommonUtil;
+
+        public BaseRepository()
+            : this(null)
+        {
+        }
+
+        public BaseRepository(ICommonUtil commonUtil)
+        {
+            commonUtil = commonUtil ?? new CommonUtil();
+        }
+
         /// <summary>
         /// Inserts the or update.
         /// </summary>
@@ -25,19 +38,28 @@
         {
             if (criteria.IsValid())
             {
-                var result = new CommandResult();
-
-                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                try
                 {
-                    var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
+                    var result = new CommandResult();
 
-                    objDb.ExecuteNonQuery(parameters);
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        var parameters = criteria.AddSpParams((new ResultCriteria()).GetSpParams());
 
-                    var outParameters = objDb.GetOuputParams();
-                    result = GetCommandResult(outParameters);
+                        objDb.ExecuteNonQuery(parameters);
+
+                        var outParameters = objDb.GetOuputParams();
+                        result = GetCommandResult(outParameters);
+                    }
+
+                    return result;
                 }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
 
-                return result;
+                    throw ex;
+                }
             }
 
             return new CommandResult { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
@@ -53,20 +75,29 @@
         {
             if (criteria.IsValid())
             {
-                PtAndComSetting positionTakingAndComSetting = new PtAndComSetting();
-
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                try
                 {
-                    using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                    PtAndComSetting positionTakingAndComSetting = new PtAndComSetting();
+
+                    using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {
-                        while (reader.Read())
+                        using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                         {
-                            mapSetting(reader, positionTakingAndComSetting);
+                            while (reader.Read())
+                            {
+                                mapSetting(reader, positionTakingAndComSetting);
+                            }
                         }
                     }
-                }
 
-                return positionTakingAndComSetting;
+                    return positionTakingAndComSetting;
+                }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
+
+                    throw ex;
+                }
             }
 
             return null;

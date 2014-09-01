@@ -210,7 +210,7 @@
                     gameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
                     _commonUtil.LogInfo(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.TargetCustId, settingContext.DirectUplineId));
                 }
-
+                
                 _logService.LogAutoInsertAccount(settingContext, gameTypes);
             }
 

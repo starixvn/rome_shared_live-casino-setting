@@ -11,7 +11,7 @@
         private const string __UN_AUTHORIZED_URL = "UnAuthorizedUrl";
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
         private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
-        private const string __LOG_CATEGORY = "LanguageSessionKey";
+        private const string __LOG_CATEGORY = "LogCategory";
 
         [ConfigurationProperty(__SYSTEM_ID, IsRequired = true)]
         public int SystemId

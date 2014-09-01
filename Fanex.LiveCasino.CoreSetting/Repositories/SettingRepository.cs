@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.Common;
     using Fanex.Common.Extensions;
@@ -23,43 +24,50 @@
         {
             if (criteria.IsValid())
             {
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                try
                 {
                     var custInfo = new CustInfo();
-                    var parameters = criteria.GetSpParams();
-
-                    using (var reader = objectDb.ExecuteReader(parameters))
+                    using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {
-                        if (reader.Read())
+                        var parameters = criteria.GetSpParams();
+                        using (var reader = objectDb.ExecuteReader(parameters))
                         {
-                            custInfo.CurrencyId = reader.To<byte>("currency");
-                            custInfo.CustId = Converter.To<int>(parameters["custid"]);
-                            custInfo.DisableLiveCasino = reader.To<bool>("DisableLiveCasino");
-                            custInfo.Fax = reader.To<string>("fax");
-                            custInfo.FirstName = reader.To<string>("firstname");
-                            custInfo.IsSyncLiveCasino = reader.To<bool>("SyncLiveCasino");
-                            custInfo.LastName = reader.To<string>("lastname");
-                            custInfo.Mobile = reader.To<string>("mobilephone");
-                            custInfo.NickName = reader.To<string>("username2");
-                            custInfo.Phone = reader.To<string>("phone");
-                            custInfo.RoleId = reader.To<byte>("roleid");
-                            custInfo.Site = reader.To<string>("site");
-                            custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
-                            custInfo.UserName = reader.To<string>("username");
-                            custInfo.MemberWinLimit = new MemberWinLimit
+                            if (reader.Read())
                             {
-                                IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
-                                Max = reader.To<float>("MaxWinLiveCasino"),
-                                Upline = new MemberWinLimit
+                                custInfo.CurrencyId = reader.To<byte>("currency");
+                                custInfo.CustId = Converter.To<int>(parameters["custid"]);
+                                custInfo.DisableLiveCasino = reader.To<bool>("DisableLiveCasino");
+                                custInfo.Fax = reader.To<string>("fax");
+                                custInfo.FirstName = reader.To<string>("firstname");
+                                custInfo.IsSyncLiveCasino = reader.To<bool>("SyncLiveCasino");
+                                custInfo.LastName = reader.To<string>("lastname");
+                                custInfo.Mobile = reader.To<string>("mobilephone");
+                                custInfo.NickName = reader.To<string>("username2");
+                                custInfo.Phone = reader.To<string>("phone");
+                                custInfo.RoleId = reader.To<byte>("roleid");
+                                custInfo.Site = reader.To<string>("site");
+                                custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
+                                custInfo.UserName = reader.To<string>("username");
+                                custInfo.MemberWinLimit = new MemberWinLimit
                                 {
-                                    IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
-                                    Max = reader.To<float>("UplineMaxWinLiveCasino")
-                                }
-                            };
+                                    IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
+                                    Max = reader.To<float>("MaxWinLiveCasino"),
+                                    Upline = new MemberWinLimit
+                                    {
+                                        IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
+                                        Max = reader.To<float>("UplineMaxWinLiveCasino")
+                                    }
+                                };
+                            }
                         }
                     }
 
                     return custInfo;
+                }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
+                    throw ex;
                 }
             }
 
@@ -73,27 +81,38 @@
         /// <returns>Current member win limit.</returns>
         public CurrentMemberWin GetCurrentMemberWin(ICriteria criteria)
         {
-            var currentMemberWin = new CurrentMemberWin();
-
             if (criteria.IsValid())
             {
-                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                var currentMemberWin = new CurrentMemberWin();
+
+                try
                 {
-                    var parameters = criteria.GetSpParams();
-                    using (var reader = objectDb.ExecuteReader(parameters))
+                    using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {
-                        if (reader.Read())
+                        var parameters = criteria.GetSpParams();
+                        using (var reader = objectDb.ExecuteReader(parameters))
                         {
-                            currentMemberWin.Balance = reader.To<float>("Balance");
-                            currentMemberWin.MaxWinCredit = reader.To<float>("MaxWinCredit");
-                            currentMemberWin.MaxWinLiveCasino = reader.To<float>("MaxWinLiveCasino");
-                            currentMemberWin.WinPercent = reader.To<float>("LCSWinPercent");
+                            if (reader.Read())
+                            {
+                                currentMemberWin.Balance = reader.To<float>("Balance");
+                                currentMemberWin.MaxWinCredit = reader.To<float>("MaxWinCredit");
+                                currentMemberWin.MaxWinLiveCasino = reader.To<float>("MaxWinLiveCasino");
+                                currentMemberWin.WinPercent = reader.To<float>("LCSWinPercent");
+                            }
                         }
                     }
+
+                    return currentMemberWin;
+                }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
+
+                    throw ex;
                 }
             }
 
-            return currentMemberWin;
+            return new CurrentMemberWin();
         }
 
         /// <summary>
@@ -283,44 +302,54 @@
         /// <returns>List of game types.</returns>
         public List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
         {
-            var gameTypes = new List<GameType>();
-            GameType current = null;
-
             if (criteria.IsValid())
             {
-                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                try
                 {
-                    using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                    var gameTypes = new List<GameType>();
+                    GameType current = null;
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
-                        while (reader.Read())
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                         {
-                            var itemGameType = new GameType
+                            while (reader.Read())
                             {
-                                Id = reader.ToInt("GameTypeID"),
-                                BetTypeId = reader.ToInt("IBCBetTypeID")
-                            };
+                                var itemGameType = new GameType
+                                {
+                                    Id = reader.ToInt("GameTypeID"),
+                                    BetTypeId = reader.ToInt("IBCBetTypeID")
+                                };
 
-                            var itemStakeLevel = new StakeLevel
-                            {
-                                Id = reader.ToInt("StakeLevelID"),
-                                Range = reader.ToString("StakeLevelName"),
-                                IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
-                            };
+                                var itemStakeLevel = new StakeLevel
+                                {
+                                    Id = reader.ToInt("StakeLevelID"),
+                                    Range = reader.ToString("StakeLevelName"),
+                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
+                                };
 
-                            if (current == null || current.Id != itemGameType.Id)
-                            {
-                                gameTypes.Add(itemGameType);
-                                current = itemGameType;
-                                current.BettingLimit = new List<StakeLevel>();
+                                if (current == null || current.Id != itemGameType.Id)
+                                {
+                                    gameTypes.Add(itemGameType);
+                                    current = itemGameType;
+                                    current.BettingLimit = new List<StakeLevel>();
+                                }
+
+                                current.BettingLimit.Add(itemStakeLevel);
                             }
-
-                            current.BettingLimit.Add(itemStakeLevel);
                         }
                     }
+
+                    return gameTypes;
+                }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
+                    throw ex;
                 }
             }
 
-            return gameTypes;
+            return new List<GameType>();
         }
 
         /// <summary>
@@ -331,46 +360,53 @@
         /// <returns>Game setting command result.</returns>
         public ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes)
         {
-            var result = new GameSettingCommandResult();
-            GameType current = null;
-
             if (criteria.IsValid())
             {
-                using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                try
                 {
-                    using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                    var result = new GameSettingCommandResult();
+                    GameType current = null;
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
-                        while (reader.Read())
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
                         {
-                            var itemGameType = new GameType
+                            while (reader.Read())
                             {
-                                Id = reader.ToInt("GameTypeID"),
-                                BetTypeId = reader.ToInt("IBCBetTypeID")
-                            };
+                                var itemGameType = new GameType
+                                {
+                                    Id = reader.ToInt("GameTypeID"),
+                                    BetTypeId = reader.ToInt("IBCBetTypeID")
+                                };
+                                var itemStakeLevel = new StakeLevel
+                                {
+                                    Range = reader.ToString("StakeLevelName"),
+                                    IsChecked = true
+                                };
+                                if (current == null || current.Id != itemGameType.Id)
+                                {
+                                    gameTypes.Add(itemGameType);
+                                    current = itemGameType;
+                                    current.BettingLimit = new List<StakeLevel>();
+                                }
 
-                            var itemStakeLevel = new StakeLevel
-                            {
-                                Range = reader.ToString("StakeLevelName"),
-                                IsChecked = true
-                            };
-
-                            if (current == null || current.Id != itemGameType.Id)
-                            {
-                                gameTypes.Add(itemGameType);
-                                current = itemGameType;
-                                current.BettingLimit = new List<StakeLevel>();
+                                current.BettingLimit.Add(itemStakeLevel);
                             }
-
-                            current.BettingLimit.Add(itemStakeLevel);
                         }
+
+                        var outParameters = objDb.GetOuputParams();
+                        result = new GameSettingCommandResult(GetCommandResult(outParameters));
                     }
 
-                    var outParameters = objDb.GetOuputParams();
-                    result = new GameSettingCommandResult(GetCommandResult(outParameters));
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    CommonUtil.LogError(ex.Message);
+                    throw ex;
                 }
             }
 
-            return result;
+            return new GameSettingCommandResult();
         }
     }
 }

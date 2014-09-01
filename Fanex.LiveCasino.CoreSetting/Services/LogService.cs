@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -122,9 +123,18 @@
                 Duration = 0
             };
 
-            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            try
+            {
+                var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
-            return updateResult;
+                return updateResult;
+            }
+            catch (Exception ex)
+            {
+                _commonUtil.LogError(string.Format("{0}\n{1}", ex.Message, criteria.ToString()));
+
+                throw ex;
+            }
         }
 
         /// <summary>
