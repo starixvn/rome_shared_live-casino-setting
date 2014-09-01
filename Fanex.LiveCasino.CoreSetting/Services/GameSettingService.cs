@@ -205,15 +205,13 @@
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
-                Task.Factory.StartNew(() =>
+                if (gameTypes == null || !gameTypes.Any())
                 {
-                    if (!gameTypes.Any())
-                    {
-                        gameTypes = GetGameSetting(settingContext.TargetCustId, settingContext.TargetUsername, settingContext.ExchangeId).ToList();
-                    }
+                    gameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
+                    _commonUtil.LogInfo(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.TargetCustId, settingContext.DirectUplineId));
+                }
 
-                    _logService.LogAutoInsertAccount(settingContext, gameTypes);
-                });
+                _logService.LogAutoInsertAccount(settingContext, gameTypes);
             }
 
             return result;
@@ -259,15 +257,13 @@
                     UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
                 }
 
-                Task.Factory.StartNew(() =>
+                if (gameTypes == null || !gameTypes.Any())
                 {
-                    if (!gameTypes.Any())
-                    {
-                        gameTypes = GetGameSetting(settingContext.UplineId, settingContext.TargetUsername, settingContext.ExchangeId).ToList();
-                    }
+                    gameTypes = GetGameSettingByCustomerId(settingContext.OldCustId);
+                    _commonUtil.LogInfo(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.TargetCustId, settingContext.OldCustId));
+                }
 
-                    _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
-                });
+                _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
             }
 
             return result;
@@ -473,41 +469,6 @@
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets the game setting with time out for waiting replication.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="exchangeId">The exchange identifier.</param>
-        /// <param name="timeOut">The time out.</param>
-        /// <returns>
-        /// Game settings.
-        /// </returns>
-        private List<GameType> GetGameSetting(int custId, string username, int exchangeId, int timeOut = TimeOutReplication)
-        {
-            var gameTypes = new List<GameType>();
-
-            // Waiting for replication
-            for (int i = 0; i < timeOut; i++)
-            {
-                _commonUtil.Sleep(1000);
-                gameTypes = GetGameSettingByCustomerId(custId).ToList();
-
-                if (gameTypes.Any())
-                {
-                    break;
-                }
-            }
-
-            if (!gameTypes.Any())
-            {
-                var site = GetCustomerSiteByUsername(username);
-                gameTypes = GetGameSettingByExchange(exchangeId, site).ToList();
-            }
-
-            return gameTypes;
         }
 
         /// <summary>

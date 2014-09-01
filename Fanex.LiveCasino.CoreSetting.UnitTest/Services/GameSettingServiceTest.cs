@@ -438,8 +438,7 @@
 
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
                               .ReturnsForAnyArgs(new CommandResult { Code = 1 });
-            _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());
-            _commonUtil.Sleep(0);
+            _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());            
 
             // Action
             ICommandResult actualCommandResult = _gameSettingService.InsertAutoAccount(settingContext);
@@ -478,7 +477,6 @@
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
                               .ReturnsForAnyArgs(new CommandResult { Code = 1 });
-            _commonUtil.Sleep(0);
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -522,7 +520,6 @@
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
                               .ReturnsForAnyArgs(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(0);
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -554,7 +551,6 @@
                               });
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -590,7 +586,6 @@
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -626,7 +621,6 @@
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -731,7 +725,6 @@
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
                               .ReturnsForAnyArgs(new CommandResult { Code = 1 });
             _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());
-            _commonUtil.Sleep(0);
 
             // Action
             ICommandResult actualCommandResult = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -770,7 +763,6 @@
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
                               .ReturnsForAnyArgs(new CommandResult { Code = 1 });
-            _commonUtil.Sleep(0);
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -814,7 +806,6 @@
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
                               .ReturnsForAnyArgs(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(0);
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -846,7 +837,6 @@
                               });
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -882,7 +872,6 @@
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -918,7 +907,6 @@
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
-            _commonUtil.Sleep(Arg.Any<int>());
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);

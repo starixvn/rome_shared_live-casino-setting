@@ -14,6 +14,8 @@
 
         List<CustInfo> GetCustomerInfo(string custIds, string usernames, string syncStatus);
 
-        void Sleep(int millisecondsTimeout);
+        void LogInfo(string message);
+
+        void LogError(string message);
     }
 }

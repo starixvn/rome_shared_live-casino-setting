@@ -11,6 +11,7 @@
         private const string __UN_AUTHORIZED_URL = "UnAuthorizedUrl";
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
         private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
+        private const string __LOG_CATEGORY = "LanguageSessionKey";
 
         [ConfigurationProperty(__SYSTEM_ID, IsRequired = true)]
         public int SystemId
@@ -38,6 +39,13 @@
         {
             get { return (string)this[__LANGUAGE_SESSION_KEY]; }
             set { this[__LANGUAGE_SESSION_KEY] = value; }
+        }
+
+        [ConfigurationProperty(__LOG_CATEGORY, IsRequired = false, DefaultValue = "LiveCasinoSetting")]
+        public string LogCategory
+        {
+            get { return (string)this[__LOG_CATEGORY]; }
+            set { this[__LOG_CATEGORY] = value; }
         }
     }
 }

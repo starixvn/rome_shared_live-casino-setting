@@ -9,6 +9,7 @@
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.Logging;
 
     /// <summary>
     /// Common utility class.
@@ -104,9 +105,14 @@
             return list;
         }
 
-        public void Sleep(int millisecondsTimeout)
+        public void LogInfo(string message)
         {
-            Thread.Sleep(millisecondsTimeout);
+            Logger.Log.Info(message, LiveCasinoSettings.LogCategory);
+        }
+
+        public void LogError(string message)
+        {
+            Logger.Log.Error(message, LiveCasinoSettings.LogCategory);
         }
     }
 }
