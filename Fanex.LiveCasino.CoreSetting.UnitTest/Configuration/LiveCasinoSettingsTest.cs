@@ -54,7 +54,7 @@
 
             // Assert
             const string UNAUTHORIZEURL = "UnAuthorized Url";
-            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizeUrl);
+            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizedPath);
         }
 
         /// <summary>
@@ -68,10 +68,10 @@
 
             // Action
             var actualConfig = GetValidConfiguration();
-            actualConfig.UnAuthorizeUrl = UNAUTHORIZEURL;
+            actualConfig.UnAuthorizedPath = UNAUTHORIZEURL;
 
             // Assert
-            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizeUrl);
+            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizedPath);
         }
 
         [Test]
@@ -82,7 +82,7 @@
 
             // Assert
             const string UNAUTHORIZEURL = "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized";
-            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizeUrl);
+            Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizedPath);
         }
 
         private LiveCasinoSettings GetValidConfiguration()

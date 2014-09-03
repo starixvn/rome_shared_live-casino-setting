@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.LiveCasino.CoreSetting.Utilities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -9,7 +10,7 @@
     {
         public ActionResult UnAuthorized()
         {
-            return View("~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml");
+            return View((new CommonUtil()).LiveCasinoSettings.UnAuthorizedPath);
         }
     }
 }

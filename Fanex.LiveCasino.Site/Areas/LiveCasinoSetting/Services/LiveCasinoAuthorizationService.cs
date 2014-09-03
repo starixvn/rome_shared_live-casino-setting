@@ -10,7 +10,7 @@ namespace Fanex.LiveCasino.Site.Services
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext)
         {
-            return true;
+            return false;
         }
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext)

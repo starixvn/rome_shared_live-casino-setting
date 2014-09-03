@@ -8,7 +8,7 @@
     public class LiveCasinoSettings : ConfigurationSection
     {
         private const string __SYSTEM_ID = "SystemId";
-        private const string __UN_AUTHORIZED_URL = "UnAuthorizedUrl";
+        private const string __UN_AUTHORIZED_PATH = "UnAuthorizedPath";
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
         private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
         private const string __LOG_CATEGORY = "LogCategory";
@@ -20,11 +20,11 @@
             set { this[__SYSTEM_ID] = value; }
         }
 
-        [ConfigurationProperty(__UN_AUTHORIZED_URL, IsRequired = false, DefaultValue = "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized")]
-        public string UnAuthorizeUrl
+        [ConfigurationProperty(__UN_AUTHORIZED_PATH, IsRequired = false, DefaultValue = "~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml")]
+        public string UnAuthorizedPath
         {
-            get { return (string)this[__UN_AUTHORIZED_URL]; }
-            set { this[__UN_AUTHORIZED_URL] = value; }
+            get { return (string)this[__UN_AUTHORIZED_PATH]; }
+            set { this[__UN_AUTHORIZED_PATH] = value; }
         }
 
         [ConfigurationProperty(__AUTHORIZATION_SERVICE_TYPE, IsRequired = false, DefaultValue = "")]

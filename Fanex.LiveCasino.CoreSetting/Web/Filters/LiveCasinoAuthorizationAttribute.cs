@@ -50,8 +50,7 @@
                     }
                     else
                     {
-                        var notAuthorizedUrl = _commonUtil.LiveCasinoSettings.UnAuthorizeUrl;
-                        filterContext.Result = new RedirectResult(notAuthorizedUrl);
+                        filterContext.Result = new RedirectResult("~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized");
                     }
                 }
             }
