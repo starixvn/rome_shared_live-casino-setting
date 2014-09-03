@@ -336,4 +336,7 @@
   <data name="InsertFromExistingAccountLogMsg" xml:space="preserve">
     <value>Insert from existing account CustId = {0}. Get old customer betting limit (OldCustId = {1}).</value>
   </data>
+  <data name="lblSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
 </root>

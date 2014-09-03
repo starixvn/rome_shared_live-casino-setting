@@ -502,6 +502,15 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string lblSubmit {
+            get {
+                return ResourceManager.GetString("lblSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Super Preset.
         /// </summary>
         public static string lblSuperAutoPresetPT {
