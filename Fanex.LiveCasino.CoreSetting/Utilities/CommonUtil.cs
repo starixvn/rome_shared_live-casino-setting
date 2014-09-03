@@ -83,9 +83,9 @@
                 return list;
             }
 
-            string[] arrayCustId = custIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] arrayUsername = usernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] arraySyncStatus = syncStatus.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (arrayCustId.Length == arrayUsername.Length
                 && arrayUsername.Length == arraySyncStatus.Length
