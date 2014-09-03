@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
@@ -20,6 +21,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer information.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public CustInfo GetCustomerInfo(ICriteria criteria)
         {
             if (criteria.IsValid())
