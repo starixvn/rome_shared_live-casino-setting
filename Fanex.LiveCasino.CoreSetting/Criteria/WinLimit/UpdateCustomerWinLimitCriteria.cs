@@ -34,5 +34,25 @@
         {
             return CustId > 0;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nMaxWinLimit = '{2}'\nIsAutoDailyReset = '{3}'\nUserId = '{4}'\nSubAccID= '{5}'\nIp = '{6}'\nLanguage = '{7}'\n",
+                GetSettingKey(),
+                CustId,
+                MaxWinLimit,
+                IsAutoDailyReset,
+                SubAccID,
+                Ip,
+                UserId,
+                Language);
+        }
     }
 }

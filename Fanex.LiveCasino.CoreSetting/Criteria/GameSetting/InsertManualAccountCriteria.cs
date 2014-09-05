@@ -11,5 +11,10 @@
         {
             return "TP_User_Customer_ManualInsertAccount";
         }
+
+        public override string ToString()
+        {
+            return string.Format("SP Name = '{0}'\n{1}\nCustSite = '{2}'", GetSettingKey(), base.GetString(), CustSite);
+        }
     }
 }

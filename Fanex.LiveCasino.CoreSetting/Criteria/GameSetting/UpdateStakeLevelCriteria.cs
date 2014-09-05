@@ -26,5 +26,16 @@
         {
             return "TP_User_CustGameType_UpdStakeLevel";
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nRoleId = '{2}'\nGameTypeId = '{3}'\nStakeLevelList = '{4}'",
+                GetSettingKey(),
+                CustId,
+                RoleId,
+                GameTypeId,
+                StakeLevelList);
+        }
     }
 }
