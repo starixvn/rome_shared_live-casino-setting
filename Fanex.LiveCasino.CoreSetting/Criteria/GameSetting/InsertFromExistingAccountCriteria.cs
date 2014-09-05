@@ -16,7 +16,7 @@
 
         public override string ToString()
         {
-            return string.Format("SP Name = '{0}'\n{1}\nOldCustId = '{2}'\nToUserName = '{3}'", GetSettingKey(), base.GetString(), OldCustId, ToUserName);
+            return string.Format("SP Name = '{0}'\n{1}\nOldCustId = '{2}'\nToUserName = '{3}'", GetSettingKey(), GetString(), OldCustId, ToUserName);
         }
     }
 }
