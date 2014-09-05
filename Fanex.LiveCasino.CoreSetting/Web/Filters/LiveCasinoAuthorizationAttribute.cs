@@ -56,6 +56,11 @@
             }
         }
 
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            return true;
+        }
+
         /// <summary>
         /// Authorize user have permission read.
         /// </summary>
