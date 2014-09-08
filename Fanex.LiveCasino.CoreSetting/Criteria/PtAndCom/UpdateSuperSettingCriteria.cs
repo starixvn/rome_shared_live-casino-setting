@@ -55,5 +55,25 @@
         {
             return base.IsValid() && UserId > 0;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nS4 = '{2}'\nN4 = '{3}'\nSuperCommission = '{4}'\nIP = '{5}'\nUserId = '{6}'\nLanguage = '{7}'",
+                GetSettingKey(),
+                CustId,
+                S4,
+                N4,
+                SuperCommission,
+                IP,
+                UserId,
+                Language);
+        }
     }
 }

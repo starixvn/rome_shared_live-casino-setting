@@ -48,5 +48,25 @@
         {
             return base.IsValid() && Recommend > 0 && UserId > 0;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nRecommend = '{2}'\nMemberCommission = '{3}'\nSubAccID = '{4}'\nUserId = '{5}'\nIP = '{6}'\nLanguage = '{7}'\n",
+                GetSettingKey(),
+                CustId,
+                Recommend,
+                MemberCommission,
+                SubAccID,
+                UserId,
+                IP,
+                Language);
+        }
     }
 }

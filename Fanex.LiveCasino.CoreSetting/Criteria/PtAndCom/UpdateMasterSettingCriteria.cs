@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -80,6 +81,33 @@
         public override bool IsValid()
         {
             return base.IsValid() && SRecommend > 0 && UserId > 0;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nSRecommend = '{2}'\nS3 = '{3}'\nM3 = '{4}'\nIs3 = '{5}'\nUs3 = '{6}'\nN3 = '{7}'\nUpdateAllMembers = '{8}'\nNewSPositionTaking = '{9}'\nSubAccID = '{10}'\nIP = '{11}'\nUserId = '{12}'\nLanguage = '{13}'",
+                GetSettingKey(),
+                CustId,
+                SRecommend,
+                S3,
+                M3,
+                Is3,
+                Us3,
+                N3,
+                UpdateAllMembers,
+                NewSuperPositionTakingOnMember,
+                SubAccID,
+                IP,
+                UserId,
+                Language);
         }
     }
 }

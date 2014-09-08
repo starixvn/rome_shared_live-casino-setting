@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -38,6 +39,29 @@
         public override string GetSettingKey()
         {
             return "Acc_CustomerUpdMemberLiveCS_SAg";
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public override string ToString()
+        {
+            return string.Format(
+                "SP Name = '{0}'\nCustId = '{1}'\nS1 = '{2}'\nIs1 = '{3}'\nUs1 = '{4}'\nIsUpdateSuperPt = '{5}'\nSubAccID = '{6}'\nUserId = '{7}'\nIP = '{8}'\nLanguage = '{9}'\n",
+                GetSettingKey(),
+                CustId,
+                S1,
+                Is1,
+                Us1,
+                IsUpdateSuperPt,
+                SubAccID,
+                UserId,
+                IP,
+                Language);
         }
     }
 }
