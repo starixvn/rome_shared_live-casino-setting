@@ -334,7 +334,7 @@
         /// <returns>Result after updating.</returns>
         public ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            var result = (CommandResult)_settingRepository.InsertOrUpdate(new UpdateCustomerWinLimitCriteria
+            var criteria = new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.TargetCustId,
                 MaxWinLimit = (decimal)memberWinLimit.Max,
@@ -342,13 +342,19 @@
                 UserId = settingContext.UserIdDoAction,
                 Ip = settingContext.IP,
                 Language = settingContext.Language
-            });
+            };
+
+            var result = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
             var winLimitResult = new WinLimitCommandResult(result);
 
             if (winLimitResult.IsSuccessful)
             {
                 winLimitResult.Message = LiveCasinoLang.UpdatedWinLimitSuccessfully;
+            }
+            else
+            {
+                _commonUtil.LogInfo(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()));
             }
 
             var commandResults = new CommandResults();

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.PtAndCom
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using NUnit.Framework;
 
@@ -48,6 +49,33 @@
 
             // Assert
             Assert.IsTrue(paramters.ContainsKey(parameterName.ToLower()));
+        }
+
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.CustId = 1;
+            criteria.S1 = 0.1M;
+            criteria.Is1 = false;
+            criteria.Us1 = 0.2M;
+            criteria.IsUpdateSuperPt = true;
+            criteria.SubAccID = 0;
+            criteria.UserId = 2;
+            criteria.IP = "10.19.10.54";
+            criteria.Language = "E";
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "SP Name = 'Acc_CustomerUpdMemberLiveCS_SAg'\nCustId = '1'\nS1 = '0.1'\nIs1 = 'False'\nUs1 = '0.2'\nIsUpdateSuperPt = 'True'\nSubAccID = '0'\nUserId = '2'\nIP = '10.19.10.54'\nLanguage = 'E'";
+            Assert.AreEqual(expected, actual);
         }
 
         private SuperUpdateMemberSettingCriteria CreateNewCriteria()

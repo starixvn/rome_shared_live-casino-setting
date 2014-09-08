@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.WinLimit
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using NUnit.Framework;
 
@@ -114,6 +115,31 @@
 
             // Assert
             Assert.IsTrue(parameters.ContainsKey(parameter));
+        }
+
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.CustId = 1;
+            criteria.Ip = "10.19.10.54";
+            criteria.IsAutoDailyReset = false;
+            criteria.Language = "E";
+            criteria.MaxWinLimit = 10;
+            criteria.SubAccID = 0;
+            criteria.UserId = 2;
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "SP Name = 'Acc_CustomerUpdLiveCS_WinLimit'\nCustId = '1'\nMaxWinLimit = '10'\nIsAutoDailyReset = 'False'\nUserId = '2'\nSubAccID= '0'\nIp = '10.19.10.54'\nLanguage = 'E'";
+            Assert.AreEqual(expected, actual);
         }
 
         private UpdateCustomerWinLimitCriteria CreateNewCriteria()

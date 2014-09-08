@@ -581,7 +581,7 @@
                 new PtAndComCommandResult
                 {
                     Code = -101,
-                    Message = "Commission: updated successfully."
+                    Message = "Commission: Updated successfully."
                 }
             };
             var updatedResult = new CommandResult

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using NUnit.Framework;
 
@@ -115,6 +116,31 @@
 
             // Assert
             Assert.IsTrue(parameters.ContainsKey(parameter));
+        }
+
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.CustId = 1;
+            criteria.DisabledLiveCS = true;
+            criteria.EnableDownlinesLiveCS = false;
+            criteria.IP = "10.19.10.54";
+            criteria.Language = "E";
+            criteria.SubAccID = 0;
+            criteria.UserID = 2;
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "SP Name = 'Acc_CustomerUpdDisableLiveCS'\nCustId = '1'\nDisabledLiveCS = 'True'\nEnableDownlinesLiveCS = 'False'\nUserID = '2'\nSubAccID = '0'\nIP = '10.19.10.54'\nLanguage = 'E'";
+            Assert.AreEqual(expected, actual);
         }
 
         private UpdateLiveCasinoStatusCriteria CreateNewCriteria()

@@ -81,7 +81,7 @@
             var actualConfig = GetMissingUnAuthorizeUrlConfiguration();
 
             // Assert
-            const string UNAUTHORIZEURL = "~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized";
+            const string UNAUTHORIZEURL = "~/Areas/LiveCasinoSetting/Views/Common/UnAuthorized.cshtml";
             Assert.AreEqual(UNAUTHORIZEURL, actualConfig.UnAuthorizedPath);
         }
 

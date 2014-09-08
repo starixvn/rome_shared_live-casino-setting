@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.GameSetting
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using NUnit.Framework;
 
@@ -121,6 +122,37 @@
 
             // Assert
             Assert.IsTrue(parameters.ContainsKey(parameter));
+        }
+
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.CustSite = "ODD-BETS";
+            criteria.CustId = 4;
+            criteria.AgentId = 3;
+            criteria.CasinoNo = "01";
+            criteria.ExchangeId = 20;
+            criteria.MasterId = 2;
+            criteria.ModifyUsername = "sa";
+            criteria.RoleId = 1;
+            criteria.SignupBy = 8;
+            criteria.SignupFrom = 1;
+            criteria.SignupIp = "10.19.10.54";
+            criteria.SuperId = 1;
+            criteria.Username = "member";
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "SP Name = 'TP_User_Customer_ManualInsertAccount'\nCustId = '4'\nCasinoNo = '01'\nExchangeId = '20'\nSuperId = '1'\nMasterId = '2'\nAgentId = '3'\nRoleId = '1'\nSignupIp = '10.19.10.54'\nSignupBy = '8'\nSignupFrom = '1'\nModifyUsername = 'sa'\nUsername = 'member'\nCustSite = 'ODD-BETS'";
+            Assert.AreEqual(expected, actual);
         }
 
         private InsertManualAccountCriteria CreateNewCriteria()

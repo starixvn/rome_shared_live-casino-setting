@@ -50,12 +50,7 @@
 
                         var outParameters = objDb.GetOuputParams();
                         result = GetCommandResult(outParameters);
-                    }
-
-                    if (!result.IsSuccessful)
-                    {
-                        CommonUtil.LogInfo(string.Format("{0}\n{1}", result.Message, criteria.ToString()));
-                    }
+                    }                    
 
                     return result;
                 }

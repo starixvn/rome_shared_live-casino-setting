@@ -44,14 +44,14 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nMaxWinLimit = '{2}'\nIsAutoDailyReset = '{3}'\nUserId = '{4}'\nSubAccID= '{5}'\nIp = '{6}'\nLanguage = '{7}'\n",
+                "SP Name = '{0}'\nCustId = '{1}'\nMaxWinLimit = '{2}'\nIsAutoDailyReset = '{3}'\nUserId = '{4}'\nSubAccID= '{5}'\nIp = '{6}'\nLanguage = '{7}'",
                 GetSettingKey(),
                 CustId,
                 MaxWinLimit,
                 IsAutoDailyReset,
+                UserId,
                 SubAccID,
                 Ip,
-                UserId,
                 Language);
         }
     }

@@ -109,6 +109,27 @@
             Assert.IsTrue(parameters.ContainsKey(parameter));
         }
 
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.CustId = 1;
+            criteria.GameTypeId = 101;
+            criteria.RoleId = 2;
+            criteria.StakeLevelList = "1101,1102,1103,1104";
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "SP Name = 'TP_User_CustGameType_UpdStakeLevel'\nCustId = '1'\nRoleId = '2'\nGameTypeId = '101'\nStakeLevelList = '1101,1102,1103,1104'";
+            Assert.AreEqual(expected, actual);
+        }
+
         private UpdateStakeLevelCriteria CreateNewCriteria()
         {
             return new UpdateStakeLevelCriteria();

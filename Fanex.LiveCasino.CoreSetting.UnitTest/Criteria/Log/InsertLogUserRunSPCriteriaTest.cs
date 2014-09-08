@@ -100,6 +100,29 @@
             Assert.IsTrue(parameters.ContainsKey(parameter));
         }
 
+        /// <summary>
+        /// To the string_ when called_ return string.
+        /// </summary>
+        [Test]
+        public void ToString_WhenCalled_ReturnString()
+        {
+            // Arrange
+            var criteria = CreateNewCriteria();
+            criteria.ActionId = 1;
+            criteria.CustId = 2;
+            criteria.SpName = "stored procedure name";
+            criteria.TrackingValue = "<Id='1' Name='one'/>";
+            criteria.TrackingValue2 = "<Id='2' Name='two'/>";
+            criteria.UserId = 3;
+
+            // Action
+            var actual = criteria.ToString();
+
+            // Assert
+            var expected = "UserId = '3'\n CustId = '2'\n SpName = 'stored procedure name'\n ActionId = '1'\n OldValue = ' < Id='1' Name='one'/>'\n NewValue = ' < Id='2' Name='two'/>'";
+            Assert.AreEqual(expected, actual);
+        }
+
         private InsertLogUserRunSPCriteria CreateNewCriteria()
         {
             return new InsertLogUserRunSPCriteria();

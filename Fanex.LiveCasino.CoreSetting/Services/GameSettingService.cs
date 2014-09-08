@@ -210,7 +210,7 @@
                     gameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
                     _commonUtil.LogInfo(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.TargetCustId, settingContext.DirectUplineId));
                 }
-                
+
                 _logService.LogAutoInsertAccount(settingContext, gameTypes);
             }
 
@@ -299,6 +299,10 @@
                     Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
                 };
             }
+            else
+            {
+                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+            }
 
             return updateResult;
         }
@@ -315,6 +319,8 @@
         public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
         {
             var gameTypeOlds = new List<GameType>();
+            var gameTypeNews = CloneGameTypes(gameTypes);
+
             if (!custInfo.IsSyncLiveCasino)
             {
                 var insertCommandResult = ManualSyncAccount(settingContext);
@@ -323,28 +329,28 @@
                     CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
                     {
-                        if (gameTypes == null)
+                        if (gameTypeNews == null)
                         {
                             string site = GetCustomerSiteByUsername(custInfo.UserName);
-                            gameTypes = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
+                            gameTypeNews = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
                         }
                         else
                         {
                             List<GameType> directUplineGameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
-                            if (gameTypes.Count < directUplineGameTypes.Count)
+                            if (gameTypeNews.Count < directUplineGameTypes.Count)
                             {
                                 var gameTypeUncheckeds = new List<GameType>();
                                 foreach (var itemGameType in directUplineGameTypes)
                                 {
-                                    var foundedGameType = gameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
+                                    var foundedGameType = gameTypeNews.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
                                     if (foundedGameType == null)
                                     {
                                         gameTypeUncheckeds.Add(itemGameType);
                                     }
                                 }
 
-                                gameTypes.AddRange(gameTypeUncheckeds);
-                                gameTypes = gameTypes.OrderBy(x => x.Id).ToList();
+                                gameTypeNews.AddRange(gameTypeUncheckeds);
+                                gameTypeNews = gameTypeNews.OrderBy(x => x.Id).ToList();
                             }
                         }
                     }
@@ -355,8 +361,8 @@
                 gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
             }
 
-            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypes, settingContext.Language);
-            WriteLogUpdateStakeLevel(settingContext, gameTypes, gameTypeOlds, resultUpdateStakeLevels);
+            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypeNews, settingContext.Language);
+            WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
         }
@@ -405,6 +411,11 @@
             };
 
             var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+
+            if (!updateResult.IsSuccessful)
+            {
+                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+            }
 
             return updateResult;
         }
@@ -497,6 +508,11 @@
 
             var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
 
+            if (!updateResult.IsSuccessful)
+            {
+                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+            }
+
             return updateResult;
         }
 
@@ -558,9 +574,27 @@
             else
             {
                 gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
+                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
             }
 
             return gameSettingResult;
+        }
+
+        private List<GameType> CloneGameTypes(List<GameType> gameType)
+        {
+            var list = new List<GameType>();
+
+            foreach (var item in gameType)
+            {
+                list.Add(new GameType
+                {
+                    Id = item.Id,
+                    BetTypeId = item.BetTypeId,
+                    BettingLimit = item.BettingLimit
+                });
+            }
+
+            return list;
         }
     }
 }

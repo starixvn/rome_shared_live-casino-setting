@@ -43,7 +43,7 @@
                 "SP Name = '{0}'\nCustId = '{1}'\nSyncLiveCS = '{2}'\nUserID = '{3}'\nSubAccID = '{4}'\nIP = '{5}'\nLanguage = '{6}'",
                 GetSettingKey(),
                 CustId,
-                SubAccId,
+                SyncLiveCS,                
                 UserId,
                 SubAccId,
                 Ip,
