@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Data;

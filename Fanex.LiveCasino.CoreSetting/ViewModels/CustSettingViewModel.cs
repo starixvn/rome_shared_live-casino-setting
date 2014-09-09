@@ -10,10 +10,6 @@
     {
         public SettingContext SettingContext { get; set; }
 
-        public CustInfo CustInfo { get; set; }
-
-        public PtAndComSetting PtAndComSetting { get; set; }
-
-        public List<GameType> GameSetting { get; set; }
+        public Customer Customer { get; set; }
     }
 }

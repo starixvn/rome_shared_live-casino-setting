@@ -6,8 +6,8 @@
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
-    using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
@@ -50,7 +50,7 @@
 
                         var outParameters = objDb.GetOuputParams();
                         result = GetCommandResult(outParameters);
-                    }                    
+                    }
 
                     return result;
                 }

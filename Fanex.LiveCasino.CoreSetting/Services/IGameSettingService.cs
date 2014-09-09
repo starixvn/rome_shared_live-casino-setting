@@ -1,13 +1,13 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.NAP.Framework.Data;
 
     public interface IGameSettingService
     {
-        CustInfo GetCustomerInfo(int custId);
+        Customer GetCustomerInfo(int custId);
 
         string GetCustomerSiteByUsername(string username);
 
@@ -15,7 +15,7 @@
 
         List<GameType> GetGameSettingByExchange(int exchangeId, string site);
 
-        List<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo);
+        List<GameType> GetGameSetting(SettingContext settingContext, Customer custInfo);
 
         ICommandResult InsertAutoAccount(SettingContext settingContext);
 
@@ -23,7 +23,7 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes);
+        ICommandResults UpdateManual(SettingContext settingContext, Customer custInfo, List<GameType> gameTypes);
 
         IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 

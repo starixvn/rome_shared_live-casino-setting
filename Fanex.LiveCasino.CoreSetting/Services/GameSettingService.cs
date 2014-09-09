@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
@@ -51,7 +50,7 @@
 
             if (criteria.IsValid())
             {
-                var userInfo = _settingRepository.Get<CustInfo>(criteria);
+                var userInfo = _settingRepository.Get<Customer>(criteria);
                 siteName = userInfo.Site;
             }
 
@@ -63,14 +62,14 @@
         /// </summary>
         /// <param name="custId">Get criteria information.</param>
         /// <returns>Customer information.</returns>
-        public CustInfo GetCustomerInfo(int custId)
+        public Customer GetCustomerInfo(int custId)
         {
             var criteria = new GetCustomerInfoCriteria
             {
                 CustId = custId
             };
 
-            CustInfo custInfo = _settingRepository.GetCustomerInfo(criteria);
+            Customer custInfo = _settingRepository.GetCustomerInfo(criteria);
 
             return custInfo;
         }
@@ -115,16 +114,16 @@
         /// Gets the game setting.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="custInfo">The customer information.</param>
+        /// <param name="customer">The customer information.</param>
         /// <returns>Game settings.</returns>
-        public List<GameType> GetGameSetting(SettingContext settingContext, CustInfo custInfo)
+        public List<GameType> GetGameSetting(SettingContext settingContext, Customer customer)
         {
             var gameSettings = new List<GameType>();
 
-            if (settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
+            if (settingContext.IsEdittingSuper && !customer.IsSyncLiveCasino)
             {
-                var site = GetCustomerSiteByUsername(custInfo.UserName);
-                gameSettings = GetGameSettingByExchange(custInfo.CurrencyId, site).ToList();
+                var site = GetCustomerSiteByUsername(customer.UserName);
+                gameSettings = GetGameSettingByExchange(customer.CurrencyId, site).ToList();
 
                 // Check all by default
                 foreach (var gameSettingItem in gameSettings)
@@ -135,7 +134,7 @@
                     }
                 }
             }
-            else if (!settingContext.IsEdittingSuper && !custInfo.IsSyncLiveCasino)
+            else if (!settingContext.IsEdittingSuper && !customer.IsSyncLiveCasino)
             {
                 gameSettings = GetGameSettingByCustomerId(settingContext.DirectUplineId);
 
@@ -311,27 +310,27 @@
         /// Updates the manual.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="custInfo">The customer information.</param>
+        /// <param name="customer">The customer information.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResults UpdateManual(SettingContext settingContext, CustInfo custInfo, List<GameType> gameTypes)
+        public ICommandResults UpdateManual(SettingContext settingContext, Customer customer, List<GameType> gameTypes)
         {
             var gameTypeOlds = new List<GameType>();
             var gameTypeNews = CloneGameTypes(gameTypes);
 
-            if (!custInfo.IsSyncLiveCasino)
+            if (!customer.IsSyncLiveCasino)
             {
                 var insertCommandResult = ManualSyncAccount(settingContext);
                 if (!settingContext.IsEdittingSuper && insertCommandResult.IsSuccessful)
                 {
-                    CustInfo directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    Customer directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
                     if (directUplineInfo.IsSyncLiveCasino)
                     {
                         if (gameTypeNews == null)
                         {
-                            string site = GetCustomerSiteByUsername(custInfo.UserName);
+                            string site = GetCustomerSiteByUsername(customer.UserName);
                             gameTypeNews = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
                         }
                         else
@@ -376,7 +375,7 @@
         public IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResults();
-            List<CustInfo> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            List<Customer> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {

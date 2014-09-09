@@ -1,9 +1,12 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
+    using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+
     /// <summary>
     /// Customer information.
     /// </summary>
-    public class CustInfo
+    public class Customer
     {
         public int CustId { get; set; }
 
@@ -34,5 +37,9 @@
         public bool UplineDisableLiveCasino { get; set; }
 
         public MemberWinLimit MemberWinLimit { get; set; }
+
+        public PtAndComSetting PtAndComSetting { get; set; }
+
+        public List<GameType> GameSetting { get; set; }
     }
 }

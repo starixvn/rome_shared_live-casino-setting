@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Controllers;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
@@ -102,7 +103,7 @@
             _controller.UpdateGameSetting(settingContext, gameSetting);
 
             // Assert
-            _gameSettingService.Received().UpdateManual(settingContext, Arg.Any<CustInfo>(), gameSetting);
+            _gameSettingService.Received().UpdateManual(settingContext, Arg.Any<Customer>(), gameSetting);
         }
 
         /// <summary>
@@ -135,7 +136,7 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
-            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+            custSettingViewModel.Customer = Substitute.For<Customer>();
 
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
@@ -161,7 +162,7 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
-            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+            custSettingViewModel.Customer = Substitute.For<Customer>();
 
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
@@ -187,7 +188,7 @@
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
             settingContext.IsEditMultiple = false;
-            custSettingViewModel.CustInfo = Substitute.For<CustInfo>();
+            custSettingViewModel.Customer = Substitute.For<Customer>();
 
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
@@ -199,7 +200,7 @@
             _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
 
             // Assert
-            _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
+            _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
         }
 
         /// <summary>
@@ -212,8 +213,8 @@
             var settingContext = Substitute.For<SettingContext>();
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
-            custSettingViewModel.CustInfo = new CustInfo();
-            custSettingViewModel.CustInfo.MemberWinLimit = new MemberWinLimit();
+            custSettingViewModel.Customer = new Customer();
+            custSettingViewModel.Customer.MemberWinLimit = new MemberWinLimit();
             settingContext.IsEditMultiple = false;
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                          .Returns(new CommandResults
@@ -225,7 +226,7 @@
                             {
                                 Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                {
                                    Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
@@ -235,7 +236,7 @@
             _controller.UpdateLiveCasinoSetting(settingContext, custSettingViewModel);
 
             // Assert
-            _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>());
+            _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
         }
 
         /// <summary>
@@ -248,8 +249,8 @@
             var settingContext = Substitute.For<SettingContext>();
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
-            custSettingViewModel.CustInfo = new CustInfo();
-            custSettingViewModel.CustInfo.MemberWinLimit = new MemberWinLimit();
+            custSettingViewModel.Customer = new Customer();
+            custSettingViewModel.Customer.MemberWinLimit = new MemberWinLimit();
             settingContext.IsEditMultiple = false;
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
@@ -261,7 +262,7 @@
                             {
                                 Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                 {
                                     Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
@@ -284,12 +285,12 @@
             var settingContext = Substitute.For<SettingContext>();
             var custSettingViewModel = Substitute.For<CustSettingViewModel>();
 
-            custSettingViewModel.CustInfo = new CustInfo();
-            custSettingViewModel.CustInfo.IsSyncLiveCasino = true;
-            custSettingViewModel.CustInfo.UplineDisableLiveCasino = false;
+            custSettingViewModel.Customer = new Customer();
+            custSettingViewModel.Customer.IsSyncLiveCasino = true;
+            custSettingViewModel.Customer.UplineDisableLiveCasino = false;
             settingContext.IsEditMultiple = false;
-            settingContext.TargetRoleId = (int)CustRole.Member;
-            settingContext.UplineRoleId = (int)CustRole.Agent;
+            settingContext.TargetRoleId = (int)CustomerRole.Member;
+            settingContext.UplineRoleId = (int)CustomerRole.Agent;
             _settingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PtAndComSetting>())
                            .Returns(new CommandResults
                            {
@@ -300,7 +301,7 @@
                             {
                                 Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
                             });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<CustInfo>(), Arg.Any<List<GameType>>())
+            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
                                .Returns(new CommandResults
                                {
                                    Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }

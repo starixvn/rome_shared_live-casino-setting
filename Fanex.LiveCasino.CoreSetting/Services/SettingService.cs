@@ -7,9 +7,10 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
@@ -91,34 +92,34 @@
         /// <returns>Position taking and commission setting.</returns>
         public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
         {
-            switch ((CustRole)settingContext.TargetRoleId)
+            switch ((CustomerRole)settingContext.TargetRoleId)
             {
-                case CustRole.Super:
+                case CustomerRole.Super:
                     return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
                     {
                         CustId = settingContext.TargetCustId
                     });
-                case CustRole.Master:
+                case CustomerRole.Master:
                     return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
                     {
                         CustId = settingContext.TargetCustId,
                         SRecommend = settingContext.UplineId
                     });
-                case CustRole.Agent:
+                case CustomerRole.Agent:
                     return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
                     {
                         CustId = settingContext.TargetCustId,
                         MRecommend = settingContext.UplineId
                     });
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.UplineRoleId)
+                case CustomerRole.Member:
+                    switch ((CustomerRole)settingContext.UplineRoleId)
                     {
-                        case CustRole.Super:
+                        case CustomerRole.Super:
                             return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
                             {
                                 CustId = settingContext.TargetCustId
                             });
-                        case CustRole.Master:
+                        case CustomerRole.Master:
                             return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria
                             {
                                 CustId = settingContext.TargetCustId
@@ -135,36 +136,6 @@
             return null;
         }
 
-        public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditSuper(criteria);
-        }
-
-        public PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditMaster(criteria);
-        }
-
-        public PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditAgent(criteria);
-        }
-
-        public PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditMember(criteria);
-        }
-
-        public PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForSuperEditMember(criteria);
-        }
-
-        public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForMasterEditMember(criteria);
-        }
-
         #region Pt and Com Single Update
 
         /// <summary>
@@ -177,28 +148,28 @@
         public ICommandResults UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
             ICommandResults updateResults = new CommandResults();
-            switch ((CustRole)settingContext.TargetRoleId)
+            switch ((CustomerRole)settingContext.TargetRoleId)
             {
-                case CustRole.Super:
+                case CustomerRole.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, positionTakingAndComSetting);
                     break;
 
-                case CustRole.Master:
+                case CustomerRole.Master:
                     updateResults.Results = UpdateMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
                     break;
 
-                case CustRole.Agent:
+                case CustomerRole.Agent:
                     updateResults.Results = UpdateAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
                     break;
 
-                case CustRole.Member:
-                    switch ((CustRole)settingContext.UplineRoleId)
+                case CustomerRole.Member:
+                    switch ((CustomerRole)settingContext.UplineRoleId)
                     {
-                        case CustRole.Super:
+                        case CustomerRole.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
                             break;
 
-                        case CustRole.Master:
+                        case CustomerRole.Master:
                             updateResults.Results = MasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
                             break;
 
@@ -211,68 +182,6 @@
             }
 
             return updateResults;
-        }
-
-        /// <summary>
-        /// Update super position taking and commission setting.
-        /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        public List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                SuperCommission = (decimal)positionTakingAndComSetting.Commission.Value,
-                S4 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
-                N4 = (decimal)positionTakingAndComSetting.PositionTaking.N4,
-            });
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        public List<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        public List<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        public List<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        public List<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        public List<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
         }
 
         #endregion Pt and Com Single Update
@@ -372,7 +281,7 @@
         public IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
             var results = new MultipleCommandResults();
-            List<CustInfo> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            List<Customer> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -391,6 +300,98 @@
         #endregion Win Limit
 
         #region Private Methods
+
+        private PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditSuper(criteria);
+        }
+
+        private PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditMaster(criteria);
+        }
+
+        private PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditAgent(criteria);
+        }
+
+        private PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForEditMember(criteria);
+        }
+
+        private PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForSuperEditMember(criteria);
+        }
+
+        private PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        {
+            return _settingRepository.GetSettingForMasterEditMember(criteria);
+        }
+
+        /// <summary>
+        /// Update super position taking and commission setting.
+        /// </summary>
+        /// <param name="settingContext">Setting context of current update setting.</param>
+        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
+        /// <returns>Update status and information for showing on web.</returns>
+        private List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
+            {
+                CustId = settingContext.TargetCustId,
+                IP = settingContext.IP,
+                Language = settingContext.Language,
+                UserId = settingContext.UserIdDoAction,
+                SuperCommission = (decimal)positionTakingAndComSetting.Commission.Value,
+                S4 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
+                N4 = (decimal)positionTakingAndComSetting.PositionTaking.N4,
+            });
+
+            return GetPtAndComResultDetails(commandResult);
+        }
+
+        private List<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
+        }
+
+        private List<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
+        }
+
+        private List<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
+        }
+
+        private List<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
+        }
+
+        private List<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        {
+            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
+            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+
+            return GetPtAndComResultDetails(commandResult);
+        }
 
         /// <summary>
         /// Get information after updated.

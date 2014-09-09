@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constant\ErrCode.cs" />
+    <Compile Include="Constant\ViewPath.cs" />
     <Compile Include="Controllers\BaseController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
@@ -127,29 +128,28 @@
     <Compile Include="Criteria\UpdateSyncLiveCasinoCriteria.cs" />
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
-    <Compile Include="Enumerations\CustRole.cs" />
+    <Compile Include="Enumerations\CustomerRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
     <Compile Include="Enumerations\SystemType.cs" />
     <Compile Include="Enumerations\UpdateType.cs" />
-    <Compile Include="Models\Command\CommandResult.cs" />
-    <Compile Include="Models\Command\CommandResults.cs" />
-    <Compile Include="Models\Command\IMultipleCommandResults.cs" />
-    <Compile Include="Models\Command\MultipleCommandResults.cs" />
-    <Compile Include="Models\Command\PtAndComCommandResult.cs" />
-    <Compile Include="Models\Command\GameSettingCommandResult.cs" />
-    <Compile Include="Models\Command\ICommandResults.cs" />
-    <Compile Include="Models\Command\WinLimitCommandResult.cs" />
+    <Compile Include="DTO\Command\CommandResult.cs" />
+    <Compile Include="DTO\Command\CommandResults.cs" />
+    <Compile Include="DTO\Command\IMultipleCommandResults.cs" />
+    <Compile Include="DTO\Command\MultipleCommandResults.cs" />
+    <Compile Include="DTO\Command\PtAndComCommandResult.cs" />
+    <Compile Include="DTO\Command\GameSettingCommandResult.cs" />
+    <Compile Include="DTO\Command\ICommandResults.cs" />
+    <Compile Include="DTO\Command\WinLimitCommandResult.cs" />
     <Compile Include="Models\Log\ILogData.cs" />
     <Compile Include="Models\Log\LogAutoInsertAccount.cs" />
     <Compile Include="Models\Log\LogDataBase.cs" />
     <Compile Include="Models\Log\LogInsertFromExistingAccount.cs" />
     <Compile Include="Models\Log\LogManualInsertAccount.cs" />
     <Compile Include="Models\Log\LogUpdateStakeLevel.cs" />
-    <Compile Include="Models\PositionTakingMatrix.cs" />
     <Compile Include="Models\Commission.cs" />
-    <Compile Include="Models\CurrentMemberWin.cs" />
-    <Compile Include="Models\CustInfo.cs" />
+    <Compile Include="DTO\CurrentMemberWin.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\MemberWinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
@@ -200,7 +200,7 @@
     <Compile Include="Utilities\CommonUtil.cs" />
     <Compile Include="Utilities\ICommonUtil.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
-    <Compile Include="Models\PtAndComSetting.cs" />
+    <Compile Include="DTO\PtAndComSetting.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />

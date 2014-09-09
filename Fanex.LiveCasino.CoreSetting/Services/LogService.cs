@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Utilities;
@@ -148,11 +148,11 @@
 
             switch (roleId)
             {
-                case (int)CustRole.Master:
+                case (int)CustomerRole.Master:
                     logAction = LogActions.AutoInsert_Master;
                     break;
 
-                case (int)CustRole.Agent:
+                case (int)CustomerRole.Agent:
                     logAction = LogActions.AutoInsert_Agent;
                     break;
 
@@ -175,11 +175,11 @@
 
             switch (roleId)
             {
-                case (int)CustRole.Master:
+                case (int)CustomerRole.Master:
                     logAction = LogActions.AutoInsertExisting_Master;
                     break;
 
-                case (int)CustRole.Agent:
+                case (int)CustomerRole.Agent:
                     logAction = LogActions.AutoInsertExisting_Agent;
                     break;
 
@@ -202,15 +202,15 @@
 
             switch (roleId)
             {
-                case (int)CustRole.Super:
+                case (int)CustomerRole.Super:
                     logAction = LogActions.ManualInsert_Super;
                     break;
 
-                case (int)CustRole.Master:
+                case (int)CustomerRole.Master:
                     logAction = LogActions.ManualInsert_Master;
                     break;
 
-                case (int)CustRole.Agent:
+                case (int)CustomerRole.Agent:
                     logAction = LogActions.ManualInsert_Agent;
                     break;
 
@@ -233,15 +233,15 @@
 
             switch (roleId)
             {
-                case (int)CustRole.Super:
+                case (int)CustomerRole.Super:
                     logAction = LogActions.UpdateStakeLevel_Super;
                     break;
 
-                case (int)CustRole.Master:
+                case (int)CustomerRole.Master:
                     logAction = LogActions.UpdateStakeLevel_Master;
                     break;
 
-                case (int)CustRole.Agent:
+                case (int)CustomerRole.Agent:
                     logAction = LogActions.UpdateStakeLevel_Agent;
                     break;
 

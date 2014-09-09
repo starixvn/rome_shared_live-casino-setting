@@ -39,10 +39,10 @@
         /// News the value_ game setting is null_ return game setting tracking empty.
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
-        [TestCase((int)CustRole.Super)]
-        [TestCase((int)CustRole.Master)]
-        [TestCase((int)CustRole.Agent)]
-        [TestCase((int)CustRole.Member)]
+        [TestCase((int)CustomerRole.Super)]
+        [TestCase((int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Member)]
         public void NewValue_TargetRoleId_ReturnTracking(int roleId)
         {
             // Arrange

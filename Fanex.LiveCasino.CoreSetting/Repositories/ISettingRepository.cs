@@ -2,12 +2,13 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
 
     public interface ISettingRepository : IBaseRepository
     {
-        CustInfo GetCustomerInfo(ICriteria criteria);
+        Customer GetCustomerInfo(ICriteria criteria);
 
         CurrentMemberWin GetCurrentMemberWin(ICriteria criteria);
 

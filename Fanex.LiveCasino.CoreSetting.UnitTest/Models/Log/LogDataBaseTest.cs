@@ -42,7 +42,7 @@
             var settingContext = Substitute.For<SettingContext>();
 
             logModel.SettingContext = settingContext;
-            settingContext.TargetRoleId = (int)CustRole.Super;
+            settingContext.TargetRoleId = (int)CustomerRole.Super;
 
             // Assert
             string expectedSubAccountTracking = string.Format(TrackingSubAcc, 0, string.Empty);
@@ -53,9 +53,9 @@
         /// Tracking the sub account_ is not super_ return empty.
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
-        [TestCase((int)CustRole.Master)]
-        [TestCase((int)CustRole.Agent)]
-        [TestCase((int)CustRole.Member)]
+        [TestCase((int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Member)]
         public void TrackingSubAccount_IsNotSuper_ReturnEmpty(int roleId)
         {
             // Arrange

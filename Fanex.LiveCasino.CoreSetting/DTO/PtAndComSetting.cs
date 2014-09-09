@@ -1,5 +1,7 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO
 {
+    using Fanex.LiveCasino.CoreSetting.Models;
+
     /// <summary>
     /// Position taking and Commission setting.
     /// </summary>

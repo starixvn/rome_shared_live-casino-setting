@@ -72,9 +72,9 @@
         /// <param name="usernames">The usernames.</param>
         /// <param name="syncStatus">The synchronize status.</param>
         /// <returns>Collection of customer information.</returns>
-        public List<CustInfo> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        public List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
         {
-            var list = new List<CustInfo>();
+            var list = new List<Customer>();
 
             if (string.IsNullOrWhiteSpace(custIds)
                 || string.IsNullOrWhiteSpace(usernames)
@@ -93,7 +93,7 @@
             {
                 for (int i = 0; i < arrayCustId.Length; i++)
                 {
-                    list.Add(new CustInfo
+                    list.Add(new Customer
                     {
                         CustId = Converter.ToInt(arrayCustId[i]),
                         UserName = arrayUsername[i],

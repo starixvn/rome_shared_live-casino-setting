@@ -4,9 +4,10 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Constant;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Utilities;
@@ -77,9 +78,9 @@
                     LangKey = GetLanguageKey()
                 };
 
-            SetCustSettingJavascriptObject(settingContext);
+            SetCustSettingJavascriptObjectToViewBag(settingContext);
 
-            return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
+            return View(ViewPath.EditSettingPage, settingContext);
         }
 
         /// <summary>
@@ -134,12 +135,12 @@
             settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
             if (settingContext.TargetCustId == 0)
             {
-                return View("~/Areas/LiveCasinoSetting/Views/Common/NoInformation.cshtml");
+                return View(ViewPath.NoInformationPage);
             }
 
-            SetCustSettingJavascriptObject(settingContext);
+            SetCustSettingJavascriptObjectToViewBag(settingContext);
 
-            return View("~/Areas/LiveCasinoSetting/Views/EditSetting/EditSetting.cshtml", settingContext);
+            return View(ViewPath.EditSettingPage, settingContext);
         }
 
         /// <summary>
@@ -278,22 +279,22 @@
             ICommandResults resultList = new CommandResults();
 
             if (settingContext.IsAgentEditingMember
-                && custSetting.CustInfo.IsSyncLiveCasino
-                && !custSetting.CustInfo.UplineDisableLiveCasino)
+                && custSetting.Customer.IsSyncLiveCasino
+                && !custSetting.Customer.UplineDisableLiveCasino)
             {
-                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.CustInfo.DisableLiveCasino));
+                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.Customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting);
+            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.Customer.PtAndComSetting);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
-            if (custSetting.CustInfo.IsSyncLiveCasino
-                || (!custSetting.CustInfo.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
+            if (custSetting.Customer.IsSyncLiveCasino
+                || (!custSetting.Customer.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
             {
-                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit).Results;
+                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.Customer.MemberWinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
 
-                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting).Results;
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.Customer, custSetting.Customer.GameSetting).Results;
                 resultList.Results.AddRange(gameSettingResult);
             }
             else
@@ -325,7 +326,7 @@
             {
                 settingContext.TargetCustId = custInfo.CustId;
                 settingContext.TargetUsername = custInfo.UserName;
-                custSetting.CustInfo.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
+                custSetting.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContext, custSetting, updateType);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
@@ -345,20 +346,20 @@
         /// <returns>Command result after updating.</returns>
         private ICommandResults UpdateEachCustomerInMultipleEdit(SettingContext settingContext, CustSettingViewModel custSetting, int updateType)
         {
-            var isSync = custSetting.CustInfo.IsSyncLiveCasino;
+            var isSync = custSetting.Customer.IsSyncLiveCasino;
             switch (updateType)
             {
                 case (int)UpdateType.PositionTakingAndCommission:
-                    return isSync ? 
-                            _settingService.UpdatePtAndComSetting(settingContext, custSetting.PtAndComSetting) 
+                    return isSync ?
+                            _settingService.UpdatePtAndComSetting(settingContext, custSetting.Customer.PtAndComSetting)
                             : UpdateSingleCustomerAllSetting(settingContext, custSetting);
                 case (int)UpdateType.WinLimit:
                     return isSync ?
-                            _settingService.UpdateWinLimit(settingContext, custSetting.CustInfo.MemberWinLimit)
+                            _settingService.UpdateWinLimit(settingContext, custSetting.Customer.MemberWinLimit)
                             : UpdateSingleCustomerAllSetting(settingContext, custSetting);
                 case (int)UpdateType.GameSetting:
                     return isSync ?
-                            _gameSettingService.UpdateManual(settingContext, custSetting.CustInfo, custSetting.GameSetting)
+                            _gameSettingService.UpdateManual(settingContext, custSetting.Customer, custSetting.Customer.GameSetting)
                             : UpdateSingleCustomerAllSetting(settingContext, custSetting);
                 case (int)UpdateType.AllSetting:
                     return UpdateSingleCustomerAllSetting(settingContext, custSetting);
@@ -375,17 +376,18 @@
         /// <returns>JAVASCRIPT object string for returning to client.</returns>
         private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
-            CustInfo custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
+            Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
-            var custSetting = new CustSettingViewModel
+            customer.PtAndComSetting = _settingService.GetPtAndComSetting(settingContext);
+            customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
+
+            var custSettingViewModel = new CustSettingViewModel
             {
                 SettingContext = settingContext,
-                CustInfo = custInfo,
-                PtAndComSetting = _settingService.GetPtAndComSetting(settingContext),
-                GameSetting = _gameSettingService.GetGameSetting(settingContext, custInfo)
+                Customer = customer
             };
 
-            return FormatJavascript(custSetting, objectName);
+            return FormatJavascript(custSettingViewModel, objectName);
         }
 
         /// <summary>
@@ -406,7 +408,7 @@
             return string.Empty;
         }
 
-        private void SetCustSettingJavascriptObject(SettingContext settingContext)
+        private void SetCustSettingJavascriptObjectToViewBag(SettingContext settingContext)
         {
             ViewBag.CustSettingViewModel = GetSettingJavascriptObjectForUpdate(settingContext, "custSetting");
         }

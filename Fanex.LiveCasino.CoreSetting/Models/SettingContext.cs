@@ -122,7 +122,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustRole.Super;
+                return TargetRoleId == (int)CustomerRole.Super;
             }
         }
 
@@ -130,7 +130,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustRole.Master;
+                return TargetRoleId == (int)CustomerRole.Master;
             }
         }
 
@@ -138,7 +138,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustRole.Agent;
+                return TargetRoleId == (int)CustomerRole.Agent;
             }
         }
 
@@ -146,7 +146,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustRole.Member;
+                return TargetRoleId == (int)CustomerRole.Member;
             }
         }
 
@@ -154,7 +154,7 @@
         {
             get
             {
-                return IsEdittingMember && UplineRoleId == (int)CustRole.Agent;
+                return IsEdittingMember && UplineRoleId == (int)CustomerRole.Agent;
             }
         }
 

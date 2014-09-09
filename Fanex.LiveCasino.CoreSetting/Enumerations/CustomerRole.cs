@@ -3,7 +3,7 @@
     /// <summary>
     /// Customer Role.
     /// </summary>
-    public enum CustRole : int
+    public enum CustomerRole : int
     {
         /// <summary>
         /// Member type.

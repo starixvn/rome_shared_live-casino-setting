@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO
 {
     /// <summary>
     /// Current member win limit.

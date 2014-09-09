@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Services;
@@ -63,9 +63,9 @@
         /// </summary>
         /// <param name="targetRoleId">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
-        [TestCase(CustRole.Master, LogActions.AutoInsert_Master)]
-        [TestCase(CustRole.Agent, LogActions.AutoInsert_Agent)]
-        [TestCase(CustRole.Member, LogActions.AutoInsert_Member)]
+        [TestCase(CustomerRole.Master, LogActions.AutoInsert_Master)]
+        [TestCase(CustomerRole.Agent, LogActions.AutoInsert_Agent)]
+        [TestCase(CustomerRole.Member, LogActions.AutoInsert_Member)]
         public void LogAutoInsertAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
         {
             // Arrange
@@ -108,9 +108,9 @@
         /// </summary>
         /// <param name="targetRoleId">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
-        [TestCase(CustRole.Master, LogActions.AutoInsertExisting_Master)]
-        [TestCase(CustRole.Agent, LogActions.AutoInsertExisting_Agent)]
-        [TestCase(CustRole.Member, LogActions.AutoInsertExisting_Member)]
+        [TestCase(CustomerRole.Master, LogActions.AutoInsertExisting_Master)]
+        [TestCase(CustomerRole.Agent, LogActions.AutoInsertExisting_Agent)]
+        [TestCase(CustomerRole.Member, LogActions.AutoInsertExisting_Member)]
         public void LogInsertFromExistingAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
         {
             // Arrange
@@ -152,10 +152,10 @@
         /// </summary>
         /// <param name="targetRoleId">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
-        [TestCase(CustRole.Super, LogActions.ManualInsert_Super)]
-        [TestCase(CustRole.Master, LogActions.ManualInsert_Master)]
-        [TestCase(CustRole.Agent, LogActions.ManualInsert_Agent)]
-        [TestCase(CustRole.Member, LogActions.ManualInsert_Member)]
+        [TestCase(CustomerRole.Super, LogActions.ManualInsert_Super)]
+        [TestCase(CustomerRole.Master, LogActions.ManualInsert_Master)]
+        [TestCase(CustomerRole.Agent, LogActions.ManualInsert_Agent)]
+        [TestCase(CustomerRole.Member, LogActions.ManualInsert_Member)]
         public void LogManualInsertAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
         {
             // Arrange
@@ -222,10 +222,10 @@
         /// </summary>
         /// <param name="targetRoleId">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
-        [TestCase(CustRole.Super, LogActions.UpdateStakeLevel_Super)]
-        [TestCase(CustRole.Master, LogActions.UpdateStakeLevel_Master)]
-        [TestCase(CustRole.Agent, LogActions.UpdateStakeLevel_Agent)]
-        [TestCase(CustRole.Member, LogActions.UpdateStakeLevel_Member)]
+        [TestCase(CustomerRole.Super, LogActions.UpdateStakeLevel_Super)]
+        [TestCase(CustomerRole.Master, LogActions.UpdateStakeLevel_Master)]
+        [TestCase(CustomerRole.Agent, LogActions.UpdateStakeLevel_Agent)]
+        [TestCase(CustomerRole.Member, LogActions.UpdateStakeLevel_Member)]
         public void LogManualUpdateStakeLevel_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
         {
             // Arrange

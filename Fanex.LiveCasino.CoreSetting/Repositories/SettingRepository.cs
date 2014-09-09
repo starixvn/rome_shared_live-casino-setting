@@ -7,8 +7,9 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -22,13 +23,13 @@
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer information.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public CustInfo GetCustomerInfo(ICriteria criteria)
+        public Customer GetCustomerInfo(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
                 try
                 {
-                    var custInfo = new CustInfo();
+                    var custInfo = new Customer();
                     using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {
                         var parameters = criteria.GetSpParams();
@@ -73,7 +74,7 @@
                 }
             }
 
-            return new CustInfo();
+            return new Customer();
         }
 
         /// <summary>

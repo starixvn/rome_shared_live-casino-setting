@@ -5,9 +5,10 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
@@ -32,7 +33,7 @@
             _settingRepository = Substitute.For<ISettingRepository>();
             _commonUtil = Substitute.For<ICommonUtil>();
             _settingService = Substitute.For<SettingService>(_settingRepository, _commonUtil);
-        }        
+        }
 
         /// <summary>
         /// Gets the current win limit_ valid customer id_ return current member win.
@@ -120,11 +121,11 @@
             memberWinLimit.Upline = new MemberWinLimit();
 
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
+                       .Returns(new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, UserName = "master1" },
-                           new CustInfo { CustId = 2, UserName = "master2" },
-                           new CustInfo { CustId = 3, UserName = "master3" }
+                           new Customer { CustId = 1, UserName = "master1" },
+                           new Customer { CustId = 2, UserName = "master2" },
+                           new Customer { CustId = 3, UserName = "master3" }
                        });
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateCustomerWinLimitCriteria>(x => x.IsValid()))
                              .Returns(new CommandResult { Code = 0 });
@@ -148,14 +149,14 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustRole.Super,
-                TargetRoleId = (int)CustRole.Master
+                UplineRoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master
             };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
+                       .Returns(new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, UserName = "master1" },
-                           new CustInfo { CustId = 2, UserName = "master2" }
+                           new Customer { CustId = 1, UserName = "master1" },
+                           new Customer { CustId = 2, UserName = "master2" }
                        });
 
             //// Act
@@ -174,7 +175,7 @@
             //// Arrange
             var settingContext = new SettingContext();
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>());
+                       .Returns(new List<Customer>());
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -193,14 +194,14 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustRole.Super,
-                TargetRoleId = (int)CustRole.Member
+                UplineRoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Member
             };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
+                       .Returns(new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, IsSyncLiveCasino = false },
-                           new CustInfo { CustId = 2, IsSyncLiveCasino = true }
+                           new Customer { CustId = 1, IsSyncLiveCasino = false },
+                           new Customer { CustId = 2, IsSyncLiveCasino = true }
                        });
 
             //// Act
@@ -220,14 +221,14 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustRole.Super,
-                TargetRoleId = (int)CustRole.Member
+                UplineRoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Member
             };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
+                       .Returns(new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, IsSyncLiveCasino = false },
-                           new CustInfo { CustId = 2, IsSyncLiveCasino = false }
+                           new Customer { CustId = 1, IsSyncLiveCasino = false },
+                           new Customer { CustId = 2, IsSyncLiveCasino = false }
                        });
 
             //// Act
@@ -246,14 +247,14 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustRole.Super,
-                TargetRoleId = (int)CustRole.Master
+                UplineRoleId = (int)CustomerRole.Super,
+                TargetRoleId = (int)CustomerRole.Master
             };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<CustInfo>()
+                       .Returns(new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, UserName = "master1" },
-                           new CustInfo { CustId = 2, UserName = "master2" }
+                           new Customer { CustId = 1, UserName = "master1" },
+                           new Customer { CustId = 2, UserName = "master2" }
                        });
 
             //// Act
@@ -272,12 +273,12 @@
         /// </summary>
         /// <param name="uplineRoleId">Up line role ID for getting setting.</param>
         /// <param name="targetRoleId">Target role ID for getting setting.</param>
-        [TestCase(0, (int)CustRole.Super)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
-        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        [TestCase(0, (int)CustomerRole.Super)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
         public void GetPtAndComSetting_whenInvalidCriteria_ReturnDefaultPtAndCommSetting(int uplineRoleId, int targetRoleId)
         {
             var settingContext = new SettingContext
@@ -302,7 +303,7 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Super
+                TargetRoleId = (int)CustomerRole.Super
             };
             var superPtAndComSetting = new PtAndComSetting
             {
@@ -333,7 +334,7 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Master
+                TargetRoleId = (int)CustomerRole.Master
             };
             var masterPtAndComSetting = new PtAndComSetting
             {
@@ -363,7 +364,7 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Agent
+                TargetRoleId = (int)CustomerRole.Agent
             };
             var agentPtAndComSetting = new PtAndComSetting
             {
@@ -393,8 +394,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Member,
-                UplineRoleId = (int)CustRole.Agent
+                TargetRoleId = (int)CustomerRole.Member,
+                UplineRoleId = (int)CustomerRole.Agent
             };
             var memberPtAndComSetting = new PtAndComSetting
             {
@@ -424,8 +425,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Member,
-                UplineRoleId = (int)CustRole.Super
+                TargetRoleId = (int)CustomerRole.Member,
+                UplineRoleId = (int)CustomerRole.Super
             };
             var memberPtAndComSetting = new PtAndComSetting
             {
@@ -456,8 +457,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                TargetRoleId = (int)CustRole.Member,
-                UplineRoleId = (int)CustRole.Master
+                TargetRoleId = (int)CustomerRole.Member,
+                UplineRoleId = (int)CustomerRole.Master
             };
             var memberPtAndComSetting = new PtAndComSetting
             {
@@ -505,12 +506,12 @@
         /// </summary>
         /// <param name="uplineRoleId">Up line role id for testing.</param>
         /// <param name="targetRoleId">Target role id for testing.</param>
-        [TestCase(0, (int)CustRole.Super)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
-        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        [TestCase(0, (int)CustomerRole.Super)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
         public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResults(int uplineRoleId, int targetRoleId)
         {
             //// Arrange
@@ -558,12 +559,12 @@
         /// </summary>
         /// <param name="uplineRoleId">Up line role id for testing.</param>
         /// <param name="targetRoleId">Target role id for testing.</param>
-        [TestCase(0, (int)CustRole.Super)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
-        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        [TestCase(0, (int)CustomerRole.Super)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
         public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResultsWithMessage(int uplineRoleId, int targetRoleId)
         {
             //// Arrange
@@ -604,19 +605,19 @@
         /// </summary>
         /// <param name="uplineRoleId">Up line role id for updating.</param>
         /// <param name="targetRoleId">Target role id for updating.</param>
-        [TestCase(0, (int)CustRole.Super)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Master)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Agent)]
-        [TestCase((int)CustRole.Agent, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Super, (int)CustRole.Member)]
-        [TestCase((int)CustRole.Master, (int)CustRole.Member)]
+        [TestCase(0, (int)CustomerRole.Super)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
+        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
+        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
         public void UpdatePtAndComSettingMultiple_SettingContextAndPtComSetting_MultipleCommandResults(int uplineRoleId, int targetRoleId)
         {
             //// Arrange
-            var custInfoList = new List<CustInfo>()
+            var custInfoList = new List<Customer>()
                        {
-                           new CustInfo { CustId = 1, UserName = "name 1" },
-                           new CustInfo { CustId = 2, UserName = "name 2" }
+                           new Customer { CustId = 1, UserName = "name 1" },
+                           new Customer { CustId = 2, UserName = "name 2" }
                        };
             _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
                        .Returns(custInfoList);
@@ -718,7 +719,7 @@
         /// </summary>
         /// <param name="custInfoList">Customer information list for get results.</param>
         /// <returns>Multiple command results from multiple customer.</returns>
-        private IMultipleCommandResults GetDummyMultipleCommand(List<CustInfo> custInfoList)
+        private IMultipleCommandResults GetDummyMultipleCommand(List<Customer> custInfoList)
         {
             return new MultipleCommandResults
             {
