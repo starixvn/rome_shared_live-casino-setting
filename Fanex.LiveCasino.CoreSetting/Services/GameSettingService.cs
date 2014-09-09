@@ -580,6 +580,11 @@
             return gameSettingResult;
         }
 
+        /// <summary>
+        /// Clones the game types.
+        /// </summary>
+        /// <param name="gameType">Type of the game.</param>
+        /// <returns>New instance of game type collection.</returns>
         private List<GameType> CloneGameTypes(List<GameType> gameType)
         {
             var list = new List<GameType>();

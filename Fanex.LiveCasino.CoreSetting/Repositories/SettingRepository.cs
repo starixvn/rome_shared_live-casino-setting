@@ -360,6 +360,7 @@
         /// <param name="criteria">The criteria.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Game setting command result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes)
         {
             if (criteria.IsValid())

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Criteria.Log
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using NUnit.Framework;
 
@@ -104,6 +105,7 @@
         /// To the string_ when called_ return string.
         /// </summary>
         [Test]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
         public void ToString_WhenCalled_ReturnString()
         {
             // Arrange
