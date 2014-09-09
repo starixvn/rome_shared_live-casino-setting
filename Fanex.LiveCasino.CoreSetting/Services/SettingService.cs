@@ -446,7 +446,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
-            return new UpdateMasterSettingCriteria
+            var criteria = new UpdateMasterSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -463,6 +463,17 @@
                 S3 = (decimal)positionTakingAndComSetting.PositionTaking.S3,
                 NewSuperPositionTakingOnMember = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
             };
+
+            if (criteria.Is3)
+            {
+                criteria.S3 = 0;
+            }
+            else
+            {
+                criteria.Us3 = 0;
+            }
+
+            return criteria;
         }
 
         /// <summary>
@@ -473,7 +484,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
-            ICriteria criteria = new UpdateAgentSettingCriteria
+            var criteria = new UpdateAgentSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -490,6 +501,16 @@
                 A2 = (decimal)positionTakingAndComSetting.PositionTaking.A2,
                 NewMasterPtOnMember = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
             };
+
+            if (criteria.Im2)
+            {
+                criteria.M2 = 0;
+            }
+            else
+            {
+                criteria.Um2 = 0;
+            }
+
             return criteria;
         }
 
@@ -523,7 +544,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
-            ICriteria criteria = new SuperUpdateMemberSettingCriteria
+            var criteria = new SuperUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -535,6 +556,16 @@
                 Us1 = (decimal)positionTakingAndComSetting.PositionTaking.Us1,
                 IsUpdateSuperPt = !(bool)positionTakingAndComSetting.PositionTaking.Is3
             };
+
+            if (criteria.Is1)
+            {
+                criteria.S1 = 0;
+            }
+            else
+            {
+                criteria.Us1 = 0;
+            }
+
             return criteria;
         }
 
@@ -546,7 +577,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
         {
-            ICriteria criteria = new MasterUpdateMemberSettingCriteria
+            var criteria = new MasterUpdateMemberSettingCriteria
             {
                 CustId = settingContext.TargetCustId,
                 IP = settingContext.IP,
@@ -558,6 +589,16 @@
                 Um1 = (decimal)positionTakingAndComSetting.PositionTaking.Um1,
                 Im2 = (bool)positionTakingAndComSetting.PositionTaking.Im2
             };
+
+            if (criteria.Im1)
+            {
+                criteria.M1 = 0;
+            }
+            else
+            {
+                criteria.Um1 = 0;
+            }
+
             return criteria;
         }
 
