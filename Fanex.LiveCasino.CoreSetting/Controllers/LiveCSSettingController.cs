@@ -84,7 +84,7 @@
                     LangKey = GetLanguageKey()
                 };
 
-            SetCustSettingJavascriptObjectToViewBag(settingContext);
+            SetCustSettingViewModelToViewBag(settingContext);
 
             return View(ViewPath.EditSettingPage, settingContext);
         }
@@ -144,7 +144,7 @@
                 return View(ViewPath.NoInformationPage);
             }
 
-            SetCustSettingJavascriptObjectToViewBag(settingContext);
+            SetCustSettingViewModelToViewBag(settingContext);
 
             return View(ViewPath.EditSettingPage, settingContext);
         }
@@ -248,21 +248,21 @@
         /// Update position taking and commission setting.
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="ptAndComSetting">Position taking and commission setting for updating.</param>
+        /// <param name="ptComSetting">Position taking and commission setting for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PTComSetting ptAndComSetting)
+        public JsonResult UpdatePtComSetting(SettingContext settingContext, PTComSetting ptComSetting)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _pTComSettingService.UpdatePtAndComSettingMultiple(settingContext, ptAndComSetting);
+                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, ptComSetting);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtAndComSetting(settingContext, ptAndComSetting));
+                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, ptComSetting));
             }
 
             return Json(updateResult);
@@ -270,13 +270,7 @@
 
         #endregion Pt and Com setting
 
-        /// <summary>
-        /// Get setting object for showing edit form.
-        /// </summary>
-        /// <param name="settingContext">Setting context for get setting.</param>
-        /// <param name="objectName">JAVASCRIPT object name.</param>
-        /// <returns>JAVASCRIPT object string for returning to client.</returns>
-        private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
+        private void SetCustSettingViewModelToViewBag(SettingContext settingContext)
         {
             var custSettingViewModel = new CustSettingViewModel
             {
@@ -284,30 +278,7 @@
                 Customer = _settingService.GetCustomer(settingContext)
             };
 
-            return FormatJavascript(custSettingViewModel, objectName);
-        }
-
-        /// <summary>
-        /// Format object to JAVASCRIPT string.
-        /// </summary>
-        /// <param name="obj">Object need be formatted.</param>
-        /// <param name="name">Name of object.</param>
-        /// <returns>JAVASCRIPT string.</returns>
-        private string FormatJavascript(object obj, string name)
-        {
-            if (obj != null)
-            {
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.NullValueHandling = NullValueHandling.Ignore;
-                return string.Format("var {0} = {1}; \n", name, JsonConvert.SerializeObject(obj, Formatting.Indented, settings));
-            }
-
-            return string.Empty;
-        }
-
-        private void SetCustSettingJavascriptObjectToViewBag(SettingContext settingContext)
-        {
-            ViewBag.CustSettingViewModel = GetSettingJavascriptObjectForUpdate(settingContext, "custSetting");
+            ViewBag.CustSettingViewModel = custSettingViewModel;
         }
 
         private string GetLanguageKey()

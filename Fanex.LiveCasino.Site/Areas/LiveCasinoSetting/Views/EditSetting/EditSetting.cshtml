@@ -20,9 +20,11 @@
 {
     <script type="text/javascript">
         var currentLaguageKey = '@(Model.LangKey)';
-        @(Html.Raw(ViewBag.CustSettingViewModel ?? string.Empty))
+        @(Html.ToJavascriptObject((CustSettingViewModel)(ViewBag.CustSettingViewModel), "custSetting"))
     </script>
 }
+
+
 <div id="tblSetting" 
     data-ng-app="fanex.liveCasinoSetting" 
     data-ng-controller="CustomerSettingController" 

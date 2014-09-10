@@ -137,7 +137,7 @@
 
             settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                            .Returns(new CommandResults
                            {
                                Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
@@ -147,7 +147,7 @@
             _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
             // Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+            _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
         }
 
         /// <summary>
@@ -162,7 +162,7 @@
 
             settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                            .Returns(new CommandResults
                            {
                                Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
@@ -187,7 +187,7 @@
 
             settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                            .Returns(new CommandResults
                            {
                                Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
@@ -212,7 +212,7 @@
 
             customer.MemberWinLimit = new MemberWinLimit();
             settingContext.IsEditMultiple = false;
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                          .Returns(new CommandResults
                          {
                              Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
@@ -247,7 +247,7 @@
 
             customer.MemberWinLimit = new MemberWinLimit();
             settingContext.IsEditMultiple = false;
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                            .Returns(new CommandResults
                            {
                                Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
@@ -285,7 +285,7 @@
             settingContext.IsEditMultiple = false;
             settingContext.TargetRoleId = (int)CustomerRole.Member;
             settingContext.UplineRoleId = (int)CustomerRole.Agent;
-            _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
                            .Returns(new CommandResults
                            {
                                Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
@@ -319,10 +319,10 @@
             var positionTakingAndComSetting = Substitute.For<PTComSetting>();
 
             //// Act
-            _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+            _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
 
             //// Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtAndComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+            _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
         }
 
         /// <summary>
@@ -337,10 +337,10 @@
             settingContext.IsEditMultiple = true;
 
             //// Act
-            _controller.UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+            _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
 
             //// Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtAndComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+            _positionTakingAndCommissionSettingService.Received().UpdatePtComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
         }
 
         [Test]

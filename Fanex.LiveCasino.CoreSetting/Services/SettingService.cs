@@ -44,7 +44,7 @@
         public Customer GetCustomer(SettingContext settingContext)
         {
             Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-            customer.PtAndComSetting = _pTComSettingService.GetPtAndComSetting(settingContext);
+            customer.PtAndComSetting = _pTComSettingService.GetPtComSetting(settingContext);
             customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
 
             return customer;
@@ -115,7 +115,7 @@
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = _pTComSettingService.UpdatePtAndComSetting(settingContext, customer.PtAndComSetting);
+            var positionTakingAndCommResults = _pTComSettingService.UpdatePtComSetting(settingContext, customer.PtAndComSetting);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
             if (customer.IsSyncLiveCasino
@@ -181,7 +181,7 @@
             {
                 case (int)UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            _pTComSettingService.UpdatePtAndComSetting(settingContext, customer.PtAndComSetting)
+                            _pTComSettingService.UpdatePtComSetting(settingContext, customer.PtAndComSetting)
                             : UpdateSingleCustomerAllSetting(settingContext, customer);
                 case (int)UpdateType.WinLimit:
                     return isSync ?

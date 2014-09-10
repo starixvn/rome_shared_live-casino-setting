@@ -38,7 +38,7 @@
         /// </summary>
         /// <param name="settingContext">Current context for getting customer information.</param>
         /// <returns>Position taking and commission setting.</returns>
-        public PTComSetting GetPtAndComSetting(SettingContext settingContext)
+        public PTComSetting GetPtComSetting(SettingContext settingContext)
         {
             switch ((CustomerRole)settingContext.TargetRoleId)
             {
@@ -93,7 +93,7 @@
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public ICommandResults UpdatePtAndComSetting(SettingContext settingContext, PTComSetting positionTakingAndComSetting)
+        public ICommandResults UpdatePtComSetting(SettingContext settingContext, PTComSetting positionTakingAndComSetting)
         {
             ICommandResults updateResults = new CommandResults();
             switch ((CustomerRole)settingContext.TargetRoleId)
@@ -142,7 +142,7 @@
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PTComSetting positionTakingAndComSetting)
+        public IMultipleCommandResults UpdatePtComSettingMultiple(SettingContext settingContext, PTComSetting positionTakingAndComSetting)
         {
             var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
@@ -151,7 +151,7 @@
             foreach (var custInfo in custInfoes)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var subResult = UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+                var subResult = UpdatePtComSetting(settingContext, positionTakingAndComSetting);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);

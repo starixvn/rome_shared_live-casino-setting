@@ -48,7 +48,7 @@
             };
             var positionTakingAndCommissionSettingService = new PTComSettingService(new SettingRepository());
 
-            var positionTakingAndCommSetting = positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.IsNull(positionTakingAndCommSetting);
@@ -79,7 +79,7 @@
         ////    };
         ////    positionTakingAndCommissionSettingService.GetSettingForEditSuper(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
         ////    //// Act
-        ////    var positionTakingAndCommSetting = _pTComSettingService.GetPtAndComSetting(settingContext);
+        ////    var positionTakingAndCommSetting = _pTComSettingService.GetPtComSetting(settingContext);
 
         ////    //// Assert
         ////    Assert.AreEqual(superPtAndComSetting, positionTakingAndCommSetting);
@@ -109,7 +109,7 @@
             };
             _settingRepository.GetSettingForEditMaster(Arg.Any<GetSettingForEditMasterCriteria>()).Returns(masterPtAndComSetting);
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.AreEqual(masterPtAndComSetting, positionTakingAndCommSetting);
@@ -139,7 +139,7 @@
             };
             _settingRepository.GetSettingForEditAgent(Arg.Any<GetSettingForEditAgentCriteria>()).Returns(agentPtAndComSetting);
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.AreEqual(agentPtAndComSetting, positionTakingAndCommSetting);
@@ -170,7 +170,7 @@
             };
             _settingRepository.GetSettingForEditMember(Arg.Any<GetSettingForEditMemberCriteria>()).Returns(memberPtAndComSetting);
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -202,7 +202,7 @@
             _settingRepository.GetSettingForSuperEditMember(Arg.Any<GetSettingForSuperEditMemberCriteria>())
                 .Returns(memberPtAndComSetting);
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -234,7 +234,7 @@
             _settingRepository.GetSettingForMasterEditMember(Arg.Any<GetSettingForMasterEditMemberCriteria>())
                 .Returns(memberPtAndComSetting);
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -251,7 +251,7 @@
             var memberPtAndComSetting = new PTComSetting();
 
             //// Act
-            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
+            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.GetPtComSetting(settingContext);
 
             //// Assert
             Assert.IsNull(positionTakingAndCommSetting);
@@ -304,7 +304,7 @@
             _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(updatedResult);
 
             //// Act
-            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(settingContext, custPtAndComSetting);
+            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtComSetting(settingContext, custPtAndComSetting);
 
             //// Assert
             Assert.AreEqual(updateResult[0].Code, mainResult.Results[0].Code);
@@ -349,7 +349,7 @@
             _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(updatedResult);
 
             //// Act
-            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtAndComSetting(settingContext, custPtAndComSetting);
+            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtComSetting(settingContext, custPtAndComSetting);
 
             //// Assert
             Assert.AreEqual(updateResult[0].Code, mainResult.Results[0].Code);
@@ -394,7 +394,7 @@
             });
 
             //// Act
-            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtAndComSettingMultiple(settingContext, custPtAndComSetting);
+            var mainResult = _positionTakingAndCommissionSettingService.UpdatePtComSettingMultiple(settingContext, custPtAndComSetting);
 
             //// Assert
             Assert.AreEqual(mainResult.CommandResultsList.Count, multipleResults.CommandResultsList.Count);
