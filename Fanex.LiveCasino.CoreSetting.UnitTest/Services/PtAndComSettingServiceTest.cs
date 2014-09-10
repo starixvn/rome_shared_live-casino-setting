@@ -34,19 +34,19 @@
 ////        /// Get Position taking and Commission setting when invalid criteria then return default position taking and Commission setting default.
 ////        /// </summary>
 ////        /// <param name="uplineRoleId">Up line role ID for getting setting.</param>
-////        /// <param name="targetRoleId">Target role ID for getting setting.</param>
+////        /// <param name="targetRole">Target role ID for getting setting.</param>
 ////        [TestCase(0, (int)CustomerRole.Super)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
 ////        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
-////        public void GetPtAndComSetting_whenInvalidCriteria_ReturnDefaultPtAndCommSetting(int uplineRoleId, int targetRoleId)
+////        public void GetPtAndComSetting_whenInvalidCriteria_ReturnDefaultPtAndCommSetting(int uplineRoleId, int targetRole)
 ////        {
 ////            var settingContext = new SettingContext
 ////            {
-////                UplineRoleId = uplineRoleId,
-////                TargetRoleId = targetRoleId
+////                UplineRole = uplineRoleId,
+////                TargetRole = targetRole
 ////            };
 ////            var positionTakingAndCommissionSettingService = new PTComSettingService(new SettingRepository(), Substitute.For<CommonUtil>());
 
@@ -65,7 +65,7 @@
 ////        ////    //// Arrange
 ////        ////    var settingContext = new SettingContext
 ////        ////    {
-////        ////        TargetRoleId = (int)CustomerRole.Super
+////        ////        TargetRole = (int)CustomerRole.Super
 ////        ////    };
 ////        ////    var superPtAndComSetting = new PtAndComSetting
 ////        ////    {
@@ -79,7 +79,7 @@
 ////        ////            N4 = (float)0.2
 ////        ////        }
 ////        ////    };
-////        ////    positionTakingAndCommissionSettingService.SetSuperPtAndComForEdit(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
+////        ////    positionTakingAndCommissionSettingService.SetSuperPtAndCom(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
 ////        ////    //// Act
 ////        ////    var positionTakingAndCommSetting = _pTComSettingService.SetCustomerPtAndComSetting(settingContext);
 
@@ -96,7 +96,7 @@
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                TargetRoleId = (int)CustomerRole.Master
+////                TargetRole = (int)CustomerRole.Master
 ////            };
 ////            var masterPtAndComSetting = new PTComSetting
 ////            {
@@ -126,7 +126,7 @@
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                TargetRoleId = (int)CustomerRole.Agent
+////                TargetRole = (int)CustomerRole.Agent
 ////            };
 ////            var agentPtAndComSetting = new PTComSetting
 ////            {
@@ -156,8 +156,8 @@
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                TargetRoleId = (int)CustomerRole.Member,
-////                UplineRoleId = (int)CustomerRole.Agent
+////                TargetRole = (int)CustomerRole.Member,
+////                UplineRole = (int)CustomerRole.Agent
 ////            };
 ////            var memberPtAndComSetting = new PTComSetting
 ////            {
@@ -187,8 +187,8 @@
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                TargetRoleId = (int)CustomerRole.Member,
-////                UplineRoleId = (int)CustomerRole.Super
+////                TargetRole = (int)CustomerRole.Member,
+////                UplineRole = (int)CustomerRole.Super
 ////            };
 ////            var memberPtAndComSetting = new PTComSetting
 ////            {
@@ -219,8 +219,8 @@
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                TargetRoleId = (int)CustomerRole.Member,
-////                UplineRoleId = (int)CustomerRole.Master
+////                TargetRole = (int)CustomerRole.Member,
+////                UplineRole = (int)CustomerRole.Master
 ////            };
 ////            var memberPtAndComSetting = new PTComSetting
 ////            {
@@ -263,20 +263,20 @@
 ////        /// Update customer position taking and Commission setting return command results.
 ////        /// </summary>
 ////        /// <param name="uplineRoleId">Up line role id for testing.</param>
-////        /// <param name="targetRoleId">Target role id for testing.</param>
+////        /// <param name="targetRole">Target role id for testing.</param>
 ////        [TestCase(0, (int)CustomerRole.Super)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
 ////        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
-////        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResults(int uplineRoleId, int targetRoleId)
+////        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResults(int uplineRoleId, int targetRole)
 ////        {
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                UplineRoleId = uplineRoleId,
-////                TargetRoleId = targetRoleId
+////                UplineRole = uplineRoleId,
+////                TargetRole = targetRole
 ////            };
 ////            var custPtAndComSetting = new PTComSetting
 ////            {
@@ -316,20 +316,20 @@
 ////        /// Update customer position taking and Commission setting return command results.
 ////        /// </summary>
 ////        /// <param name="uplineRoleId">Up line role id for testing.</param>
-////        /// <param name="targetRoleId">Target role id for testing.</param>
+////        /// <param name="targetRole">Target role id for testing.</param>
 ////        [TestCase(0, (int)CustomerRole.Super)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
 ////        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
-////        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResultsWithMessage(int uplineRoleId, int targetRoleId)
+////        public void UpdatePtAndComSetting_UpdateCustomerSetting_CommandResultsWithMessage(int uplineRoleId, int targetRole)
 ////        {
 ////            //// Arrange
 ////            var settingContext = new SettingContext
 ////            {
-////                UplineRoleId = uplineRoleId,
-////                TargetRoleId = targetRoleId
+////                UplineRole = uplineRoleId,
+////                TargetRole = targetRole
 ////            };
 ////            var custPtAndComSetting = new PTComSetting
 ////            {
@@ -362,14 +362,14 @@
 ////        /// Update multiple customer position taking and Commission setting, return multiple command result.
 ////        /// </summary>
 ////        /// <param name="uplineRoleId">Up line role id for updating.</param>
-////        /// <param name="targetRoleId">Target role id for updating.</param>
+////        /// <param name="targetRole">Target role id for updating.</param>
 ////        [TestCase(0, (int)CustomerRole.Super)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Master)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Agent)]
 ////        [TestCase((int)CustomerRole.Agent, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Super, (int)CustomerRole.Member)]
 ////        [TestCase((int)CustomerRole.Master, (int)CustomerRole.Member)]
-////        public void UpdatePtAndComSettingMultiple_SettingContextAndPtComSetting_MultipleCommandResults(int uplineRoleId, int targetRoleId)
+////        public void UpdatePtAndComSettingMultiple_SettingContextAndPtComSetting_MultipleCommandResults(int uplineRoleId, int targetRole)
 ////        {
 ////            //// Arrange
 ////            var custInfoList = new List<Customer>()
@@ -380,8 +380,8 @@
           
 ////            var settingContext = new SettingContext
 ////            {
-////                UplineRoleId = uplineRoleId,
-////                TargetRoleId = targetRoleId
+////                UplineRole = uplineRoleId,
+////                TargetRole = targetRole
 ////            };
 ////            var custPtAndComSetting = new PTComSetting
 ////            {

@@ -56,7 +56,7 @@
         /// <summary>
         /// Gets or sets Current role id of customer that is performing.
         /// </summary>
-        public int UplineRoleId { get; set; }
+        public CustomerRole UplineRole { get; set; }
 
         /// <summary>
         /// Gets or sets Site name.
@@ -66,7 +66,7 @@
         /// <summary>
         /// Gets or sets Role id of edited customer.
         /// </summary>
-        public int TargetRoleId { get; set; }
+        public CustomerRole TargetRole { get; set; }
 
         /// <summary>
         /// Gets or sets Form type of edit: Edit Min/Max PT, Edit MinPT or Edit PT.
@@ -142,7 +142,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustomerRole.Super;
+                return TargetRole == CustomerRole.Super;
             }
         }
 
@@ -150,7 +150,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustomerRole.Master;
+                return TargetRole == CustomerRole.Master;
             }
         }
 
@@ -158,7 +158,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustomerRole.Agent;
+                return TargetRole == CustomerRole.Agent;
             }
         }
 
@@ -166,7 +166,7 @@
         {
             get
             {
-                return TargetRoleId == (int)CustomerRole.Member;
+                return TargetRole == CustomerRole.Member;
             }
         }
 
@@ -174,7 +174,7 @@
         {
             get
             {
-                return IsEdittingMember && UplineRoleId == (int)CustomerRole.Agent;
+                return IsEdittingMember && UplineRole == CustomerRole.Agent;
             }
         }
 
@@ -182,7 +182,7 @@
         {
             get
             {
-                return IsEdittingSuper || (UplineRoleId - TargetRoleId) == 1;
+                return IsEdittingSuper || (UplineRole - TargetRole) == 1;
             }
         }
     }

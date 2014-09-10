@@ -4,6 +4,7 @@
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Position Taking And Commission Setting Service Interface.
@@ -11,7 +12,7 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface IPTComSettingService
     {
-        void SetCustomerPtAndComSetting(SettingContext settingContext, Customer customer);
+        void SetCustomerPtAndComSetting(Customer customer, CustomerRole targetCustRole, int targetCustId, CustomerRole uplineRole, int uplineId);
 
         ICommandResultsDTO UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking);
 

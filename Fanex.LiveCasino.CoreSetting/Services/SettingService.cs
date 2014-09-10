@@ -44,7 +44,12 @@
         public Customer GetCustomer(SettingContext settingContext)
         {
             Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-            _pTComSettingService.SetCustomerPtAndComSetting(settingContext, customer);
+            _pTComSettingService.SetCustomerPtAndComSetting(
+                customer,
+                settingContext.TargetRole,
+                settingContext.TargetCustId,
+                settingContext.UplineRole,
+                settingContext.UplineId);
             customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
 
             return customer;

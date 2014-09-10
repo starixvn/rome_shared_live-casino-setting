@@ -35,8 +35,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master
+                UplineRole = CustomerRole.Super,
+                TargetRole = CustomerRole.Master
             };
 
             //// Act
@@ -72,8 +72,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Member
+                UplineRole = CustomerRole.Super,
+                TargetRole = CustomerRole.Member
             };
 
             //// Act
@@ -93,8 +93,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Member
+                UplineRole = CustomerRole.Super,
+                TargetRole = CustomerRole.Member
             };
 
             //// Act
@@ -113,8 +113,8 @@
             //// Arrange
             var settingContext = new SettingContext
             {
-                UplineRoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master
+                UplineRole = CustomerRole.Super,
+                TargetRole = CustomerRole.Master
             };
 
             //// Act

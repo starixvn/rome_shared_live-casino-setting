@@ -38,7 +38,7 @@
         {
             var log = new LogAutoInsertAccount
             {
-                Action = GetInsertAutoLogAction(settingContext.TargetRoleId),
+                Action = GetInsertAutoLogAction(settingContext.TargetRole),
                 SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 GameSetting = gameTypes,
                 SettingContext = settingContext
@@ -56,7 +56,7 @@
         {
             var log = new LogInsertFromExistingAccount
             {
-                Action = GetInsertFromExistingLogAction(settingContext.TargetRoleId),
+                Action = GetInsertFromExistingLogAction(settingContext.TargetRole),
                 SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 GameSetting = gameTypes,
                 SettingContext = settingContext
@@ -73,7 +73,7 @@
         {
             var log = new LogManualInsertAccount
             {
-                Action = GetInsertManualLogAction(settingContext.TargetRoleId),
+                Action = GetInsertManualLogAction(settingContext.TargetRole),
                 SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 SettingContext = settingContext
             };
@@ -91,7 +91,7 @@
         {
             var log = new LogUpdateStakeLevel
             {
-                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRoleId),
+                Action = GetUpdateStakeLevelLogAction(settingContext.TargetRole),
                 SettingContext = settingContext,
                 NewGameType = gameTypeNew,
                 OldGameType = gameTypeOld
@@ -139,19 +139,19 @@
         /// <summary>
         /// Gets the insert automatic log action.
         /// </summary>
-        /// <param name="roleId">The role identifier.</param>
+        /// <param name="role">The role identifier.</param>
         /// <returns>Log action for insert automatic account.</returns>
-        private static LogActions GetInsertAutoLogAction(int roleId)
+        private static LogActions GetInsertAutoLogAction(CustomerRole role)
         {
             LogActions logAction;
 
-            switch (roleId)
+            switch (role)
             {
-                case (int)CustomerRole.Master:
+                case CustomerRole.Master:
                     logAction = LogActions.AutoInsert_Master;
                     break;
 
-                case (int)CustomerRole.Agent:
+                case CustomerRole.Agent:
                     logAction = LogActions.AutoInsert_Agent;
                     break;
 
@@ -166,19 +166,19 @@
         /// <summary>
         /// Gets the insert from existing log action.
         /// </summary>
-        /// <param name="roleId">The role identifier.</param>
+        /// <param name="role">The role identifier.</param>
         /// <returns>Log action for insert from existing account.</returns>
-        private static LogActions GetInsertFromExistingLogAction(int roleId)
+        private static LogActions GetInsertFromExistingLogAction(CustomerRole role)
         {
             LogActions logAction;
 
-            switch (roleId)
+            switch (role)
             {
-                case (int)CustomerRole.Master:
+                case CustomerRole.Master:
                     logAction = LogActions.AutoInsertExisting_Master;
                     break;
 
-                case (int)CustomerRole.Agent:
+                case CustomerRole.Agent:
                     logAction = LogActions.AutoInsertExisting_Agent;
                     break;
 
@@ -195,21 +195,21 @@
         /// </summary>
         /// <param name="roleId">The role identifier.</param>
         /// <returns>Log action for manual insert account.</returns>
-        private static LogActions GetInsertManualLogAction(int roleId)
+        private static LogActions GetInsertManualLogAction(CustomerRole role)
         {
             LogActions logAction;
 
-            switch (roleId)
+            switch (role)
             {
-                case (int)CustomerRole.Super:
+                case CustomerRole.Super:
                     logAction = LogActions.ManualInsert_Super;
                     break;
 
-                case (int)CustomerRole.Master:
+                case CustomerRole.Master:
                     logAction = LogActions.ManualInsert_Master;
                     break;
 
-                case (int)CustomerRole.Agent:
+                case CustomerRole.Agent:
                     logAction = LogActions.ManualInsert_Agent;
                     break;
 
@@ -224,23 +224,23 @@
         /// <summary>
         /// Gets the update stake level log action.
         /// </summary>
-        /// <param name="roleId">The role identifier.</param>
+        /// <param name="role">The role identifier.</param>
         /// <returns>Log action for update stake level.</returns>
-        private static LogActions GetUpdateStakeLevelLogAction(int roleId)
+        private static LogActions GetUpdateStakeLevelLogAction(CustomerRole role)
         {
             LogActions logAction;
 
-            switch (roleId)
+            switch (role)
             {
-                case (int)CustomerRole.Super:
+                case CustomerRole.Super:
                     logAction = LogActions.UpdateStakeLevel_Super;
                     break;
 
-                case (int)CustomerRole.Master:
+                case CustomerRole.Master:
                     logAction = LogActions.UpdateStakeLevel_Master;
                     break;
 
-                case (int)CustomerRole.Agent:
+                case CustomerRole.Agent:
                     logAction = LogActions.UpdateStakeLevel_Agent;
                     break;
 

@@ -58,7 +58,7 @@
                  gameType.CheckedStakeLevelRange,
                  SettingContext.IP,
                  SettingContext.Language,
-                 SettingContext.TargetRoleId,
+                 SettingContext.TargetRole,
                  ErrCode,
                  ErrMsg);
 

@@ -74,9 +74,9 @@
                 {
                     UplineId = uplineId,
                     DirectUplineId = directUplineId,
-                    UplineRoleId = uplineRoleId,
+                    UplineRole = (CustomerRole)uplineRoleId,
                     TargetCustId = targetCustId,
-                    TargetRoleId = targetRoleId,
+                    TargetRole = (CustomerRole)targetRoleId,
                     FormType = (FormType)formType,
                     AdminId = adminId,
                     Language = language,
@@ -125,8 +125,8 @@
             {
                 UplineId = uplineId,
                 DirectUplineId = directUplineId,
-                UplineRoleId = uplineRoleId,
-                TargetRoleId = targetRoleId,
+                UplineRole = (CustomerRole)uplineRoleId,
+                TargetRole = (CustomerRole)targetRoleId,
                 TargetCustIds = targetCustIds,
                 TargetUsernames = targetUsernames,
                 FormType = (FormType)formType,
@@ -253,7 +253,6 @@
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();

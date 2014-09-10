@@ -163,7 +163,7 @@
             var expectedGameSetting = new List<GameType>();
             var returnGameSetting = new List<GameType>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             custInfo.UserName = "supertest1";
             custInfo.Site = "BEST-ODDS";
@@ -200,10 +200,10 @@
         /// <summary>
         /// Gets the game setting when target customer is not synced then return direct up line game setting.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
-        public void GetGameSetting_TargetCustIsNotSynced_ReturnDirectUplineGameSetting(int targetRoleId)
+        public void GetGameSetting_TargetCustIsNotSynced_ReturnDirectUplineGameSetting(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -212,7 +212,7 @@
             var returnGameSetting = new List<GameType>();
 
             settingContext.DirectUplineId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             custInfo.IsSyncLiveCasino = false;
 
             expectedGameSetting.Add(new GameType
@@ -241,10 +241,10 @@
         /// <summary>
         /// Gets the game setting when target customer is not synced then return game setting be removed game type has all stake level unchecked.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
-        public void GetGameSetting_TargetCustIsNotSynced_ReturnGameSettingBeRemovedGameTypeHasAllStakeLevelUnchecked(int targetRoleId)
+        public void GetGameSetting_TargetCustIsNotSynced_ReturnGameSettingBeRemovedGameTypeHasAllStakeLevelUnchecked(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -253,7 +253,7 @@
             var returnGameSetting = new List<GameType>();
 
             settingContext.DirectUplineId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             custInfo.IsSyncLiveCasino = false;
             expectedGameSetting.Add(new GameType
             {
@@ -301,7 +301,7 @@
             var returnGameSetting = new List<GameType>();
 
             settingContext.DirectUplineId = 1;
-            settingContext.TargetRoleId = (int)CustomerRole.Member;
+            settingContext.TargetRole = CustomerRole.Member;
             custInfo.IsSyncLiveCasino = false;
             expectedGameSetting.Add(new GameType
             {
@@ -333,12 +333,12 @@
         /// <summary>
         /// Gets the game setting when target customer is synced then return game setting.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Super)]
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void GetGameSetting_TargetCustIsSynced_ReturnGameSetting(int targetRoleId)
+        public void GetGameSetting_TargetCustIsSynced_ReturnGameSetting(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -347,7 +347,7 @@
             var returnGameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             custInfo.IsSyncLiveCasino = true;
             expectedGameSetting.Add(new GameType
             {
@@ -382,7 +382,7 @@
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             // Action
             ICommandResult actualCommandResult = _gameSettingService.InsertAutoAccount(settingContext);
@@ -400,11 +400,11 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting not empty_ call write log.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertAutoAccount_InsertSuccessAndGameSettingNotEmpty_CallWriteLog(int targetRoleId)
+        public void InsertAutoAccount_InsertSuccessAndGameSettingNotEmpty_CallWriteLog(CustomerRole targetRole)
         {
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
@@ -415,7 +415,7 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
 
             _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -444,18 +444,18 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting empty_ asynchronous call get game setting.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertAutoAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSetting(int targetRoleId)
+        public void InsertAutoAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSetting(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = new SettingContext();
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
 
             _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -481,18 +481,18 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting empty_ asynchronous call get game setting default.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertAutoAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSettingDefault(int targetRoleId)
+        public void InsertAutoAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSettingDefault(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             settingContext.ExchangeId = 1;
             settingContext.DirectUplineId = 1;
 
@@ -677,11 +677,11 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting not empty_ call write log.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertFromExistingAccount_InsertSuccessAndGameSettingNotEmpty_CallWriteLog(int targetRoleId)
+        public void InsertFromExistingAccount_InsertSuccessAndGameSettingNotEmpty_CallWriteLog(CustomerRole targetRole)
         {
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
@@ -692,7 +692,7 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
 
             _settingRepository.InsertGameSettingAccount(new InsertFromExistingAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -721,18 +721,18 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting empty_ asynchronous call get game setting.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertFromExistingAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSetting(int targetRoleId)
+        public void InsertFromExistingAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSetting(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = new SettingContext();
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
 
             _settingRepository.InsertGameSettingAccount(new InsertFromExistingAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -758,18 +758,18 @@
         /// <summary>
         /// Inserts the automatic account_ insert success and game setting empty_ asynchronous call get game setting default.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         [TestCase(CustomerRole.Master)]
         [TestCase(CustomerRole.Agent)]
         [TestCase(CustomerRole.Member)]
-        public void InsertFromExistingAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSettingDefault(int targetRoleId)
+        public void InsertFromExistingAccount_InsertSuccessAndGameSettingEmpty_AsyncCallGetGameSettingDefault(CustomerRole targetRole)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             settingContext.ExchangeId = 1;
             settingContext.OldCustId = 1;
 
@@ -1021,7 +1021,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
@@ -1083,7 +1083,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
@@ -1106,7 +1106,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
@@ -1132,7 +1132,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
@@ -1158,7 +1158,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
 
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
@@ -1184,7 +1184,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Member;
+            settingContext.TargetRole = CustomerRole.Member;
             settingContext.DirectUplineId = 1;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
@@ -1211,7 +1211,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = (int)CustomerRole.Super;
+            settingContext.TargetRole = CustomerRole.Super;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });

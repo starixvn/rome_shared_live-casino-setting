@@ -43,12 +43,12 @@
         [TestCase((int)CustomerRole.Master)]
         [TestCase((int)CustomerRole.Agent)]
         [TestCase((int)CustomerRole.Member)]
-        public void NewValue_TargetRoleId_ReturnTracking(int roleId)
+        public void NewValue_TargetRoleId_ReturnTracking(CustomerRole role)
         {
             // Arrange
             var logModel = CreateNewInstance();
 
-            logModel.SettingContext.TargetRoleId = roleId;
+            logModel.SettingContext.TargetRole = role;
 
             // Assert
             string expectedValue = string.Format(

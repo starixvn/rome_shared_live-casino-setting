@@ -76,7 +76,7 @@
                                             SettingContext.SuperId,
                                             SettingContext.MasterId,
                                             SettingContext.AgentId,
-                                            SettingContext.TargetRoleId,
+                                            SettingContext.TargetRole,
                                             SettingContext.IP,
                                             SettingContext.UserIdDoAction,
                                             SignUpForm,

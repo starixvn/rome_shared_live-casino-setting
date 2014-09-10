@@ -283,8 +283,8 @@
         ////    customer.IsSyncLiveCasino = true;
         ////    customer.UplineDisableLiveCasino = false;
         ////    settingContext.IsEditMultiple = false;
-        ////    settingContext.TargetRoleId = (int)CustomerRole.Member;
-        ////    settingContext.UplineRoleId = (int)CustomerRole.Agent;
+        ////    settingContext.TargetRole = (int)CustomerRole.Member;
+        ////    settingContext.UplineRole = (int)CustomerRole.Agent;
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {

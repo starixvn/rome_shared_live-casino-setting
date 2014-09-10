@@ -38,35 +38,40 @@
         /// <param name="settingContext">Current context for getting customer information.</param>
         /// <param name="customer">Current customer need be set position taking and commission data.</param>
         /// <returns>Position taking and Commission setting.</returns>
-        public void SetCustomerPtAndComSetting(SettingContext settingContext, Customer customer)
+        public void SetCustomerPtAndComSetting(
+            Customer customer, 
+            CustomerRole targetCustRole, 
+            int targetCustId, 
+            CustomerRole uplineRole, 
+            int uplineId)
         {
-            switch ((CustomerRole)settingContext.TargetRoleId)
+            switch (targetCustRole)
             {
                 case CustomerRole.Super:
-                    SetSuperPtAndComForEdit(settingContext.TargetCustId, customer);
+                    SetSuperPtAndCom(targetCustId, customer);
                     break;
 
                 case CustomerRole.Master:
-                    SetMasterPtAndComForEdit(settingContext.TargetCustId, settingContext.UplineId, customer);
+                    SetMasterPtAndCom(targetCustId, uplineId, customer);
                     break;
 
                 case CustomerRole.Agent:
-                    SetAgentPtAndComSettingForEdit(settingContext.TargetCustId, settingContext.UplineId, customer);
+                    SetAgentPtAndCom(targetCustId, uplineId, customer);
                     break;
 
                 case CustomerRole.Member:
-                    switch ((CustomerRole)settingContext.UplineRoleId)
+                    switch (uplineRole)
                     {
                         case CustomerRole.Super:
-                            SetMemberPtAndComSettingForSuperEdit(settingContext.TargetCustId, customer);
+                            SetMemberPtAndComSettingForSuperEditMember(targetCustId, customer);
                             break;
 
                         case CustomerRole.Master:
-                            SetMemberPtAndComSettingForMasterEdit(settingContext.TargetCustId, customer);
+                            SetMemberPtAndComSettingForMasterEditMember(targetCustId, customer);
                             break;
 
                         default:
-                            SetMemberPtAndComSettingForAgentEdit(settingContext.TargetCustId, settingContext.UplineId, customer);
+                            SetMemberPtAndComSettingForAgentEditMember(targetCustId, uplineId, customer);
                             break;
                     }
 
@@ -86,7 +91,7 @@
         public ICommandResultsDTO UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
         {
             ICommandResultsDTO updateResults = new CommandResultsDTO();
-            switch ((CustomerRole)settingContext.TargetRoleId)
+            switch ((CustomerRole)settingContext.TargetRole)
             {
                 case CustomerRole.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
@@ -101,7 +106,7 @@
                     break;
 
                 case CustomerRole.Member:
-                    switch ((CustomerRole)settingContext.UplineRoleId)
+                    switch ((CustomerRole)settingContext.UplineRole)
                     {
                         case CustomerRole.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -154,7 +159,7 @@
 
         #endregion Pt and Com
 
-        private void SetSuperPtAndComForEdit(int superId, Customer customer)
+        private void SetSuperPtAndCom(int superId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
                     {
@@ -163,7 +168,7 @@
             SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
-        private void SetMasterPtAndComForEdit(int masterId, int superId, Customer customer)
+        private void SetMasterPtAndCom(int masterId, int superId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
                     {
@@ -174,7 +179,7 @@
             SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
-        private void SetAgentPtAndComSettingForEdit(int agentId, int masterId, Customer customer)
+        private void SetAgentPtAndCom(int agentId, int masterId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
                     {
@@ -184,7 +189,7 @@
             SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
-        private void SetMemberPtAndComSettingForAgentEdit(int memberId, int agentId, Customer customer)
+        private void SetMemberPtAndComSettingForAgentEditMember(int memberId, int agentId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
                             {
@@ -194,7 +199,7 @@
             SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
-        private void SetMemberPtAndComSettingForSuperEdit(int memberId, Customer customer)
+        private void SetMemberPtAndComSettingForSuperEditMember(int memberId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
             {
@@ -203,7 +208,7 @@
             SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
-        private void SetMemberPtAndComSettingForMasterEdit(int memberId, Customer customer)
+        private void SetMemberPtAndComSettingForMasterEditMember(int memberId, Customer customer)
         {
             object[] positionTakingAndCommissionData = _settingRepository.GetSettingForMasterEditMember(
                 new GetSettingForMasterEditMemberCriteria

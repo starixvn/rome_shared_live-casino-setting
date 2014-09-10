@@ -9,6 +9,7 @@
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
@@ -184,7 +185,7 @@
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
                 ModifyUsername = settingContext.UplineUsername,
-                RoleId = settingContext.TargetRoleId,
+                RoleId = (int)settingContext.TargetRole,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
@@ -237,7 +238,7 @@
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
                 ModifyUsername = settingContext.UplineUsername,
-                RoleId = settingContext.TargetRoleId,
+                RoleId = (int)settingContext.TargetRole,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
@@ -366,7 +367,11 @@
                 gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
             }
 
-            ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypeNews, settingContext.Language);
+            ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(
+                settingContext.TargetCustId, 
+                settingContext.TargetRole, 
+                gameTypeNews, 
+                settingContext.Language);
             WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
@@ -502,7 +507,7 @@
                 SuperId = settingContext.SuperId,
                 MasterId = settingContext.MasterId,
                 AgentId = settingContext.AgentId,
-                RoleId = settingContext.TargetRoleId,
+                RoleId = (int)settingContext.TargetRole,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
@@ -531,7 +536,7 @@
         /// <returns>
         /// Command results update list stake level.
         /// </returns>
-        private ICommandResultsDTO UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes, string language)
+        private ICommandResultsDTO UpdateListStakeLevel(int custId, CustomerRole role, List<GameType> gameTypes, string language)
         {
             var results = new CommandResultsDTO();
 
@@ -539,7 +544,7 @@
             {
                 foreach (var itemGameType in gameTypes)
                 {
-                    var result = UpdateStakeLevel(custId, roleId, itemGameType, language);
+                    var result = UpdateStakeLevel(custId, role, itemGameType, language);
                     results.Results.Add(result);
                 }
             }
@@ -557,12 +562,12 @@
         /// <returns>
         /// Command result update stake level.
         /// </returns>
-        private ICommandResult UpdateStakeLevel(int custId, int roleId, GameType gameType, string language)
+        private ICommandResult UpdateStakeLevel(int custId, CustomerRole role, GameType gameType, string language)
         {
             var criteria = new UpdateStakeLevelCriteria
             {
                 CustId = custId,
-                RoleId = roleId,
+                RoleId = (int)role,
                 GameTypeId = gameType.Id,
                 StakeLevelList = gameType.CheckedStakeLevelId
             };

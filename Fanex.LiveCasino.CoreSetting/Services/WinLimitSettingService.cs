@@ -1,6 +1,9 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
@@ -9,9 +12,6 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
-    using System;
-    using Fanex.Common;
-    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.

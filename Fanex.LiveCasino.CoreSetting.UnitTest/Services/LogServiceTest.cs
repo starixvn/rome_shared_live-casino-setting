@@ -56,18 +56,18 @@
         /// <summary>
         /// Logs the automatic insert account_ target role id_ return action identifier.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
         [TestCase(CustomerRole.Master, LogActions.AutoInsert_Master)]
         [TestCase(CustomerRole.Agent, LogActions.AutoInsert_Agent)]
         [TestCase(CustomerRole.Member, LogActions.AutoInsert_Member)]
-        public void LogAutoInsertAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
+        public void LogAutoInsertAccount_TargetRoleId_ReturnActionId(CustomerRole targetRole, int actionId)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
@@ -99,18 +99,18 @@
         /// <summary>
         /// Logs the insert from existing account_ target role id_ return action identifier.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
         [TestCase(CustomerRole.Master, LogActions.AutoInsertExisting_Master)]
         [TestCase(CustomerRole.Agent, LogActions.AutoInsertExisting_Agent)]
         [TestCase(CustomerRole.Member, LogActions.AutoInsertExisting_Member)]
-        public void LogInsertFromExistingAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
+        public void LogInsertFromExistingAccount_TargetRoleId_ReturnActionId(CustomerRole targetRole, int actionId)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
@@ -141,18 +141,18 @@
         /// <summary>
         /// Logs the manual insert account_ target role id_ return action identifier.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
         [TestCase(CustomerRole.Super, LogActions.ManualInsert_Super)]
         [TestCase(CustomerRole.Master, LogActions.ManualInsert_Master)]
         [TestCase(CustomerRole.Agent, LogActions.ManualInsert_Agent)]
         [TestCase(CustomerRole.Member, LogActions.ManualInsert_Member)]
-        public void LogManualInsertAccount_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
+        public void LogManualInsertAccount_TargetRoleId_ReturnActionId(CustomerRole targetRole, int actionId)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
 
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
@@ -208,20 +208,20 @@
         /// <summary>
         /// Logs the manual update stake level_ target role id_ return action identifier.
         /// </summary>
-        /// <param name="targetRoleId">The target role identifier.</param>
+        /// <param name="targetRole">The target role identifier.</param>
         /// <param name="actionId">The action identifier.</param>
         [TestCase(CustomerRole.Super, LogActions.UpdateStakeLevel_Super)]
         [TestCase(CustomerRole.Master, LogActions.UpdateStakeLevel_Master)]
         [TestCase(CustomerRole.Agent, LogActions.UpdateStakeLevel_Agent)]
         [TestCase(CustomerRole.Member, LogActions.UpdateStakeLevel_Member)]
-        public void LogManualUpdateStakeLevel_TargetRoleId_ReturnActionId(int targetRoleId, int actionId)
+        public void LogManualUpdateStakeLevel_TargetRoleId_ReturnActionId(CustomerRole targetRole, int actionId)
         {
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
             GameType oldGameType = null;
             var newGameType = Substitute.For<GameType>();
 
-            settingContext.TargetRoleId = targetRoleId;
+            settingContext.TargetRole = targetRole;
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action

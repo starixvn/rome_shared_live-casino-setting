@@ -43,12 +43,12 @@
         [TestCase((int)CustomerRole.Master)]
         [TestCase((int)CustomerRole.Agent)]
         [TestCase((int)CustomerRole.Member)]
-        public void NewValue_TargetRoleId_ReturnNewValueTracking(int roleId)
+        public void NewValue_TargetRoleId_ReturnNewValueTracking(CustomerRole role)
         {
             // Arrange
             var logModel = CreateNewInstance();
 
-            logModel.SettingContext.TargetRoleId = roleId;
+            logModel.SettingContext.TargetRole = role;
             logModel.NewGameType = new GameType();
 
             // Assert
@@ -62,7 +62,7 @@
                                          string.Empty,
                                          string.Empty,
                                          string.Empty,
-                                         roleId,
+                                         role,
                                          string.Empty,
                                          string.Empty);
             Assert.AreEqual(expectedValue, logModel.NewValue);
@@ -76,12 +76,12 @@
         [TestCase((int)CustomerRole.Master)]
         [TestCase((int)CustomerRole.Agent)]
         [TestCase((int)CustomerRole.Member)]
-        public void NewValue_TargetRoleId_ReturnOldValueTracking(int roleId)
+        public void NewValue_TargetRoleId_ReturnOldValueTracking(CustomerRole role)
         {
             // Arrange
             var logModel = CreateNewInstance();
 
-            logModel.SettingContext.TargetRoleId = roleId;
+            logModel.SettingContext.TargetRole = role;
             logModel.OldGameType = new GameType();
 
             // Assert
@@ -95,7 +95,7 @@
                                          string.Empty,
                                          string.Empty,
                                          string.Empty,
-                                         roleId,
+                                         role,
                                          string.Empty,
                                          string.Empty);
             Assert.AreEqual(expectedValue, logModel.OldValue);
