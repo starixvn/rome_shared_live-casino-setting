@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Customer information.
@@ -43,5 +44,37 @@
         public PositionTaking PositionTaking { get; set; }
 
         public List<GameType> GameSetting { get; set; }
+
+        public bool IsSuper
+        {
+            get
+            {
+                return RoleId == (int)CustomerRole.Super;
+            }
+        }
+
+        public bool IsMaster
+        {
+            get
+            {
+                return RoleId == (int)CustomerRole.Master;
+            }
+        }
+
+        public bool IsAgent
+        {
+            get
+            {
+                return RoleId == (int)CustomerRole.Agent;
+            }
+        }
+
+        public bool IsMember
+        {
+            get
+            {
+                return RoleId == (int)CustomerRole.Member;
+            }
+        }
     }
 }
