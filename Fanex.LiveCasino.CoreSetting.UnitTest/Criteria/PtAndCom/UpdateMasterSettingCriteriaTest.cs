@@ -138,7 +138,14 @@
             // Arrange
             var criteria = CreateNewCriteria();
             criteria.CustId = 1;
-            
+            criteria.SRecommend = 10;
+            criteria.S3 = 0.1M;
+            criteria.M3 = 0.2M;
+            criteria.Is3 = true;
+            criteria.Us3 = 0.3M;
+            criteria.N3 = 0.4M;
+            criteria.UpdateAllMembers = false;
+            criteria.NewSuperPositionTakingOnMember = 0.5M;
             criteria.SubAccID = 0;
             criteria.UserId = 2;
             criteria.IP = "10.19.10.54";
@@ -148,7 +155,7 @@
             var actual = criteria.ToString();
 
             // Assert
-            var expected = "SP Name = 'Acc_CustomerUpdMasterLiveCS_All'\nCustId = '1'\nSRecommend = '{2}'\nS3 = '{3}'\nM3 = '{4}'\nIs3 = '{5}'\nUs3 = '{6}'\nN3 = '{7}'\nUpdateAllMembers = '{8}'\nNewSPositionTaking = '{9}'\nSubAccID = '0'\nIP = '10.19.10.54'\nUserId = '2'\nLanguage = 'E'";
+            var expected = "SP Name = 'Acc_CustomerUpdMasterLiveCS_All'\nCustId = '1'\nSRecommend = '10'\nS3 = '0.1'\nM3 = '0.2'\nIs3 = 'True'\nUs3 = '0.3'\nN3 = '0.4'\nUpdateAllMembers = 'False'\nNewSPositionTaking = '0.5'\nSubAccID = '0'\nIP = '10.19.10.54'\nUserId = '2'\nLanguage = 'E'";
             Assert.AreEqual(expected, actual);
         }
 
