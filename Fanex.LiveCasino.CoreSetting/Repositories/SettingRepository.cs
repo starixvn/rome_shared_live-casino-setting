@@ -123,7 +123,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        public PTComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -152,7 +152,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        public PTComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -186,7 +186,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        public PTComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -221,7 +221,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        public PTComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -250,7 +250,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        public PTComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -276,7 +276,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        public PTComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,

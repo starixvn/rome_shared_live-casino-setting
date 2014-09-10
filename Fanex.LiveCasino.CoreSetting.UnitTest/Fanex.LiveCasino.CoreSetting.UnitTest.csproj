@@ -95,7 +95,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameSettingServiceTest.cs" />
     <Compile Include="Services\LogServiceTest.cs" />
+    <Compile Include="Services\PtAndComSettingServiceTest.cs" />
     <Compile Include="Services\SettingServiceTest.cs" />
+    <Compile Include="Services\WinLimitSettingServiceTest.cs" />
     <Compile Include="Utilities\CommonUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>

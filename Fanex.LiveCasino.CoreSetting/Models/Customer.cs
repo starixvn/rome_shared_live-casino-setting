@@ -38,7 +38,7 @@
 
         public MemberWinLimit MemberWinLimit { get; set; }
 
-        public PtAndComSetting PtAndComSetting { get; set; }
+        public PTComSetting PtAndComSetting { get; set; }
 
         public List<GameType> GameSetting { get; set; }
     }

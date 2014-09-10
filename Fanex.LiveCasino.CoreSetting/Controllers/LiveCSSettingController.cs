@@ -18,21 +18,31 @@
     /// <summary>
     /// Controller handles setting request.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class LiveCSSettingController : BaseController
     {
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;
+        private readonly IPTComSettingService _pTComSettingService;
+        private readonly IWinLimitSettingService _winLimitSettingService;
         private readonly ICommonUtil _commonUtil;
 
         public LiveCSSettingController()
-            : this(null, null, null)
+            : this(null, null, null, null, null)
         {
         }
 
-        public LiveCSSettingController(ISettingService settingService, IGameSettingService gameSettingService, ICommonUtil commonUtil)
+        public LiveCSSettingController(
+            ISettingService settingService,
+            IPTComSettingService pTComSettingService, 
+            IWinLimitSettingService winLimitSettingService,
+            IGameSettingService gameSettingService, 
+            ICommonUtil commonUtil)
         {
             _settingService = settingService ?? new SettingService();
+            _pTComSettingService = pTComSettingService ?? new PTComSettingService();
             _gameSettingService = gameSettingService ?? new GameSettingService();
+            _winLimitSettingService = winLimitSettingService ?? new WinLimitSettingService();
             _commonUtil = commonUtil ?? new CommonUtil();
         }
 
@@ -147,22 +157,22 @@
         /// Update live casino setting.
         /// </summary>
         /// <param name="settingContext">Setting context for update current customer.</param>
-        /// <param name="custSetting">Customer setting for update data.</param>
+        /// <param name="customer">Customer setting for update data.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, CustSettingViewModel custSetting, int updateType = (int)UpdateType.AllSetting)
+        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, Customer customer, int updateType = (int)UpdateType.AllSetting)
         {
             settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = UpdateMultipleCustomerAllSetting(settingContext, custSetting, updateType);
+                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, updateType);
             }
             else
             {
-                updateResult.CommandResultsList.Add(UpdateSingleCustomerAllSetting(settingContext, custSetting));
+                updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer));
             }
 
             return Json(updateResult);
@@ -178,7 +188,7 @@
         [HttpGet, LiveCasinoAuthorization]
         public ActionResult GetCurrentWinLimit(int custId)
         {
-            CurrentMemberWin currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
+            CurrentMemberWin currentMemberWinLimit = _winLimitSettingService.GetCurrentWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
@@ -197,11 +207,11 @@
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _settingService.UpdateWinLimitMultiple(settingContext, model);
+                updateResult = _winLimitSettingService.UpdateWinLimitMultiple(settingContext, model);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
+                updateResult.CommandResultsList.Add(_winLimitSettingService.UpdateWinLimit(settingContext, model));
             }
 
             return Json(updateResult);
@@ -249,124 +259,24 @@
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting)
+        public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PTComSetting ptAndComSetting)
         {
             settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _settingService.UpdatePtAndComSettingMultiple(settingContext, ptAndComSetting);
+                updateResult = _pTComSettingService.UpdatePtAndComSettingMultiple(settingContext, ptAndComSetting);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_settingService.UpdatePtAndComSetting(settingContext, ptAndComSetting));
+                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtAndComSetting(settingContext, ptAndComSetting));
             }
 
             return Json(updateResult);
         }
 
         #endregion Pt and Com setting
-
-        /// <summary>
-        /// Update single customer all setting.
-        /// </summary>
-        /// <param name="settingContext">Current setting context.</param>
-        /// <param name="custSetting">Customer setting information for updating.</param>
-        /// <returns>Update result.</returns>
-        private ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting)
-        {
-            ICommandResults resultList = new CommandResults();
-
-            if (settingContext.IsAgentEditingMember
-                && custSetting.Customer.IsSyncLiveCasino
-                && !custSetting.Customer.UplineDisableLiveCasino)
-            {
-                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, custSetting.Customer.DisableLiveCasino));
-            }
-
-            var positionTakingAndCommResults = _settingService.UpdatePtAndComSetting(settingContext, custSetting.Customer.PtAndComSetting);
-            resultList.Results.AddRange(positionTakingAndCommResults.Results);
-
-            if (custSetting.Customer.IsSyncLiveCasino
-                || (!custSetting.Customer.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
-            {
-                var winLimitResults = _settingService.UpdateWinLimit(settingContext, custSetting.Customer.MemberWinLimit).Results;
-                resultList.Results.AddRange(winLimitResults);
-
-                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, custSetting.Customer, custSetting.Customer.GameSetting).Results;
-                resultList.Results.AddRange(gameSettingResult);
-            }
-            else
-            {
-                resultList.Results.Add(new CommandResult
-                {
-                    Code = ErrCode.UpdateGameSettingFail,
-                    Message = string.Format("{0}: {1}", LiveCasinoLang.lblGameSetting, LiveCasinoLang.UpdatedUnsuccessfully)
-                });
-            }
-
-            return resultList;
-        }
-
-        /// <summary>
-        /// Update multiple customer all setting.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="custSetting">Customer setting contains customer setting information.</param>
-        /// <param name="updateType">Update type for multiple.</param>
-        /// <returns>Multiple result return to user.</returns>
-        private IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, CustSettingViewModel custSetting, int updateType)
-        {
-            var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
-
-            IMultipleCommandResults mainResults = new MultipleCommandResults();
-
-            foreach (var custInfo in custInfoes)
-            {
-                settingContext.TargetCustId = custInfo.CustId;
-                settingContext.TargetUsername = custInfo.UserName;
-                custSetting.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
-                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, custSetting, updateType);
-                subResult.Id = custInfo.CustId;
-                subResult.Name = custInfo.UserName;
-                mainResults.CommandResultsList.Add(subResult);
-            }
-
-            return mainResults;
-        }
-
-        /// <summary>
-        /// Depend on status of current customer, we decide to update just part of setting or all setting
-        /// This handle for updating multiple customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="custSetting">Customer setting.</param>
-        /// <param name="updateType">Update form type.</param>
-        /// <returns>Command result after updating.</returns>
-        private ICommandResults UpdateEachCustomerInMultipleEdit(SettingContext settingContext, CustSettingViewModel custSetting, int updateType)
-        {
-            var isSync = custSetting.Customer.IsSyncLiveCasino;
-            switch (updateType)
-            {
-                case (int)UpdateType.PositionTakingAndCommission:
-                    return isSync ?
-                            _settingService.UpdatePtAndComSetting(settingContext, custSetting.Customer.PtAndComSetting)
-                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
-                case (int)UpdateType.WinLimit:
-                    return isSync ?
-                            _settingService.UpdateWinLimit(settingContext, custSetting.Customer.MemberWinLimit)
-                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
-                case (int)UpdateType.GameSetting:
-                    return isSync ?
-                            _gameSettingService.UpdateManual(settingContext, custSetting.Customer, custSetting.Customer.GameSetting)
-                            : UpdateSingleCustomerAllSetting(settingContext, custSetting);
-                case (int)UpdateType.AllSetting:
-                    return UpdateSingleCustomerAllSetting(settingContext, custSetting);
-                default:
-                    return new CommandResults();
-            }
-        }
 
         /// <summary>
         /// Get setting object for showing edit form.
@@ -376,15 +286,10 @@
         /// <returns>JAVASCRIPT object string for returning to client.</returns>
         private string GetSettingJavascriptObjectForUpdate(SettingContext settingContext, string objectName)
         {
-            Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-
-            customer.PtAndComSetting = _settingService.GetPtAndComSetting(settingContext);
-            customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
-
             var custSettingViewModel = new CustSettingViewModel
             {
                 SettingContext = settingContext,
-                Customer = customer
+                Customer = _settingService.GetCustomer(settingContext)
             };
 
             return FormatJavascript(custSettingViewModel, objectName);

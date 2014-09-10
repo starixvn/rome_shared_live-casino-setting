@@ -1,38 +1,54 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Constant;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
-    using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
-    using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Setting service for update position taking setting, commission, member win limit.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class SettingService : ISettingService
     {
         private readonly ISettingRepository _settingRepository;
+        private readonly IGameSettingService _gameSettingService;
+        private readonly IPTComSettingService _pTComSettingService;
+        private readonly IWinLimitSettingService _winLimitSettingService;
         private readonly ICommonUtil _commonUtil;
 
         public SettingService()
-            : this(null, null)
+            : this(null, null, null, null, null)
         {
         }
 
-        public SettingService(ISettingRepository settingRepository, ICommonUtil commonUtil)
+        public SettingService(
+            ISettingRepository settingRepository,
+            IPTComSettingService pTComSettingService,
+            IWinLimitSettingService winLimitSettingService,
+            IGameSettingService gameSettingService,
+            ICommonUtil commonUtil)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
+            _pTComSettingService = pTComSettingService ?? new PTComSettingService();
+            _gameSettingService = gameSettingService ?? new GameSettingService();
+            _winLimitSettingService = winLimitSettingService ?? new WinLimitSettingService();
             _commonUtil = commonUtil ?? new CommonUtil();
+        }
+
+        public Customer GetCustomer(SettingContext settingContext)
+        {
+            Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
+            customer.PtAndComSetting = _pTComSettingService.GetPtAndComSetting(settingContext);
+            customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
+
+            return customer;
         }
 
         /// <summary>
@@ -83,118 +99,55 @@
             return firstSyncCustId;
         }
 
-        #region Pt and Com
-
         /// <summary>
-        /// Get Customer Setting for Editing.
+        /// Update single customer all setting.
         /// </summary>
-        /// <param name="settingContext">Current context for getting customer information.</param>
-        /// <returns>Position taking and commission setting.</returns>
-        public PtAndComSetting GetPtAndComSetting(SettingContext settingContext)
+        /// <param name="settingContext">Current setting context.</param>
+        /// <param name="customer">Customer setting information for updating.</param>
+        /// <returns>Update result.</returns>
+        public ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer)
         {
-            switch ((CustomerRole)settingContext.TargetRoleId)
+            ICommandResults resultList = new CommandResults();
+
+            if (settingContext.IsAgentEditingMember
+                && customer.IsSyncLiveCasino
+                && !customer.UplineDisableLiveCasino)
             {
-                case CustomerRole.Super:
-                    return GetSettingForEditSuper(new GetSettingForEditSuperCriteria
-                    {
-                        CustId = settingContext.TargetCustId
-                    });
-                case CustomerRole.Master:
-                    return GetSettingForEditMaster(new GetSettingForEditMasterCriteria
-                    {
-                        CustId = settingContext.TargetCustId,
-                        SRecommend = settingContext.UplineId
-                    });
-                case CustomerRole.Agent:
-                    return GetSettingForEditAgent(new GetSettingForEditAgentCriteria
-                    {
-                        CustId = settingContext.TargetCustId,
-                        MRecommend = settingContext.UplineId
-                    });
-                case CustomerRole.Member:
-                    switch ((CustomerRole)settingContext.UplineRoleId)
-                    {
-                        case CustomerRole.Super:
-                            return GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId
-                            });
-                        case CustomerRole.Master:
-                            return GetSettingForMasterEditMember(new GetSettingForMasterEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId
-                            });
-                        default:
-                            return GetSettingForEditMember(new GetSettingForEditMemberCriteria
-                            {
-                                CustId = settingContext.TargetCustId,
-                                Recommend = settingContext.UplineId
-                            });
-                    }
+                resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            return null;
-        }
+            var positionTakingAndCommResults = _pTComSettingService.UpdatePtAndComSetting(settingContext, customer.PtAndComSetting);
+            resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
-        #region Pt and Com Single Update
-
-        /// <summary>
-        /// Update position taking and commission setting, depend on setting context,
-        /// we will decide which store procedure and function will be called.
-        /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        public ICommandResults UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICommandResults updateResults = new CommandResults();
-            switch ((CustomerRole)settingContext.TargetRoleId)
+            if (customer.IsSyncLiveCasino
+                || (!customer.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
             {
-                case CustomerRole.Super:
-                    updateResults.Results = UpdateSuperPtAndComSetting(settingContext, positionTakingAndComSetting);
-                    break;
+                var winLimitResults = _winLimitSettingService.UpdateWinLimit(settingContext, customer.MemberWinLimit).Results;
+                resultList.Results.AddRange(winLimitResults);
 
-                case CustomerRole.Master:
-                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-                    break;
-
-                case CustomerRole.Agent:
-                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-                    break;
-
-                case CustomerRole.Member:
-                    switch ((CustomerRole)settingContext.UplineRoleId)
-                    {
-                        case CustomerRole.Super:
-                            updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-                            break;
-
-                        case CustomerRole.Master:
-                            updateResults.Results = MasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-                            break;
-
-                        default:
-                            updateResults.Results = AgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-                            break;
-                    }
-
-                    break;
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, customer, customer.GameSetting).Results;
+                resultList.Results.AddRange(gameSettingResult);
+            }
+            else
+            {
+                resultList.Results.Add(new CommandResult
+                {
+                    Code = ErrCode.UpdateGameSettingFail,
+                    Message = string.Format("{0}: {1}", LiveCasinoLang.lblGameSetting, LiveCasinoLang.UpdatedUnsuccessfully)
+                });
             }
 
-            return updateResults;
+            return resultList;
         }
 
-        #endregion Pt and Com Single Update
-
-        #region Pt and Com Multiple Update
-
         /// <summary>
-        /// Update multiple customer.
+        /// Update multiple customer all setting.
         /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        public IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="customer">Customer setting contains customer setting information.</param>
+        /// <param name="updateType">Update type for multiple.</param>
+        /// <returns>Multiple result return to user.</returns>
+        public IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType)
         {
             var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
@@ -203,7 +156,9 @@
             foreach (var custInfo in custInfoes)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var subResult = UpdatePtAndComSetting(settingContext, positionTakingAndComSetting);
+                settingContext.TargetUsername = custInfo.UserName;
+                customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
+                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, customer, updateType);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -212,397 +167,36 @@
             return mainResults;
         }
 
-        #endregion Pt and Com Multiple Update
-
-        #endregion Pt and Com
-
-        #region Win Limit
-
         /// <summary>
-        /// Gets the current win limit.
+        /// Depend on status of current customer, we decide to update just part of setting or all setting
+        /// This handle for updating multiple customer.
         /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <returns>Current member win limit.</returns>
-        public CurrentMemberWin GetCurrentWinLimit(int custId)
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="customer">Customer setting.</param>
+        /// <param name="updateType">Update form type.</param>
+        /// <returns>Command result after updating.</returns>
+        private ICommandResults UpdateEachCustomerInMultipleEdit(SettingContext settingContext, Customer customer, int updateType)
         {
-            var criteria = new GetCustomerWinLimitCriteria
+            var isSync = customer.IsSyncLiveCasino;
+            switch (updateType)
             {
-                CustId = custId
-            };
-
-            var currentWinLimit = (CurrentMemberWin)_settingRepository.GetCurrentMemberWin(criteria);
-
-            return currentWinLimit;
-        }
-
-        /// <summary>
-        /// Update member win limit.
-        /// </summary>
-        /// <param name="settingContext">Setting context information.</param>
-        /// <param name="memberWinLimit">Member win limit information.</param>
-        /// <returns>Result after updating.</returns>
-        public ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
-        {
-            var criteria = new UpdateCustomerWinLimitCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                MaxWinLimit = (decimal)memberWinLimit.Max,
-                IsAutoDailyReset = memberWinLimit.IsAutoReset,
-                UserId = settingContext.UserIdDoAction,
-                Ip = settingContext.IP,
-                Language = settingContext.Language
-            };
-
-            var result = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
-
-            var winLimitResult = new WinLimitCommandResult(result);
-
-            if (winLimitResult.IsSuccessful)
-            {
-                winLimitResult.Message = LiveCasinoLang.UpdatedWinLimitSuccessfully;
+                case (int)UpdateType.PositionTakingAndCommission:
+                    return isSync ?
+                            _pTComSettingService.UpdatePtAndComSetting(settingContext, customer.PtAndComSetting)
+                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                case (int)UpdateType.WinLimit:
+                    return isSync ?
+                            _winLimitSettingService.UpdateWinLimit(settingContext, customer.MemberWinLimit)
+                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                case (int)UpdateType.GameSetting:
+                    return isSync ?
+                            _gameSettingService.UpdateManual(settingContext, customer, customer.GameSetting)
+                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                case (int)UpdateType.AllSetting:
+                    return UpdateSingleCustomerAllSetting(settingContext, customer);
+                default:
+                    return new CommandResults();
             }
-            else
-            {
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()));
-            }
-
-            var commandResults = new CommandResults();
-            commandResults.Results.Add(winLimitResult);
-
-            return commandResults;
         }
-
-        /// <summary>
-        /// Updates the win limit multiple.
-        /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <param name="memberWinLimit">The member win limit.</param>
-        /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
-        {
-            var results = new MultipleCommandResults();
-            List<Customer> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
-
-            foreach (var custInfo in custInfos)
-            {
-                settingContext.TargetCustId = custInfo.CustId;
-                var updateResult = UpdateWinLimit(settingContext, memberWinLimit);
-
-                updateResult.Id = custInfo.CustId;
-                updateResult.Name = custInfo.UserName;
-
-                results.CommandResultsList.Add(updateResult);
-            }
-
-            return results;
-        }
-
-        #endregion Win Limit
-
-        #region Private Methods
-
-        private PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditSuper(criteria);
-        }
-
-        private PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditMaster(criteria);
-        }
-
-        private PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditAgent(criteria);
-        }
-
-        private PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForEditMember(criteria);
-        }
-
-        private PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForSuperEditMember(criteria);
-        }
-
-        private PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
-        {
-            return _settingRepository.GetSettingForMasterEditMember(criteria);
-        }
-
-        /// <summary>
-        /// Update super position taking and commission setting.
-        /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        private List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                SuperCommission = (decimal)positionTakingAndComSetting.Commission.Value,
-                S4 = (decimal)positionTakingAndComSetting.PositionTaking.S4,
-                N4 = (decimal)positionTakingAndComSetting.PositionTaking.N4,
-            });
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, positionTakingAndComSetting);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        /// <summary>
-        /// Get information after updated.
-        /// </summary>
-        /// <param name="commandResult">General information for analyzing to small message.</param>
-        /// <returns>List message for showing on web.</returns>
-        private List<ICommandResult> GetPtAndComResultDetails(ICommandResult commandResult)
-        {
-            List<ICommandResult> resultDetails = new List<ICommandResult>();
-
-            if (commandResult.Code != null
-                && Converter.ToString2(commandResult.Code) == ErrCode.InvalidCriteria.ToString())
-            {
-                resultDetails.Add(commandResult);
-                return resultDetails;
-            }
-
-            string[] errCodes = commandResult.Code.Split('\a');
-            string[] errMsgs = commandResult.Message.Split('\a');
-
-            for (int i = 0; i < errCodes.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(errCodes[i]))
-                {
-                    var errCode = Converter.ToInt(errCodes[i]);
-                    if (errCode < 0)
-                    {
-                        resultDetails.Add(new PtAndComCommandResult
-                        {
-                            Code = errCode,
-                            Message = LiveCasinoLang.ResourceManager.GetString(string.Format("_{0}", Math.Abs(errCode)))
-                        });
-                    }
-                    else
-                    {
-                        resultDetails.Add(new PtAndComCommandResult
-                        {
-                            Code = errCode,
-                            Message = errMsgs[i]
-                        });
-                    }
-                }
-            }
-
-            return resultDetails;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            var criteria = new UpdateMasterSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                SRecommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                MasterCommission = (decimal)positionTakingAndComSetting.Commission.Value,
-                M3 = (decimal)positionTakingAndComSetting.PositionTaking.M3,
-                N3 = (decimal)positionTakingAndComSetting.PositionTaking.N3,
-                Is3 = (bool)positionTakingAndComSetting.PositionTaking.Is3,
-                Us3 = (decimal)positionTakingAndComSetting.PositionTaking.Us3,
-                UpdateAllMembers = (bool)positionTakingAndComSetting.PositionTaking.UpdateAllMembers,
-                S3 = (decimal)positionTakingAndComSetting.PositionTaking.S3,
-                NewSuperPositionTakingOnMember = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
-            };
-
-            if (criteria.Is3)
-            {
-                criteria.S3 = 0;
-            }
-            else
-            {
-                criteria.Us3 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            var criteria = new UpdateAgentSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                MRecommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                AgentCommission = (decimal)positionTakingAndComSetting.Commission.Value,
-                M2 = (decimal)positionTakingAndComSetting.PositionTaking.M2,
-                N2 = (decimal)positionTakingAndComSetting.PositionTaking.N2,
-                Im2 = (bool)positionTakingAndComSetting.PositionTaking.Im2,
-                Um2 = (decimal)positionTakingAndComSetting.PositionTaking.Um2,
-                UpdateAllMembers = (bool)positionTakingAndComSetting.PositionTaking.UpdateAllMembers,
-                A2 = (decimal)positionTakingAndComSetting.PositionTaking.A2,
-                NewMasterPtOnMember = (decimal)positionTakingAndComSetting.PositionTaking.NewPresetOnMember
-            };
-
-            if (criteria.Im2)
-            {
-                criteria.M2 = 0;
-            }
-            else
-            {
-                criteria.Um2 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            ICriteria criteria = new AgentUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                Recommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                MemberCommission = (decimal)positionTakingAndComSetting.Commission.Value,
-                A1 = (decimal)positionTakingAndComSetting.PositionTaking.A1
-            };
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            var criteria = new SuperUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                S1 = (decimal)positionTakingAndComSetting.PositionTaking.S1,
-                Is1 = (bool)positionTakingAndComSetting.PositionTaking.Is1,
-                Us1 = (decimal)positionTakingAndComSetting.PositionTaking.Us1,
-                IsUpdateSuperPt = !(bool)positionTakingAndComSetting.PositionTaking.Is3
-            };
-
-            if (criteria.Is1)
-            {
-                criteria.S1 = 0;
-            }
-            else
-            {
-                criteria.Us1 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and commission setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(SettingContext settingContext, PtAndComSetting positionTakingAndComSetting)
-        {
-            var criteria = new MasterUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.TargetCustId,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
-                SubAccID = settingContext.SubAccId,
-                M1 = (decimal)positionTakingAndComSetting.PositionTaking.M1,
-                Im1 = (bool)positionTakingAndComSetting.PositionTaking.Im1,
-                Um1 = (decimal)positionTakingAndComSetting.PositionTaking.Um1,
-                Im2 = (bool)positionTakingAndComSetting.PositionTaking.Im2
-            };
-
-            if (criteria.Im1)
-            {
-                criteria.M1 = 0;
-            }
-            else
-            {
-                criteria.Um1 = 0;
-            }
-
-            return criteria;
-        }
-
-        #endregion Private Methods
     }
 }

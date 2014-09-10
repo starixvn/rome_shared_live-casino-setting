@@ -71,13 +71,13 @@
         /// <param name="criteria">The criteria.</param>
         /// <param name="mapSetting">The map setting.</param>
         /// <returns>Position taking and commission setting models.</returns>
-        protected PtAndComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PtAndComSetting> mapSetting)
+        protected PTComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PTComSetting> mapSetting)
         {
             if (criteria.IsValid())
             {
                 try
                 {
-                    PtAndComSetting positionTakingAndComSetting = new PtAndComSetting();
+                    PTComSetting positionTakingAndComSetting = new PTComSetting();
 
                     using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {

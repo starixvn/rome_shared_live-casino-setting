@@ -5,9 +5,9 @@
     /// <summary>
     /// Position taking and Commission setting.
     /// </summary>
-    public class PtAndComSetting
+    public class PTComSetting
     {
-        public PtAndComSetting()
+        public PTComSetting()
         {
             Commission = new Commission();
             PositionTaking = new PositionTaking();

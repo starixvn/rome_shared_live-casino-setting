@@ -4,30 +4,17 @@
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.ViewModels;
 
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
     {
         int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext);
 
-        #region PT and Com
+        ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer);
 
-        PtAndComSetting GetPtAndComSetting(SettingContext settingContext);
+        IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType);
 
-        ICommandResults UpdatePtAndComSetting(SettingContext settingContext, PtAndComSetting ptAndComSetting);
-
-        IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PtAndComSetting ptAndComSetting);
-
-        #endregion PT and Com
-
-        #region Win Limit
-
-        CurrentMemberWin GetCurrentWinLimit(int custId);
-
-        ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
-
-        IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit);
-
-        #endregion Win Limit
+        Customer GetCustomer(SettingContext settingContext);
     }
 }
