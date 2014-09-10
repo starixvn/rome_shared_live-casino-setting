@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
@@ -9,8 +10,10 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
+    using System;
+    using Fanex.Common;
 
     /// <summary>
     /// Game setting service class.
@@ -21,18 +24,16 @@
         private const int TimeOutReplication = 5;
         private readonly ILogService _logService;
         private readonly ISettingRepository _settingRepository;
-        private readonly ICommonUtil _commonUtil;
 
         public GameSettingService()
-            : this(null, null, null)
+            : this(null, null)
         {
         }
 
-        public GameSettingService(ISettingRepository settingRepository, ILogService logService, ICommonUtil commonUtil)
+        public GameSettingService(ISettingRepository settingRepository, ILogService logService)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
             _logService = logService ?? new LogService();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -185,7 +186,7 @@
                 ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
                 Username = settingContext.TargetUsername
@@ -207,7 +208,10 @@
                 if (gameTypes == null || !gameTypes.Any())
                 {
                     gameTypes = GetGameSettingByCustomerId(settingContext.DirectUplineId);
-                    _commonUtil.LogInfo(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.TargetCustId, settingContext.DirectUplineId));
+
+                    Logger.Log.Info(
+                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.TargetCustId, settingContext.DirectUplineId),
+                        LiveCasinoSettings.Settings.LogCategory);
                 }
 
                 _logService.LogAutoInsertAccount(settingContext, gameTypes);
@@ -235,7 +239,7 @@
                 ModifyUsername = settingContext.UplineUsername,
                 RoleId = settingContext.TargetRoleId,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
                 Username = settingContext.TargetUsername,
@@ -259,7 +263,9 @@
                 if (gameTypes == null || !gameTypes.Any())
                 {
                     gameTypes = GetGameSettingByCustomerId(settingContext.OldCustId);
-                    _commonUtil.LogInfo(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.TargetCustId, settingContext.OldCustId));
+                    Logger.Log.Info(
+                        string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.TargetCustId, settingContext.OldCustId),
+                        LiveCasinoSettings.Settings.LogCategory);
                 }
 
                 _logService.LogInsertFromExistingAccount(settingContext, gameTypes);
@@ -300,7 +306,7 @@
             }
             else
             {
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
             return updateResult;
@@ -375,7 +381,7 @@
         public IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResults();
-            List<Customer> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            List<Customer> custInfos = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -413,7 +419,7 @@
 
             if (!updateResult.IsSuccessful)
             {
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
             return updateResult;
@@ -499,7 +505,7 @@
                 RoleId = settingContext.TargetRoleId,
                 SignupIp = settingContext.IP,
                 SignupBy = settingContext.UserIdDoAction,
-                SignupFrom = _commonUtil.LiveCasinoSettings.SystemId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 ModifyUsername = settingContext.UplineUsername,
                 Username = settingContext.TargetUsername,
                 CustSite = settingContext.SiteName
@@ -509,7 +515,7 @@
 
             if (!updateResult.IsSuccessful)
             {
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
             return updateResult;
@@ -573,7 +579,7 @@
             else
             {
                 gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()));
+                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
             return gameSettingResult;
@@ -596,6 +602,39 @@
                     BetTypeId = item.BetTypeId,
                     BettingLimit = item.BettingLimit
                 });
+            }
+
+            return list;
+        }
+
+        private List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        {
+            var list = new List<Customer>();
+
+            if (string.IsNullOrWhiteSpace(custIds)
+                || string.IsNullOrWhiteSpace(usernames)
+                || string.IsNullOrWhiteSpace(syncStatus))
+            {
+                return list;
+            }
+
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (arrayCustId.Length == arrayUsername.Length
+                && arrayUsername.Length == arraySyncStatus.Length
+                && arrayCustId.Any())
+            {
+                for (int i = 0; i < arrayCustId.Length; i++)
+                {
+                    list.Add(new Customer
+                    {
+                        CustId = Converter.ToInt(arrayCustId[i]),
+                        UserName = arrayUsername[i],
+                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
+                    });
+                }
             }
 
             return list;

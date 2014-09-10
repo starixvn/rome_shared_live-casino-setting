@@ -201,8 +201,6 @@
     <Compile Include="Services\PTComSettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\WinLimitSettingService.cs" />
-    <Compile Include="Utilities\CommonUtil.cs" />
-    <Compile Include="Utilities\ICommonUtil.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="DTO\PTComSetting.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />

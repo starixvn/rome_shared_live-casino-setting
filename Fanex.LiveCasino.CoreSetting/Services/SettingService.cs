@@ -1,5 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common;
@@ -9,7 +11,6 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
 
     /// <summary>
     /// Setting service for update position taking setting, commission, member win limit.
@@ -21,10 +22,10 @@
         private readonly IGameSettingService _gameSettingService;
         private readonly IPTComSettingService _pTComSettingService;
         private readonly IWinLimitSettingService _winLimitSettingService;
-        private readonly ICommonUtil _commonUtil;
+
 
         public SettingService()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null)
         {
         }
 
@@ -32,14 +33,12 @@
             ISettingRepository settingRepository,
             IPTComSettingService pTComSettingService,
             IWinLimitSettingService winLimitSettingService,
-            IGameSettingService gameSettingService,
-            ICommonUtil commonUtil)
+            IGameSettingService gameSettingService)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
             _pTComSettingService = pTComSettingService ?? new PTComSettingService();
             _gameSettingService = gameSettingService ?? new GameSettingService();
             _winLimitSettingService = winLimitSettingService ?? new WinLimitSettingService();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         public Customer GetCustomer(SettingContext settingContext)
@@ -58,7 +57,7 @@
         /// <returns>Customer id representative.</returns>
         public int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext)
         {
-            var custInfoList = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            var custInfoList = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             if (!custInfoList.Any())
             {
@@ -149,7 +148,7 @@
         /// <returns>Multiple result return to user.</returns>
         public IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType)
         {
-            var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             IMultipleCommandResults mainResults = new MultipleCommandResults();
 
@@ -197,6 +196,39 @@
                 default:
                     return new CommandResults();
             }
+        }
+
+        private List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        {
+            var list = new List<Customer>();
+
+            if (string.IsNullOrWhiteSpace(custIds)
+                || string.IsNullOrWhiteSpace(usernames)
+                || string.IsNullOrWhiteSpace(syncStatus))
+            {
+                return list;
+            }
+
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (arrayCustId.Length == arrayUsername.Length
+                && arrayUsername.Length == arraySyncStatus.Length
+                && arrayCustId.Any())
+            {
+                for (int i = 0; i < arrayCustId.Length; i++)
+                {
+                    list.Add(new Customer
+                    {
+                        CustId = Converter.ToInt(arrayCustId[i]),
+                        UserName = arrayUsername[i],
+                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
+                    });
+                }
+            }
+
+            return list;
         }
     }
 }

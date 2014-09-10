@@ -1,13 +1,17 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.Logging;
+    using System;
+    using Fanex.Common;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -15,17 +19,15 @@
     public class WinLimitSettingService : IWinLimitSettingService
     {
         private readonly ISettingRepository _settingRepository;
-        private readonly ICommonUtil _commonUtil;
 
         public WinLimitSettingService()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        public WinLimitSettingService(ISettingRepository settingRepository, ICommonUtil commonUtil)
+        public WinLimitSettingService(ISettingRepository settingRepository)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -73,7 +75,7 @@
             }
             else
             {
-                _commonUtil.LogInfo(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()));
+                Logger.Log.Info(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
             var commandResults = new CommandResults();
@@ -91,7 +93,7 @@
         public IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
             var results = new MultipleCommandResults();
-            List<Customer> custInfos = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            List<Customer> custInfos = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -105,6 +107,39 @@
             }
 
             return results;
+        }
+
+        private List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        {
+            var list = new List<Customer>();
+
+            if (string.IsNullOrWhiteSpace(custIds)
+                || string.IsNullOrWhiteSpace(usernames)
+                || string.IsNullOrWhiteSpace(syncStatus))
+            {
+                return list;
+            }
+
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (arrayCustId.Length == arrayUsername.Length
+                && arrayUsername.Length == arraySyncStatus.Length
+                && arrayCustId.Any())
+            {
+                for (int i = 0; i < arrayCustId.Length; i++)
+                {
+                    list.Add(new Customer
+                    {
+                        CustId = Converter.ToInt(arrayCustId[i]),
+                        UserName = arrayUsername[i],
+                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
+                    });
+                }
+            }
+
+            return list;
         }
     }
 }

@@ -5,18 +5,16 @@
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
 
     /// <summary>
     /// Live casino authorization filter.
     /// </summary>
     public class LiveCasinoAuthorizationAttribute : AuthorizeAttribute
     {
-        private readonly ICommonUtil _commonUtil = new CommonUtil();
-
         public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
 
         public bool IsHost { get; set; }
@@ -29,9 +27,9 @@
         {
             base.OnAuthorization(filterContext);
 
-            if (!string.IsNullOrEmpty(_commonUtil.LiveCasinoSettings.AuthorizationServiceType))
+            if (!string.IsNullOrEmpty(LiveCasinoSettings.Settings.AuthorizationServiceType))
             {
-                var authorizationType = Type.GetType(_commonUtil.LiveCasinoSettings.AuthorizationServiceType);
+                var authorizationType = Type.GetType(LiveCasinoSettings.Settings.AuthorizationServiceType);
                 LiveCasinoAuthenticationService = Activator.CreateInstance(authorizationType) as ILiveCasinoAuthorizationService;
 
                 var isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);

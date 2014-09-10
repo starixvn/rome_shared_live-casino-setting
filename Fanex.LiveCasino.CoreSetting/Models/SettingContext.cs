@@ -2,6 +2,7 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using System.Web;
 
     /// <summary>
     /// Setting Context.
@@ -75,7 +76,26 @@
         /// <summary>
         /// Gets or sets IP of current request.
         /// </summary>
-        public string IP { get; set; }
+        public string IP
+        {
+            get
+            {
+                HttpContext context = HttpContext.Current;
+
+                string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+                if (!string.IsNullOrEmpty(ipAddress))
+                {
+                    string[] addresses = ipAddress.Split(',');
+                    if (addresses.Length != 0)
+                    {
+                        return addresses[0];
+                    }
+                }
+
+                return context.Request.ServerVariables["REMOTE_ADDR"];
+            }
+        }
 
         /// <summary>
         /// Gets or sets Language of current request.

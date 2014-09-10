@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -17,17 +18,15 @@
     public class LogService : ILogService
     {
         private readonly ISettingRepository _settingRepository;
-        private readonly ICommonUtil _commonUtil;
 
         public LogService()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        public LogService(ISettingRepository settingRepository, ICommonUtil commonUtil)
+        public LogService(ISettingRepository settingRepository)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -40,7 +39,7 @@
             var log = new LogAutoInsertAccount
             {
                 Action = GetInsertAutoLogAction(settingContext.TargetRoleId),
-                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 GameSetting = gameTypes,
                 SettingContext = settingContext
             };
@@ -58,7 +57,7 @@
             var log = new LogInsertFromExistingAccount
             {
                 Action = GetInsertFromExistingLogAction(settingContext.TargetRoleId),
-                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 GameSetting = gameTypes,
                 SettingContext = settingContext
             };
@@ -75,7 +74,7 @@
             var log = new LogManualInsertAccount
             {
                 Action = GetInsertManualLogAction(settingContext.TargetRoleId),
-                SignUpForm = _commonUtil.LiveCasinoSettings.SystemId,
+                SignUpForm = LiveCasinoSettings.Settings.SystemId,
                 SettingContext = settingContext
             };
 
@@ -131,7 +130,7 @@
             }
             catch (Exception ex)
             {
-                _commonUtil.LogError(string.Format("{0}\n{1}", ex.Message, criteria.ToString()));
+                Logger.Log.Error(string.Format("{0}\n{1}", ex.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
 
                 throw ex;
             }

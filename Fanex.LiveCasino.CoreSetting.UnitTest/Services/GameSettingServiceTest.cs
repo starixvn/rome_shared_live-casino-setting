@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
@@ -11,7 +10,6 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -22,7 +20,6 @@
     [TestFixture]
     public class GameSettingServiceTest
     {
-        private ICommonUtil _commonUtil;
         private IGameSettingService _gameSettingService;
         private ILogService _logService;
         private ISettingRepository _settingRepository;
@@ -32,8 +29,7 @@
         {
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _gameSettingService = new GameSettingService(_settingRepository, _logService, _commonUtil);
+            _gameSettingService = new GameSettingService(_settingRepository, _logService);
         }
 
         /// <summary>
@@ -412,8 +408,7 @@
         {
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _gameSettingService = Substitute.For<GameSettingService>(_settingRepository, _logService, _commonUtil);
+            _gameSettingService = Substitute.For<GameSettingService>(_settingRepository, _logService);
 
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -422,7 +417,6 @@
             settingContext.TargetCustId = 1;
             settingContext.TargetRoleId = targetRoleId;
 
-            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -463,7 +457,6 @@
             settingContext.TargetCustId = 1;
             settingContext.TargetRoleId = targetRoleId;
 
-            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -503,7 +496,6 @@
             settingContext.ExchangeId = 1;
             settingContext.DirectUplineId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertAutoAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -539,7 +531,6 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -572,7 +563,6 @@
             settingContext.TargetCustId = 1;
             settingContext.DirectUplineId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.GetCustomerInfo(Arg.Is<GetCustomerInfoCriteria>(x => x.CustId == 1)).Returns(new Customer());
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -607,7 +597,6 @@
             settingContext.TargetCustId = 1;
             settingContext.DirectUplineId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.GetCustomerInfo(Arg.Is<GetCustomerInfoCriteria>(x => x.CustId == 1)).Returns(new Customer());
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -640,7 +629,6 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Is<InsertAutoAccountCriteria>(x => x.IsValid()), ref gameSetting)
                               .Returns(x =>
                               {
@@ -669,7 +657,6 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = new List<GameType>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertAutoAccountCriteria>(), ref gameSetting)
                              .ReturnsForAnyArgs(x =>
                              {
@@ -698,8 +685,7 @@
         {
             _settingRepository = Substitute.For<ISettingRepository>();
             _logService = Substitute.For<ILogService>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _gameSettingService = Substitute.For<GameSettingService>(_settingRepository, _logService, _commonUtil);
+            _gameSettingService = Substitute.For<GameSettingService>(_settingRepository, _logService);
 
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
@@ -708,7 +694,6 @@
             settingContext.TargetCustId = 1;
             settingContext.TargetRoleId = targetRoleId;
 
-            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertFromExistingAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -749,7 +734,6 @@
             settingContext.TargetCustId = 1;
             settingContext.TargetRoleId = targetRoleId;
 
-            _commonUtil.LiveCasinoSettings.ReturnsForAnyArgs(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertFromExistingAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -789,7 +773,6 @@
             settingContext.ExchangeId = 1;
             settingContext.OldCustId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(new InsertFromExistingAccountCriteria(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -825,7 +808,6 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertFromExistingAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
                               {
@@ -858,7 +840,6 @@
             settingContext.TargetCustId = 1;
             settingContext.OldCustId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.GetCustomerInfo(Arg.Is<GetCustomerInfoCriteria>(x => x.CustId == 1)).Returns(new Customer());
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertFromExistingAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -893,7 +874,6 @@
             settingContext.TargetCustId = 1;
             settingContext.DirectUplineId = 1;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.GetCustomerInfo(Arg.Is<GetCustomerInfoCriteria>(x => x.CustId == 1)).Returns(new Customer());
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertFromExistingAccountCriteria>(), ref gameSetting)
                               .ReturnsForAnyArgs(x =>
@@ -926,7 +906,6 @@
             var gameSetting = new List<GameType>();
 
             settingContext.TargetCustId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Is<InsertFromExistingAccountCriteria>(x => x.IsValid()), ref gameSetting)
                               .Returns(x =>
                               {
@@ -955,7 +934,6 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = new List<GameType>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertGameSettingAccount(Arg.Any<InsertFromExistingAccountCriteria>(), ref gameSetting)
                              .ReturnsForAnyArgs(x =>
                              {
@@ -1045,7 +1023,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
 
             // Action
@@ -1066,7 +1043,6 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
 
             // Action
@@ -1087,7 +1063,6 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
 
             // Action
@@ -1110,7 +1085,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
 
@@ -1134,7 +1108,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
@@ -1161,7 +1134,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
@@ -1188,7 +1160,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
@@ -1215,7 +1186,6 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Member;
             settingContext.DirectUplineId = 1;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
@@ -1242,7 +1212,6 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
-            _commonUtil.LiveCasinoSettings.Returns(new CoreSetting.Configuration.LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });

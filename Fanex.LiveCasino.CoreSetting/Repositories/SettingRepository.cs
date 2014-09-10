@@ -6,10 +6,12 @@
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -69,7 +71,8 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message, LiveCasinoSettings.Settings.LogCategory);
+
                     throw ex;
                 }
             }
@@ -109,7 +112,7 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
 
                     throw ex;
                 }
@@ -123,7 +126,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        public PTComSetting GetSettingForEditSuper(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -152,7 +155,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
+        public PTComSetting GetSettingForEditMaster(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -186,7 +189,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
+        public PTComSetting GetSettingForEditAgent(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -221,7 +224,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
+        public PTComSetting GetSettingForEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -250,7 +253,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
+        public PTComSetting GetSettingForSuperEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -276,7 +279,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
+        public PTComSetting GetSettingForMasterEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
@@ -347,7 +350,7 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
                     throw ex;
                 }
             }
@@ -403,14 +406,14 @@
 
                     if (!result.IsSuccessful)
                     {
-                        CommonUtil.LogInfo(string.Format("{0}\n{1}", result.Message, criteria.ToString()));
+                        Logger.Log.Info(string.Format("{0}\n{1}", result.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
                     }
 
                     return result;
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
                     throw ex;
                 }
             }

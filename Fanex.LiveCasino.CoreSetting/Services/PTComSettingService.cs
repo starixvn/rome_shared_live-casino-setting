@@ -11,8 +11,8 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -20,17 +20,15 @@
     public class PTComSettingService : IPTComSettingService
     {
         private readonly ISettingRepository _settingRepository;
-        private readonly ICommonUtil _commonUtil;
 
         public PTComSettingService()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        public PTComSettingService(ISettingRepository settingRepository, ICommonUtil commonUtil)
+        public PTComSettingService(ISettingRepository settingRepository)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         #region Pt and Com
@@ -146,7 +144,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         public IMultipleCommandResults UpdatePtAndComSettingMultiple(SettingContext settingContext, PTComSetting positionTakingAndComSetting)
         {
-            var custInfoes = _commonUtil.GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
+            var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             IMultipleCommandResults mainResults = new MultipleCommandResults();
 
@@ -161,8 +159,7 @@
 
             return mainResults;
         }
-
-        #endregion Pt and Com Multiple Update
+#endregion Pt and Com Multiple Update
 
         #endregion Pt and Com
 
@@ -466,6 +463,39 @@
             }
 
             return criteria;
+        }
+
+        private List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        {
+            var list = new List<Customer>();
+
+            if (string.IsNullOrWhiteSpace(custIds)
+                || string.IsNullOrWhiteSpace(usernames)
+                || string.IsNullOrWhiteSpace(syncStatus))
+            {
+                return list;
+            }
+
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (arrayCustId.Length == arrayUsername.Length
+                && arrayUsername.Length == arraySyncStatus.Length
+                && arrayCustId.Any())
+            {
+                for (int i = 0; i < arrayCustId.Length; i++)
+                {
+                    list.Add(new Customer
+                    {
+                        CustId = Converter.ToInt(arrayCustId[i]),
+                        UserName = arrayUsername[i],
+                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
+                    });
+                }
+            }
+
+            return list;
         }
     }
 }

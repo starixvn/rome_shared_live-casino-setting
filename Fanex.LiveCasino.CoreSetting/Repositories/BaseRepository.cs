@@ -9,7 +9,7 @@
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -17,18 +17,6 @@
     /// </summary>
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
-        protected readonly ICommonUtil CommonUtil;
-
-        public BaseRepository()
-            : this(null)
-        {
-        }
-
-        public BaseRepository(ICommonUtil commonUtil)
-        {
-            commonUtil = commonUtil ?? new CommonUtil();
-        }
-
         /// <summary>
         /// Inserts the or update.
         /// </summary>
@@ -56,7 +44,7 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
 
                     throw ex;
                 }
@@ -94,7 +82,7 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
 
                     throw ex;
                 }

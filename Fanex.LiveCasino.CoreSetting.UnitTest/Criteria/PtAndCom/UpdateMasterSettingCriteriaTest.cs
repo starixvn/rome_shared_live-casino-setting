@@ -138,7 +138,7 @@
             // Arrange
             var criteria = CreateNewCriteria();
             criteria.CustId = 1;
-            
+
             criteria.SubAccID = 0;
             criteria.UserId = 2;
             criteria.IP = "10.19.10.54";

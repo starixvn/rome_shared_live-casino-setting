@@ -4,7 +4,7 @@
     using System.Threading;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
 
     /// <summary>
     /// Base controller for handle pre-request.
@@ -13,7 +13,6 @@
     public class BaseController : Controller
     {
         private readonly CultureInfo _defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
-        private readonly ICommonUtil _commonUtil = new CommonUtil();
 
         /// <summary>
         /// Set current language.
@@ -21,7 +20,7 @@
         /// <param name="filterContext">Current filter context.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var currentLanguageKey = _commonUtil.LiveCasinoSettings.LanguageSessionKey;
+            var currentLanguageKey = LiveCasinoSettings.Settings.LanguageSessionKey;
             var currentLanguage = Session[currentLanguageKey] != null ? Session[currentLanguageKey].ToString() : string.Empty;
 
             if (!string.IsNullOrEmpty(currentLanguage))

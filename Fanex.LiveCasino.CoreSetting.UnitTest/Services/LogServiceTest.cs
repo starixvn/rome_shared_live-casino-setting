@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -9,7 +8,6 @@
     using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -19,7 +17,6 @@
     [TestFixture]
     public class LogServiceTest
     {
-        private ICommonUtil _commonUtil;
         private ISettingRepository _settingRepository;
         private ILogService _logService;
 
@@ -27,8 +24,7 @@
         public void SetUp()
         {
             _settingRepository = Substitute.For<ISettingRepository>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _logService = Substitute.For<LogService>(_settingRepository, _commonUtil);
+            _logService = Substitute.For<LogService>(_settingRepository);
         }
 
         [Test]
@@ -48,7 +44,6 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -73,7 +68,6 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -93,7 +87,6 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -118,7 +111,6 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -137,7 +129,6 @@
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -162,7 +153,6 @@
             var settingContext = Substitute.For<SettingContext>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -183,7 +173,6 @@
             GameType oldGameType = null;
             var newGameType = Substitute.For<GameType>();
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -207,7 +196,6 @@
             oldGameType.BettingLimit = new List<StakeLevel>() { new StakeLevel { Id = 1, IsChecked = true, Range = "1-1000" } };
             newGameType.BettingLimit = new List<StakeLevel>() { new StakeLevel { Id = 1, IsChecked = true, Range = "1-1000" } };
 
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action
@@ -234,7 +222,6 @@
             var newGameType = Substitute.For<GameType>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _commonUtil.LiveCasinoSettings.Returns(new LiveCasinoSettings { SystemId = 1 });
             _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
 
             // Action

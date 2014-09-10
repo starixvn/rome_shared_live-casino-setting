@@ -8,7 +8,6 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -19,7 +18,6 @@
     [TestFixture]
     public class PtAndComSettingServiceTest
     {
-        private ICommonUtil _commonUtil;
         private IPTComSettingService _positionTakingAndCommissionSettingService;
         private ISettingRepository _settingRepository;
 
@@ -27,8 +25,7 @@
         public void SetUp()
         {
             _settingRepository = Substitute.For<ISettingRepository>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _positionTakingAndCommissionSettingService = Substitute.For<PTComSettingService>(_settingRepository, _commonUtil);
+            _positionTakingAndCommissionSettingService = Substitute.For<PTComSettingService>(_settingRepository);
         }
 
         /// <summary>
@@ -49,7 +46,7 @@
                 UplineRoleId = uplineRoleId,
                 TargetRoleId = targetRoleId
             };
-            var positionTakingAndCommissionSettingService = new PTComSettingService(new SettingRepository(), Substitute.For<CommonUtil>());
+            var positionTakingAndCommissionSettingService = new PTComSettingService(new SettingRepository());
 
             var positionTakingAndCommSetting = positionTakingAndCommissionSettingService.GetPtAndComSetting(settingContext);
 
@@ -378,8 +375,7 @@
                            new Customer { CustId = 1, UserName = "name 1" },
                            new Customer { CustId = 2, UserName = "name 2" }
                        };
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(custInfoList);
+          
             var settingContext = new SettingContext
             {
                 UplineRoleId = uplineRoleId,

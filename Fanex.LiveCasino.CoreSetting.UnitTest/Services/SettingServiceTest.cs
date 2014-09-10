@@ -6,7 +6,6 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -17,7 +16,6 @@
     [TestFixture]
     public class SettingServiceTest
     {
-        private ICommonUtil _commonUtil;
         private ISettingService _settingService;
         private ISettingRepository _settingRepository;
 
@@ -25,8 +23,7 @@
         public void SetUp()
         {
             _settingRepository = Substitute.For<ISettingRepository>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _settingService = Substitute.For<SettingService>(_settingRepository, _commonUtil);
+            _settingService = Substitute.For<SettingService>(_settingRepository);
         }
 
         /// <summary>
@@ -41,12 +38,6 @@
                 UplineRoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master
             };
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>()
-                       {
-                           new Customer { CustId = 1, UserName = "master1" },
-                           new Customer { CustId = 2, UserName = "master2" }
-                       });
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -63,8 +54,6 @@
         {
             //// Arrange
             var settingContext = new SettingContext();
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>());
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -86,12 +75,6 @@
                 UplineRoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Member
             };
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>()
-                       {
-                           new Customer { CustId = 1, IsSyncLiveCasino = false },
-                           new Customer { CustId = 2, IsSyncLiveCasino = true }
-                       });
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -113,12 +96,6 @@
                 UplineRoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Member
             };
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>()
-                       {
-                           new Customer { CustId = 1, IsSyncLiveCasino = false },
-                           new Customer { CustId = 2, IsSyncLiveCasino = false }
-                       });
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
@@ -139,12 +116,6 @@
                 UplineRoleId = (int)CustomerRole.Super,
                 TargetRoleId = (int)CustomerRole.Master
             };
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>()
-                       {
-                           new Customer { CustId = 1, UserName = "master1" },
-                           new Customer { CustId = 2, UserName = "master2" }
-                       });
 
             //// Act
             var representativeCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);

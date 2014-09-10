@@ -7,8 +7,6 @@
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.NAP.Framework.Data;
     using NSubstitute;
     using NUnit.Framework;
@@ -23,7 +21,6 @@
         private IGameSettingService _gameSettingService;
         private IPTComSettingService _positionTakingAndCommissionSettingService;
         private IWinLimitSettingService _winLimitSettingService;
-        private ICommonUtil _commonUtil;
         private LiveCSSettingController _controller;
 
         [SetUp]
@@ -33,8 +30,7 @@
             _positionTakingAndCommissionSettingService = Substitute.For<IPTComSettingService>();
             _gameSettingService = Substitute.For<IGameSettingService>();
             _winLimitSettingService = Substitute.For<IWinLimitSettingService>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _controller = Substitute.For<LiveCSSettingController>(_settingService, _gameSettingService, _commonUtil);
+            _controller = Substitute.For<LiveCSSettingController>(_settingService, _gameSettingService);
         }
 
         /// <summary>

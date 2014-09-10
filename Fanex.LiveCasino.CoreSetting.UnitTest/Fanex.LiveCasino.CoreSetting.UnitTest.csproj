@@ -98,7 +98,6 @@
     <Compile Include="Services\PtAndComSettingServiceTest.cs" />
     <Compile Include="Services\SettingServiceTest.cs" />
     <Compile Include="Services\WinLimitSettingServiceTest.cs" />
-    <Compile Include="Utilities\CommonUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Configuration\MissingUnAuthorizeUrlWebTest.config">

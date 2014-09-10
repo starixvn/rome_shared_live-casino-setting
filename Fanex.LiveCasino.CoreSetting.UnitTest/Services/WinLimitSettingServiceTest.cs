@@ -10,7 +10,6 @@
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -19,7 +18,6 @@
     /// </summary>
     public class WinLimitSettingServiceTest
     {
-        private ICommonUtil _commonUtil;
         private IWinLimitSettingService _winLimitSettingService;
         private ISettingRepository _settingRepository;
 
@@ -27,8 +25,7 @@
         public void SetUp()
         {
             _settingRepository = Substitute.For<ISettingRepository>();
-            _commonUtil = Substitute.For<ICommonUtil>();
-            _winLimitSettingService = Substitute.For<WinLimitSettingService>(_settingRepository, _commonUtil);
+            _winLimitSettingService = Substitute.For<WinLimitSettingService>(_settingRepository);
         }
 
         /// <summary>
@@ -116,13 +113,6 @@
             memberWinLimit.Max = 0;
             memberWinLimit.Upline = new MemberWinLimit();
 
-            _commonUtil.GetCustomerInfo(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>())
-                       .Returns(new List<Customer>()
-                       {
-                           new Customer { CustId = 1, UserName = "master1" },
-                           new Customer { CustId = 2, UserName = "master2" },
-                           new Customer { CustId = 3, UserName = "master3" }
-                       });
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateCustomerWinLimitCriteria>(x => x.IsValid()))
                              .Returns(new CommandResult { Code = 0 });
 

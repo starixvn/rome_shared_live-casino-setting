@@ -3,14 +3,13 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.Command;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
     using Newtonsoft.Json;
@@ -25,25 +24,22 @@
         private readonly IGameSettingService _gameSettingService;
         private readonly IPTComSettingService _pTComSettingService;
         private readonly IWinLimitSettingService _winLimitSettingService;
-        private readonly ICommonUtil _commonUtil;
 
         public LiveCSSettingController()
-            : this(null, null, null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public LiveCSSettingController(
             ISettingService settingService,
-            IPTComSettingService pTComSettingService, 
+            IPTComSettingService pTComSettingService,
             IWinLimitSettingService winLimitSettingService,
-            IGameSettingService gameSettingService, 
-            ICommonUtil commonUtil)
+            IGameSettingService gameSettingService)
         {
             _settingService = settingService ?? new SettingService();
             _pTComSettingService = pTComSettingService ?? new PTComSettingService();
             _gameSettingService = gameSettingService ?? new GameSettingService();
             _winLimitSettingService = winLimitSettingService ?? new WinLimitSettingService();
-            _commonUtil = commonUtil ?? new CommonUtil();
         }
 
         /// <summary>
@@ -84,7 +80,7 @@
                     AdminId = adminId,
                     Language = language,
                     SubAccId = subAccId,
-                    SystemId = _commonUtil.LiveCasinoSettings.SystemId,
+                    SystemId = LiveCasinoSettings.Settings.SystemId,
                     LangKey = GetLanguageKey()
                 };
 
@@ -138,7 +134,7 @@
                 IsEditMultiple = true,
                 SubAccId = subAccId,
                 TargetSyncStatus = targetSyncStatus,
-                SystemId = _commonUtil.LiveCasinoSettings.SystemId,
+                SystemId = LiveCasinoSettings.Settings.SystemId,
                 LangKey = GetLanguageKey()
             };
 
@@ -163,7 +159,6 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, Customer customer, int updateType = (int)UpdateType.AllSetting)
         {
-            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -202,7 +197,6 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -230,7 +224,6 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
-            settingContext.IP = _commonUtil.IPAddress;
             var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
             IMultipleCommandResults updateResult = new MultipleCommandResults();
@@ -261,7 +254,6 @@
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtAndComSetting(SettingContext settingContext, PTComSetting ptAndComSetting)
         {
-            settingContext.IP = _commonUtil.IPAddress;
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
@@ -320,8 +312,8 @@
 
         private string GetLanguageKey()
         {
-            return HttpContext.Session[_commonUtil.LiveCasinoSettings.LanguageSessionKey] != null ?
-                HttpContext.Session[_commonUtil.LiveCasinoSettings.LanguageSessionKey].ToString() :
+            return HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey] != null ?
+                HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey].ToString() :
                 "en-US";
         }
     }
