@@ -125,223 +125,223 @@
             _gameSettingService.Received().UpdateManualMultiple(settingContext, gameSetting);
         }
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and PT COM fail_ call update PT and COM setting.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_CallUpdatePtAndComSetting()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and PT COM fail_ call update PT and COM setting.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_CallUpdatePtAndComSetting()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            settingContext.IsEditMultiple = false;
+        ////    settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                           .Returns(new CommandResults
-                           {
-                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
-                           });
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                   .Returns(new CommandResults
+        ////                   {
+        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                   });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
-        }
+        ////    // Assert
+        ////    _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+        ////}
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and PT COM fail_ dot not call update win limit.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateWinLimit()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and PT COM fail_ dot not call update win limit.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateWinLimit()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            settingContext.IsEditMultiple = false;
+        ////    settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                           .Returns(new CommandResults
-                           {
-                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
-                           });
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                   .Returns(new CommandResults
+        ////                   {
+        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                   });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _winLimitSettingService.DidNotReceive().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
-        }
+        ////    // Assert
+        ////    _winLimitSettingService.DidNotReceive().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
+        ////}
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and PT COM fail_ dot not call update manual.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateManual()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and PT COM fail_ dot not call update manual.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndPTComFail_DotNotCallUpdateManual()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            settingContext.IsEditMultiple = false;
+        ////    settingContext.IsEditMultiple = false;
 
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                           .Returns(new CommandResults
-                           {
-                               Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
-                           });
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                   .Returns(new CommandResults
+        ////                   {
+        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                   });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
-        }
+        ////    // Assert
+        ////    _gameSettingService.DidNotReceive().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
+        ////}
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and PT COM success_ call update manual.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateManual()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and PT COM success_ call update manual.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateManual()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            customer.MemberWinLimit = new MemberWinLimit();
-            settingContext.IsEditMultiple = false;
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                         .Returns(new CommandResults
-                         {
-                             Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
-                         });
-            _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
-                            .Returns(new CommandResults
-                            {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                            });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
-                               .Returns(new CommandResults
-                               {
-                                   Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                               });
+        ////    customer.MemberWinLimit = new MemberWinLimit();
+        ////    settingContext.IsEditMultiple = false;
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                 .Returns(new CommandResults
+        ////                 {
+        ////                     Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                 });
+        ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+        ////                    .Returns(new CommandResults
+        ////                    {
+        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                    });
+        ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
+        ////                       .Returns(new CommandResults
+        ////                       {
+        ////                           Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                       });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
-        }
+        ////    // Assert
+        ////    _gameSettingService.Received().UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>());
+        ////}
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and PT COM success_ call update win limit.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateWinLimit()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and PT COM success_ call update win limit.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndPTComSuccess_CallUpdateWinLimit()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            customer.MemberWinLimit = new MemberWinLimit();
-            settingContext.IsEditMultiple = false;
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                           .Returns(new CommandResults
-                           {
-                               Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
-                           });
-            _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
-                            .Returns(new CommandResults
-                            {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                            });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
-                               .Returns(new CommandResults
-                                {
-                                    Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                                });
+        ////    customer.MemberWinLimit = new MemberWinLimit();
+        ////    settingContext.IsEditMultiple = false;
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                   .Returns(new CommandResults
+        ////                   {
+        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                   });
+        ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+        ////                    .Returns(new CommandResults
+        ////                    {
+        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                    });
+        ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
+        ////                       .Returns(new CommandResults
+        ////                        {
+        ////                            Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                        });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _winLimitSettingService.Received().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
-        }
+        ////    // Assert
+        ////    _winLimitSettingService.Received().UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>());
+        ////}
 
-        /// <summary>
-        /// Updates the live casino setting_ update single and is edit member not synced and up line enable l c_ call update live casino status.
-        /// </summary>
-        [Test]
-        public void UpdateLiveCasinoSetting_UpdateSingleAndIsEditMemberNotSyncedAndUplineEnableLC_CallUpdateLiveCasinoStatus()
-        {
-            // Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var customer = Substitute.For<Customer>();
+        /////// <summary>
+        /////// Updates the live casino setting_ update single and is edit member not synced and up line enable l c_ call update live casino status.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdateLiveCasinoSetting_UpdateSingleAndIsEditMemberNotSyncedAndUplineEnableLC_CallUpdateLiveCasinoStatus()
+        ////{
+        ////    // Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var customer = Substitute.For<Customer>();
 
-            customer.IsSyncLiveCasino = true;
-            customer.UplineDisableLiveCasino = false;
-            settingContext.IsEditMultiple = false;
-            settingContext.TargetRoleId = (int)CustomerRole.Member;
-            settingContext.UplineRoleId = (int)CustomerRole.Agent;
-            _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
-                           .Returns(new CommandResults
-                           {
-                               Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
-                           });
-            _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
-                            .Returns(new CommandResults
-                            {
-                                Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                            });
-            _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
-                               .Returns(new CommandResults
-                               {
-                                   Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
-                               });
+        ////    customer.IsSyncLiveCasino = true;
+        ////    customer.UplineDisableLiveCasino = false;
+        ////    settingContext.IsEditMultiple = false;
+        ////    settingContext.TargetRoleId = (int)CustomerRole.Member;
+        ////    settingContext.UplineRoleId = (int)CustomerRole.Agent;
+        ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
+        ////                   .Returns(new CommandResults
+        ////                   {
+        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                   });
+        ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
+        ////                    .Returns(new CommandResults
+        ////                    {
+        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                    });
+        ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
+        ////                       .Returns(new CommandResults
+        ////                       {
+        ////                           Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                       });
 
-            // Action
-            _controller.UpdateLiveCasinoSetting(settingContext, customer);
+        ////    // Action
+        ////    _controller.UpdateLiveCasinoSetting(settingContext, customer);
 
-            // Assert
-            _gameSettingService.Received().UpdateLiveCasinoStatus(Arg.Any<SettingContext>(), Arg.Any<bool>());
-        }
+        ////    // Assert
+        ////    _gameSettingService.Received().UpdateLiveCasinoStatus(Arg.Any<SettingContext>(), Arg.Any<bool>());
+        ////}
 
-        /// <summary>
-        /// Update PT And COM Setting When Call Update Single Called Update Single Customer PT And COM Setting.
-        /// </summary>
-        [Test]
-        public void UpdatePtAndComSetting_WhenCallUpdateSingle_CalledUpdateSingleCustomerPtAndComSetting()
-        {
-            //// Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var positionTakingAndComSetting = Substitute.For<PTComSetting>();
+        /////// <summary>
+        /////// Update PT And COM Setting When Call Update Single Called Update Single Customer PT And COM Setting.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdatePtAndComSetting_WhenCallUpdateSingle_CalledUpdateSingleCustomerPtAndComSetting()
+        ////{
+        ////    //// Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var positionTakingAndComSetting = Substitute.For<PTComSetting>();
 
-            //// Act
-            _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
+        ////    //// Act
+        ////    _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
 
-            //// Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
-        }
+        ////    //// Assert
+        ////    _positionTakingAndCommissionSettingService.Received().UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+        ////}
 
-        /// <summary>
-        /// Update PT And COM Setting When Call Update multiple Called Update multiple Customer PT And COM Setting.
-        /// </summary>
-        [Test]
-        public void UpdatePtAndComSettingMultiple_WhenCallUpdateMultiple_CalledUpdateMultipleCustomerPtAndComSetting()
-        {
-            //// Arrange
-            var settingContext = Substitute.For<SettingContext>();
-            var positionTakingAndComSetting = Substitute.For<PTComSetting>();
-            settingContext.IsEditMultiple = true;
+        /////// <summary>
+        /////// Update PT And COM Setting When Call Update multiple Called Update multiple Customer PT And COM Setting.
+        /////// </summary>
+        ////[Test]
+        ////public void UpdatePtAndComSettingMultiple_WhenCallUpdateMultiple_CalledUpdateMultipleCustomerPtAndComSetting()
+        ////{
+        ////    //// Arrange
+        ////    var settingContext = Substitute.For<SettingContext>();
+        ////    var positionTakingAndComSetting = Substitute.For<PTComSetting>();
+        ////    settingContext.IsEditMultiple = true;
 
-            //// Act
-            _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
+        ////    //// Act
+        ////    _controller.UpdatePtComSetting(settingContext, positionTakingAndComSetting);
 
-            //// Assert
-            _positionTakingAndCommissionSettingService.Received().UpdatePtComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
-        }
+        ////    //// Assert
+        ////    _positionTakingAndCommissionSettingService.Received().UpdatePtComSettingMultiple(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>());
+        ////}
 
         [Test]
         public void UpdateMultipleCustomerAllSetting_WhenCalled_CallUpdateSingleCustomerAllSetting()

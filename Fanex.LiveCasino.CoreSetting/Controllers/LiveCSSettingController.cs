@@ -20,6 +20,7 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class LiveCSSettingController : BaseController
     {
+        private const string DefaultLanguage = "en-US";
         private readonly ISettingService _settingService;
         private readonly IGameSettingService _gameSettingService;
         private readonly IPTComSettingService _pTComSettingService;
@@ -245,24 +246,24 @@
         #region Pt and Com setting
 
         /// <summary>
-        /// Update position taking and commission setting.
+        /// Update position taking and Commission setting.
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="ptComSetting">Position taking and commission setting for updating.</param>
+        /// <param name="ptComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        public JsonResult UpdatePtComSetting(SettingContext settingContext, PTComSetting ptComSetting)
+        public JsonResult UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, ptComSetting);
+                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, ptComSetting));
+                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, commission, positionTaking));
             }
 
             return Json(updateResult);
@@ -285,7 +286,7 @@
         {
             return HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey] != null ?
                 HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey].ToString() :
-                "en-US";
+                DefaultLanguage;
         }
     }
 }

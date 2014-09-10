@@ -202,7 +202,6 @@
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\WinLimitSettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
-    <Compile Include="DTO\PTComSetting.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />

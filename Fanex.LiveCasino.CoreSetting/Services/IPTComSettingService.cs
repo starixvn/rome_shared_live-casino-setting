@@ -11,10 +11,10 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface IPTComSettingService
     {
-        PTComSetting GetPtComSetting(SettingContext settingContext);
+        void SetPtAndComSetting(SettingContext settingContext, Customer customer);
 
-        ICommandResults UpdatePtComSetting(SettingContext settingContext, PTComSetting pTComSetting);
+        ICommandResults UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking);
 
-        IMultipleCommandResults UpdatePtComSettingMultiple(SettingContext settingContext, PTComSetting pTComSetting);
+        IMultipleCommandResults UpdatePtComSettingMultiple(SettingContext settingContext, Commission commission, PositionTaking positionTaking);
     }
 }

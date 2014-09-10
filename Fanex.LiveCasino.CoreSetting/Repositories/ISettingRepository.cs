@@ -12,17 +12,17 @@
 
         CurrentMemberWin GetCurrentMemberWin(ICriteria criteria);
 
-        PTComSetting GetSettingForEditSuper(ICriteria criteria);
+        object[] GetSettingForEditSuper(ICriteria criteria);
 
-        PTComSetting GetSettingForEditMaster(ICriteria criteria);
+        object[] GetSettingForEditMaster(ICriteria criteria);
 
-        PTComSetting GetSettingForEditAgent(ICriteria criteria);
+        object[] GetSettingForEditAgent(ICriteria criteria);
 
-        PTComSetting GetSettingForEditMember(ICriteria criteria);
+        object[] GetSettingForEditMember(ICriteria criteria);
 
-        PTComSetting GetSettingForSuperEditMember(ICriteria criteria);
+        object[] GetSettingForSuperEditMember(ICriteria criteria);
 
-        PTComSetting GetSettingForMasterEditMember(ICriteria criteria);
+        object[] GetSettingForMasterEditMember(ICriteria criteria);
 
         List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn);
 

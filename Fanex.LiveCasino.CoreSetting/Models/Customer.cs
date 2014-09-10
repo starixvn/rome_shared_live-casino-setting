@@ -38,7 +38,9 @@
 
         public MemberWinLimit MemberWinLimit { get; set; }
 
-        public PTComSetting PtAndComSetting { get; set; }
+        public Commission Commission { get; set; }
+
+        public PositionTaking PositionTaking { get; set; }
 
         public List<GameType> GameSetting { get; set; }
     }

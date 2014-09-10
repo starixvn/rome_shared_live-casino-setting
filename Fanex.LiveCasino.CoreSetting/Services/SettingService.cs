@@ -13,7 +13,7 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
 
     /// <summary>
-    /// Setting service for update position taking setting, commission, member win limit.
+    /// Setting service for update position taking setting, Commission, member win limit.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class SettingService : ISettingService
@@ -44,7 +44,7 @@
         public Customer GetCustomer(SettingContext settingContext)
         {
             Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-            customer.PtAndComSetting = _pTComSettingService.GetPtComSetting(settingContext);
+            _pTComSettingService.SetPtAndComSetting(settingContext, customer);
             customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
 
             return customer;
@@ -115,7 +115,7 @@
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = _pTComSettingService.UpdatePtComSetting(settingContext, customer.PtAndComSetting);
+            var positionTakingAndCommResults = _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
             if (customer.IsSyncLiveCasino
@@ -181,7 +181,7 @@
             {
                 case (int)UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            _pTComSettingService.UpdatePtComSetting(settingContext, customer.PtAndComSetting)
+                            _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking)
                             : UpdateSingleCustomerAllSetting(settingContext, customer);
                 case (int)UpdateType.WinLimit:
                     return isSync ?

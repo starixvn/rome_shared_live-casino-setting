@@ -125,14 +125,21 @@
         /// Gets the setting for edit super.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditSuper(ICriteria criteria)
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForEditSuper(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
                 (reader, ptAndComSetting) =>
                 {
-                    ptAndComSetting.Commission = new Commission
+                    ptAndComSetting[0] = new PositionTaking
+                    {
+                        S4 = reader.To<float>("v162spositiontaking_1101"),
+                        L4 = reader.To<float>("v162spositiontaking_1101_max"),
+                        N4 = reader.To<float>("v162spositiontaking_1101_min")
+                    };
+
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162sdiscount_1101"),
                         Upline = new Commission
@@ -141,12 +148,6 @@
                         }
                     };
 
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        S4 = reader.To<float>("v162spositiontaking_1101"),
-                        L4 = reader.To<float>("v162spositiontaking_1101_max"),
-                        N4 = reader.To<float>("v162spositiontaking_1101_min")
-                    };
                 });
         }
 
@@ -154,23 +155,14 @@
         /// Gets the setting for edit master.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditMaster(ICriteria criteria)
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForEditMaster(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
                 (reader, ptAndComSetting) =>
                 {
-                    ptAndComSetting.Commission = new Commission
-                    {
-                        Value = reader.ToFloat("v162discount_1101"),
-                        Upline = new Commission
-                        {
-                            Value = reader.ToFloat("v162discount_1101_max")
-                        }
-                    };
-
-                    ptAndComSetting.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         S4 = reader.To<float>("v162spositiontaking_1101_max"),
                         N3 = reader.To<float>("v162mpositiontaking_1101_min"),
@@ -181,21 +173,8 @@
                         NewPresetOnMember = 0,
                         UpdateAllMembers = false
                     };
-                });
-        }
 
-        /// <summary>
-        /// Gets the setting for edit agent.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditAgent(ICriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.Commission = new Commission
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162discount_1101"),
                         Upline = new Commission
@@ -203,8 +182,21 @@
                             Value = reader.ToFloat("v162discount_1101_max")
                         }
                     };
+                });
+        }
 
-                    ptAndComSetting.PositionTaking = new PositionTaking
+        /// <summary>
+        /// Gets the setting for edit agent.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForEditAgent(ICriteria criteria)
+        {
+            return GetCommonSettingForEdit(
+                criteria,
+                (reader, ptAndComSetting) =>
+                {
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
                         M2 = reader.To<float>("v162mpositiontaking_1101"),
@@ -216,6 +208,15 @@
                         NewPresetOnMember = 0,
                         UpdateAllMembers = false
                     };
+
+                    ptAndComSetting[1] = new Commission
+                    {
+                        Value = reader.ToFloat("v162discount_1101"),
+                        Upline = new Commission
+                        {
+                            Value = reader.ToFloat("v162discount_1101_max")
+                        }
+                    };
                 });
         }
 
@@ -223,14 +224,21 @@
         /// Gets the setting for edit member.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForEditMember(ICriteria criteria)
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
                 (reader, ptAndComSetting) =>
                 {
-                    ptAndComSetting.Commission = new Commission
+                    ptAndComSetting[0] = new PositionTaking
+                    {
+                        A1 = reader.To<float>("v162apositiontaking_1101"),
+                        A2 = reader.To<float>("v162apositiontaking_1101_max"),
+                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
+                    };
+
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162playerdiscount_1101"),
                         Upline = new Commission
@@ -239,12 +247,6 @@
                         }
                     };
 
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        A1 = reader.To<float>("v162apositiontaking_1101"),
-                        A2 = reader.To<float>("v162apositiontaking_1101_max"),
-                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
-                    };
                 });
         }
 
@@ -252,14 +254,14 @@
         /// Gets the setting for super edit member.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForSuperEditMember(ICriteria criteria)
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForSuperEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
                 (reader, ptAndComSetting) =>
                 {
-                    ptAndComSetting.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         S1 = reader.To<float>("v162spositiontaking_1101"),
                         S1Max = reader.To<float>("v162spositiontaking_1101_max"),
@@ -278,14 +280,14 @@
         /// Gets the setting for master edit member.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PTComSetting GetSettingForMasterEditMember(ICriteria criteria)
+        /// <returns>Position taking and Commission model.</returns>
+        public object[] GetSettingForMasterEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
                 (reader, ptAndComSetting) =>
                 {
-                    ptAndComSetting.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
                         M1 = reader.To<float>("v162mpositiontaking_1101"),
