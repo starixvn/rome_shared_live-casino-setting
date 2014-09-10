@@ -1,19 +1,19 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
-    using System;
-    using Fanex.Common;
 
     /// <summary>
     /// Game setting service class.
@@ -173,7 +173,7 @@
         {
             if (settingContext.IsEdittingSuper)
             {
-                return new CommandResult { Code = ErrCode.InvalidCustomer, Message = LiveCasinoLang.InvalidCustomer };
+                return new CommandResultDTO { Code = ErrCode.InvalidCustomer, Message = LiveCasinoLang.InvalidCustomer };
             }
 
             var criteria = new InsertAutoAccountCriteria
@@ -294,11 +294,11 @@
                 Language = settingContext.Language
             };
 
-            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
             if (updateResult.IsSuccessful)
             {
-                updateResult = new CommandResult
+                updateResult = new CommandResultDTO
                 {
                     Code = 0,
                     Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
@@ -321,7 +321,7 @@
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResults UpdateManual(SettingContext settingContext, Customer customer, List<GameType> gameTypes)
+        public ICommandResultsDTO UpdateManual(SettingContext settingContext, Customer customer, List<GameType> gameTypes)
         {
             var gameTypeOlds = new List<GameType>();
             var gameTypeNews = CloneGameTypes(gameTypes);
@@ -366,7 +366,7 @@
                 gameTypeOlds = GetGameSettingByCustomerId(settingContext.TargetCustId);
             }
 
-            ICommandResults resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypeNews, settingContext.Language);
+            ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(settingContext.TargetCustId, settingContext.TargetRoleId, gameTypeNews, settingContext.Language);
             WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
 
             return resultUpdateStakeLevels;
@@ -378,15 +378,15 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Multiple result command.</returns>
-        public IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
+        public IMultipleCommandResultsDTO UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes)
         {
-            var results = new MultipleCommandResults();
+            var results = new MultipleCommandResultsDTO();
             List<Customer> custInfos = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var updateResult = (CommandResults)UpdateManual(settingContext, custInfo, gameTypes);
+                var updateResult = (CommandResultsDTO)UpdateManual(settingContext, custInfo, gameTypes);
 
                 updateResult.Id = custInfo.CustId;
                 updateResult.Name = custInfo.UserName;
@@ -415,7 +415,7 @@
                 SyncLiveCS = isSynced
             };
 
-            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -437,7 +437,7 @@
             if (resultInsertAccount.IsSuccessful)
             {
                 _logService.LogManualInsertAccount(settingContext);
-                var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSynced: true);
+                var syncResult = (CommandResultDTO)UpdateSyncLiveCasino(settingContext, isSynced: true);
                 var disableLiveCasino = false;
 
                 if (!settingContext.IsEdittingSuper)
@@ -466,7 +466,7 @@
             SettingContext settingContext,
             List<GameType> gameTypes,
             List<GameType> gameTypeOlds,
-            ICommandResults resultUpdateStakeLevels)
+            ICommandResultsDTO resultUpdateStakeLevels)
         {
             if (resultUpdateStakeLevels.IsSuccessful)
             {
@@ -474,7 +474,7 @@
 
                 foreach (var itemResult in successResultUpdateStakeLevel)
                 {
-                    var gameSettingResult = (GameSettingCommandResult)itemResult;
+                    var gameSettingResult = (GameSettingCommandResultDTO)itemResult;
 
                     var newGameType = gameTypes.Where(x => x.Id == gameSettingResult.Id).FirstOrDefault();
 
@@ -511,7 +511,7 @@
                 CustSite = settingContext.SiteName
             };
 
-            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -531,9 +531,9 @@
         /// <returns>
         /// Command results update list stake level.
         /// </returns>
-        private ICommandResults UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes, string language)
+        private ICommandResultsDTO UpdateListStakeLevel(int custId, int roleId, List<GameType> gameTypes, string language)
         {
-            var results = new CommandResults();
+            var results = new CommandResultsDTO();
 
             if (gameTypes != null && gameTypes.Any())
             {
@@ -567,9 +567,9 @@
                 StakeLevelList = gameType.CheckedStakeLevelId
             };
 
-            var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
-            var gameSettingResult = new GameSettingCommandResult(updateResult);
+            var gameSettingResult = new GameSettingCommandResultDTO(updateResult);
 
             if (gameSettingResult.IsSuccessful)
             {

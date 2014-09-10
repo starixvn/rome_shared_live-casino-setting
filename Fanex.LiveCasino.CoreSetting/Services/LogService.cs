@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
@@ -124,7 +124,7 @@
 
             try
             {
-                var updateResult = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+                var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
                 return updateResult;
             }

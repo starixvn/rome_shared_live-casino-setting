@@ -3,7 +3,7 @@
 ////    using System.Collections.Generic;
 ////    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
 ////    using Fanex.LiveCasino.CoreSetting.DTO;
-////    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+////    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
 ////    using Fanex.LiveCasino.CoreSetting.Enumerations;
 ////    using Fanex.LiveCasino.CoreSetting.Models;
 ////    using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -50,7 +50,7 @@
 ////            };
 ////            var positionTakingAndCommissionSettingService = new PTComSettingService(new SettingRepository(), Substitute.For<CommonUtil>());
 
-////            var positionTakingAndCommSetting = positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.IsNull(positionTakingAndCommSetting);
@@ -81,7 +81,7 @@
 ////        ////    };
 ////        ////    positionTakingAndCommissionSettingService.SetSuperPtAndComForEdit(Arg.Any<GetSettingForEditSuperCriteria>()).Returns(superPtAndComSetting);
 ////        ////    //// Act
-////        ////    var positionTakingAndCommSetting = _pTComSettingService.SetPtAndComSetting(settingContext);
+////        ////    var positionTakingAndCommSetting = _pTComSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////        ////    //// Assert
 ////        ////    Assert.AreEqual(superPtAndComSetting, positionTakingAndCommSetting);
@@ -111,7 +111,7 @@
 ////            };
 ////            _settingRepository.GetSettingForEditMaster(Arg.Any<GetSettingForEditMasterCriteria>()).Returns(masterPtAndComSetting);
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.AreEqual(masterPtAndComSetting, positionTakingAndCommSetting);
@@ -141,7 +141,7 @@
 ////            };
 ////            _settingRepository.GetSettingForEditAgent(Arg.Any<GetSettingForEditAgentCriteria>()).Returns(agentPtAndComSetting);
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.AreEqual(agentPtAndComSetting, positionTakingAndCommSetting);
@@ -172,7 +172,7 @@
 ////            };
 ////            _settingRepository.GetSettingForEditMember(Arg.Any<GetSettingForEditMemberCriteria>()).Returns(memberPtAndComSetting);
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -204,7 +204,7 @@
 ////            _settingRepository.GetSettingForSuperEditMember(Arg.Any<GetSettingForSuperEditMemberCriteria>())
 ////                .Returns(memberPtAndComSetting);
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -236,7 +236,7 @@
 ////            _settingRepository.GetSettingForMasterEditMember(Arg.Any<GetSettingForMasterEditMemberCriteria>())
 ////                .Returns(memberPtAndComSetting);
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.AreEqual(memberPtAndComSetting, positionTakingAndCommSetting);
@@ -253,7 +253,7 @@
 ////            var memberPtAndComSetting = new PTComSetting();
 
 ////            //// Act
-////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetPtAndComSetting(settingContext);
+////            var positionTakingAndCommSetting = _positionTakingAndCommissionSettingService.SetCustomerPtAndComSetting(settingContext);
 
 ////            //// Assert
 ////            Assert.IsNull(positionTakingAndCommSetting);
@@ -298,7 +298,7 @@
 ////                    Message = string.Empty
 ////                }
 ////            };
-////            var updatedResult = new CommandResult
+////            var updatedResult = new CommandResultDTO
 ////            {
 ////                Code = "1",
 ////                Message = string.Empty
@@ -343,7 +343,7 @@
 ////                    Message = "Commission: Updated successfully."
 ////                }
 ////            };
-////            var updatedResult = new CommandResult
+////            var updatedResult = new CommandResultDTO
 ////            {
 ////                Code = "-101",
 ////                Message = string.Empty
@@ -389,7 +389,7 @@
 ////            };
 ////            var multipleResults = GetDummyMultipleCommand(custInfoList);
 
-////            _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(new CommandResult
+////            _settingRepository.InsertOrUpdate(Arg.Any<ICriteria>()).Returns(new CommandResultDTO
 ////            {
 ////                Code = "1",
 ////                Message = string.Empty
@@ -464,7 +464,7 @@
 ////                        Name = custInfoList[0].UserName,
 ////                        Results = new List<ICommandResult>
 ////                        {
-////                            new CommandResult
+////                            new CommandResultDTO
 ////                            {
 ////                                Code = "1",
 ////                                Message = string.Empty
@@ -477,7 +477,7 @@
 ////                        Name = custInfoList[1].UserName,
 ////                        Results = new List<ICommandResult>
 ////                        {
-////                            new CommandResult
+////                            new CommandResultDTO
 ////                            {
 ////                                Code = "1",
 ////                                Message = string.Empty

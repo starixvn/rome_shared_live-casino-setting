@@ -4,7 +4,7 @@
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
@@ -35,14 +35,14 @@
         /// </summary>
         /// <param name="custId">The customer identifier.</param>
         /// <returns>Current member win limit.</returns>
-        public CurrentMemberWin GetCurrentWinLimit(int custId)
+        public CurrentMemberWinDTO GetCurrentWinLimit(int custId)
         {
             var criteria = new GetCustomerWinLimitCriteria
             {
                 CustId = custId
             };
 
-            var currentWinLimit = (CurrentMemberWin)_settingRepository.GetCurrentMemberWin(criteria);
+            var currentWinLimit = (CurrentMemberWinDTO)_settingRepository.GetCurrentMemberWin(criteria);
 
             return currentWinLimit;
         }
@@ -53,7 +53,7 @@
         /// <param name="settingContext">Setting context information.</param>
         /// <param name="memberWinLimit">Member win limit information.</param>
         /// <returns>Result after updating.</returns>
-        public ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        public ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
             var criteria = new UpdateCustomerWinLimitCriteria
             {
@@ -65,9 +65,9 @@
                 Language = settingContext.Language
             };
 
-            var result = (CommandResult)_settingRepository.InsertOrUpdate(criteria);
+            var result = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
 
-            var winLimitResult = new WinLimitCommandResult(result);
+            var winLimitResult = new WinLimitCommandResultDTO(result);
 
             if (winLimitResult.IsSuccessful)
             {
@@ -78,7 +78,7 @@
                 Logger.Log.Info(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
-            var commandResults = new CommandResults();
+            var commandResults = new CommandResultsDTO();
             commandResults.Results.Add(winLimitResult);
 
             return commandResults;
@@ -90,9 +90,9 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
         /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
         {
-            var results = new MultipleCommandResults();
+            var results = new MultipleCommandResultsDTO();
             List<Customer> custInfos = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             foreach (var custInfo in custInfos)

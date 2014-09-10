@@ -1,17 +1,17 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using Fanex.Common;
 
     /// <summary>
-    /// Position taking And Commission CommandResult.
+    /// Position taking And Commission CommandResultDTO.
     /// </summary>
-    public class PtAndComCommandResult : CommandResult
+    public class PtAndComCommandResultDTO : CommandResultDTO
     {
-        public PtAndComCommandResult()
+        public PtAndComCommandResultDTO()
         {
         }
 
-        public PtAndComCommandResult(CommandResult result)
+        public PtAndComCommandResultDTO(CommandResultDTO result)
         {
             Code = result.Code;
             Message = result.Message;

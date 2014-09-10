@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,14 +6,14 @@
     /// <summary>
     /// Multiple Command Results.
     /// </summary>
-    public class MultipleCommandResults : IMultipleCommandResults
+    public class MultipleCommandResultsDTO : IMultipleCommandResultsDTO
     {
-        public MultipleCommandResults()
+        public MultipleCommandResultsDTO()
         {
-            CommandResultsList = new List<ICommandResults>();
+            CommandResultsList = new List<ICommandResultsDTO>();
         }
 
-        public List<ICommandResults> CommandResultsList { get; set; }
+        public List<ICommandResultsDTO> CommandResultsList { get; set; }
 
         public bool IsSuccessful
         {

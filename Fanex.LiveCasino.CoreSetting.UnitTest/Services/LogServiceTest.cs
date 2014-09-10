@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Models.Log;
@@ -44,7 +44,7 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogAutoInsertAccount(settingContext, gameSetting);
@@ -68,7 +68,7 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogAutoInsertAccount(settingContext, gameSetting);
@@ -87,7 +87,7 @@
             var settingContext = Substitute.For<SettingContext>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogInsertFromExistingAccount(settingContext, gameSetting);
@@ -111,7 +111,7 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogInsertFromExistingAccount(settingContext, gameSetting);
@@ -129,7 +129,7 @@
             // Arrange
             var settingContext = Substitute.For<SettingContext>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogManualInsertAccount(settingContext);
@@ -153,7 +153,7 @@
             var settingContext = Substitute.For<SettingContext>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogManualInsertAccount(settingContext);
@@ -173,7 +173,7 @@
             GameType oldGameType = null;
             var newGameType = Substitute.For<GameType>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType);
@@ -196,7 +196,7 @@
             oldGameType.BettingLimit = new List<StakeLevel>() { new StakeLevel { Id = 1, IsChecked = true, Range = "1-1000" } };
             newGameType.BettingLimit = new List<StakeLevel>() { new StakeLevel { Id = 1, IsChecked = true, Range = "1-1000" } };
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType);
@@ -222,7 +222,7 @@
             var newGameType = Substitute.For<GameType>();
 
             settingContext.TargetRoleId = targetRoleId;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResult());
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertLogUserRunSPCriteria>()).Returns(new CommandResultDTO());
 
             // Action
             _logService.LogManualUpdateStakeLevel(settingContext, oldGameType, newGameType);

@@ -7,7 +7,7 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
@@ -28,7 +28,7 @@
             {
                 try
                 {
-                    var result = new CommandResult();
+                    var result = new CommandResultDTO();
 
                     using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
@@ -50,7 +50,7 @@
                 }
             }
 
-            return new CommandResult { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
+            return new CommandResultDTO { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
         }
 
         /// <summary>
@@ -96,9 +96,9 @@
         /// </summary>
         /// <param name="outParameters">The out parameters.</param>
         /// <returns>Error code and error message.</returns>
-        protected CommandResult GetCommandResult(Hashtable outParameters)
+        protected CommandResultDTO GetCommandResult(Hashtable outParameters)
         {
-            var result = new CommandResult();
+            var result = new CommandResultDTO();
 
             if (outParameters != null)
             {

@@ -5,7 +5,7 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
@@ -36,7 +36,7 @@
         {
             // Arrange
             var custId = 1;
-            var expectedCurrentMemberWin = new CurrentMemberWin
+            var expectedCurrentMemberWin = new CurrentMemberWinDTO
             {
                 Balance = 1,
                 MaxWinCredit = 1,
@@ -68,7 +68,7 @@
 
             settingContext.TargetCustId = custId;
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateCustomerWinLimitCriteria>(x => !x.IsValid()))
-                              .Returns(new CommandResult { Code = ErrCode.InvalidCriteria });
+                              .Returns(new CommandResultDTO { Code = ErrCode.InvalidCriteria });
 
             // Action
             var actualCommand = _winLimitSettingService.UpdateWinLimit(settingContext, memberWinLimit);
@@ -90,7 +90,7 @@
 
             settingContext.TargetCustId = custId;
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateCustomerWinLimitCriteria>(x => x.IsValid()))
-                              .Returns(new CommandResult { Code = 0 });
+                              .Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualCommand = _winLimitSettingService.UpdateWinLimit(settingContext, memberWinLimit);
@@ -114,7 +114,7 @@
             memberWinLimit.Upline = new MemberWinLimit();
 
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateCustomerWinLimitCriteria>(x => x.IsValid()))
-                             .Returns(new CommandResult { Code = 0 });
+                             .Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateCommand = _winLimitSettingService.UpdateWinLimitMultiple(settingContext, memberWinLimit);
@@ -126,7 +126,7 @@
             Assert.AreEqual(3, updateCommand.CommandResultsList[2].Id);
         }
 
-        private void AssertCurrentWinLimit(CurrentMemberWin expectedValue, CurrentMemberWin actualValue)
+        private void AssertCurrentWinLimit(CurrentMemberWinDTO expectedValue, CurrentMemberWinDTO actualValue)
         {
             Assert.AreEqual(expectedValue.Balance, actualValue.Balance);
             Assert.AreEqual(expectedValue.MaxWinCredit, actualValue.MaxWinCredit);
@@ -134,9 +134,9 @@
             Assert.AreEqual(expectedValue.MaxWinLiveCasino, actualValue.MaxWinLiveCasino);
         }
 
-        private CurrentMemberWin CloneCurrentMemberWin(CurrentMemberWin currentMemberWin)
+        private CurrentMemberWinDTO CloneCurrentMemberWin(CurrentMemberWinDTO currentMemberWin)
         {
-            var result = new CurrentMemberWin();
+            var result = new CurrentMemberWinDTO();
 
             result.Balance = currentMemberWin.Balance;
             result.MaxWinCredit = currentMemberWin.MaxWinCredit;

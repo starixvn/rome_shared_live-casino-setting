@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
@@ -9,10 +9,10 @@
     /// </summary>
     public interface IWinLimitSettingService
     {
-        CurrentMemberWin GetCurrentWinLimit(int custId);
+        CurrentMemberWinDTO GetCurrentWinLimit(int custId);
 
-        ICommandResults UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
+        ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
 
-        IMultipleCommandResults UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit);
+        IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit);
     }
 }

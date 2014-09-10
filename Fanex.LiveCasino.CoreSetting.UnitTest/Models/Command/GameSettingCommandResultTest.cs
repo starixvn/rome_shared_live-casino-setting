@@ -1,6 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Command
 {
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using NUnit.Framework;
 
     /// <summary>
@@ -16,7 +16,7 @@
         public void GameSettingCommandResult_CommandResult_ReturnInstance()
         {
             // Arrange
-            var command = new GameSettingCommandResult(new CommandResult
+            var command = new GameSettingCommandResultDTO(new CommandResultDTO
             {
                 Code = 1,
                 Message = string.Empty
@@ -51,9 +51,9 @@
             Assert.IsTrue(command.IsSuccessful);
         }
 
-        private GameSettingCommandResult CreateInstance()
+        private GameSettingCommandResultDTO CreateInstance()
         {
-            return new GameSettingCommandResult();
+            return new GameSettingCommandResultDTO();
         }
     }
 }

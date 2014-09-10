@@ -4,7 +4,7 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -388,7 +388,7 @@
             ICommandResult actualCommandResult = _gameSettingService.InsertAutoAccount(settingContext);
 
             // Assert
-            var expectedCommandResult = new CommandResult
+            var expectedCommandResult = new CommandResultDTO
             {
                 Code = ErrCode.InvalidCustomer,
                 Message = LiveCasinoLang.InvalidCustomer
@@ -424,14 +424,14 @@
                                   {
                                       new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() }
                                   };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 1 });
             _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());
 
             // Action
@@ -461,7 +461,7 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
@@ -469,7 +469,7 @@
             _settingRepository.GetGameSetting(Arg.Is<GetGameSettingByCustomerIdCriteria>(x => x.CustId == 1), hasCheckedColumn: true)
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 1 });
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -500,7 +500,7 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
@@ -511,7 +511,7 @@
             _settingRepository.GetGameSetting(Arg.Is<GetGameSettingByExchangeCriteria>(x => x.ExchangeId == 1), hasCheckedColumn: false)
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 0 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -535,13 +535,13 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -568,14 +568,14 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -602,14 +602,14 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertAutoAccount(settingContext);
@@ -633,7 +633,7 @@
                               .Returns(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = "E0001",
                                       Message = "CustID is null"
@@ -661,7 +661,7 @@
                              .ReturnsForAnyArgs(x =>
                              {
                                  x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                 return new GameSettingCommandResult
+                                 return new GameSettingCommandResultDTO
                                  {
                                      Code = "1"
                                  };
@@ -701,14 +701,14 @@
                                   {
                                       new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() }
                                   };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 1 });
             _logService.LogAutoInsertAccount(new SettingContext(), new List<GameType>());
 
             // Action
@@ -738,7 +738,7 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
@@ -746,7 +746,7 @@
             _settingRepository.GetGameSetting(Arg.Is<GetGameSettingByCustomerIdCriteria>(x => x.CustId == 1), hasCheckedColumn: true)
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(new UpdateSyncLiveCasinoCriteria())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 1 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 1 });
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -777,7 +777,7 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
@@ -788,7 +788,7 @@
             _settingRepository.GetGameSetting(Arg.Is<GetGameSettingByExchangeCriteria>(x => x.ExchangeId == 1), hasCheckedColumn: false)
                               .Returns(new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } });
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
-                              .ReturnsForAnyArgs(new CommandResult { Code = 0 });
+                              .ReturnsForAnyArgs(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -812,13 +812,13 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -845,14 +845,14 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -879,14 +879,14 @@
                               .ReturnsForAnyArgs(x =>
                               {
                                   x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = string.Empty
                                   };
                               });
 
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var actualValue = _gameSettingService.InsertFromExistingAccount(settingContext);
@@ -910,7 +910,7 @@
                               .Returns(x =>
                               {
                                   x[1] = new List<GameType>();
-                                  return new GameSettingCommandResult
+                                  return new GameSettingCommandResultDTO
                                   {
                                       Code = "E0001",
                                       Message = "CustID is null"
@@ -938,7 +938,7 @@
                              .ReturnsForAnyArgs(x =>
                              {
                                  x[1] = new List<GameType>() { new GameType { Id = 1, BetTypeId = 1, BettingLimit = new List<StakeLevel>() } };
-                                 return new GameSettingCommandResult
+                                 return new GameSettingCommandResultDTO
                                  {
                                      Code = "1"
                                  };
@@ -962,7 +962,7 @@
             settingContext.TargetCustId = 1;
 
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateLiveCasinoStatusCriteria>(x => x.IsValid()))
-                              .Returns(new CommandResult { Code = 0 });
+                              .Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateResult = _gameSettingService.UpdateLiveCasinoStatus(settingContext, Arg.Any<bool>());
@@ -982,7 +982,7 @@
             settingContext.TargetCustId = -1;
 
             _settingRepository.InsertOrUpdate(Arg.Is<UpdateLiveCasinoStatusCriteria>(x => !x.IsValid()))
-                              .Returns(new CommandResult { Code = ErrCode.InvalidCriteria });
+                              .Returns(new CommandResultDTO { Code = ErrCode.InvalidCriteria });
 
             // Action
             var updateResult = _gameSettingService.UpdateLiveCasinoStatus(settingContext, Arg.Any<bool>());
@@ -1023,7 +1023,7 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1043,7 +1043,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1063,7 +1063,7 @@
             var custInfo = Substitute.For<Customer>();
             var gameSetting = Substitute.For<List<GameType>>();
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1085,8 +1085,8 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1108,10 +1108,10 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1134,10 +1134,10 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 1 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 1 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1160,10 +1160,10 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
 
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateCommand = _gameSettingService.UpdateManual(settingContext, custInfo, gameSetting);
@@ -1186,10 +1186,10 @@
 
             settingContext.TargetRoleId = (int)CustomerRole.Member;
             settingContext.DirectUplineId = 1;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>()).Returns(new Customer());
 
             // Action
@@ -1212,10 +1212,10 @@
             var gameSetting = Substitute.For<List<GameType>>();
 
             settingContext.TargetRoleId = (int)CustomerRole.Super;
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResult { Code = 0 });
-            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResult { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<InsertManualAccountCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>()).Returns(new CommandResultDTO { Code = 0 });
+            _settingRepository.InsertOrUpdate(Arg.Any<UpdateLiveCasinoStatusCriteria>()).Returns(new CommandResultDTO { Code = 0 });
             _settingRepository.GetCustomerInfo(Arg.Any<GetCustomerInfoCriteria>()).Returns(new Customer());
 
             // Action
@@ -1235,7 +1235,7 @@
             var settingContext = Substitute.For<SettingContext>();
 
             _settingRepository.InsertOrUpdate(Arg.Any<UpdateSyncLiveCasinoCriteria>())
-                              .Returns(new CommandResult { Code = 0 });
+                              .Returns(new CommandResultDTO { Code = 0 });
 
             // Action
             var updateResult = _gameSettingService.UpdateSyncLiveCasino(settingContext, Arg.Any<bool>());

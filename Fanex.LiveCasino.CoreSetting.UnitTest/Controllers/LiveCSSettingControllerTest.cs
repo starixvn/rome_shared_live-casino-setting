@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Controllers;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
@@ -140,7 +140,7 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {
-        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                       Results = new List<ICommandResult>() { new CommandResultDTO { Code = 1 } }
         ////                   });
 
         ////    // Action
@@ -165,7 +165,7 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {
-        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                       Results = new List<ICommandResult>() { new CommandResultDTO { Code = 1 } }
         ////                   });
 
         ////    // Action
@@ -190,7 +190,7 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {
-        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 1 } }
+        ////                       Results = new List<ICommandResult>() { new CommandResultDTO { Code = 1 } }
         ////                   });
 
         ////    // Action
@@ -215,17 +215,17 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                 .Returns(new CommandResults
         ////                 {
-        ////                     Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                     Results = new List<ICommandResult>() { new CommandResultDTO { Code = 0 } }
         ////                 });
         ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
         ////                    .Returns(new CommandResults
         ////                    {
-        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                        Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                    });
         ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
         ////                       .Returns(new CommandResults
         ////                       {
-        ////                           Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                           Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                       });
 
         ////    // Action
@@ -250,17 +250,17 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {
-        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                       Results = new List<ICommandResult>() { new CommandResultDTO { Code = 0 } }
         ////                   });
         ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
         ////                    .Returns(new CommandResults
         ////                    {
-        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                        Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                    });
         ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
         ////                       .Returns(new CommandResults
         ////                        {
-        ////                            Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                            Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                        });
 
         ////    // Action
@@ -288,17 +288,17 @@
         ////    _positionTakingAndCommissionSettingService.UpdatePtComSetting(Arg.Any<SettingContext>(), Arg.Any<PTComSetting>())
         ////                   .Returns(new CommandResults
         ////                   {
-        ////                       Results = new List<ICommandResult>() { new CommandResult { Code = 0 } }
+        ////                       Results = new List<ICommandResult>() { new CommandResultDTO { Code = 0 } }
         ////                   });
         ////    _winLimitSettingService.UpdateWinLimit(Arg.Any<SettingContext>(), Arg.Any<MemberWinLimit>())
         ////                    .Returns(new CommandResults
         ////                    {
-        ////                        Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                        Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                    });
         ////    _gameSettingService.UpdateManual(Arg.Any<SettingContext>(), Arg.Any<Customer>(), Arg.Any<List<GameType>>())
         ////                       .Returns(new CommandResults
         ////                       {
-        ////                           Results = new List<ICommandResult>() { new CommandResult { Code = string.Empty } }
+        ////                           Results = new List<ICommandResult>() { new CommandResultDTO { Code = string.Empty } }
         ////                       });
 
         ////    // Action

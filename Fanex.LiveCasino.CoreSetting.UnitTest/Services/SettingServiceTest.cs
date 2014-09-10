@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -129,32 +129,32 @@
         /// </summary>
         /// <param name="custInfoList">Customer information list for get results.</param>
         /// <returns>Multiple command results from multiple customer.</returns>
-        private IMultipleCommandResults GetDummyMultipleCommand(List<Customer> custInfoList)
+        private IMultipleCommandResultsDTO GetDummyMultipleCommand(List<Customer> custInfoList)
         {
-            return new MultipleCommandResults
+            return new MultipleCommandResultsDTO
             {
-                CommandResultsList = new List<ICommandResults>
+                CommandResultsList = new List<ICommandResultsDTO>
                 {
-                    new CommandResults
+                    new CommandResultsDTO
                     {
                         Id = custInfoList[0].CustId,
                         Name = custInfoList[0].UserName,
                         Results = new List<ICommandResult>
                         {
-                            new CommandResult
+                            new CommandResultDTO
                             {
                                 Code = "1",
                                 Message = string.Empty
                             }
                         }
                     },
-                    new CommandResults
+                    new CommandResultsDTO
                     {
                         Id = custInfoList[1].CustId,
                         Name = custInfoList[1].UserName,
                         Results = new List<ICommandResult>
                         {
-                            new CommandResult
+                            new CommandResultDTO
                             {
                                 Code = "1",
                                 Message = string.Empty

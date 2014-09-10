@@ -1,8 +1,8 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models
 {
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using System.Web;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Setting Context.

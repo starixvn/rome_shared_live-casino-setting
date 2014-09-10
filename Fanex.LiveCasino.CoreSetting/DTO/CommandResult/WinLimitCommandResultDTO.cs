@@ -1,17 +1,17 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using System;
 
     /// <summary>
     /// Win limit command result class.
     /// </summary>
-    public class WinLimitCommandResult : CommandResult
+    public class WinLimitCommandResultDTO : CommandResultDTO
     {
-        public WinLimitCommandResult()
+        public WinLimitCommandResultDTO()
         {
         }
 
-        public WinLimitCommandResult(CommandResult result)
+        public WinLimitCommandResultDTO(CommandResultDTO result)
         {
             Code = result.Code;
             Message = result.Message;

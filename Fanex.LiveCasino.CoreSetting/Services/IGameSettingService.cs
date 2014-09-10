@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
 
@@ -23,9 +23,9 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResults UpdateManual(SettingContext settingContext, Customer custInfo, List<GameType> gameTypes);
+        ICommandResultsDTO UpdateManual(SettingContext settingContext, Customer custInfo, List<GameType> gameTypes);
 
-        IMultipleCommandResults UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
+        IMultipleCommandResultsDTO UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSynced);
     }

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Command
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.NAP.Framework.Data;
     using NUnit.Framework;
 
@@ -35,8 +35,8 @@
 
             command.Results = new List<ICommandResult>()
             {
-                new CommandResult { Code = 1 },
-                new CommandResult { Code = 0 }
+                new CommandResultDTO { Code = 1 },
+                new CommandResultDTO { Code = 0 }
             };
 
             // Assert
@@ -54,17 +54,17 @@
 
             command.Results = new List<ICommandResult>()
             {
-                new CommandResult { Code = 0 },
-                new CommandResult { Code = 0 }
+                new CommandResultDTO { Code = 0 },
+                new CommandResultDTO { Code = 0 }
             };
 
             // Assert
             Assert.IsTrue(command.IsSuccessful);
         }
 
-        private CommandResults CreateInstance()
+        private CommandResultsDTO CreateInstance()
         {
-            return new CommandResults();
+            return new CommandResultsDTO();
         }
     }
 }

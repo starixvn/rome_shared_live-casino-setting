@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,9 +7,9 @@
     /// <summary>
     /// Class contain list command results.
     /// </summary>
-    public class CommandResults : ICommandResults
+    public class CommandResultsDTO : ICommandResultsDTO
     {
-        public CommandResults()
+        public CommandResultsDTO()
         {
             Results = new List<ICommandResult>();
         }

@@ -1,9 +1,9 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Data;
 
-    public interface ICommandResults
+    public interface ICommandResultsDTO
     {
         List<ICommandResult> Results { get; set; }
 

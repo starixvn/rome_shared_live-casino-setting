@@ -3,7 +3,7 @@
     /// <summary>
     /// Current member win limit.
     /// </summary>
-    public class CurrentMemberWin
+    public class CurrentMemberWinDTO
     {
         public float Balance { get; set; }
 

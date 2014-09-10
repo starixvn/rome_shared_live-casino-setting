@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Command
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.NAP.Framework.Data;
     using NUnit.Framework;
 
@@ -30,22 +30,22 @@
             // Arrange
             var command = CreateInstance();
 
-            command.CommandResultsList = new List<ICommandResults>()
+            command.CommandResultsList = new List<ICommandResultsDTO>()
             {
-                new CommandResults
+                new CommandResultsDTO
                 {
                     Results = new List<ICommandResult>
                     {
-                        new CommandResult { Code = 1 },
-                        new CommandResult { Code = 0 }
+                        new CommandResultDTO { Code = 1 },
+                        new CommandResultDTO { Code = 0 }
                     }
                 },
-                new CommandResults
+                new CommandResultsDTO
                 {
                     Results = new List<ICommandResult>
                     {
-                        new CommandResult { Code = 0 },
-                        new CommandResult { Code = 0 }
+                        new CommandResultDTO { Code = 0 },
+                        new CommandResultDTO { Code = 0 }
                     }
                 }
             };
@@ -63,22 +63,22 @@
             // Arrange
             var command = CreateInstance();
 
-            command.CommandResultsList = new List<ICommandResults>()
+            command.CommandResultsList = new List<ICommandResultsDTO>()
             {
-                new CommandResults
+                new CommandResultsDTO
                 {
                     Results = new List<ICommandResult>
                     {
-                        new CommandResult { Code = 0 },
-                        new CommandResult { Code = 0 }
+                        new CommandResultDTO { Code = 0 },
+                        new CommandResultDTO { Code = 0 }
                     }
                 },
-                new CommandResults
+                new CommandResultsDTO
                 {
                     Results = new List<ICommandResult>
                     {
-                        new CommandResult { Code = 0 },
-                        new CommandResult { Code = 0 }
+                        new CommandResultDTO { Code = 0 },
+                        new CommandResultDTO { Code = 0 }
                     }
                 }
             };
@@ -87,9 +87,9 @@
             Assert.IsTrue(command.IsSuccessful);
         }
 
-        private MultipleCommandResults CreateInstance()
+        private MultipleCommandResultsDTO CreateInstance()
         {
-            return new MultipleCommandResults();
+            return new MultipleCommandResultsDTO();
         }
     }
 }

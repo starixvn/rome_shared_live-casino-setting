@@ -7,9 +7,8 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Configuration;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
@@ -85,11 +84,11 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Current member win limit.</returns>
-        public CurrentMemberWin GetCurrentMemberWin(ICriteria criteria)
+        public CurrentMemberWinDTO GetCurrentMemberWin(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
-                var currentMemberWin = new CurrentMemberWin();
+                var currentMemberWin = new CurrentMemberWinDTO();
 
                 try
                 {
@@ -118,7 +117,7 @@
                 }
             }
 
-            return new CurrentMemberWin();
+            return new CurrentMemberWinDTO();
         }
 
         /// <summary>
@@ -147,7 +146,6 @@
                             Value = reader.ToFloat("v162sdicount_1101_max")
                         }
                     };
-
                 });
         }
 
@@ -246,7 +244,6 @@
                             Value = reader.ToFloat("v162playerdiscount_1101_max")
                         }
                     };
-
                 });
         }
 
@@ -373,7 +370,7 @@
             {
                 try
                 {
-                    var result = new GameSettingCommandResult();
+                    var result = new GameSettingCommandResultDTO();
                     GameType current = null;
                     using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
@@ -403,7 +400,7 @@
                         }
 
                         var outParameters = objDb.GetOuputParams();
-                        result = new GameSettingCommandResult(GetCommandResult(outParameters));
+                        result = new GameSettingCommandResultDTO(GetCommandResult(outParameters));
                     }
 
                     if (!result.IsSuccessful)
@@ -420,7 +417,7 @@
                 }
             }
 
-            return new GameSettingCommandResult();
+            return new GameSettingCommandResultDTO();
         }
     }
 }

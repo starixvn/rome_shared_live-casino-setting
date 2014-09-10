@@ -6,7 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
@@ -160,7 +160,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, Customer customer, int updateType = (int)UpdateType.AllSetting)
         {
-            IMultipleCommandResults updateResult = new MultipleCommandResults();
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {
@@ -184,7 +184,7 @@
         [HttpGet, LiveCasinoAuthorization]
         public ActionResult GetCurrentWinLimit(int custId)
         {
-            CurrentMemberWin currentMemberWinLimit = _winLimitSettingService.GetCurrentWinLimit(custId);
+            CurrentMemberWinDTO currentMemberWinLimit = _winLimitSettingService.GetCurrentWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
@@ -198,7 +198,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
         {
-            IMultipleCommandResults updateResult = new MultipleCommandResults();
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {
@@ -227,7 +227,7 @@
         {
             var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
 
-            IMultipleCommandResults updateResult = new MultipleCommandResults();
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {
@@ -249,13 +249,14 @@
         /// Update position taking and Commission setting.
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
-        /// <param name="ptComSetting">Position taking and Commission setting for updating.</param>
+        /// <param name="commission">Commission setting for updating.</param>
+        /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public JsonResult UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
         {
-            IMultipleCommandResults updateResult = new MultipleCommandResults();
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {

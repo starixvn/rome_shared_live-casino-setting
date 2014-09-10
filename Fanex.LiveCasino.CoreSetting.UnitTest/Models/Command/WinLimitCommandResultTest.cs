@@ -1,6 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.UnitTest.Models.Command
 {
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using NUnit.Framework;
 
     /// <summary>
@@ -16,7 +16,7 @@
         public void WinLimitCommandResult_CommandResult_ReturnInstance()
         {
             // Arrange
-            var command = new WinLimitCommandResult(new CommandResult
+            var command = new WinLimitCommandResultDTO(new CommandResultDTO
             {
                 Code = 1,
                 Message = string.Empty
@@ -50,9 +50,9 @@
             Assert.IsTrue(command.IsSuccessful);
         }
 
-        private WinLimitCommandResult CreateInstance()
+        private WinLimitCommandResultDTO CreateInstance()
         {
-            return new WinLimitCommandResult();
+            return new WinLimitCommandResultDTO();
         }
     }
 }

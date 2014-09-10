@@ -6,7 +6,7 @@
     using System.Linq;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Constant;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
@@ -44,7 +44,7 @@
         public Customer GetCustomer(SettingContext settingContext)
         {
             Customer customer = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-            _pTComSettingService.SetPtAndComSetting(settingContext, customer);
+            _pTComSettingService.SetCustomerPtAndComSetting(settingContext, customer);
             customer.GameSetting = _gameSettingService.GetGameSetting(settingContext, customer);
 
             return customer;
@@ -104,9 +104,9 @@
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
-        public ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer)
+        public ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer)
         {
-            ICommandResults resultList = new CommandResults();
+            ICommandResultsDTO resultList = new CommandResultsDTO();
 
             if (settingContext.IsAgentEditingMember
                 && customer.IsSyncLiveCasino
@@ -129,7 +129,7 @@
             }
             else
             {
-                resultList.Results.Add(new CommandResult
+                resultList.Results.Add(new CommandResultDTO
                 {
                     Code = ErrCode.UpdateGameSettingFail,
                     Message = string.Format("{0}: {1}", LiveCasinoLang.lblGameSetting, LiveCasinoLang.UpdatedUnsuccessfully)
@@ -146,11 +146,11 @@
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
-        public IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType)
+        public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType)
         {
             var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
-            IMultipleCommandResults mainResults = new MultipleCommandResults();
+            IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
 
             foreach (var custInfo in custInfoes)
             {
@@ -174,7 +174,7 @@
         /// <param name="customer">Customer setting.</param>
         /// <param name="updateType">Update form type.</param>
         /// <returns>Command result after updating.</returns>
-        private ICommandResults UpdateEachCustomerInMultipleEdit(SettingContext settingContext, Customer customer, int updateType)
+        private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(SettingContext settingContext, Customer customer, int updateType)
         {
             var isSync = customer.IsSyncLiveCasino;
             switch (updateType)
@@ -194,7 +194,7 @@
                 case (int)UpdateType.AllSetting:
                     return UpdateSingleCustomerAllSetting(settingContext, customer);
                 default:
-                    return new CommandResults();
+                    return new CommandResultsDTO();
             }
         }
 

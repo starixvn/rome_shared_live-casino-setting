@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.DTO;
-    using Fanex.LiveCasino.CoreSetting.DTO.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
 
@@ -11,9 +11,9 @@
     {
         int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext);
 
-        ICommandResults UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer);
+        ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer);
 
-        IMultipleCommandResults UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType);
+        IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType);
 
         Customer GetCustomer(SettingContext settingContext);
     }

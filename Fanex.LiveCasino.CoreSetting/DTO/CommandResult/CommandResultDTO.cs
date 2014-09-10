@@ -1,11 +1,11 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.DTO.Command
+﻿namespace Fanex.LiveCasino.CoreSetting.DTO.CommandResult
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Command result.
     /// </summary>
-    public class CommandResult : CommandResultBase
+    public class CommandResultDTO : CommandResultBase
     {
         public override bool IsSuccessful
         {

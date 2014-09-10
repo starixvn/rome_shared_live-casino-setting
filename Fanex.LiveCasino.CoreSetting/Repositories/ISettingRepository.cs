@@ -10,7 +10,7 @@
     {
         Customer GetCustomerInfo(ICriteria criteria);
 
-        CurrentMemberWin GetCurrentMemberWin(ICriteria criteria);
+        CurrentMemberWinDTO GetCurrentMemberWin(ICriteria criteria);
 
         object[] GetSettingForEditSuper(ICriteria criteria);
 
