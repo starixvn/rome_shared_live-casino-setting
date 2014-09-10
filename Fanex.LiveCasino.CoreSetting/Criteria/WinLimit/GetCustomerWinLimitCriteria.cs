@@ -7,7 +7,7 @@
     /// Setting key : Acc_CustomerSelWinLimitLiveCS.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    public class GetCustomerWinLimitCriteria : CriteriaBase
+    internal class GetCustomerWinLimitCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

@@ -5,7 +5,7 @@
     /// <summary>
     /// Get customer information criteria.
     /// </summary>
-    public class GetCustomerInfoCriteria : CriteriaBase
+    internal class GetCustomerInfoCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

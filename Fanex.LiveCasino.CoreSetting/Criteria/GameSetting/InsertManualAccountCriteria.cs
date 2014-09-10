@@ -3,7 +3,7 @@
     /// <summary>
     /// Setting key : TP_User_Customer_ManualInsertAccount.
     /// </summary>
-    public class InsertManualAccountCriteria : InsertAutoAccountCriteria
+    internal class InsertManualAccountCriteria : InsertAutoAccountCriteria
     {
         public string CustSite { get; set; }
 

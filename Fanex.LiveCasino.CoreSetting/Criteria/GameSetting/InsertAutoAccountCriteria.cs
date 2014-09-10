@@ -6,7 +6,7 @@
     /// <summary>
     /// Setting key : TP_User_Customer_AutoInsertAccount.
     /// </summary>
-    public class InsertAutoAccountCriteria : CriteriaBase
+    internal class InsertAutoAccountCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

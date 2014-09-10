@@ -5,7 +5,7 @@
     /// <summary>
     /// Base get setting for editing customer.
     /// </summary>
-    public class CustomerCriteriaBase : CriteriaBase
+    internal class CustomerCriteriaBase : CriteriaBase
     {
         public int CustId { get; set; }
 

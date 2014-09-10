@@ -3,7 +3,7 @@
     /// <summary>
     /// Get setting for editing agent criteria.
     /// </summary>
-    public class GetSettingForEditAgentCriteria : CustomerCriteriaBase
+    internal class GetSettingForEditAgentCriteria : CustomerCriteriaBase
     {
         public int MRecommend { get; set; }
 

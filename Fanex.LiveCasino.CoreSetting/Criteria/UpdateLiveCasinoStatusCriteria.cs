@@ -5,7 +5,7 @@
     /// <summary>
     /// Update Live Casino Status Criteria.
     /// </summary>
-    public class UpdateLiveCasinoStatusCriteria : CriteriaBase
+    internal class UpdateLiveCasinoStatusCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

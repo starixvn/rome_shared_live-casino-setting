@@ -5,7 +5,7 @@
     /// <summary>
     /// Setting key : WriteLog_UserLog_RunSP.
     /// </summary>
-    public class InsertLogUserRunSPCriteria : CriteriaBase
+    internal class InsertLogUserRunSPCriteria : CriteriaBase
     {
         public int UserId { get; set; }
 

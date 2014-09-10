@@ -7,7 +7,7 @@
     /// Setting key : Acc_CustomerUpdSyncLiveCS_Cust.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    public class UpdateSyncLiveCasinoCriteria : CriteriaBase
+    internal class UpdateSyncLiveCasinoCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

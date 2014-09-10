@@ -6,7 +6,7 @@
     /// <summary>
     /// Update Master Setting Criteria.
     /// </summary>
-    public class UpdateMasterSettingCriteria : CustomerCriteriaBase
+    internal class UpdateMasterSettingCriteria : CustomerCriteriaBase
     {
         public int SRecommend { get; set; }
 

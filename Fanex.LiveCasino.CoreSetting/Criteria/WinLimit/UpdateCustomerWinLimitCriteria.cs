@@ -7,7 +7,7 @@
     /// Setting key : Acc_CustomerUpdLiveCS_WinLimit.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    public class UpdateCustomerWinLimitCriteria : CriteriaBase
+    internal class UpdateCustomerWinLimitCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

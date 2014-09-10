@@ -7,7 +7,7 @@
     /// Setting key : TP_Admin_StakeLevel_GetCustStakeLevelMulti.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    public class GetGameSettingByCustomerIdCriteria : CriteriaBase
+    internal class GetGameSettingByCustomerIdCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

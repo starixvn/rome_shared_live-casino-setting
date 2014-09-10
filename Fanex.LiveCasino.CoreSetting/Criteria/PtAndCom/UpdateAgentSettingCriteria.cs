@@ -6,7 +6,7 @@
     /// <summary>
     /// Update Agent Setting Criteria.
     /// </summary>
-    public class UpdateAgentSettingCriteria : CustomerCriteriaBase
+    internal class UpdateAgentSettingCriteria : CustomerCriteriaBase
     {
         public int MRecommend { get; set; }
 

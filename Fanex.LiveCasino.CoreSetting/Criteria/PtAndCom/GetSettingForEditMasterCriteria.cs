@@ -5,7 +5,7 @@
     /// <summary>
     /// Get Setting For Edit Master Criteria.
     /// </summary>
-    public class GetSettingForEditMasterCriteria : CustomerCriteriaBase
+    internal class GetSettingForEditMasterCriteria : CustomerCriteriaBase
     {
         public int SRecommend { get; set; }
 

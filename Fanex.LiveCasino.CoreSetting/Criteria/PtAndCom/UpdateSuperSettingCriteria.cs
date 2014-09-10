@@ -5,7 +5,7 @@
     /// <summary>
     /// Update Super Setting Criteria.
     /// </summary>
-    public class UpdateSuperSettingCriteria : CustomerCriteriaBase
+    internal class UpdateSuperSettingCriteria : CustomerCriteriaBase
     {
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
         public decimal S4 { get; set; }

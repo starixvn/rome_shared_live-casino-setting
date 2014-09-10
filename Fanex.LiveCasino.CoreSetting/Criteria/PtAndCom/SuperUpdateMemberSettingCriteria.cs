@@ -6,7 +6,7 @@
     /// <summary>
     /// Super Update Member Setting Criteria.
     /// </summary>
-    public class SuperUpdateMemberSettingCriteria : CustomerCriteriaBase
+    internal class SuperUpdateMemberSettingCriteria : CustomerCriteriaBase
     {
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
         public decimal S1 { get; set; }
