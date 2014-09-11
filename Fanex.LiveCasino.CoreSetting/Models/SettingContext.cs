@@ -57,55 +57,7 @@
             }
         }
 
-        public bool IsAgentEditingMember
-        {
-            get
-            {
-                return IsEdittingMember && UplineRole == CustomerLevel.Agent;
-            }
-        }
-
-        public bool IsEditDirectDownline
-        {
-            get
-            {
-                return IsEdittingSuper || (UplineRole - TargetRole) == 1;
-            }
-        }
-
         public bool IsEditMultiple { get; set; }
-
-        public bool IsEdittingAgent
-        {
-            get
-            {
-                return TargetRole == CustomerLevel.Agent;
-            }
-        }
-
-        public bool IsEdittingMaster
-        {
-            get
-            {
-                return TargetRole == CustomerLevel.Master;
-            }
-        }
-
-        public bool IsEdittingMember
-        {
-            get
-            {
-                return TargetRole == CustomerLevel.Member;
-            }
-        }
-
-        public bool IsEdittingSuper
-        {
-            get
-            {
-                return TargetRole == CustomerLevel.Super;
-            }
-        }
 
         public bool IsTargetSyncedLiveCS { get; set; }
 
@@ -142,26 +94,14 @@
         /// <summary>
         /// Gets or sets Target customer id of edited customer.
         /// </summary>
-        public int TargetCustId { get; set; }
-
-        /// <summary>
-        /// Gets or sets Target customers id for edit multiple.
-        /// </summary>
-        public string TargetCustIds { get; set; }
+        public int CustId { get; set; }
 
         /// <summary>
         /// Gets or sets Role id of edited customer.
         /// </summary>
         public CustomerLevel TargetRole { get; set; }
 
-        public string TargetSyncStatus { get; set; }
-
-        public string TargetUsername { get; set; }
-
-        /// <summary>
-        /// Gets or sets Target User.
-        /// </summary>
-        public string TargetUsernames { get; set; }
+        public string Username { get; set; }
 
         public string ToUsername { get; set; }
 

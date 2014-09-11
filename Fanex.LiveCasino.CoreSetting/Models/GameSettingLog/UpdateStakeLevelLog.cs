@@ -82,7 +82,7 @@
             var trackingValue = string.Format(
                      TrackingTemplate,
                      SpName,
-                     SettingContext.TargetCustId,
+                     SettingContext.CustId,
                      TrackingSubAccount,
                      gameType.Id,
                      gameType.BetTypeId,

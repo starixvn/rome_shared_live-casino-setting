@@ -70,8 +70,8 @@
             string trackingValue = string.Format(
                                             TrackingTemplate,
                                             SpName,
-                                            SettingContext.TargetCustId,
-                                            SettingContext.TargetUsername,
+                                            SettingContext.CustId,
+                                            SettingContext.Username,
                                             CasinoNo,
                                             SettingContext.ExchangeId,
                                             SettingContext.SuperId,

@@ -151,6 +151,7 @@
     <Compile Include="DTO\CurrentMemberWinLimitDTO.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
+    <Compile Include="Models\SettingContextMultiple.cs" />
     <Compile Include="Models\WinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
     <Compile Include="Models\SettingContext.cs" />

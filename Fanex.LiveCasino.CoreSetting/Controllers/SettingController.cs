@@ -65,7 +65,7 @@
                     UplineId = uplineId,
                     DirectUplineId = directUplineId,
                     UplineRole = (CustomerLevel)uplineRoleId,
-                    TargetCustId = targetCustId,
+                    CustId = targetCustId,
                     TargetRole = (CustomerLevel)targetRoleId,
                     FormType = (FormType)formType,
                     AdminId = adminId,
@@ -76,7 +76,7 @@
                 };
 
             SetCustomerSettingViewModelToViewBag(settingContext);
-            
+
             return View(ViewPath.EditSettingPage, settingContext);
         }
 
@@ -111,7 +111,7 @@
             int formType = (int)FormType.Edit,
             string language = "E")
         {
-            var settingContext = new SettingContext
+            var settingContextMultiple = new SettingContextMultiple
             {
                 UplineId = uplineId,
                 DirectUplineId = directUplineId,
@@ -129,15 +129,15 @@
                 LangKey = GetLanguageKey()
             };
 
-            settingContext.TargetCustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContext);
-            if (settingContext.TargetCustId == 0)
+            settingContextMultiple.CustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
+            if (settingContextMultiple.CustId == 0)
             {
                 return View(ViewPath.NoInformationPage);
             }
 
-            SetCustomerSettingViewModelToViewBag(settingContext);
+            SetCustomerSettingViewModelToViewBag(settingContextMultiple);
 
-            return View(ViewPath.EditSettingPage, settingContext);
+            return View(ViewPath.EditSettingPage, settingContextMultiple);
         }
 
         /// <summary>
@@ -157,14 +157,22 @@
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            if (settingContext.IsEditMultiple)
-            {
-                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember, updateType);
-            }
-            else
-            {
-                updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember));
-            }
+            updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember));
+
+            return Json(updateResult);
+        }
+
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
+        public JsonResult UpdateLiveCasinoSettingMultiple(
+            SettingContextMultiple settingContextMultiple,
+            Customer customer,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            int updateType = (int)UpdateType.AllSetting)
+        {
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+
+            updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContextMultiple, customer, uplinePositionTakingOnMember, updateType);
+
 
             return Json(updateResult);
         }
@@ -195,14 +203,17 @@
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            if (settingContext.IsEditMultiple)
-            {
-                updateResult = _settingService.UpdateWinLimitMultiple(settingContext, model);
-            }
-            else
-            {
-                updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
-            }
+            updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
+
+            return Json(updateResult);
+        }
+
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
+        public ActionResult UpdateWinLimitMultiple(SettingContextMultiple settingContextMultiple, WinLimit model)
+        {
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+
+            updateResult = _settingService.UpdateWinLimitMultiple(settingContextMultiple, model);
 
             return Json(updateResult);
         }
@@ -222,14 +233,17 @@
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            if (settingContext.IsEditMultiple)
-            {
-                updateResult = _settingService.UpdateGameSettingMultiple(settingContext, gameSetting);
-            }
-            else
-            {
-                updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting));
-            }
+            updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting));
+
+            return Json(updateResult);
+        }
+
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
+        public ActionResult UpdateGameSettingMultiple(SettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
+        {
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+
+            updateResult = _settingService.UpdateGameSettingMultiple(settingContextMultiple, gameSetting);
 
             return Json(updateResult);
         }
@@ -255,14 +269,21 @@
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            if (settingContext.IsEditMultiple)
-            {
-                updateResult = _settingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
-            }
-            else
-            {
-                updateResult.CommandResultsList.Add(_settingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
-            }
+            updateResult.CommandResultsList.Add(_settingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
+
+            return Json(updateResult);
+        }
+
+        [HttpPost, LiveCasinoAuthorization(IsHost = true)]
+        public JsonResult UpdatePtComSettingMultiple(
+            SettingContextMultiple settingContextMultiple,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+        {
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+
+            updateResult = _settingService.UpdatePtComSettingMultiple(settingContextMultiple, commission, positionTaking, uplinePositionTakingOnMember);
 
             return Json(updateResult);
         }
