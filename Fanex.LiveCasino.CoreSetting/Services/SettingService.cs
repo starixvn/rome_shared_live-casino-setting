@@ -109,7 +109,8 @@
         public ICommandResultsDTO UpdateSingleCustomerAllSetting(
             SettingContext settingContext,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             ICommandResultsDTO resultList = new CommandResultsDTO();
 
@@ -120,7 +121,12 @@
                 resultList.Results.Add(UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, uplinePositionTakingOnMember);
+            var positionTakingAndCommResults = UpdatePtComSetting(
+                settingContext, 
+                customer.Commission, 
+                customer.PositionTaking,
+                isApplyPositionTakingAllMembers,
+                positionTakingOnMembers);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
             if (customer.IsSyncLiveCasino
@@ -154,8 +160,9 @@
         public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
             SettingContextMultiple settingContextMultiple,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember,
-            int updateType)
+            int updateType,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             var custInfoes = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
 
@@ -166,7 +173,7 @@
                 settingContextMultiple.CustId = custInfo.CustId;
                 settingContextMultiple.Username = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
-                var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, uplinePositionTakingOnMember);
+                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -863,25 +870,26 @@
             SettingContext settingContext,
             Customer customer,
             int updateType,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             var isSync = customer.IsSyncLiveCasino;
             switch (updateType)
             {
                 case (int)UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, uplinePositionTakingOnMember)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
+                            UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers)
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case (int)UpdateType.WinLimit:
                     return isSync ?
                             UpdateWinLimit(settingContext, customer.MemberWinLimit)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case (int)UpdateType.GameSetting:
                     return isSync ?
                             UpdateGameSetting(settingContext, customer.GameSetting)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case (int)UpdateType.AllSetting:
-                    return UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
+                    return UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 default:
                     return new CommandResultsDTO();
             }
@@ -978,7 +986,8 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(positionTaking, "positionTaking");
@@ -993,11 +1002,11 @@
                     break;
 
                 case CustomerLevel.Master:
-                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
+                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                     break;
 
                 case CustomerLevel.Agent:
-                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
+                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                     break;
 
                 case CustomerLevel.Member:
@@ -1033,7 +1042,8 @@
             SettingContextMultiple settingContextMultiple,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             Check.Argument.IsNotNull(settingContextMultiple, "settingContext");
             Check.Argument.IsNotEmpty(settingContextMultiple.TargetCustIds, "TargetCustIds");
@@ -1049,7 +1059,7 @@
             foreach (var custInfo in custInfoes)
             {
                 settingContextMultiple.CustId = custInfo.CustId;
-                var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, uplinePositionTakingOnMember);
+                var subResult = UpdatePtComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -1166,9 +1176,10 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
+            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -1178,9 +1189,10 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
+            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -1276,7 +1288,8 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             var criteria = new UpdateMasterSettingCriteria
             {
@@ -1291,9 +1304,9 @@
                 N3 = (decimal)positionTaking.N3,
                 Is3 = (bool)positionTaking.Is3,
                 Us3 = (decimal)positionTaking.Us3,
-                UpdateAllMembers = (bool)uplinePositionTakingOnMember.IsApplyNewUplinePositionTaking,
+                UpdateAllMembers = isApplyPositionTakingAllMembers,
                 S3 = (decimal)positionTaking.S3,
-                NewSuperPositionTakingOnMember = (decimal)uplinePositionTakingOnMember.NewUplinePositionTaking
+                NewSuperPositionTakingOnMember = (decimal)positionTakingOnMembers
             };
 
             if (criteria.Is3)
@@ -1320,7 +1333,8 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             var criteria = new UpdateAgentSettingCriteria
             {
@@ -1335,9 +1349,9 @@
                 N2 = (decimal)positionTaking.N2,
                 Im2 = (bool)positionTaking.Im2,
                 Um2 = (decimal)positionTaking.Um2,
-                UpdateAllMembers = (bool)uplinePositionTakingOnMember.IsApplyNewUplinePositionTaking,
+                UpdateAllMembers = (bool)isApplyPositionTakingAllMembers,
                 A2 = (decimal)positionTaking.A2,
-                NewMasterPtOnMember = (decimal)uplinePositionTakingOnMember.NewUplinePositionTaking
+                NewMasterPtOnMember = (decimal)positionTakingOnMembers
             };
 
             if (criteria.Im2)

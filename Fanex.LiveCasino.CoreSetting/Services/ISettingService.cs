@@ -14,13 +14,15 @@
 
         ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember);
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers);
 
         IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
             SettingContextMultiple settingContextMultiple,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember,
-            int updateType);
+            int updateType,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers);
 
         /// <summary>
         /// Update position taking and Commission setting, depend on setting context,
@@ -33,7 +35,8 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember);
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers);
 
         /// <summary>
         /// Update multiple Customer Position Taking and Commission.
@@ -46,7 +49,8 @@
             SettingContextMultiple settingContextMultiple,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember);
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers);
 
         Customer GetCustomer(SettingContext settingContext);
 

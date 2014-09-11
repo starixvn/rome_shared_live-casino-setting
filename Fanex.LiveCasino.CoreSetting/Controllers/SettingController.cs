@@ -152,12 +152,14 @@
         public JsonResult UpdateLiveCasinoSetting(
             SettingContext settingContext,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember));
+                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+
 
             return Json(updateResult);
         }
@@ -265,11 +267,13 @@
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            updateResult.CommandResultsList.Add(_settingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
+                updateResult = _settingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+
 
             return Json(updateResult);
         }
