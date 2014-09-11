@@ -38,11 +38,7 @@
 
         Customer GetCustomerInfo(int custId);
 
-        string GetCustomerSiteByUsername(string username);
-
-        List<GameType> GetGameSettingByCustomerId(int custId);
-
-        List<GameType> GetGameSettingByExchange(int exchangeId, string site);
+        string GetCustomerSite(string username);      
 
         List<GameType> GetGameSetting(SettingContext settingContext);
 
@@ -52,13 +48,13 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResultsDTO UpdateManual(SettingContext settingContext, List<GameType> gameTypes);
+        ICommandResultsDTO UpdateGameSetting(SettingContext settingContext, List<GameType> gameTypes);
 
-        IMultipleCommandResultsDTO UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
+        IMultipleCommandResultsDTO UpdateGameSettingMultiple(SettingContext settingContext, List<GameType> gameTypes);
 
         ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSynced);
 
-        CurrentMemberWinDTO GetCurrentWinLimit(int custId);
+        CurrentMemberWinLimitDTO GetCurrentWinLimit(int custId);
 
         ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, WinLimit memberWinLimit);
 

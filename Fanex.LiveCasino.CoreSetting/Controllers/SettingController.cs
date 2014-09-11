@@ -179,7 +179,7 @@
         [HttpGet, LiveCasinoAuthorization]
         public ActionResult GetCurrentWinLimit(int custId)
         {
-            CurrentMemberWinDTO currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
+            CurrentMemberWinLimitDTO currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
@@ -224,11 +224,11 @@
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _settingService.UpdateManualMultiple(settingContext, gameSetting);
+                updateResult = _settingService.UpdateGameSettingMultiple(settingContext, gameSetting);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_settingService.UpdateManual(settingContext, gameSetting));
+                updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting));
             }
 
             return Json(updateResult);

@@ -10,7 +10,7 @@
     {
         Customer GetCustomerInfo(ICriteria criteria);
 
-        CurrentMemberWinDTO GetCurrentMemberWin(ICriteria criteria);
+        CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria);
 
         object[] GetSettingForEditSuper(ICriteria criteria);
 
@@ -24,8 +24,10 @@
 
         object[] GetSettingForMasterEditMember(ICriteria criteria);
 
-        List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn);
+        List<GameType> GetGameSetting(int custId);
 
-        ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes);
+        List<GameType> GetGameSetting(int exchangeId, string site);
+
+        ICommandResult InsertGameSettingAccount(ICriteria criteria, List<GameType> gameTypes);
     }
 }

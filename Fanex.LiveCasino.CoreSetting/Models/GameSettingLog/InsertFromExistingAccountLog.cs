@@ -1,19 +1,12 @@
-﻿using Fanex.LiveCasino.CoreSetting.Enumerations;
-namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿namespace Fanex.LiveCasino.CoreSetting.Models.GameSettingLog
 {
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
+
     /// <summary>
     /// Log insert account from existing account.
     /// </summary>
-    public class LogInsertFromExistingAccount : LogAutoInsertAccount
+    public class InsertFromExistingAccountLog : AutoInsertAccountLog
     {
-        public override string SpName
-        {
-            get
-            {
-                return "TP_User_Customer_AutoInsertAccountFromExisting";
-            }
-        }
-
         public override LogActions Action
         {
             get
@@ -25,17 +18,23 @@ namespace Fanex.LiveCasino.CoreSetting.Models.Log
                     case CustomerRole.Master:
                         logAction = LogActions.AutoInsertExisting_Master;
                         break;
-
                     case CustomerRole.Agent:
                         logAction = LogActions.AutoInsertExisting_Agent;
                         break;
-
                     default:
                         logAction = LogActions.AutoInsertExisting_Member;
                         break;
                 }
 
                 return logAction;
+            }
+        }
+
+        public override string SpName
+        {
+            get
+            {
+                return "TP_User_Customer_AutoInsertAccountFromExisting";
             }
         }
     }

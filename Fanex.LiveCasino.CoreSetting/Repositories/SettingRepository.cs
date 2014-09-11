@@ -12,6 +12,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
 
     /// <summary>
     /// Setting repository class.
@@ -84,11 +85,11 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Current member win limit.</returns>
-        public CurrentMemberWinDTO GetCurrentMemberWin(ICriteria criteria)
+        public CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
-                var currentMemberWin = new CurrentMemberWinDTO();
+                var currentMemberWin = new CurrentMemberWinLimitDTO();
 
                 try
                 {
@@ -117,7 +118,7 @@
                 }
             }
 
-            return new CurrentMemberWinDTO();
+            return new CurrentMemberWinLimitDTO();
         }
 
         /// <summary>
@@ -296,61 +297,39 @@
         }
 
         /// <summary>
-        /// Gets the game setting.
+        /// Gets the game setting by customer identifier.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
-        /// <returns>List of game types.</returns>
-        public List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Game setting of customer.</returns>
+        public List<GameType> GetGameSetting(int custId)
         {
-            if (criteria.IsValid())
+            var criteria = new GetGameSettingByCustomerIdCriteria
             {
-                try
-                {
-                    var gameTypes = new List<GameType>();
-                    GameType current = null;
+                CustId = custId
+            };
 
-                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
-                        {
-                            while (reader.Read())
-                            {
-                                var itemGameType = new GameType
-                                {
-                                    Id = reader.ToInt("GameTypeID"),
-                                    BetTypeId = reader.ToInt("IBCBetTypeID")
-                                };
+            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: true);
 
-                                var itemStakeLevel = new StakeLevel
-                                {
-                                    Id = reader.ToInt("StakeLevelID"),
-                                    Range = reader.ToString("StakeLevelName"),
-                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
-                                };
+            return gameSetting;
+        }
 
-                                if (current == null || current.Id != itemGameType.Id)
-                                {
-                                    gameTypes.Add(itemGameType);
-                                    current = itemGameType;
-                                    current.BettingLimit = new List<StakeLevel>();
-                                }
+        /// <summary>
+        /// Gets the game setting by exchange.
+        /// </summary>
+        /// <param name="exchangeId">The exchange identifier.</param>
+        /// <param name="site">The site name.</param>
+        /// <returns>Game setting by exchange and site.</returns>
+        public List<GameType> GetGameSetting(int exchangeId, string site)
+        {
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
 
-                                current.BettingLimit.Add(itemStakeLevel);
-                            }
-                        }
-                    }
+            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: false);
 
-                    return gameTypes;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log.Error(ex.Message);
-                    throw ex;
-                }
-            }
-
-            return new List<GameType>();
+            return gameSetting;
         }
 
         /// <summary>
@@ -360,7 +339,7 @@
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Game setting command result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes)
+        public ICommandResult InsertGameSettingAccount(ICriteria criteria, List<GameType> gameTypes)
         {
             if (criteria.IsValid())
             {
@@ -415,5 +394,64 @@
 
             return new GameSettingCommandResultDTO();
         }
+
+        /// <summary>
+        /// Gets the game setting.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
+        /// <returns>List of game types.</returns>
+        private List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    var gameTypes = new List<GameType>();
+                    GameType current = null;
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                        {
+                            while (reader.Read())
+                            {
+                                var itemGameType = new GameType
+                                {
+                                    Id = reader.ToInt("GameTypeID"),
+                                    BetTypeId = reader.ToInt("IBCBetTypeID")
+                                };
+
+                                var itemStakeLevel = new StakeLevel
+                                {
+                                    Id = reader.ToInt("StakeLevelID"),
+                                    Range = reader.ToString("StakeLevelName"),
+                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
+                                };
+
+                                if (current == null || current.Id != itemGameType.Id)
+                                {
+                                    gameTypes.Add(itemGameType);
+                                    current = itemGameType;
+                                    current.BettingLimit = new List<StakeLevel>();
+                                }
+
+                                current.BettingLimit.Add(itemStakeLevel);
+                            }
+                        }
+                    }
+
+                    return gameTypes;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log.Error(ex.Message);
+                    throw ex;
+                }
+            }
+
+            return new List<GameType>();
+        }
+
     }
 }

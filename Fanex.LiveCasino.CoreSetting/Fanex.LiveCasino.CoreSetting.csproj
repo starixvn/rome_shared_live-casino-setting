@@ -141,14 +141,14 @@
     <Compile Include="DTO\CommandResult\GameSettingCommandResultDTO.cs" />
     <Compile Include="DTO\CommandResult\ICommandResultsDTO.cs" />
     <Compile Include="DTO\CommandResult\WinLimitCommandResultDTO.cs" />
-    <Compile Include="Models\Log\ILogData.cs" />
-    <Compile Include="Models\Log\LogAutoInsertAccount.cs" />
-    <Compile Include="Models\Log\LogDataBase.cs" />
-    <Compile Include="Models\Log\LogInsertFromExistingAccount.cs" />
-    <Compile Include="Models\Log\LogManualInsertAccount.cs" />
-    <Compile Include="Models\Log\LogUpdateStakeLevel.cs" />
+    <Compile Include="Models\GameSettingLog\IGameSettingLog.cs" />
+    <Compile Include="Models\GameSettingLog\AutoInsertAccountLog.cs" />
+    <Compile Include="Models\GameSettingLog\GameSettingLog.cs" />
+    <Compile Include="Models\GameSettingLog\InsertFromExistingAccountLog.cs" />
+    <Compile Include="Models\GameSettingLog\ManualInsertAccountLog.cs" />
+    <Compile Include="Models\GameSettingLog\UpdateStakeLevelLog.cs" />
     <Compile Include="Models\Commission.cs" />
-    <Compile Include="DTO\CurrentMemberWinDTO.cs" />
+    <Compile Include="DTO\CurrentMemberWinLimitDTO.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\WinLimit.cs" />
@@ -215,6 +215,7 @@
     <EmbeddedResource Include="Resources\LiveCasinoLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LiveCasinoLang.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LiveCasinoLang.th-TH.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

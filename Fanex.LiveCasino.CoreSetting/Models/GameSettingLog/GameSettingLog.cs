@@ -1,15 +1,15 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿namespace Fanex.LiveCasino.CoreSetting.Models.GameSettingLog
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Log data base class.
     /// </summary>
-    public class LogDataBase : ILogData
+    public class GameSettingLog : IGameSettingLog
     {
         private const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
 
-        public LogDataBase()
+        public GameSettingLog()
         {
             SettingContext = new SettingContext();
         }

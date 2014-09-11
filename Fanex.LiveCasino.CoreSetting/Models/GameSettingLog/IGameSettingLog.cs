@@ -1,12 +1,10 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿namespace Fanex.LiveCasino.CoreSetting.Models.GameSettingLog
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
 
-    public interface ILogData
+    public interface IGameSettingLog
     {
         LogActions Action { get; }
-
-        SettingContext SettingContext { get; set; }
 
         string ErrCode { get; set; }
 
@@ -15,6 +13,8 @@
         string NewValue { get; }
 
         string OldValue { get; }
+
+        SettingContext SettingContext { get; set; }
 
         string SpName { get; }
     }

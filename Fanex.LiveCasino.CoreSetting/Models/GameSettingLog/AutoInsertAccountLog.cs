@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿namespace Fanex.LiveCasino.CoreSetting.Models.GameSettingLog
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
@@ -6,7 +6,7 @@
     /// <summary>
     /// Log insert account when up line is synced Live Casino setting.
     /// </summary>
-    public class LogAutoInsertAccount : LogManualInsertAccount
+    public class AutoInsertAccountLog : ManualInsertAccountLog
     {
         private const string GameTypeTemplate = "<GameType GameTypeId=\"{0}\" BetTypeId=\"{1}\" StakeLevel=\"{2}\" />";
 
