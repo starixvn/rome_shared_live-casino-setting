@@ -125,20 +125,20 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForEditSuper(ICriteria criteria)
+        public object[] GetSettingForEditSuper(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         S4 = reader.To<float>("v162spositiontaking_1101"),
                         L4 = reader.To<float>("v162spositiontaking_1101_max"),
                         N4 = reader.To<float>("v162spositiontaking_1101_min")
                     };
 
-                    ptComSettingDTO.Commission = new Commission
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162sdiscount_1101"),
                         Upline = new Commission
@@ -154,13 +154,13 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForEditMaster(ICriteria criteria)
+        public object[] GetSettingForEditMaster(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         S4 = reader.To<float>("v162spositiontaking_1101_max"),
                         N3 = reader.To<float>("v162mpositiontaking_1101_min"),
@@ -170,7 +170,7 @@
                         M3 = reader.To<float>("v162mpositiontaking_1101")
                     };
 
-                    ptComSettingDTO.Commission = new Commission
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162discount_1101"),
                         Upline = new Commission
@@ -186,13 +186,13 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForEditAgent(ICriteria criteria)
+        public object[] GetSettingForEditAgent(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
                         M2 = reader.To<float>("v162mpositiontaking_1101"),
@@ -203,7 +203,7 @@
                         N2 = reader.To<float>("v162apositiontaking_1101_min")
                     };
 
-                    ptComSettingDTO.Commission = new Commission
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162discount_1101"),
                         Upline = new Commission
@@ -219,20 +219,20 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForEditMember(ICriteria criteria)
+        public object[] GetSettingForEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         A1 = reader.To<float>("v162apositiontaking_1101"),
                         A2 = reader.To<float>("v162apositiontaking_1101_max"),
                         N2 = reader.To<float>("v162apositiontaking_1101_min"),
                     };
 
-                    ptComSettingDTO.Commission = new Commission
+                    ptAndComSetting[1] = new Commission
                     {
                         Value = reader.ToFloat("v162playerdiscount_1101"),
                         Upline = new Commission
@@ -248,13 +248,13 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForSuperEditMember(ICriteria criteria)
+        public object[] GetSettingForSuperEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         S1 = reader.To<float>("v162spositiontaking_1101"),
                         S1Max = reader.To<float>("v162spositiontaking_1101_max"),
@@ -274,13 +274,13 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Position taking and Commission model.</returns>
-        public PTComSettingDTO GetSettingForMasterEditMember(ICriteria criteria)
+        public object[] GetSettingForMasterEditMember(ICriteria criteria)
         {
             return GetCommonSettingForEdit(
                 criteria,
-                (reader, ptComSettingDTO) =>
+                (reader, ptAndComSetting) =>
                 {
-                    ptComSettingDTO.PositionTaking = new PositionTaking
+                    ptAndComSetting[0] = new PositionTaking
                     {
                         IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
                         M1 = reader.To<float>("v162mpositiontaking_1101"),

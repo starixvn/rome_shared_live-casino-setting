@@ -128,7 +128,6 @@
     <Compile Include="Criteria\UpdateSyncLiveCasinoCriteria.cs" />
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
-    <Compile Include="DTO\PTComSettingDTO.cs" />
     <Compile Include="Enumerations\CustomerRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />

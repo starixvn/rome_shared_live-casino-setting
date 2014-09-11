@@ -171,62 +171,62 @@
 
         private void SetSuperPtAndCom(int superId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
                     {
                         CustId = superId
                     });
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         private void SetMasterPtAndCom(int masterId, int superId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
                     {
                         CustId = masterId,
                         SRecommend = superId
                     });
 
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         private void SetAgentPtAndCom(int agentId, int masterId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
                     {
                         CustId = agentId,
                         MRecommend = masterId
                     });
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         private void SetMemberPtAndComSettingForAgentEditMember(int memberId, int agentId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
                             {
                                 CustId = memberId,
                                 Recommend = agentId
                             });
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         private void SetMemberPtAndComSettingForSuperEditMember(int memberId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
             {
                 CustId = memberId
             });
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         private void SetMemberPtAndComSettingForMasterEditMember(int memberId, Customer customer)
         {
-            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForMasterEditMember(
+            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForMasterEditMember(
                 new GetSettingForMasterEditMemberCriteria
                             {
                                 CustId = memberId
                             });
 
-            SetDataToCustomerPtCom(ptComSettingDTO, customer);
+            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
         }
 
         /// <summary>
@@ -234,10 +234,17 @@
         /// </summary>
         /// <param name="positionTakingAndCommission">Array contains position taking and commission setting.</param>
         /// <param name="customer">Customer need be set position taking and commission data.</param>
-        private void SetDataToCustomerPtCom(PTComSettingDTO pTComSettingDTO, Customer customer)
+        private void SetDataToCustomerPtComSetting(object[] positionTakingAndCommission, Customer customer)
         {
-            customer.PositionTaking = pTComSettingDTO.PositionTaking;
-            customer.Commission = pTComSettingDTO.Commission;
+            if (positionTakingAndCommission[0] is PositionTaking)
+            {
+                customer.PositionTaking = positionTakingAndCommission[0] as PositionTaking;
+            }
+
+            if (positionTakingAndCommission[1] is Commission)
+            {
+                customer.Commission = positionTakingAndCommission[1] as Commission;
+            }
         }
 
         /// <summary>
