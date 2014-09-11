@@ -73,11 +73,11 @@
             if (formCollection.Count > 0)
             {
                 settingContext.UplineId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
-                settingContext.UplineRole = (CustomerRole)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
+                settingContext.UplineRole = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
                 settingContext.SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId"));
                 settingContext.TargetCustId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
-                settingContext.TargetRole = (CustomerRole)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
+                settingContext.TargetRole = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
                 settingContext.TargetUsername = GetFormValue(formCollection, "targetUsername");
                 settingContext.TargetCustIds = GetFormValue(formCollection, "targetCustIds");
                 settingContext.TargetUsernames = GetFormValue(formCollection, "targetUsernames");
@@ -85,11 +85,11 @@
             else
             {
                 settingContext.UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
-                settingContext.UplineRole = (CustomerRole)Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
+                settingContext.UplineRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
                 settingContext.SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId"));
                 settingContext.TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
-                settingContext.TargetRole = (CustomerRole)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
+                settingContext.TargetRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
                 settingContext.TargetUsername = GetActionParameterValue(valueProvider, "targetUsername");
                 settingContext.TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds");
                 settingContext.TargetUsernames = GetActionParameterValue(valueProvider, "targetUsernames");
@@ -109,12 +109,12 @@
             var settingContext = new SettingContext
             {
                 UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
-                UplineRole = (CustomerRole)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                UplineRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
                 SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
                 TargetCustId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
                 TargetUsername = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
-                TargetRole = (CustomerRole)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
+                TargetRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
                 TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
                 TargetUsernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
                 TargetSyncStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")

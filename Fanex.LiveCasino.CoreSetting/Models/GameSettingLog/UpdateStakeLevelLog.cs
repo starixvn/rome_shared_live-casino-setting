@@ -18,15 +18,15 @@
 
                 switch (SettingContext.TargetRole)
                 {
-                    case CustomerRole.Super:
+                    case CustomerLevel.Super:
                         logAction = LogActions.UpdateStakeLevel_Super;
                         break;
 
-                    case CustomerRole.Master:
+                    case CustomerLevel.Master:
                         logAction = LogActions.UpdateStakeLevel_Master;
                         break;
 
-                    case CustomerRole.Agent:
+                    case CustomerLevel.Agent:
                         logAction = LogActions.UpdateStakeLevel_Agent;
                         break;
 

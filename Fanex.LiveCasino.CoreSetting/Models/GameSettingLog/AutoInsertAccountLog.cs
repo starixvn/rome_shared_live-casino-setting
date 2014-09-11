@@ -99,11 +99,11 @@
 
                 switch (SettingContext.TargetRole)
                 {
-                    case CustomerRole.Master:
+                    case CustomerLevel.Master:
                         logAction = LogActions.AutoInsert_Master;
                         break;
 
-                    case CustomerRole.Agent:
+                    case CustomerLevel.Agent:
                         logAction = LogActions.AutoInsert_Agent;
                         break;
 

@@ -742,7 +742,7 @@
         /// <returns>
         /// Command results update list stake level.
         /// </returns>
-        private ICommandResultsDTO UpdateListStakeLevel(int custId, CustomerRole role, List<GameType> gameTypes, string language)
+        private ICommandResultsDTO UpdateListStakeLevel(int custId, CustomerLevel role, List<GameType> gameTypes, string language)
         {
             var results = new CommandResultsDTO();
 
@@ -768,7 +768,7 @@
         /// <returns>
         /// Command result update stake level.
         /// </returns>
-        private ICommandResult UpdateStakeLevel(int custId, CustomerRole role, GameType gameType, string language)
+        private ICommandResult UpdateStakeLevel(int custId, CustomerLevel role, GameType gameType, string language)
         {
             var criteria = new UpdateStakeLevelCriteria
             {
@@ -935,26 +935,26 @@
 
             switch (settingContext.TargetRole)
             {
-                case CustomerRole.Super:
+                case CustomerLevel.Super:
                     SetSuperPtAndCom(settingContext.TargetCustId, customer);
                     break;
 
-                case CustomerRole.Master:
+                case CustomerLevel.Master:
                     SetMasterPtAndCom(settingContext.TargetCustId, settingContext.UplineId, customer);
                     break;
 
-                case CustomerRole.Agent:
+                case CustomerLevel.Agent:
                     SetAgentPtAndCom(settingContext.TargetCustId, settingContext.UplineId, customer);
                     break;
 
-                case CustomerRole.Member:
+                case CustomerLevel.Member:
                     switch (settingContext.UplineRole)
                     {
-                        case CustomerRole.Super:
+                        case CustomerLevel.Super:
                             SetMemberPtAndComSettingForSuperEditMember(settingContext.TargetCustId, customer);
                             break;
 
-                        case CustomerRole.Master:
+                        case CustomerLevel.Master:
                             SetMemberPtAndComSettingForMasterEditMember(settingContext.TargetCustId, customer);
                             break;
 
@@ -988,26 +988,26 @@
             ICommandResultsDTO updateResults = new CommandResultsDTO();
             switch (settingContext.TargetRole)
             {
-                case CustomerRole.Super:
+                case CustomerLevel.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
                     break;
 
-                case CustomerRole.Master:
+                case CustomerLevel.Master:
                     updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
                     break;
 
-                case CustomerRole.Agent:
+                case CustomerLevel.Agent:
                     updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
                     break;
 
-                case CustomerRole.Member:
+                case CustomerLevel.Member:
                     switch (settingContext.UplineRole)
                     {
-                        case CustomerRole.Super:
+                        case CustomerLevel.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
                             break;
 
-                        case CustomerRole.Master:
+                        case CustomerLevel.Master:
                             updateResults.Results = MasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
                             break;
 

@@ -49,7 +49,7 @@
         {
             get
             {
-                return RoleId == (int)CustomerRole.Super;
+                return RoleId == (int)CustomerLevel.Super;
             }
         }
 
@@ -57,7 +57,7 @@
         {
             get
             {
-                return RoleId == (int)CustomerRole.Master;
+                return RoleId == (int)CustomerLevel.Master;
             }
         }
 
@@ -65,7 +65,7 @@
         {
             get
             {
-                return RoleId == (int)CustomerRole.Agent;
+                return RoleId == (int)CustomerLevel.Agent;
             }
         }
 
@@ -73,7 +73,7 @@
         {
             get
             {
-                return RoleId == (int)CustomerRole.Member;
+                return RoleId == (int)CustomerLevel.Member;
             }
         }
     }

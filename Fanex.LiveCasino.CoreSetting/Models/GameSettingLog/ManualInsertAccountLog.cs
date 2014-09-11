@@ -19,15 +19,15 @@
 
                 switch (SettingContext.TargetRole)
                 {
-                    case CustomerRole.Super:
+                    case CustomerLevel.Super:
                         logAction = LogActions.ManualInsert_Super;
                         break;
 
-                    case CustomerRole.Master:
+                    case CustomerLevel.Master:
                         logAction = LogActions.ManualInsert_Master;
                         break;
 
-                    case CustomerRole.Agent:
+                    case CustomerLevel.Agent:
                         logAction = LogActions.ManualInsert_Agent;
                         break;
 

@@ -15,10 +15,10 @@
 
                 switch (SettingContext.TargetRole)
                 {
-                    case CustomerRole.Master:
+                    case CustomerLevel.Master:
                         logAction = LogActions.AutoInsertExisting_Master;
                         break;
-                    case CustomerRole.Agent:
+                    case CustomerLevel.Agent:
                         logAction = LogActions.AutoInsertExisting_Agent;
                         break;
                     default:

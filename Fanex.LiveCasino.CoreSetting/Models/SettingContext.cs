@@ -61,7 +61,7 @@
         {
             get
             {
-                return IsEdittingMember && UplineRole == CustomerRole.Agent;
+                return IsEdittingMember && UplineRole == CustomerLevel.Agent;
             }
         }
 
@@ -79,7 +79,7 @@
         {
             get
             {
-                return TargetRole == CustomerRole.Agent;
+                return TargetRole == CustomerLevel.Agent;
             }
         }
 
@@ -87,7 +87,7 @@
         {
             get
             {
-                return TargetRole == CustomerRole.Master;
+                return TargetRole == CustomerLevel.Master;
             }
         }
 
@@ -95,7 +95,7 @@
         {
             get
             {
-                return TargetRole == CustomerRole.Member;
+                return TargetRole == CustomerLevel.Member;
             }
         }
 
@@ -103,7 +103,7 @@
         {
             get
             {
-                return TargetRole == CustomerRole.Super;
+                return TargetRole == CustomerLevel.Super;
             }
         }
 
@@ -152,7 +152,7 @@
         /// <summary>
         /// Gets or sets Role id of edited customer.
         /// </summary>
-        public CustomerRole TargetRole { get; set; }
+        public CustomerLevel TargetRole { get; set; }
 
         public string TargetSyncStatus { get; set; }
 
@@ -173,7 +173,7 @@
         /// <summary>
         /// Gets or sets Current role id of customer that is performing.
         /// </summary>
-        public CustomerRole UplineRole { get; set; }
+        public CustomerLevel UplineRole { get; set; }
 
         /// <summary>
         /// Gets or sets Current login customer user name.

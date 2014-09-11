@@ -64,9 +64,9 @@
                 {
                     UplineId = uplineId,
                     DirectUplineId = directUplineId,
-                    UplineRole = (CustomerRole)uplineRoleId,
+                    UplineRole = (CustomerLevel)uplineRoleId,
                     TargetCustId = targetCustId,
-                    TargetRole = (CustomerRole)targetRoleId,
+                    TargetRole = (CustomerLevel)targetRoleId,
                     FormType = (FormType)formType,
                     AdminId = adminId,
                     Language = language,
@@ -115,8 +115,8 @@
             {
                 UplineId = uplineId,
                 DirectUplineId = directUplineId,
-                UplineRole = (CustomerRole)uplineRoleId,
-                TargetRole = (CustomerRole)targetRoleId,
+                UplineRole = (CustomerLevel)uplineRoleId,
+                TargetRole = (CustomerLevel)targetRoleId,
                 TargetCustIds = targetCustIds,
                 TargetUsernames = targetUsernames,
                 FormType = (FormType)formType,
