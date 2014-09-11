@@ -22,7 +22,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
-    using Fanex.Common.Helper;
 
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
@@ -218,7 +217,7 @@
         /// <summary>
         /// Gets the game setting.
         /// </summary>
-        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>                
+        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>
         /// <returns>The game setting.</returns>
         public List<GameType> GetGameSetting(SettingContext settingContext)
         {
