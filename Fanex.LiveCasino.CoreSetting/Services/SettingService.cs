@@ -21,6 +21,7 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Common.Helper;
 
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
@@ -45,12 +46,7 @@
         public Customer GetCustomer(SettingContext settingContext)
         {
             Customer customer = GetCustomerInfo(settingContext.TargetCustId);
-            SetCustomerPtAndComSetting(
-                customer,
-                settingContext.TargetRole,
-                settingContext.TargetCustId,
-                settingContext.UplineRole,
-                settingContext.UplineId);
+            SetCustomerPtAndComSetting(settingContext, customer);
             customer.GameSetting = GetGameSetting(settingContext);
 
             return customer;
@@ -935,39 +931,39 @@
         /// <param name="customer">Current customer need be set position taking and commission data.</param>
         /// <returns>Position taking and Commission setting.</returns>
         public void SetCustomerPtAndComSetting(
-            Customer customer,
-            CustomerRole targetCustRole,
-            int targetCustId,
-            CustomerRole uplineRole,
-            int uplineId)
+            SettingContext settingContext,
+            Customer customer)
         {
-            switch (targetCustRole)
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(customer, "customer");
+
+            switch (settingContext.TargetRole)
             {
                 case CustomerRole.Super:
-                    SetSuperPtAndCom(targetCustId, customer);
+                    SetSuperPtAndCom(settingContext.TargetCustId, customer);
                     break;
 
                 case CustomerRole.Master:
-                    SetMasterPtAndCom(targetCustId, uplineId, customer);
+                    SetMasterPtAndCom(settingContext.TargetCustId, settingContext.UplineId, customer);
                     break;
 
                 case CustomerRole.Agent:
-                    SetAgentPtAndCom(targetCustId, uplineId, customer);
+                    SetAgentPtAndCom(settingContext.TargetCustId, settingContext.UplineId, customer);
                     break;
 
                 case CustomerRole.Member:
-                    switch (uplineRole)
+                    switch (settingContext.UplineRole)
                     {
                         case CustomerRole.Super:
-                            SetMemberPtAndComSettingForSuperEditMember(targetCustId, customer);
+                            SetMemberPtAndComSettingForSuperEditMember(settingContext.TargetCustId, customer);
                             break;
 
                         case CustomerRole.Master:
-                            SetMemberPtAndComSettingForMasterEditMember(targetCustId, customer);
+                            SetMemberPtAndComSettingForMasterEditMember(settingContext.TargetCustId, customer);
                             break;
 
                         default:
-                            SetMemberPtAndComSettingForAgentEditMember(targetCustId, uplineId, customer);
+                            SetMemberPtAndComSettingForAgentEditMember(settingContext.TargetCustId, settingContext.UplineId, customer);
                             break;
                     }
 
@@ -979,7 +975,7 @@
         /// Update position taking and Commission setting, depend on setting context,
         /// we will decide which store procedure and function will be called.
         /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
+        /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
         public ICommandResultsDTO UpdatePtComSetting(
@@ -988,8 +984,13 @@
             PositionTaking positionTaking,
             UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(positionTaking, "positionTaking");
+            Check.Argument.IsNotNegativeOrZero((int)settingContext.TargetRole, "TargetRole");
+            Check.Argument.IsNotNegativeOrZero(settingContext.TargetCustId, "TargetCustId");
+
             ICommandResultsDTO updateResults = new CommandResultsDTO();
-            switch ((CustomerRole)settingContext.TargetRole)
+            switch (settingContext.TargetRole)
             {
                 case CustomerRole.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
@@ -1004,7 +1005,7 @@
                     break;
 
                 case CustomerRole.Member:
-                    switch ((CustomerRole)settingContext.UplineRole)
+                    switch (settingContext.UplineRole)
                     {
                         case CustomerRole.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -1038,6 +1039,13 @@
             PositionTaking positionTaking,
             UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotEmpty(settingContext.TargetCustIds, "TargetCustIds");
+            Check.Argument.IsNotEmpty(settingContext.TargetUsernames, "TargetUsernames");
+            Check.Argument.IsNotEmpty(settingContext.TargetSyncStatus, "TargetSyncStatus");
+            Check.Argument.IsNotEmpty(settingContext.TargetCustIds, "TargetCustIds");
+            Check.Argument.IsNotNull(positionTaking, "positionTaking");
+
             var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
             IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();

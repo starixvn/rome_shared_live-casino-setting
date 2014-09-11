@@ -6,22 +6,22 @@
     public enum CustomerRole : int
     {
         /// <summary>
-        /// Member type.
+        /// Member Role.
         /// </summary>
         Member = 1,
 
         /// <summary>
-        /// Agent type.
+        /// Agent Role.
         /// </summary>
         Agent = 2,
 
         /// <summary>
-        /// Master type.
+        /// Master Role.
         /// </summary>
         Master = 3,
 
         /// <summary>
-        /// Super type.
+        /// Super Role.
         /// </summary>
         Super = 4
     }

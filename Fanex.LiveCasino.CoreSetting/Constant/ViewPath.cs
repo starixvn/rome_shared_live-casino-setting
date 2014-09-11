@@ -1,10 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Constant
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Contains view path constant for returning from action.
     /// </summary>
