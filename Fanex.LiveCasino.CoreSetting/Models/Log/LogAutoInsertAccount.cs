@@ -1,6 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using System.Collections.Generic;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Log insert account when up line is synced Live Casino setting.
@@ -88,6 +89,31 @@
                                             SpName);
 
             return trackingValue;
+        }
+
+        public override LogActions Action
+        {
+            get
+            {
+                LogActions logAction;
+
+                switch (SettingContext.TargetRole)
+                {
+                    case CustomerRole.Master:
+                        logAction = LogActions.AutoInsert_Master;
+                        break;
+
+                    case CustomerRole.Agent:
+                        logAction = LogActions.AutoInsert_Agent;
+                        break;
+
+                    default:
+                        logAction = LogActions.AutoInsert_Member;
+                        break;
+                }
+
+                return logAction;
+            }
         }
     }
 }

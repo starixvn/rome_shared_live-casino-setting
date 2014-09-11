@@ -1,4 +1,5 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿using Fanex.LiveCasino.CoreSetting.Enumerations;
+namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     /// <summary>
     /// Log update stake level.
@@ -63,6 +64,35 @@
                  ErrMsg);
 
             return trackingValue;
+        }
+
+        public override LogActions Action
+        {
+            get
+            {
+                LogActions logAction;
+
+                switch (SettingContext.TargetRole)
+                {
+                    case CustomerRole.Super:
+                        logAction = LogActions.UpdateStakeLevel_Super;
+                        break;
+
+                    case CustomerRole.Master:
+                        logAction = LogActions.UpdateStakeLevel_Master;
+                        break;
+
+                    case CustomerRole.Agent:
+                        logAction = LogActions.UpdateStakeLevel_Agent;
+                        break;
+
+                    default:
+                        logAction = LogActions.UpdateStakeLevel_Member;
+                        break;
+                }
+
+                return logAction;
+            }
         }
     }
 }

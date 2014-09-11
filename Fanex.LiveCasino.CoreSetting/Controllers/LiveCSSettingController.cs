@@ -12,7 +12,6 @@
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Controller handles setting request.
@@ -22,25 +21,19 @@
     {
         private const string DefaultLanguage = "en-US";
         private readonly ISettingService _settingService;
-        private readonly IGameSettingService _gameSettingService;
         private readonly IPTComSettingService _pTComSettingService;
-        private readonly IWinLimitSettingService _winLimitSettingService;
 
         public LiveCSSettingController()
-            : this(null, null, null, null)
+            : this(null, null)
         {
         }
 
         public LiveCSSettingController(
             ISettingService settingService,
-            IPTComSettingService pTComSettingService,
-            IWinLimitSettingService winLimitSettingService,
-            IGameSettingService gameSettingService)
+            IPTComSettingService pTComSettingService)
         {
             _settingService = settingService ?? new SettingService();
             _pTComSettingService = pTComSettingService ?? new PTComSettingService();
-            _gameSettingService = gameSettingService ?? new GameSettingService();
-            _winLimitSettingService = winLimitSettingService ?? new WinLimitSettingService();
         }
 
         /// <summary>
@@ -189,7 +182,7 @@
         [HttpGet, LiveCasinoAuthorization]
         public ActionResult GetCurrentWinLimit(int custId)
         {
-            CurrentMemberWinDTO currentMemberWinLimit = _winLimitSettingService.GetCurrentWinLimit(custId);
+            CurrentMemberWinDTO currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
 
             return Json(currentMemberWinLimit, JsonRequestBehavior.AllowGet);
         }
@@ -207,11 +200,11 @@
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _winLimitSettingService.UpdateWinLimitMultiple(settingContext, model);
+                updateResult = _settingService.UpdateWinLimitMultiple(settingContext, model);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_winLimitSettingService.UpdateWinLimit(settingContext, model));
+                updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
             }
 
             return Json(updateResult);
@@ -234,11 +227,11 @@
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _gameSettingService.UpdateManualMultiple(settingContext, gameSetting);
+                updateResult = _settingService.UpdateManualMultiple(settingContext, gameSetting);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, gameSetting));
+                updateResult.CommandResultsList.Add(_settingService.UpdateManual(settingContext, gameSetting));
             }
 
             return Json(updateResult);

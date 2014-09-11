@@ -1,4 +1,5 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
+﻿using Fanex.LiveCasino.CoreSetting.Enumerations;
+namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     /// <summary>
     /// Log manual insert account to Live Casino setting.
@@ -52,6 +53,35 @@
             get
             {
                 return "TP_User_Customer_ManualInsertAccount";
+            }
+        }
+
+        public override LogActions Action
+        {
+            get
+            {
+                LogActions logAction;
+
+                switch (SettingContext.TargetRole)
+                {
+                    case CustomerRole.Super:
+                        logAction = LogActions.ManualInsert_Super;
+                        break;
+
+                    case CustomerRole.Master:
+                        logAction = LogActions.ManualInsert_Master;
+                        break;
+
+                    case CustomerRole.Agent:
+                        logAction = LogActions.ManualInsert_Agent;
+                        break;
+
+                    default:
+                        logAction = LogActions.ManualInsert_Member;
+                        break;
+                }
+
+                return logAction;
             }
         }
     }

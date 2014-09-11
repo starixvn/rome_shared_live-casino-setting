@@ -4,7 +4,7 @@
 
     public interface ILogData
     {
-        LogActions Action { get; set; }
+        LogActions Action { get; }
 
         SettingContext SettingContext { get; set; }
 

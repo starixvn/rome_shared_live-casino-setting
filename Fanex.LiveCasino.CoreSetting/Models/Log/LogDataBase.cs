@@ -14,7 +14,7 @@
             SettingContext = new SettingContext();
         }
 
-        public LogActions Action { get; set; }
+        public virtual LogActions Action { get; set; }
 
         public SettingContext SettingContext { get; set; }
 

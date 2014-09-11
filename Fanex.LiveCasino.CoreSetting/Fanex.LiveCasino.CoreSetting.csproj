@@ -191,17 +191,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.zh-TW.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\GameSettingService.cs" />
     <Compile Include="Services\ILiveCasinoAuthorizationService.cs" />
-    <Compile Include="Services\IGameSettingService.cs" />
-    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IPTComSettingService.cs" />
     <Compile Include="Services\ISettingService.cs" />
-    <Compile Include="Services\IWinLimitSettingService.cs" />
-    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\PTComSettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
-    <Compile Include="Services\WinLimitSettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
