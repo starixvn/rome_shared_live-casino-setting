@@ -319,7 +319,7 @@
         /// <param name="exchangeId">The exchange identifier.</param>
         /// <param name="site">The site name.</param>
         /// <returns>Game setting by exchange and site.</returns>
-        public List<GameType> GetGameSetting(int exchangeId, string site)
+        public List<GameType> GetGameSetting(int exchangeId, string site, bool defaultCheckedValue = false)
         {
             var criteria = new GetGameSettingByExchangeCriteria
             {
@@ -327,7 +327,7 @@
                 Site = site
             };
 
-            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: false);
+            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: false, defaultCheckedValue: defaultCheckedValue);
 
             return gameSetting;
         }
@@ -401,7 +401,7 @@
         /// <param name="criteria">The criteria.</param>
         /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
         /// <returns>List of game types.</returns>
-        private List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
+        private List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn, bool defaultCheckedValue = false)
         {
             if (criteria.IsValid())
             {
@@ -426,7 +426,7 @@
                                 {
                                     Id = reader.ToInt("StakeLevelID"),
                                     Range = reader.ToString("StakeLevelName"),
-                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
+                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : defaultCheckedValue
                                 };
 
                                 if (current == null || current.Id != itemGameType.Id)

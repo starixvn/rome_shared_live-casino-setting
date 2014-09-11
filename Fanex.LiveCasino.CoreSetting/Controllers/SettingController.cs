@@ -76,7 +76,7 @@
                 };
 
             SetCustomerSettingViewModelToViewBag(settingContext);
-
+            
             return View(ViewPath.EditSettingPage, settingContext);
         }
 

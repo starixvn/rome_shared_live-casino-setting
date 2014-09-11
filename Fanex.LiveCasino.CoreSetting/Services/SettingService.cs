@@ -22,6 +22,7 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Common.Helper;
 
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
@@ -217,26 +218,24 @@
         /// <summary>
         /// Gets the game setting.
         /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <param name="customer">The customer information.</param>
-        /// <returns>Game settings.</returns>
+        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>                
+        /// <returns>The game setting.</returns>
         public List<GameType> GetGameSetting(SettingContext settingContext)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNegativeOrZero(settingContext.TargetCustId, "TargetCustId");
+            Check.Argument.IsNotNegativeOrZero((int)settingContext.TargetRole, "TargetRole");
+            Check.Argument.IsNotNull(settingContext.IsTargetSyncedLiveCS, "IsTargetSyncedLiveCS");
+            Check.Argument.IsNotEmpty(settingContext.TargetUsername, "TargetUsername");
+            Check.Argument.IsNotNegativeOrZero(settingContext.ExchangeId, "ExchangeId");
+            Check.Argument.IsNotNegativeOrZero(settingContext.DirectUplineId, "DirectUplineId");
+
             var gameSettings = new List<GameType>();
 
             if (settingContext.IsEdittingSuper && !settingContext.IsTargetSyncedLiveCS)
             {
                 var site = GetCustomerSite(settingContext.TargetUsername);
-                gameSettings = _settingRepository.GetGameSetting(settingContext.ExchangeId, site).ToList();
-
-                // Check all by default
-                foreach (var gameSettingItem in gameSettings)
-                {
-                    foreach (var betLimitItem in gameSettingItem.BettingLimit)
-                    {
-                        betLimitItem.IsChecked = true;
-                    }
-                }
+                gameSettings = _settingRepository.GetGameSetting(settingContext.ExchangeId, site, defaultCheckedValue: true);
             }
             else if (!settingContext.IsEdittingSuper && !settingContext.IsTargetSyncedLiveCS)
             {
@@ -258,7 +257,7 @@
             }
             else
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.TargetCustId).ToList();
+                gameSettings = _settingRepository.GetGameSetting(settingContext.TargetCustId);
             }
 
             return gameSettings;
@@ -267,10 +266,8 @@
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <returns>
-        /// Command result insert automatic account.
-        /// </returns>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, UplineUsername, TargetRole, UserIdDoAction, IP, SuperId, TargetUsername, DirectUplineId.</param>
+        /// <returns>Insert account command results.</returns>
         public ICommandResult InsertAutoAccount(SettingContext settingContext)
         {
             var criteria = new InsertAutoAccountCriteria
@@ -311,14 +308,14 @@
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                var log = new AutoInsertAccountLog
+                var logModel = new AutoInsertAccountLog
                 {
                     SignUpForm = LiveCasinoSettings.Settings.SystemId,
                     GameSetting = gameTypes,
                     SettingContext = settingContext
                 };
 
-                WriteLog(log);
+                WriteLog(logModel);
             }
 
             return result;

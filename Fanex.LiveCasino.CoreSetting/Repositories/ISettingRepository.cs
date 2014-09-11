@@ -26,7 +26,7 @@
 
         List<GameType> GetGameSetting(int custId);
 
-        List<GameType> GetGameSetting(int exchangeId, string site);
+        List<GameType> GetGameSetting(int exchangeId, string site, bool defaultCheckedValue = false);
 
         ICommandResult InsertGameSettingAccount(ICriteria criteria, List<GameType> gameTypes);
     }

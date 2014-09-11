@@ -52,10 +52,20 @@
 
         Customer GetCustomerInfo(int custId);
 
-        string GetCustomerSite(string username);      
+        string GetCustomerSite(string username);
 
+        /// <summary>
+        /// Gets the game setting.
+        /// </summary>
+        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>                
+        /// <returns>The game setting.</returns>
         List<GameType> GetGameSetting(SettingContext settingContext);
 
+        /// <summary>
+        /// Inserts the automatic account.
+        /// </summary>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, UplineUsername, TargetRole, UserIdDoAction, IP, SuperId, TargetUsername, DirectUplineId.</param>
+        /// <returns>Insert account command results.</returns>
         ICommandResult InsertAutoAccount(SettingContext settingContext);
 
         ICommandResult InsertFromExistingAccount(SettingContext settingContext);
