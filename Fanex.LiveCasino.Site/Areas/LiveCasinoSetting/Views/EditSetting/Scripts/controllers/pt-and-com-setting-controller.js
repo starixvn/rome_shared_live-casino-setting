@@ -84,7 +84,12 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                 $scope.$parent.updateAllSetting();
             }
             else {
-                ptAndComSettingService.updatePtAndComSetting(me.updatePTComUrl, $scope.commission, $scope.positionTaking, $scope.uplinePTOnMember, $scope.$parent);
+                ptAndComSettingService.updatePtAndComSetting(
+                            me.updatePTComUrl,
+                            $scope.commission,
+                            $scope.positionTaking,
+                            $scope.uplinePTOnMember, 
+                            $scope.$parent);
             }
         };
     }

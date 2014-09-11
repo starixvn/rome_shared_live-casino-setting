@@ -192,9 +192,7 @@
       <DependentUpon>LiveCasinoLang.zh-TW.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ILiveCasinoAuthorizationService.cs" />
-    <Compile Include="Services\IPTComSettingService.cs" />
     <Compile Include="Services\ISettingService.cs" />
-    <Compile Include="Services\PTComSettingService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustSettingViewModel.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />

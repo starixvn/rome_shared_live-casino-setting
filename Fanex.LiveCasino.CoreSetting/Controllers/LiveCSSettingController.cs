@@ -21,19 +21,16 @@
     {
         private const string DefaultLanguage = "en-US";
         private readonly ISettingService _settingService;
-        private readonly IPTComSettingService _pTComSettingService;
 
         public LiveCSSettingController()
-            : this(null, null)
+            : this(null)
         {
         }
 
         public LiveCSSettingController(
-            ISettingService settingService,
-            IPTComSettingService pTComSettingService)
+            ISettingService settingService)
         {
             _settingService = settingService ?? new SettingService();
-            _pTComSettingService = pTComSettingService ?? new PTComSettingService();
         }
 
         /// <summary>
@@ -260,11 +257,11 @@
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
+                updateResult = _settingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
+                updateResult.CommandResultsList.Add(_settingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
             }
 
             return Json(updateResult);

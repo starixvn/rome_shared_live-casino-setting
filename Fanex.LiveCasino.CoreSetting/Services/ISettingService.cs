@@ -22,6 +22,18 @@
             UplinePositionTakingOnMember uplinePositionTakingOnMember,
             int updateType);
 
+        ICommandResultsDTO UpdatePtComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember);
+
+        IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember);
+
         Customer GetCustomer(SettingContext settingContext);
 
         Customer GetCustomerInfo(int custId);
