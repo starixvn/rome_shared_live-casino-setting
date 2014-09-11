@@ -22,12 +22,26 @@
             UplinePositionTakingOnMember uplinePositionTakingOnMember,
             int updateType);
 
+        /// <summary>
+        /// Update position taking and Commission setting, depend on setting context,
+        /// we will decide which store procedure and function will be called.
+        /// </summary>
+        /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
+        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
+        /// <returns>Update status and information for showing on web.</returns>
         ICommandResultsDTO UpdatePtComSetting(
             SettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             UplinePositionTakingOnMember uplinePositionTakingOnMember);
 
+        /// <summary>
+        /// Update multiple Customer Position Taking and Commission.
+        /// </summary>
+        /// <param name="settingContext">Setting context of current update setting.</param>
+        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
+        /// <returns>Update status and information for showing on web.</returns>
         IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
             SettingContext settingContext,
             Commission commission,

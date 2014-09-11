@@ -6,7 +6,7 @@
     /// <summary>
     /// Customer Setting View Model.
     /// </summary>
-    public class CustSettingViewModel
+    public class CustomerSettingViewModel
     {
         public SettingContext SettingContext { get; set; }
 

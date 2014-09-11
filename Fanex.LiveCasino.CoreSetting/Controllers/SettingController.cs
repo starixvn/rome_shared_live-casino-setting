@@ -75,7 +75,7 @@
                     LangKey = GetLanguageKey()
                 };
 
-            SetCustSettingViewModelToViewBag(settingContext);
+            SetCustomerSettingViewModelToViewBag(settingContext);
 
             return View(ViewPath.EditSettingPage, settingContext);
         }
@@ -135,7 +135,7 @@
                 return View(ViewPath.NoInformationPage);
             }
 
-            SetCustSettingViewModelToViewBag(settingContext);
+            SetCustomerSettingViewModelToViewBag(settingContext);
 
             return View(ViewPath.EditSettingPage, settingContext);
         }
@@ -269,12 +269,16 @@
 
         #endregion Pt and Com setting
 
-        private void SetCustSettingViewModelToViewBag(SettingContext settingContext)
+        /// <summary>
+        /// Set customer setting view model to View Bag to pre loading data for JAVASCRIP using.
+        /// </summary>
+        /// <param name="settingContext">Setting context for get customer information to edit.</param>
+        private void SetCustomerSettingViewModelToViewBag(SettingContext settingContext)
         {
             var customer = _settingService.GetCustomer(settingContext);
             settingContext.IsTargetSyncedLiveCS = customer.IsSyncLiveCasino;
 
-            var custSettingViewModel = new CustSettingViewModel
+            var custSettingViewModel = new CustomerSettingViewModel
             {
                 SettingContext = settingContext,
                 Customer = customer

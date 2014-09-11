@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common;
+    using Fanex.Common.Helper;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
@@ -21,7 +22,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
-    using Fanex.Common.Helper;
 
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
@@ -1027,7 +1027,7 @@
         }
 
         /// <summary>
-        /// Update multiple customer.
+        /// Update multiple Customer Position Taking and Commission.
         /// </summary>
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>

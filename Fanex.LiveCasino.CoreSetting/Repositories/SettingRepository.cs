@@ -7,12 +7,12 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Configuration;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
-    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
 
     /// <summary>
     /// Setting repository class.
@@ -452,6 +452,5 @@
 
             return new List<GameType>();
         }
-
     }
 }
