@@ -1,7 +1,7 @@
 ﻿@model SettingContext
 @{
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "EditSetting";
+    ViewBag.Title = Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino;
 }
 @section css
 {
@@ -58,17 +58,20 @@
 
             case (int)SystemType.Accounting:
                 buttonClass = "update-setting-accounting-submit";
-                
                 <div class="setting-header-accounting bold col-xs-12">
-                    <span class="setting-header-first-icon"></span><span class="setting-header-text">@(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)</span>
+                    <span class="setting-header-first-icon"></span>
+                    <span class="setting-header-text">
+                        @(ViewBag.Title)
+                    </span>
                     <span class="setting-header-last-icon"></span>
                 </div>
-                                                                                                 break;
+    
+                break;
             case (int)SystemType.Agency:
-                                                                                                 buttonClass = "update-setting-agency-submit";
+                buttonClass = "update-setting-agency-submit";
                 
                 <div class="setting-header-agency bold col-xs-12">
-                    <span class="setting-header-text">@(Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino)</span>
+                    <span class="setting-header-text">@(ViewBag.Title)</span>
                 </div>
                                                   break;
             case (int)SystemType.ExtAccounting:

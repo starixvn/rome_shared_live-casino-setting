@@ -3,10 +3,11 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
     'use strict';
     var me = this;
 
-    me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, custSettingScope) {
+    me.updatePtAndComSetting = function (updatePtAndComUrl, ptAndComSetting, uplinePTOnMember, custSettingScope) {
         var ptAndComUpdateModel = {
             settingContext: custSetting.SettingContext,
-            ptAndComSetting: ptAndComSetting
+            ptAndComSetting: ptAndComSetting,
+            uplinePositionTakingOnMember: uplinePTOnMember
         };
 
         $http({
