@@ -95,10 +95,10 @@
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Configuration\LiveCasinoSettings.cs" />
-    <Compile Include="Controllers\LiveCasinoUserController.cs">
+    <Compile Include="Controllers\UserController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controllers\LiveCSSettingController.cs">
+    <Compile Include="Controllers\SettingController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
