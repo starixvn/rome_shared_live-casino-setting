@@ -57,8 +57,8 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         //// Properties
-        $scope.positionTaking = fanex.cloneObject(custSetting.PositionTaking);
-        $scope.commission = fanex.cloneObject(custSetting.Commission);
+        $scope.positionTaking = fanex.cloneObject(custSetting.Customer.PositionTaking);
+        $scope.commission = fanex.cloneObject(custSetting.Customer.Commission);
         $scope.uplinePTOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;

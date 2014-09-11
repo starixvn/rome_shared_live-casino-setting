@@ -10,6 +10,7 @@
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
     using Fanex.LiveCasino.CoreSetting.Criteria.Log;
+    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
@@ -20,7 +21,6 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
 
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
@@ -970,9 +970,6 @@
             }
         }
 
-
-        #region Pt and Com
-
         /// <summary>
         /// Get Customer Setting for Editing.
         /// </summary>
@@ -1019,8 +1016,6 @@
                     break;
             }
         }
-
-        #region Pt and Com Single Update
 
         /// <summary>
         /// Update position taking and Commission setting, depend on setting context,
@@ -1072,10 +1067,6 @@
             return updateResults;
         }
 
-        #endregion Pt and Com Single Update
-
-        #region Pt and Com Multiple Update
-
         /// <summary>
         /// Update multiple customer.
         /// </summary>
@@ -1104,10 +1095,6 @@
 
             return mainResults;
         }
-
-        #endregion Pt and Com Multiple Update
-
-        #endregion Pt and Com
 
         private void SetSuperPtAndCom(int superId, Customer customer)
         {
@@ -1194,7 +1181,10 @@
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        private List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> UpdateSuperPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
@@ -1234,7 +1224,10 @@
             return GetPtAndComResultDetails(commandResult);
         }
 
-        private List<ICommandResult> AgentUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> AgentUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
@@ -1242,7 +1235,10 @@
             return GetPtAndComResultDetails(commandResult);
         }
 
-        private List<ICommandResult> SuperUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> SuperUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
@@ -1250,7 +1246,10 @@
             return GetPtAndComResultDetails(commandResult);
         }
 
-        private List<ICommandResult> MasterUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> MasterUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
@@ -1398,7 +1397,10 @@
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             ICriteria criteria = new AgentUpdateMemberSettingCriteria
             {
@@ -1421,7 +1423,10 @@
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             var criteria = new SuperUpdateMemberSettingCriteria
             {
@@ -1455,7 +1460,10 @@
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking)
         {
             var criteria = new MasterUpdateMemberSettingCriteria
             {

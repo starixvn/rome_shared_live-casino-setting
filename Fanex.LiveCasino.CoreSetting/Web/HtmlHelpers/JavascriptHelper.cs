@@ -15,19 +15,20 @@
         /// <param name="objConvertToJsObject">Object need be converted to JAVASCRIPT object.</param>
         /// <param name="javascriptObjectName">JAVASCRIPT Object name.</param>
         /// <returns>JAVASCRIPT object string.</returns>
-        public static string ToJavascriptObject(this HtmlHelper helper, object objConvertToJsObject, string javascriptObjectName)
+        public static MvcHtmlString ToJavascriptObject(this HtmlHelper helper, object objConvertToJsObject, string javascriptObjectName)
         {
+            var objectString = string.Empty;
             if (objConvertToJsObject != null)
             {
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
-                return string.Format(
+                objectString = string.Format(
                     "var {0} = {1}; \n",
                     javascriptObjectName,
                     JsonConvert.SerializeObject(objConvertToJsObject, Formatting.Indented, settings));
             }
 
-            return string.Empty;
+            return MvcHtmlString.Create(objectString);
         }
     }
 }

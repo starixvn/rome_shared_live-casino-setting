@@ -61,34 +61,34 @@
         /// <returns>Position taking and Commission setting models.</returns>
         protected object[] GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, object[]> mapSetting)
         {
-            if (criteria.IsValid())
+            if (!criteria.IsValid())
             {
-                try
-                {
-                    object[] positionTakingAndComSetting = new object[2];
-
-                    using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
-                        {
-                            while (reader.Read())
-                            {
-                                mapSetting(reader, positionTakingAndComSetting);
-                            }
-                        }
-                    }
-
-                    return positionTakingAndComSetting;
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log.Error(ex.Message);
-
-                    throw ex;
-                }
+                throw new Exception(LiveCasinoLang.InvalidCriteriaMsg);
             }
 
-            return null;
+            try
+            {
+                object[] positionTakingAndComSetting = new object[2];
+
+                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            mapSetting(reader, positionTakingAndComSetting);
+                        }
+                    }
+                }
+
+                return positionTakingAndComSetting;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message);
+
+                throw ex;
+            }
         }
 
         /// <summary>

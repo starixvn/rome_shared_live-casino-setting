@@ -17,17 +17,17 @@
     /// Controller handles setting request.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-    public class LiveCSSettingController : BaseController
+    public class SettingController : BaseController
     {
         private const string DefaultLanguage = "en-US";
         private readonly ISettingService _settingService;
 
-        public LiveCSSettingController()
+        public SettingController()
             : this(null)
         {
         }
 
-        public LiveCSSettingController(
+        public SettingController(
             ISettingService settingService)
         {
             _settingService = settingService ?? new SettingService();

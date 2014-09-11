@@ -25,7 +25,7 @@
                 <td class="betting-limit-container">
                     <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
                         <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
-                        @if (Model.TargetRoleId != (int)CustRole.Member)
+                        @if (Model.TargetRole != CustomerRole.Member)
                         {
                             <label class="checkbox-inline betting-limit-label">
                                 <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"

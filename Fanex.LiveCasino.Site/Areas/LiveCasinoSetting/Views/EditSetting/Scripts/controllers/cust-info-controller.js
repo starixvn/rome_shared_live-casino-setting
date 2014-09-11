@@ -5,14 +5,13 @@ fanex.liveCasinoSetting.controller('CustomerInfoController',
         '$scope',
         function ($scope) {
             'use strict';
-            $scope.custInfo = fanex.cloneObject(custSetting.CustInfo);
-            $scope.enableLiveCasino = !custSetting.CustInfo.DisableLiveCasino;
-            $scope.disableCheckBoxLiveCasino = custSetting.CustInfo.UplineDisableLiveCasino;
+            $scope.enableLiveCasino = !custSetting.Customer.DisableLiveCasino;
+            $scope.disableCheckBoxLiveCasino = custSetting.Customer.UplineDisableLiveCasino;
 
             //// Functions
             $scope.getCustInfo = function () {
-                $scope.custInfo.DisableLiveCasino = !$scope.enableLiveCasino;
-                return $scope.custInfo;
+                custSetting.Customer.DisableLiveCasino = !$scope.enableLiveCasino;
+                return custSetting.Customer;
             };
         }
         ]);
