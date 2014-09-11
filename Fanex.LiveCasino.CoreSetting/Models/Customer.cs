@@ -37,7 +37,7 @@
 
         public bool UplineDisableLiveCasino { get; set; }
 
-        public MemberWinLimit MemberWinLimit { get; set; }
+        public WinLimit MemberWinLimit { get; set; }
 
         public Commission Commission { get; set; }
 

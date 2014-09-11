@@ -322,12 +322,12 @@
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResultsDTO UpdateManual(SettingContext settingContext, Customer customer, List<GameType> gameTypes)
+        public ICommandResultsDTO UpdateManual(SettingContext settingContext, List<GameType> gameTypes)
         {
             var gameTypeOlds = new List<GameType>();
             var gameTypeNews = CloneGameTypes(gameTypes);
 
-            if (!customer.IsSyncLiveCasino)
+            if (!settingContext.IsTargetSyncedLiveCS)
             {
                 var insertCommandResult = ManualSyncAccount(settingContext);
                 if (!settingContext.IsEdittingSuper && insertCommandResult.IsSuccessful)
@@ -337,7 +337,7 @@
                     {
                         if (gameTypeNews == null)
                         {
-                            string site = GetCustomerSiteByUsername(customer.UserName);
+                            string site = GetCustomerSiteByUsername(settingContext.TargetUsername);
                             gameTypeNews = GetGameSettingByExchange(directUplineInfo.CurrencyId, site);
                         }
                         else
@@ -368,9 +368,9 @@
             }
 
             ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(
-                settingContext.TargetCustId, 
-                settingContext.TargetRole, 
-                gameTypeNews, 
+                settingContext.TargetCustId,
+                settingContext.TargetRole,
+                gameTypeNews,
                 settingContext.Language);
             WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
 
@@ -391,7 +391,10 @@
             foreach (var custInfo in custInfos)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var updateResult = (CommandResultsDTO)UpdateManual(settingContext, custInfo, gameTypes);
+                settingContext.TargetUsername = custInfo.UserName;
+                settingContext.IsTargetSyncedLiveCS = custInfo.IsSyncLiveCasino;
+
+                var updateResult = (CommandResultsDTO)UpdateManual(settingContext, gameTypes);
 
                 updateResult.Id = custInfo.CustId;
                 updateResult.Name = custInfo.UserName;

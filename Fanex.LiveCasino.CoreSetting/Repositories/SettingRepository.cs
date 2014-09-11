@@ -52,11 +52,11 @@
                                 custInfo.Site = reader.To<string>("site");
                                 custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
                                 custInfo.UserName = reader.To<string>("username");
-                                custInfo.MemberWinLimit = new MemberWinLimit
+                                custInfo.MemberWinLimit = new WinLimit
                                 {
                                     IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
                                     Max = reader.To<float>("MaxWinLiveCasino"),
-                                    Upline = new MemberWinLimit
+                                    Upline = new WinLimit
                                     {
                                         IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
                                         Max = reader.To<float>("UplineMaxWinLiveCasino")

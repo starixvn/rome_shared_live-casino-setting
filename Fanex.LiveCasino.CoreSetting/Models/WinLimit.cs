@@ -3,7 +3,7 @@
     /// <summary>
     /// Member win limit.
     /// </summary>
-    public class MemberWinLimit
+    public class WinLimit
     {
         public float Max { get; set; }
 
@@ -11,6 +11,6 @@
 
         public float Current { get; set; }
 
-        public MemberWinLimit Upline { get; set; }
+        public WinLimit Upline { get; set; }
     }
 }

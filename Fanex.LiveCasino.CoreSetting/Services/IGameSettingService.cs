@@ -23,7 +23,7 @@
 
         ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResultsDTO UpdateManual(SettingContext settingContext, Customer custInfo, List<GameType> gameTypes);
+        ICommandResultsDTO UpdateManual(SettingContext settingContext, List<GameType> gameTypes);
 
         IMultipleCommandResultsDTO UpdateManualMultiple(SettingContext settingContext, List<GameType> gameTypes);
 

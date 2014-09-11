@@ -11,8 +11,8 @@
     {
         CurrentMemberWinDTO GetCurrentWinLimit(int custId);
 
-        ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit);
+        ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, WinLimit memberWinLimit);
 
-        IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit);
+        IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, WinLimit memberWinLimit);
     }
 }

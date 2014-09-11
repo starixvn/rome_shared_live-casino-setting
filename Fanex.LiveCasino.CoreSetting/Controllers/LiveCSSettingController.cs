@@ -160,8 +160,8 @@
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(
-            SettingContext settingContext, 
-            Customer customer, 
+            SettingContext settingContext,
+            Customer customer,
             UplinePositionTakingOnMember uplinePositionTakingOnMember,
             int updateType = (int)UpdateType.AllSetting)
         {
@@ -201,7 +201,7 @@
         /// <param name="model">Data for update win limit.</param>
         /// <returns>Result after updating win limit.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateWinLimit(SettingContext settingContext, MemberWinLimit model)
+        public ActionResult UpdateWinLimit(SettingContext settingContext, WinLimit model)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
@@ -230,8 +230,6 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
         {
-            var custInfo = _gameSettingService.GetCustomerInfo(settingContext.TargetCustId);
-
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
@@ -240,7 +238,7 @@
             }
             else
             {
-                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, custInfo, gameSetting));
+                updateResult.CommandResultsList.Add(_gameSettingService.UpdateManual(settingContext, gameSetting));
             }
 
             return Json(updateResult);
@@ -260,8 +258,8 @@
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSetting(
-            SettingContext settingContext, 
-            Commission commission, 
+            SettingContext settingContext,
+            Commission commission,
             PositionTaking positionTaking,
             UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
@@ -283,10 +281,13 @@
 
         private void SetCustSettingViewModelToViewBag(SettingContext settingContext)
         {
+            var customer = _settingService.GetCustomer(settingContext);
+            settingContext.IsTargetSyncedLiveCS = customer.IsSyncLiveCasino;
+
             var custSettingViewModel = new CustSettingViewModel
             {
                 SettingContext = settingContext,
-                Customer = _settingService.GetCustomer(settingContext)
+                Customer = customer
             };
 
             ViewBag.CustSettingViewModel = custSettingViewModel;

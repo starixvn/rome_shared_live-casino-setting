@@ -130,6 +130,8 @@
 
         public int SystemId { get; set; }
 
+        public bool IsTargetSyncedLiveCS { get; set; }
+
         public int UserIdDoAction
         {
             get

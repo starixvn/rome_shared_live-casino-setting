@@ -53,7 +53,7 @@
         /// <param name="settingContext">Setting context information.</param>
         /// <param name="memberWinLimit">Member win limit information.</param>
         /// <returns>Result after updating.</returns>
-        public ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        public ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, WinLimit memberWinLimit)
         {
             var criteria = new UpdateCustomerWinLimitCriteria
             {
@@ -90,7 +90,7 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
         /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, MemberWinLimit memberWinLimit)
+        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContext settingContext, WinLimit memberWinLimit)
         {
             var results = new MultipleCommandResultsDTO();
             List<Customer> custInfos = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);

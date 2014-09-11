@@ -109,7 +109,7 @@
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
-        public ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, 
+        public ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext,
             Customer customer,
             UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
@@ -131,7 +131,7 @@
                 var winLimitResults = _winLimitSettingService.UpdateWinLimit(settingContext, customer.MemberWinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
 
-                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, customer, customer.GameSetting).Results;
+                var gameSettingResult = _gameSettingService.UpdateManual(settingContext, customer.GameSetting).Results;
                 resultList.Results.AddRange(gameSettingResult);
             }
             else
@@ -154,7 +154,7 @@
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
         public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
-            SettingContext settingContext, 
+            SettingContext settingContext,
             Customer customer,
             UplinePositionTakingOnMember uplinePositionTakingOnMember,
             int updateType)
@@ -186,8 +186,8 @@
         /// <param name="updateType">Update form type.</param>
         /// <returns>Command result after updating.</returns>
         private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(
-            SettingContext settingContext, 
-            Customer customer, 
+            SettingContext settingContext,
+            Customer customer,
             int updateType,
             UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
@@ -204,7 +204,7 @@
                             : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 case (int)UpdateType.GameSetting:
                     return isSync ?
-                            _gameSettingService.UpdateManual(settingContext, customer, customer.GameSetting)
+                            _gameSettingService.UpdateManual(settingContext, customer.GameSetting)
                             : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 case (int)UpdateType.AllSetting:
                     return UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
