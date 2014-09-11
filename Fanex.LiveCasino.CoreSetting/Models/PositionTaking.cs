@@ -64,9 +64,5 @@
         public float? M1Max { get; set; }
 
         public float? M1Min { get; set; }
-
-        public float? NewPresetOnMember { get; set; }
-
-        public bool? UpdateAllMembers { get; set; }
     }
 }

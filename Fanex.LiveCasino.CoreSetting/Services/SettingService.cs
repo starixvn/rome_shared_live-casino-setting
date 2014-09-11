@@ -109,7 +109,9 @@
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
-        public ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer)
+        public ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, 
+            Customer customer,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             ICommandResultsDTO resultList = new CommandResultsDTO();
 
@@ -120,7 +122,7 @@
                 resultList.Results.Add(_gameSettingService.UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking);
+            var positionTakingAndCommResults = _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, uplinePositionTakingOnMember);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
             if (customer.IsSyncLiveCasino
@@ -151,7 +153,11 @@
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
-        public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType)
+        public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
+            SettingContext settingContext, 
+            Customer customer,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            int updateType)
         {
             var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
@@ -162,7 +168,7 @@
                 settingContext.TargetCustId = custInfo.CustId;
                 settingContext.TargetUsername = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
-                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, customer, updateType);
+                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, customer, updateType, uplinePositionTakingOnMember);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -179,25 +185,29 @@
         /// <param name="customer">Customer setting.</param>
         /// <param name="updateType">Update form type.</param>
         /// <returns>Command result after updating.</returns>
-        private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(SettingContext settingContext, Customer customer, int updateType)
+        private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(
+            SettingContext settingContext, 
+            Customer customer, 
+            int updateType,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             var isSync = customer.IsSyncLiveCasino;
             switch (updateType)
             {
                 case (int)UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                            _pTComSettingService.UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, uplinePositionTakingOnMember)
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 case (int)UpdateType.WinLimit:
                     return isSync ?
                             _winLimitSettingService.UpdateWinLimit(settingContext, customer.MemberWinLimit)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 case (int)UpdateType.GameSetting:
                     return isSync ?
                             _gameSettingService.UpdateManual(settingContext, customer, customer.GameSetting)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer);
+                            : UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 case (int)UpdateType.AllSetting:
-                    return UpdateSingleCustomerAllSetting(settingContext, customer);
+                    return UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember);
                 default:
                     return new CommandResultsDTO();
             }

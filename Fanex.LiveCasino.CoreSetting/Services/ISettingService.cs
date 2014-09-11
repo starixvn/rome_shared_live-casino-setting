@@ -11,9 +11,15 @@
     {
         int GetRepresentativeCustIdForEditingMultiple(SettingContext settingContext);
 
-        ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, Customer customer);
+        ICommandResultsDTO UpdateSingleCustomerAllSetting(SettingContext settingContext, 
+            Customer customer, 
+            UplinePositionTakingOnMember uplinePositionTakingOnMember);
 
-        IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(SettingContext settingContext, Customer customer, int updateType);
+        IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
+            SettingContext settingContext, 
+            Customer customer, 
+            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            int updateType);
 
         Customer GetCustomer(SettingContext settingContext);
     }

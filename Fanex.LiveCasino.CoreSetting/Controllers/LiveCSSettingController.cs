@@ -155,20 +155,25 @@
         /// </summary>
         /// <param name="settingContext">Setting context for update current customer.</param>
         /// <param name="customer">Customer setting for update data.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdateLiveCasinoSetting(SettingContext settingContext, Customer customer, int updateType = (int)UpdateType.AllSetting)
+        public JsonResult UpdateLiveCasinoSetting(
+            SettingContext settingContext, 
+            Customer customer, 
+            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            int updateType = (int)UpdateType.AllSetting)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, updateType);
+                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember, updateType);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer));
+                updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(settingContext, customer, uplinePositionTakingOnMember));
             }
 
             return Json(updateResult);
@@ -251,19 +256,24 @@
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        public JsonResult UpdatePtComSetting(
+            SettingContext settingContext, 
+            Commission commission, 
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             if (settingContext.IsEditMultiple)
             {
-                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking);
+                updateResult = _pTComSettingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
             }
             else
             {
-                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, commission, positionTaking));
+                updateResult.CommandResultsList.Add(_pTComSettingService.UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember));
             }
 
             return Json(updateResult);

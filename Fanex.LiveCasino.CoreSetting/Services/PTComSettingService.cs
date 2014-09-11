@@ -6,6 +6,7 @@
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
@@ -39,10 +40,10 @@
         /// <param name="customer">Current customer need be set position taking and commission data.</param>
         /// <returns>Position taking and Commission setting.</returns>
         public void SetCustomerPtAndComSetting(
-            Customer customer, 
-            CustomerRole targetCustRole, 
-            int targetCustId, 
-            CustomerRole uplineRole, 
+            Customer customer,
+            CustomerRole targetCustRole,
+            int targetCustId,
+            CustomerRole uplineRole,
             int uplineId)
         {
             switch (targetCustRole)
@@ -88,7 +89,11 @@
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public ICommandResultsDTO UpdatePtComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        public ICommandResultsDTO UpdatePtComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             ICommandResultsDTO updateResults = new CommandResultsDTO();
             switch ((CustomerRole)settingContext.TargetRole)
@@ -98,11 +103,11 @@
                     break;
 
                 case CustomerRole.Master:
-                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking);
+                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
                     break;
 
                 case CustomerRole.Agent:
-                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking);
+                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
                     break;
 
                 case CustomerRole.Member:
@@ -136,8 +141,13 @@
         /// </summary>
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public IMultipleCommandResultsDTO UpdatePtComSettingMultiple(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        public IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             var custInfoes = GetCustomerInfo(settingContext.TargetCustIds, settingContext.TargetUsernames, settingContext.TargetSyncStatus);
 
@@ -146,7 +156,7 @@
             foreach (var custInfo in custInfoes)
             {
                 settingContext.TargetCustId = custInfo.CustId;
-                var subResult = UpdatePtComSetting(settingContext, commission, positionTaking);
+                var subResult = UpdatePtComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -161,62 +171,62 @@
 
         private void SetSuperPtAndCom(int superId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
                     {
                         CustId = superId
                     });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         private void SetMasterPtAndCom(int masterId, int superId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
                     {
                         CustId = masterId,
                         SRecommend = superId
                     });
 
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         private void SetAgentPtAndCom(int agentId, int masterId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
                     {
                         CustId = agentId,
                         MRecommend = masterId
                     });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForAgentEditMember(int memberId, int agentId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
                             {
                                 CustId = memberId,
                                 Recommend = agentId
                             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForSuperEditMember(int memberId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
             {
                 CustId = memberId
             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForMasterEditMember(int memberId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForMasterEditMember(
+            PTComSettingDTO ptComSettingDTO = _settingRepository.GetSettingForMasterEditMember(
                 new GetSettingForMasterEditMemberCriteria
                             {
                                 CustId = memberId
                             });
 
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtCom(ptComSettingDTO, customer);
         }
 
         /// <summary>
@@ -224,17 +234,10 @@
         /// </summary>
         /// <param name="positionTakingAndCommission">Array contains position taking and commission setting.</param>
         /// <param name="customer">Customer need be set position taking and commission data.</param>
-        private void SetDataToCustomerPtComSetting(object[] positionTakingAndCommission, Customer customer)
+        private void SetDataToCustomerPtCom(PTComSettingDTO pTComSettingDTO, Customer customer)
         {
-            if (positionTakingAndCommission[0] is PositionTaking)
-            {
-                customer.PositionTaking = positionTakingAndCommission[0] as PositionTaking;
-            }
-
-            if (positionTakingAndCommission[1] is Commission)
-            {
-                customer.Commission = positionTakingAndCommission[1] as Commission;
-            }
+            customer.PositionTaking = pTComSettingDTO.PositionTaking;
+            customer.Commission = pTComSettingDTO.Commission;
         }
 
         /// <summary>
@@ -242,6 +245,7 @@
         /// </summary>
         /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
         private List<ICommandResult> UpdateSuperPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
         {
@@ -259,17 +263,25 @@
             return GetPtAndComResultDetails(commandResult);
         }
 
-        private List<ICommandResult> UpdateMasterPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> UpdateMasterPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking);
+            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
 
-        private List<ICommandResult> UpdateAgentPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private List<ICommandResult> UpdateAgentPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking);
+            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking, uplinePositionTakingOnMember);
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
 
             return GetPtAndComResultDetails(commandResult);
@@ -350,8 +362,13 @@
         /// </summary>
         /// <param name="settingContext">Setting context for updating customer.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             var criteria = new UpdateMasterSettingCriteria
             {
@@ -366,9 +383,9 @@
                 N3 = (decimal)positionTaking.N3,
                 Is3 = (bool)positionTaking.Is3,
                 Us3 = (decimal)positionTaking.Us3,
-                UpdateAllMembers = (bool)positionTaking.UpdateAllMembers,
+                UpdateAllMembers = (bool)uplinePositionTakingOnMember.IsApplyNewUplinePositionTaking,
                 S3 = (decimal)positionTaking.S3,
-                NewSuperPositionTakingOnMember = (decimal)positionTaking.NewPresetOnMember
+                NewSuperPositionTakingOnMember = (decimal)uplinePositionTakingOnMember.NewUplinePositionTaking
             };
 
             if (criteria.Is3)
@@ -389,8 +406,13 @@
         /// <param name="settingContext">Setting context for updating customer.</param>
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
+        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(SettingContext settingContext, Commission commission, PositionTaking positionTaking)
+        private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(
+            SettingContext settingContext,
+            Commission commission,
+            PositionTaking positionTaking,
+            UplinePositionTakingOnMember uplinePositionTakingOnMember)
         {
             var criteria = new UpdateAgentSettingCriteria
             {
@@ -405,9 +427,9 @@
                 N2 = (decimal)positionTaking.N2,
                 Im2 = (bool)positionTaking.Im2,
                 Um2 = (decimal)positionTaking.Um2,
-                UpdateAllMembers = (bool)positionTaking.UpdateAllMembers,
+                UpdateAllMembers = (bool)uplinePositionTakingOnMember.IsApplyNewUplinePositionTaking,
                 A2 = (decimal)positionTaking.A2,
-                NewMasterPtOnMember = (decimal)positionTaking.NewPresetOnMember
+                NewMasterPtOnMember = (decimal)uplinePositionTakingOnMember.NewUplinePositionTaking
             };
 
             if (criteria.Im2)

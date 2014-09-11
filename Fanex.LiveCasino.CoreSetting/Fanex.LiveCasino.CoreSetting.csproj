@@ -128,6 +128,7 @@
     <Compile Include="Criteria\UpdateSyncLiveCasinoCriteria.cs" />
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
+    <Compile Include="DTO\PTComSettingDTO.cs" />
     <Compile Include="Enumerations\CustomerRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Models\PositionTaking.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
+    <Compile Include="Models\UplinePositionTakingOnMember.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
