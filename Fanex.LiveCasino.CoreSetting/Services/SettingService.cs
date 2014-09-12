@@ -267,22 +267,6 @@
                 Language = language
             };
 
-            var directUplineId = 0;
-            switch (uplineCustomerInfo.RoleId)
-            {
-                case (int)CustomerLevel.Master:
-                    directUplineId = uplineCustomerInfo.SuperId;
-                    break;
-
-                case (int)CustomerLevel.Agent:
-                    directUplineId = uplineCustomerInfo.MasterId;
-                    break;
-
-                default:
-                    directUplineId = uplineCustomerInfo.AgentId;
-                    break;
-            }
-
             var gameTypes = new List<GameType>();
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
@@ -307,16 +291,16 @@
 
                 if (updateSyncResult.IsSuccessful)
                 {
-                    var uplineCustInfo = GetCustomerInfo(directUplineId);
+                    var uplineCustInfo = GetCustomerInfo(uplineCustomerInfo.DirectUplineId);
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
                 if (gameTypes == null || !gameTypes.Any())
                 {
-                    gameTypes = _settingRepository.GetGameSetting(directUplineId);
+                    gameTypes = _settingRepository.GetGameSetting(uplineCustomerInfo.DirectUplineId);
 
                     Logger.Log.Info(
-                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, directUplineId),
+                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, uplineCustomerInfo.DirectUplineId),
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
@@ -506,7 +490,7 @@
         /// <returns>Multiple result command.</returns>
         public IMultipleCommandResultsDTO UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
         {
-            var results = new MultipleCommandResultsDTO();            
+            var results = new MultipleCommandResultsDTO();
 
             foreach (var custInfo in settingContextMultiple.Customers)
             {
@@ -617,7 +601,7 @@
         /// <returns>Update win limit multiple result.</returns>
         public IMultipleCommandResultsDTO UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
         {
-            var results = new MultipleCommandResultsDTO();           
+            var results = new MultipleCommandResultsDTO();
 
             foreach (var custInfo in settingContextMultiple.Customers)
             {

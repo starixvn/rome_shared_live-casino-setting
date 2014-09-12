@@ -1,5 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.DTO
 {
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
+
     /// <summary>
     /// Up line customer information DTO.
     /// </summary>
@@ -18,5 +20,30 @@
         public int MasterId { get; set; }
 
         public int SuperId { get; set; }
+
+        public int DirectUplineId
+        {
+            get
+            {
+                var directUplineId = 0;
+
+                switch (RoleId)
+                {
+                    case (int)CustomerLevel.Master:
+                        directUplineId = SuperId;
+                        break;
+
+                    case (int)CustomerLevel.Agent:
+                        directUplineId = MasterId;
+                        break;
+
+                    default:
+                        directUplineId = AgentId;
+                        break;
+                }
+
+                return directUplineId;
+            }
+        }
     }
 }

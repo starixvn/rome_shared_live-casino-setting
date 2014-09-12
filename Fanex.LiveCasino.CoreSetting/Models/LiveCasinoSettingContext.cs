@@ -8,6 +8,8 @@
     /// </summary>
     public class LiveCasinoSettingContext
     {
+        private string _ip = string.Empty;
+
         public Customer Customer { get; set; }
 
         public Customer Upline { get; set; }
@@ -22,12 +24,12 @@
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(IP) ? HttpContext.Current.Request.UserHostAddress : IP;
+                return !string.IsNullOrWhiteSpace(_ip) ? HttpContext.Current.Request.UserHostAddress : _ip;
             }
 
             set
             {
-                IP = value;
+                _ip = value;
             }
         }
 
