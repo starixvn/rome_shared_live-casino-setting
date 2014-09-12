@@ -19,7 +19,6 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class SettingController : BaseController
     {
-        private const string DefaultLanguage = "en-US";
         private readonly ISettingService _settingService;
 
         public SettingController()
@@ -49,32 +48,8 @@
         /// Edit customer page.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSetting(
-            int uplineId = 0,
-            int directUplineId = 0,
-            int uplineRoleId = 0,
-            int targetCustId = 0,
-            int targetRoleId = 0,
-            int adminId = 0,
-            int subAccId = 0,
-            int formType = (int)FormType.Edit,
-            string language = "E")
+        public ActionResult EditSetting(SettingContext settingContext)
         {
-            var settingContext = new SettingContext
-                {
-                    ParentId = uplineId,
-                    DirectParentId = directUplineId,
-                    ParentLevel = (CustomerLevel)uplineRoleId,
-                    CustomerId = targetCustId,
-                    CustomerLevel = (CustomerLevel)targetRoleId,
-                    FormType = (FormType)formType,
-                    AdminId = adminId,
-                    Language = language,
-                    SubAccId = subAccId,
-                    SystemId = LiveCasinoSettings.Settings.SystemId,
-                    LangKey = GetLanguageKey()
-                };
-
             SetCustomerSettingViewModelToViewBag(settingContext);
 
             return View(ViewPath.EditSettingPage, settingContext);
@@ -98,37 +73,8 @@
         /// Edit multiple form.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSettingMultiple(
-            int uplineId = 0,
-            int directUplineId = 0,
-            int uplineRoleId = 0,
-            string targetCustIds = "",
-            string targetUsernames = "",
-            string targetSyncStatus = "",
-            int targetRoleId = 0,
-            int adminId = 0,
-            int subAccId = 0,
-            int formType = (int)FormType.Edit,
-            string language = "E")
+        public ActionResult EditSettingMultiple(SettingContextMultiple settingContextMultiple)
         {
-            var settingContextMultiple = new SettingContextMultiple
-            {
-                ParentId = uplineId,
-                DirectParentId = directUplineId,
-                ParentLevel = (CustomerLevel)uplineRoleId,
-                CustomerLevel = (CustomerLevel)targetRoleId,
-                TargetCustIds = targetCustIds,
-                TargetUsernames = targetUsernames,
-                FormType = (FormType)formType,
-                AdminId = adminId,
-                Language = language,
-                IsEditMultiple = true,
-                SubAccId = subAccId,
-                TargetSyncStatus = targetSyncStatus,
-                SystemId = LiveCasinoSettings.Settings.SystemId,
-                LangKey = GetLanguageKey()
-            };
-
             settingContextMultiple.CustomerId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
             if (settingContextMultiple.CustomerId == 0)
             {
@@ -323,13 +269,6 @@
             };
 
             ViewBag.CustSettingViewModel = custSettingViewModel;
-        }
-
-        private string GetLanguageKey()
-        {
-            return HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey] != null ?
-                HttpContext.Session[LiveCasinoSettings.Settings.LanguageSessionKey].ToString() :
-                DefaultLanguage;
         }
     }
 }

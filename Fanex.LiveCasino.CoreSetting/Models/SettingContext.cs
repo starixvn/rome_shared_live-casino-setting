@@ -97,11 +97,6 @@
         public bool IsCustomerSyncedLiveCS { get; set; }
 
         /// <summary>
-        /// Gets or sets LangKey of current request.
-        /// </summary>
-        public string LangKey { get; set; }
-
-        /// <summary>
         /// Gets or sets Language of current request.
         /// </summary>
         public string Language { get; set; }
@@ -125,8 +120,5 @@
         public int MasterId { get; set; }
 
         public int SuperId { get; set; }
-
-        public int SystemId { get; set; }
-
     }
 }

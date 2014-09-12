@@ -2,10 +2,12 @@
 @{
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.IsEditMultiple ? LiveCasinoLang.lblEditMultipleLiveCasino : LiveCasinoLang.lblEditLiveCasino;
+    var currentLangaugeKey = Session[LiveCasinoSettings.Settings.LanguageSessionKey] != null ?
+                Session[LiveCasinoSettings.Settings.LanguageSessionKey].ToString() : "en-US";
 }
 @section css
 {
-    @if (Model.SystemId == (int)SystemType.Accounting)
+    @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Accounting)
     {
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/bootstrap.css")" />
         <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")" />
@@ -19,7 +21,7 @@
 @section modeldata
 {
     <script type="text/javascript">
-        var currentLaguageKey = '@(Model.LangKey)';
+        var currentLaguageKey = '@(currentLangaugeKey)';
         @(Html.ToJavascriptObject((CustSettingViewModel)(ViewBag.CustSettingViewModel), "custSetting"))
     </script>
 }
@@ -53,7 +55,7 @@
         var buttonClass = string.Empty;
         var buttonText = LiveCasinoLang.lblUpdate;
 
-        switch (Model.SystemId)
+        switch (LiveCasinoSettings.Settings.SystemId)
         {
 
             case (int)SystemType.Accounting:
@@ -105,7 +107,7 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
 
     <div class="update-setting col-xs-12">
-        @if (Model.SystemId == (int)SystemType.Agency)
+        @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Agency)
         {
             <span class="update-setting-agency-submit-left"  data-ng-show="!isReadOnly"></span>
         }
@@ -118,7 +120,7 @@
 </div>
 @section scripts
 {
-    @if (Model.SystemId == (int)SystemType.Accounting)
+    @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Accounting)
     {
         <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/live-casino-lang.js")"></script>
         <script type="text/javascript" src="@Url.Content("~/areas/LiveCasinoSetting/scripts/core/language/LiveCasinoLang.js")"></script>
