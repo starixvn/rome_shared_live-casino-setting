@@ -68,7 +68,7 @@
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, UserId, IP, SuperId, TargetUsername, DirectParentId.</param>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, ActorId, IP, SuperId, TargetUsername, DirectParentId.</param>
         /// <returns>Insert account command results.</returns>
         ICommandResult InsertAutoAccount(SettingContext settingContext);
 

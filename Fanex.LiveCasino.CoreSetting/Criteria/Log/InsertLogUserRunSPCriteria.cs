@@ -35,7 +35,7 @@
 
         public override string ToString()
         {
-            var template = "UserId = '{0}'\n CustId = '{1}'\n SpName = '{2}'\n ActionId = '{3}'\n OldValue = '{4}'\n NewValue = '{5}'";
+            var template = "ActorId = '{0}'\n CustId = '{1}'\n SpName = '{2}'\n ActionId = '{3}'\n OldValue = '{4}'\n NewValue = '{5}'";
 
             return string.Format(template, UserId, CustId, SpName, ActionId, TrackingValue.Replace("<", " < "), TrackingValue2.Replace("<", " < "));
         }

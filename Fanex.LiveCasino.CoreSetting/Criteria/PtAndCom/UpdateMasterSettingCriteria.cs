@@ -93,7 +93,7 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nSRecommend = '{2}'\nS3 = '{3}'\nM3 = '{4}'\nIs3 = '{5}'\nUs3 = '{6}'\nN3 = '{7}'\nUpdateAllMembers = '{8}'\nNewSPositionTaking = '{9}'\nSubAccID = '{10}'\nIP = '{11}'\nUserId = '{12}'\nLanguage = '{13}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nSRecommend = '{2}'\nS3 = '{3}'\nM3 = '{4}'\nIs3 = '{5}'\nUs3 = '{6}'\nN3 = '{7}'\nUpdateAllMembers = '{8}'\nNewSPositionTaking = '{9}'\nSubAccID = '{10}'\nIP = '{11}'\nActorId = '{12}'\nLanguage = '{13}'",
                 GetSettingKey(),
                 CustId,
                 SRecommend,

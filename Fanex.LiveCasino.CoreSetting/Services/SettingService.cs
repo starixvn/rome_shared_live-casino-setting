@@ -70,7 +70,7 @@
             int levelGap = (int)settingContextMultiple.ParentLevel - (int)settingContextMultiple.CustomerLevel;
             if (levelGap == 1)
             {
-                return Converter.ToInt(custInfoList[0].CustId);
+                return Converter.ToInt(custInfoList[0].Id);
             }
 
             //// Super/Master multiple member
@@ -85,10 +85,10 @@
                 {
                     if (firstSyncCustId == 0)
                     {
-                        firstSyncCustId = custInfo.CustId;
+                        firstSyncCustId = custInfo.Id;
                     }
 
-                    newCustIdList += custInfo.CustId.ToString() + ",";
+                    newCustIdList += custInfo.Id.ToString() + ",";
                     newUsernameList += custInfo.UserName + ",";
                     newTargetSyncList += (custInfo.IsSyncLiveCasino ? "1" : "0") + ",";
                 }
@@ -172,11 +172,11 @@
 
             foreach (var custInfo in custInfoes)
             {
-                settingContextMultiple.CustomerId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.Id;
                 settingContextMultiple.Username = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                subResult.Id = custInfo.CustId;
+                subResult.Id = custInfo.Id;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
             }
@@ -274,7 +274,7 @@
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, UserId, IP, SuperId, TargetUsername, DirectParentId.</param>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, ActorId, IP, SuperId, TargetUsername, DirectParentId.</param>
         /// <returns>Insert account command results.</returns>
         public ICommandResult InsertAutoAccount(SettingContext settingContext)
         {
@@ -287,7 +287,7 @@
                 MasterId = settingContext.MasterId,
                 ModifyUsername = settingContext.ParentUsername,
                 RoleId = (int)settingContext.CustomerLevel,
-                SignupBy = settingContext.UserId,
+                SignupBy = settingContext.ActorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
@@ -347,7 +347,7 @@
                 MasterId = settingContext.MasterId,
                 ModifyUsername = settingContext.ParentUsername,
                 RoleId = (int)settingContext.CustomerLevel,
-                SignupBy = settingContext.UserId,
+                SignupBy = settingContext.ActorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
@@ -403,7 +403,7 @@
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
                 CustId = settingContext.CustomerId,
-                UserID = settingContext.UserId,
+                UserID = settingContext.ActorId,
                 DisabledLiveCS = disableLiveCasino,
                 EnableDownlinesLiveCS = !disableLiveCasino,
                 IP = settingContext.IP,
@@ -505,13 +505,13 @@
 
             foreach (var custInfo in custInfos)
             {
-                settingContextMultiple.CustomerId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.Id;
                 settingContextMultiple.Username = custInfo.UserName;
                 settingContextMultiple.IsCustomerSyncedLiveCS = custInfo.IsSyncLiveCasino;
 
                 var updateResult = (CommandResultsDTO)UpdateGameSetting(settingContextMultiple, gameTypes);
 
-                updateResult.Id = custInfo.CustId;
+                updateResult.Id = custInfo.Id;
                 updateResult.Name = custInfo.UserName;
 
                 results.CommandResultsList.Add(updateResult);
@@ -531,7 +531,7 @@
             var criteria = new UpdateSyncLiveCasinoCriteria
             {
                 CustId = settingContext.CustomerId,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 Ip = settingContext.IP,
                 Language = settingContext.Language,
                 SubAccId = settingContext.SubAccId,
@@ -578,7 +578,7 @@
                 CustId = settingContext.CustomerId,
                 MaxWinLimit = (decimal)memberWinLimit.Max,
                 IsAutoDailyReset = memberWinLimit.IsAutoReset,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             };
@@ -615,10 +615,10 @@
 
             foreach (var custInfo in custInfos)
             {
-                settingContextMultiple.CustomerId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.Id;
                 var updateResult = UpdateWinLimit(settingContextMultiple, memberWinLimit);
 
-                updateResult.Id = custInfo.CustId;
+                updateResult.Id = custInfo.Id;
                 updateResult.Name = custInfo.UserName;
 
                 results.CommandResultsList.Add(updateResult);
@@ -724,7 +724,7 @@
                 AgentId = settingContext.AgentId,
                 RoleId = (int)settingContext.CustomerLevel,
                 SignupIp = settingContext.IP,
-                SignupBy = settingContext.UserId,
+                SignupBy = settingContext.ActorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 ModifyUsername = settingContext.ParentUsername,
                 Username = settingContext.Username,
@@ -850,7 +850,7 @@
                 {
                     list.Add(new Customer
                     {
-                        CustId = Converter.ToInt(arrayCustId[i]),
+                        Id = Converter.ToInt(arrayCustId[i]),
                         UserName = arrayUsername[i],
                         IsSyncLiveCasino = arraySyncStatus[i] == "1"
                     });
@@ -906,7 +906,7 @@
         {
             var criteria = new InsertLogUserRunSPCriteria
             {
-                UserId = logData.SettingContext.UserId,
+                UserId = logData.SettingContext.ActorId,
                 CustId = logData.SettingContext.CustomerId,
                 SpName = logData.SpName,
                 Doing = string.Empty,
@@ -1060,9 +1060,9 @@
 
             foreach (var custInfo in custInfoes)
             {
-                settingContextMultiple.CustomerId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.Id;
                 var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                subResult.Id = custInfo.CustId;
+                subResult.Id = custInfo.Id;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
             }
@@ -1165,7 +1165,7 @@
                 CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SuperCommission = (decimal)commission.Value,
                 S4 = (decimal)positionTaking.S4,
                 N4 = (decimal)positionTaking.N4,
@@ -1299,7 +1299,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 SRecommend = settingContext.ParentId,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SubAccID = settingContext.SubAccId,
                 MasterCommission = (decimal)commission.Value,
                 M3 = (decimal)positionTaking.M3,
@@ -1344,7 +1344,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 MRecommend = settingContext.ParentId,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SubAccID = settingContext.SubAccId,
                 AgentCommission = (decimal)commission.Value,
                 M2 = (decimal)positionTaking.M2,
@@ -1386,7 +1386,7 @@
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 Recommend = settingContext.ParentId,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SubAccID = settingContext.SubAccId,
                 MemberCommission = (decimal)commission.Value,
                 A1 = (decimal)positionTaking.A1
@@ -1411,7 +1411,7 @@
                 CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SubAccID = settingContext.SubAccId,
                 S1 = (decimal)positionTaking.S1,
                 Is1 = (bool)positionTaking.Is1,
@@ -1448,7 +1448,7 @@
                 CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserId,
+                UserId = settingContext.ActorId,
                 SubAccID = settingContext.SubAccId,
                 M1 = (decimal)positionTaking.M1,
                 Im1 = (bool)positionTaking.Im1,

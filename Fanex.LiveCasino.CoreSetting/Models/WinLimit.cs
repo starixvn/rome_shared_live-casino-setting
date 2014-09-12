@@ -10,7 +10,5 @@
         public bool IsAutoReset { get; set; }
 
         public float Current { get; set; }
-
-        public WinLimit Upline { get; set; }
     }
 }

@@ -79,7 +79,7 @@
                                             SettingContext.AgentId,
                                             SettingContext.CustomerLevel,
                                             SettingContext.IP,
-                                            SettingContext.UserId,
+                                            SettingContext.ActorId,
                                             SignUpForm,
                                             SettingContext.Language,
                                             ErrCode,

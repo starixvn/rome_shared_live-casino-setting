@@ -51,7 +51,7 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nS1 = '{2}'\nIs1 = '{3}'\nUs1 = '{4}'\nIsUpdateSuperPt = '{5}'\nSubAccID = '{6}'\nUserId = '{7}'\nIP = '{8}'\nLanguage = '{9}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nS1 = '{2}'\nIs1 = '{3}'\nUs1 = '{4}'\nIsUpdateSuperPt = '{5}'\nSubAccID = '{6}'\nActorId = '{7}'\nIP = '{8}'\nLanguage = '{9}'",
                 GetSettingKey(),
                 CustId,
                 S1,

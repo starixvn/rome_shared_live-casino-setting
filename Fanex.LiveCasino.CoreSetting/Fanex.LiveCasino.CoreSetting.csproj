@@ -141,22 +141,22 @@
     <Compile Include="DTO\CommandResult\GameSettingCommandResultDTO.cs" />
     <Compile Include="DTO\CommandResult\ICommandResultsDTO.cs" />
     <Compile Include="DTO\CommandResult\WinLimitCommandResultDTO.cs" />
+    <Compile Include="Models\LiveCasinoSetting.cs" />
     <Compile Include="Models\Log\IGameSettingLog.cs" />
     <Compile Include="Models\Log\AutoInsertAccountLog.cs" />
     <Compile Include="Models\Log\GameSettingLog.cs" />
     <Compile Include="Models\Log\InsertFromExistingAccountLog.cs" />
     <Compile Include="Models\Log\ManualInsertAccountLog.cs" />
     <Compile Include="Models\Log\UpdateStakeLevelLog.cs" />
-    <Compile Include="Models\Commission.cs" />
     <Compile Include="DTO\CurrentMemberWinLimitDTO.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\SettingContextMultiple.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\WinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
     <Compile Include="Models\SettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
-    <Compile Include="Models\UplinePositionTakingOnMember.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
@@ -203,6 +203,7 @@
     <Compile Include="Web\LiveCasinoSettingAreRegistration.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -41,7 +41,7 @@
                             if (reader.Read())
                             {
                                 custInfo.CurrencyId = reader.To<byte>("currency");
-                                custInfo.CustId = Converter.To<int>(parameters["custid"]);
+                                custInfo.Id = Converter.To<int>(parameters["custid"]);
                                 custInfo.DisableLiveCasino = reader.To<bool>("DisableLiveCasino");
                                 custInfo.Fax = reader.To<string>("fax");
                                 custInfo.FirstName = reader.To<string>("firstname");

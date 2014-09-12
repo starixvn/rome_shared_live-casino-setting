@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.Customer">
+    <Position X="3.75" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAgIAgAAAAAEAQAAAAAAAAAABAAAAAAAAACA=</HashCode>
+      <FileName>Models\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.WinLimit">
+    <Position X="11.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAACCAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WinLimit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.GameType">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAAQAIAQAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\GameType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.LiveCasinoSetting">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAAAgA=</HashCode>
+      <FileName>Models\LiveCasinoSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.PositionTaking" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAhARAAAAAAAgAAAAADQiAABEADIBAAAgCI0AAIA=</HashCode>
+      <FileName>Models\PositionTaking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.SettingContext">
+    <Position X="7" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAACAACAAAAAAAAIAAQQgAIAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Models\SettingContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.SettingContextMultiple">
+    <Position X="7" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SettingContextMultiple.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.StakeLevel">
+    <Position X="11.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\StakeLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fanex.LiveCasino.CoreSetting.Models.User">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAgAAAAAAAAAAAAAAAAAAAAAGAAQAAIAAAAAg=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

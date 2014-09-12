@@ -58,7 +58,7 @@
                    SettingContext.AgentId,
                    SettingContext.CustomerId,
                    SettingContext.IP,
-                   SettingContext.UserId,
+                   SettingContext.ActorId,
                    SignUpForm,
                    SettingContext.Language,
                    ErrCode,
