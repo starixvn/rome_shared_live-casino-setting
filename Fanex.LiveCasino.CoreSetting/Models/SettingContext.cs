@@ -16,13 +16,7 @@
 
         public FormType FormType { get; set; }
 
-        public int ActorId
-        {
-            get
-            {
-                return Admin.Id > 0 ? Admin.Id : Upline.Id;
-            }
-        }
+        public int ActorId { get; set; }
 
         public string IP
         {
