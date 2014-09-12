@@ -16,8 +16,8 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         $scope.isEditPresetOnMember = function () {
-            var currentPt = $scope.ptAndComSetting.PositionTaking;
-            switch (custSetting.SettingContext.TargetRoleId) {
+            var currentPt = $scope.PositionTaking;
+            switch (custSetting.SettingContext.) {
                 case fanex.liveCasinoSetting.custRole.Master:
                     if (custSetting.PtAndComSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
@@ -67,7 +67,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         //// Action
         $scope.updatePtAndComSetting = function () {
-            if (!custSetting.CustInfo.IsSyncLiveCasino) {
+            if (!custSetting.Customer.IsSyncLiveCasino) {
                 $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.PositionTakingAndCommission);
                 return;
             }

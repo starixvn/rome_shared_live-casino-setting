@@ -16,6 +16,9 @@ if (fanex.liveCasinoSetting) {
                 CommandResultsList: []
             };
             $scope.isUpdateAllSetting = false;
+            if (!custSetting.SettingContext) {
+                
+            }
             $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
             if (custSetting.SettingContext.IsEditMultiple
                 && custSetting.SettingContext.TargetSyncStatus

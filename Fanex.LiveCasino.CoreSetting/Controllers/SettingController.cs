@@ -44,7 +44,13 @@
         public ActionResult EditSetting(
             [ModelBinder(typeof(LiveCasinoSettingContextModelBinder))]LiveCasinoSettingContext settingContext)
         {
-            SetCustomerSettingViewModelToViewBag(settingContext);
+            var customer = _settingService.GetCustomer(settingContext);
+
+            ViewBag.CustSettingViewModel = new CustomerSettingViewModel
+            {
+                SettingContext = settingContext,
+                Customer = customer
+            };
 
             return View(ViewPath.EditSettingSinglePage, settingContext);
         }
@@ -66,7 +72,13 @@
                 return View(ViewPath.NoInformationPage);
             }
 
-            SetCustomerSettingViewModelToViewBag(settingContextMultiple);
+            var customer = _settingService.GetCustomer(settingContextMultiple);
+
+            ViewBag.CustSettingViewModel = new CustomerSettingMultipleViewModel
+            {
+                SettingContextMultiple = settingContextMultiple,
+                Customer = customer
+            };
 
             return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
         }
@@ -248,22 +260,5 @@
         }
 
         #endregion Pt and Com setting
-
-        /// <summary>
-        /// Set customer setting view model to View Bag to pre loading data for JAVASCRIP using.
-        /// </summary>
-        /// <param name="settingContext">Setting context for get customer information to edit.</param>
-        private void SetCustomerSettingViewModelToViewBag(LiveCasinoSettingContext settingContext)
-        {
-            var customer = _settingService.GetCustomer(settingContext);
-
-            var custSettingViewModel = new CustomerSettingViewModel
-            {
-                SettingContext = settingContext,
-                Customer = customer
-            };
-
-            ViewBag.CustSettingViewModel = custSettingViewModel;
-        }
     }
 }
