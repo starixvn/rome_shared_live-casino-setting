@@ -11,5 +11,9 @@
         bool IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext);
 
         bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext);
+
+        bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, SettingContextMultiple settingContextMultiple);
+
+        bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, SettingContextMultiple settingContextMultiple);
     }
 }

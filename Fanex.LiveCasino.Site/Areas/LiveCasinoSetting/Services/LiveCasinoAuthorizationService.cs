@@ -17,5 +17,15 @@ namespace Fanex.LiveCasino.Site.Services
         {
             return true;
         }
+
+        public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, SettingContextMultiple settingContextMultiple)
+        {
+            return true;
+        }
+
+        public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, SettingContextMultiple settingContextMultiple)
+        {
+            return true;
+        }
     }
 }

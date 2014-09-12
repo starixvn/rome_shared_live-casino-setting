@@ -33,24 +33,19 @@
                 var authorizationType = Type.GetType(LiveCasinoSettings.Settings.AuthorizationServiceType);
                 LiveCasinoAuthenticationService = Activator.CreateInstance(authorizationType) as ILiveCasinoAuthorizationService;
 
-                var isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);
+                var isAuthorized = false;
+                if (filterContext.ActionDescriptor.ActionName.ToLower().Contains("multiple"))
+                {
+                    isAuthorized = IsHost ? IsAuthorizedHostMultiple(filterContext) : IsAuthorizedReadMultiple(filterContext);
+                }
+                else
+                {
+                    isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);
+                }
 
                 if (!isAuthorized)
                 {
-                    HttpResponseBase response = filterContext.HttpContext.Response;
-
-                    if (filterContext.HttpContext.Request.IsAjaxRequest())
-                    {
-                        response.Clear();
-                        response.Write(LiveCasinoLang.UnauthorizeMsg);
-                        filterContext.Result = new HttpUnauthorizedResult();
-                        filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                        response.End();
-                    }
-                    else
-                    {
-                        filterContext.Result = new RedirectResult("~/LiveCasinoSetting/User/UnAuthorized");
-                    }
+                    UnAuthorizedAction(filterContext);
                 }
             }
         }
@@ -69,33 +64,37 @@
         {
             var valueProvider = filterContext.Controller.ValueProvider;
             var formCollection = filterContext.HttpContext.Request.Form;
-            var settingContext = new LiveCasinoSettingContextMultiple();
-            if (formCollection.Count > 0)
+            var settingContext = new SettingContext
             {
-                settingContext.ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
-                settingContext.ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
-                settingContext.SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId"));
-                settingContext.Admin = Converter.ToInt(GetFormValue(formCollection, "adminId"));
-                settingContext.CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
-                settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
-                settingContext.Username = GetFormValue(formCollection, "targetUsername");
-                settingContext.CustomerIds = GetFormValue(formCollection, "targetCustIds");
-                settingContext.Usernames = GetFormValue(formCollection, "targetUsernames");
-            }
-            else
-            {
-                settingContext.ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
-                settingContext.ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
-                settingContext.SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "subAccId"));
-                settingContext.Admin = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId"));
-                settingContext.CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
-                settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
-                settingContext.Username = GetActionParameterValue(valueProvider, "targetUsername");
-                settingContext.CustomerIds = GetActionParameterValue(valueProvider, "targetCustIds");
-                settingContext.Usernames = GetActionParameterValue(valueProvider, "targetUsernames");
-            }
+                ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId")),
+                SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId")),
+                AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId")),
+                CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId")),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"))
+            };
 
             return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
+        }
+
+        private bool IsAuthorizedReadMultiple(AuthorizationContext filterContext)
+        {
+            var valueProvider = filterContext.Controller.ValueProvider;
+            var formCollection = filterContext.HttpContext.Request.Form;
+            var settingContext = new SettingContextMultiple
+            {
+                ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId")),
+                SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId")),
+                AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId")),
+                CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId")),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId")),
+                Username = GetFormValue(formCollection, "targetUsername"),
+                TargetCustIds = GetFormValue(formCollection, "targetCustIds"),
+                TargetUsernames = GetFormValue(formCollection, "targetUsernames"),
+            };
+
+            return LiveCasinoAuthenticationService.IsAuthorizedReadMultiple(filterContext, settingContext);
         }
 
         /// <summary>
@@ -106,7 +105,24 @@
         private bool IsAuthorizedHost(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContext = new LiveCasinoSettingContextMultiple
+            var settingContext = new SettingContext
+            {
+                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
+                AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
+                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
+                Username = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId"))
+            };
+
+            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
+        }
+
+        private bool IsAuthorizedHostMultiple(AuthorizationContext filterContext)
+        {
+            var valueProvider = filterContext.Controller.ValueProvider;
+            var settingContextMultiple = new SettingContextMultiple
             {
                 ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
                 ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
@@ -119,7 +135,26 @@
                 Usernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
                 CustomerSyncedStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")
             };
-            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
+
+            return LiveCasinoAuthenticationService.IsAuthorizedHostMultiple(filterContext, settingContextMultiple);
+        }
+
+        private void UnAuthorizedAction(AuthorizationContext filterContext)
+        {
+            HttpResponseBase response = filterContext.HttpContext.Response;
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                response.Clear();
+                response.Write(LiveCasinoLang.UnauthorizeMsg);
+                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                response.End();
+            }
+            else
+            {
+                filterContext.Result = new RedirectResult("~/LiveCasinoSetting/User/UnAuthorized");
+            }
         }
 
         private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
