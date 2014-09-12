@@ -36,7 +36,7 @@
             {
                 var tracking = string.Empty;
 
-                if (SettingContext.TargetRole == CustomerLevel.Super)
+                if (SettingContext.CustomerLevel == CustomerLevel.Super)
                 {
                     tracking = string.Format(TrackingSubAcc, SettingContext.SubAccId, SettingContext.SubAccName);
                 }

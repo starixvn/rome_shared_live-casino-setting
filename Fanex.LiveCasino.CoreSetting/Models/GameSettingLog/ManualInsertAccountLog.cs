@@ -17,7 +17,7 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.TargetRole)
+                switch (SettingContext.CustomerLevel)
                 {
                     case CustomerLevel.Super:
                         logAction = LogActions.ManualInsert_Super;
@@ -49,16 +49,16 @@
                 return string.Format(
                    TrackingTemplate,
                    SpName,
-                   SettingContext.CustId,
+                   SettingContext.CustomerId,
                    SettingContext.Username,
                    CasinoNo,
                    SettingContext.ExchangeId,
                    SettingContext.SuperId,
                    SettingContext.MasterId,
                    SettingContext.AgentId,
-                   SettingContext.CustId,
+                   SettingContext.CustomerId,
                    SettingContext.IP,
-                   SettingContext.UserIdDoAction,
+                   SettingContext.UserId,
                    SignUpForm,
                    SettingContext.Language,
                    ErrCode,

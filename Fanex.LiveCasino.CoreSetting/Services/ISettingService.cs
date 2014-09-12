@@ -61,14 +61,14 @@
         /// <summary>
         /// Gets the game setting.
         /// </summary>
-        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>                
+        /// <param name="settingContext">TargetCustId, CustomerLevel, IsCustomerSyncedLiveCS, TargetUsername, ExchangeId, DirectParentId. </param>                
         /// <returns>The game setting.</returns>
         List<GameType> GetGameSetting(SettingContext settingContext);
 
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, UplineUsername, TargetRole, UserIdDoAction, IP, SuperId, TargetUsername, DirectUplineId.</param>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, UserId, IP, SuperId, TargetUsername, DirectParentId.</param>
         /// <returns>Insert account command results.</returns>
         ICommandResult InsertAutoAccount(SettingContext settingContext);
 

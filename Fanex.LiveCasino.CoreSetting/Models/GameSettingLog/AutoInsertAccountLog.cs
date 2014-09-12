@@ -70,16 +70,16 @@
             string trackingValue = string.Format(
                                             TrackingTemplate,
                                             SpName,
-                                            SettingContext.CustId,
+                                            SettingContext.CustomerId,
                                             SettingContext.Username,
                                             CasinoNo,
                                             SettingContext.ExchangeId,
                                             SettingContext.SuperId,
                                             SettingContext.MasterId,
                                             SettingContext.AgentId,
-                                            SettingContext.TargetRole,
+                                            SettingContext.CustomerLevel,
                                             SettingContext.IP,
-                                            SettingContext.UserIdDoAction,
+                                            SettingContext.UserId,
                                             SignUpForm,
                                             SettingContext.Language,
                                             ErrCode,
@@ -97,7 +97,7 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.TargetRole)
+                switch (SettingContext.CustomerLevel)
                 {
                     case CustomerLevel.Master:
                         logAction = LogActions.AutoInsert_Master;

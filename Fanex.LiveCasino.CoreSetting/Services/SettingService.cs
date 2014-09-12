@@ -45,7 +45,7 @@
 
         public Customer GetCustomer(SettingContext settingContext)
         {
-            Customer customer = GetCustomerInfo(settingContext.CustId);
+            Customer customer = GetCustomerInfo(settingContext.CustomerId);
             SetCustomerPtAndComSetting(settingContext, customer);
             customer.GameSetting = GetGameSetting(settingContext);
 
@@ -67,7 +67,8 @@
             }
 
             //// Edit multiple direct downline. Load setting info of the first selected downline in customer list
-            if (settingContextMultiple.IsEditDirectDownline)
+            int levelGap = (int)settingContextMultiple.ParentLevel - (int)settingContextMultiple.CustomerLevel;
+            if (levelGap == 1)
             {
                 return Converter.ToInt(custInfoList[0].CustId);
             }
@@ -114,7 +115,8 @@
         {
             ICommandResultsDTO resultList = new CommandResultsDTO();
 
-            if (settingContext.IsAgentEditingMember
+            if (settingContext.CustomerLevel == CustomerLevel.Member
+                && settingContext.ParentLevel == CustomerLevel.Agent
                 && customer.IsSyncLiveCasino
                 && !customer.UplineDisableLiveCasino)
             {
@@ -170,10 +172,10 @@
 
             foreach (var custInfo in custInfoes)
             {
-                settingContextMultiple.CustId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.CustId;
                 settingContextMultiple.Username = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
-                var subResult = UpdateEachCustomerInMultipleEdit(settingContext, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -224,35 +226,35 @@
         /// <summary>
         /// Gets the game setting.
         /// </summary>
-        /// <param name="settingContext">TargetCustId, TargetRole, IsTargetSyncedLiveCS, TargetUsername, ExchangeId, DirectUplineId. </param>
+        /// <param name="settingContext">TargetCustId, CustomerLevel, IsCustomerSyncedLiveCS, TargetUsername, ExchangeId, DirectParentId. </param>
         /// <returns>The game setting.</returns>
         public List<GameType> GetGameSetting(SettingContext settingContext)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNegativeOrZero(settingContext.CustId, "TargetCustId");
-            Check.Argument.IsNotNegativeOrZero((int)settingContext.TargetRole, "TargetRole");
-            Check.Argument.IsNotNull(settingContext.IsTargetSyncedLiveCS, "IsTargetSyncedLiveCS");
+            Check.Argument.IsNotNegativeOrZero(settingContext.CustomerId, "TargetCustId");
+            Check.Argument.IsNotNegativeOrZero((int)settingContext.CustomerLevel, "TargetRole");
+            Check.Argument.IsNotNull(settingContext.IsCustomerSyncedLiveCS, "IsTargetSyncedLiveCS");
             Check.Argument.IsNotEmpty(settingContext.Username, "TargetUsername");
             Check.Argument.IsNotNegativeOrZero(settingContext.ExchangeId, "ExchangeId");
-            Check.Argument.IsNotNegativeOrZero(settingContext.DirectUplineId, "DirectUplineId");
+            Check.Argument.IsNotNegativeOrZero(settingContext.DirectParentId, "DirectUplineId");
 
             var gameSettings = new List<GameType>();
 
-            if (settingContext.TargetRole == CustomerLevel.Super && !settingContext.IsTargetSyncedLiveCS)
+            if (settingContext.CustomerLevel == CustomerLevel.Super && !settingContext.IsCustomerSyncedLiveCS)
             {
                 var site = GetCustomerSite(settingContext.Username);
                 gameSettings = _settingRepository.GetGameSetting(settingContext.ExchangeId, site, defaultCheckedValue: true);
             }
-            else if (settingContext.TargetRole != CustomerLevel.Super && !settingContext.IsTargetSyncedLiveCS)
+            else if (settingContext.CustomerLevel != CustomerLevel.Super && !settingContext.IsCustomerSyncedLiveCS)
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.DirectUplineId);
+                gameSettings = _settingRepository.GetGameSetting(settingContext.DirectParentId);
                 gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
 
                 // Check all by default
                 foreach (var gameSettingItem in gameSettings)
                 {
                     gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
-                    if (settingContext.TargetRole == CustomerLevel.Member)
+                    if (settingContext.CustomerLevel == CustomerLevel.Member)
                     {
                         for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
                         {
@@ -263,7 +265,7 @@
             }
             else
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.CustId);
+                gameSettings = _settingRepository.GetGameSetting(settingContext.CustomerId);
             }
 
             return gameSettings;
@@ -272,7 +274,7 @@
         /// <summary>
         /// Inserts the automatic account.
         /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, UplineUsername, TargetRole, UserIdDoAction, IP, SuperId, TargetUsername, DirectUplineId.</param>
+        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, UserId, IP, SuperId, TargetUsername, DirectParentId.</param>
         /// <returns>Insert account command results.</returns>
         public ICommandResult InsertAutoAccount(SettingContext settingContext)
         {
@@ -280,12 +282,12 @@
             {
                 AgentId = settingContext.AgentId,
                 CasinoNo = CasinoNo,
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
-                ModifyUsername = settingContext.UplineUsername,
-                RoleId = (int)settingContext.TargetRole,
-                SignupBy = settingContext.UserIdDoAction,
+                ModifyUsername = settingContext.ParentUsername,
+                RoleId = (int)settingContext.CustomerLevel,
+                SignupBy = settingContext.UserId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
@@ -301,16 +303,16 @@
 
                 if (updateSyncResult.IsSuccessful)
                 {
-                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectParentId);
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
                 if (gameTypes == null || !gameTypes.Any())
                 {
-                    gameTypes = _settingRepository.GetGameSetting(settingContext.DirectUplineId);
+                    gameTypes = _settingRepository.GetGameSetting(settingContext.DirectParentId);
 
                     Logger.Log.Info(
-                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.CustId, settingContext.DirectUplineId),
+                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.CustomerId, settingContext.DirectParentId),
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
@@ -340,12 +342,12 @@
             {
                 AgentId = settingContext.AgentId,
                 CasinoNo = CasinoNo,
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 ExchangeId = settingContext.ExchangeId,
                 MasterId = settingContext.MasterId,
-                ModifyUsername = settingContext.UplineUsername,
-                RoleId = (int)settingContext.TargetRole,
-                SignupBy = settingContext.UserIdDoAction,
+                ModifyUsername = settingContext.ParentUsername,
+                RoleId = (int)settingContext.CustomerLevel,
+                SignupBy = settingContext.UserId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = settingContext.IP,
                 SuperId = settingContext.SuperId,
@@ -371,7 +373,7 @@
                 {
                     gameTypes = _settingRepository.GetGameSetting(settingContext.OldCustId);
                     Logger.Log.Info(
-                        string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.CustId, settingContext.OldCustId),
+                        string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.CustomerId, settingContext.OldCustId),
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
@@ -400,8 +402,8 @@
         {
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
-                CustId = settingContext.CustId,
-                UserID = settingContext.UserIdDoAction,
+                CustId = settingContext.CustomerId,
+                UserID = settingContext.UserId,
                 DisabledLiveCS = disableLiveCasino,
                 EnableDownlinesLiveCS = !disableLiveCasino,
                 IP = settingContext.IP,
@@ -440,12 +442,12 @@
             var gameTypeOlds = new List<GameType>();
             var gameTypeNews = CloneGameTypes(gameTypes);
 
-            if (!settingContext.IsTargetSyncedLiveCS)
+            if (!settingContext.IsCustomerSyncedLiveCS)
             {
                 var insertCommandResult = ManualSyncAccount(settingContext);
-                if (settingContext.TargetRole != CustomerLevel.Super && insertCommandResult.IsSuccessful)
+                if (settingContext.CustomerLevel != CustomerLevel.Super && insertCommandResult.IsSuccessful)
                 {
-                    Customer directUplineInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    Customer directUplineInfo = GetCustomerInfo(settingContext.DirectParentId);
                     if (directUplineInfo.IsSyncLiveCasino)
                     {
                         if (gameTypeNews == null)
@@ -455,7 +457,7 @@
                         }
                         else
                         {
-                            List<GameType> directUplineGameTypes = _settingRepository.GetGameSetting(settingContext.DirectUplineId);
+                            List<GameType> directUplineGameTypes = _settingRepository.GetGameSetting(settingContext.DirectParentId);
                             if (gameTypeNews.Count < directUplineGameTypes.Count)
                             {
                                 var gameTypeUncheckeds = new List<GameType>();
@@ -477,12 +479,12 @@
             }
             else
             {
-                gameTypeOlds = _settingRepository.GetGameSetting(settingContext.CustId);
+                gameTypeOlds = _settingRepository.GetGameSetting(settingContext.CustomerId);
             }
 
             ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(
-                settingContext.CustId,
-                settingContext.TargetRole,
+                settingContext.CustomerId,
+                settingContext.CustomerLevel,
                 gameTypeNews,
                 settingContext.Language);
             WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
@@ -503,9 +505,9 @@
 
             foreach (var custInfo in custInfos)
             {
-                settingContextMultiple.CustId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.CustId;
                 settingContextMultiple.Username = custInfo.UserName;
-                settingContextMultiple.IsTargetSyncedLiveCS = custInfo.IsSyncLiveCasino;
+                settingContextMultiple.IsCustomerSyncedLiveCS = custInfo.IsSyncLiveCasino;
 
                 var updateResult = (CommandResultsDTO)UpdateGameSetting(settingContextMultiple, gameTypes);
 
@@ -528,8 +530,8 @@
         {
             var criteria = new UpdateSyncLiveCasinoCriteria
             {
-                CustId = settingContext.CustId,
-                UserId = settingContext.UserIdDoAction,
+                CustId = settingContext.CustomerId,
+                UserId = settingContext.UserId,
                 Ip = settingContext.IP,
                 Language = settingContext.Language,
                 SubAccId = settingContext.SubAccId,
@@ -573,10 +575,10 @@
         {
             var criteria = new UpdateCustomerWinLimitCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 MaxWinLimit = (decimal)memberWinLimit.Max,
                 IsAutoDailyReset = memberWinLimit.IsAutoReset,
-                UserId = settingContext.UserIdDoAction,
+                UserId = settingContext.UserId,
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             };
@@ -613,7 +615,7 @@
 
             foreach (var custInfo in custInfos)
             {
-                settingContextMultiple.CustId = custInfo.CustId;
+                settingContextMultiple.CustomerId = custInfo.CustId;
                 var updateResult = UpdateWinLimit(settingContextMultiple, memberWinLimit);
 
                 updateResult.Id = custInfo.CustId;
@@ -647,9 +649,9 @@
                 var syncResult = (CommandResultDTO)UpdateSyncLiveCasino(settingContext, isSynced: true);
                 var disableLiveCasino = false;
 
-                if (settingContext.TargetRole != CustomerLevel.Super)
+                if (settingContext.CustomerLevel != CustomerLevel.Super)
                 {
-                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectUplineId);
+                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectParentId);
                     disableLiveCasino = uplineCustInfo.DisableLiveCasino;
                 }
 
@@ -714,17 +716,17 @@
         {
             var criteria = new InsertManualAccountCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 CasinoNo = CasinoNo,
                 ExchangeId = settingContext.ExchangeId,
                 SuperId = settingContext.SuperId,
                 MasterId = settingContext.MasterId,
                 AgentId = settingContext.AgentId,
-                RoleId = (int)settingContext.TargetRole,
+                RoleId = (int)settingContext.CustomerLevel,
                 SignupIp = settingContext.IP,
-                SignupBy = settingContext.UserIdDoAction,
+                SignupBy = settingContext.UserId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
-                ModifyUsername = settingContext.UplineUsername,
+                ModifyUsername = settingContext.ParentUsername,
                 Username = settingContext.Username,
                 CustSite = settingContext.SiteName
             };
@@ -904,8 +906,8 @@
         {
             var criteria = new InsertLogUserRunSPCriteria
             {
-                UserId = logData.SettingContext.UserIdDoAction,
-                CustId = logData.SettingContext.CustId,
+                UserId = logData.SettingContext.UserId,
+                CustId = logData.SettingContext.CustomerId,
                 SpName = logData.SpName,
                 Doing = string.Empty,
                 ActionId = (int)logData.Action,
@@ -941,33 +943,33 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(customer, "customer");
 
-            switch (settingContext.TargetRole)
+            switch (settingContext.CustomerLevel)
             {
                 case CustomerLevel.Super:
-                    SetSuperPtAndCom(settingContext.CustId, customer);
+                    SetSuperPtAndCom(settingContext.CustomerId, customer);
                     break;
 
                 case CustomerLevel.Master:
-                    SetMasterPtAndCom(settingContext.CustId, settingContext.UplineId, customer);
+                    SetMasterPtAndCom(settingContext.CustomerId, settingContext.ParentId, customer);
                     break;
 
                 case CustomerLevel.Agent:
-                    SetAgentPtAndCom(settingContext.CustId, settingContext.UplineId, customer);
+                    SetAgentPtAndCom(settingContext.CustomerId, settingContext.ParentId, customer);
                     break;
 
                 case CustomerLevel.Member:
-                    switch (settingContext.UplineRole)
+                    switch (settingContext.ParentLevel)
                     {
                         case CustomerLevel.Super:
-                            SetMemberPtAndComSettingForSuperEditMember(settingContext.CustId, customer);
+                            SetMemberPtAndComSettingForSuperEditMember(settingContext.CustomerId, customer);
                             break;
 
                         case CustomerLevel.Master:
-                            SetMemberPtAndComSettingForMasterEditMember(settingContext.CustId, customer);
+                            SetMemberPtAndComSettingForMasterEditMember(settingContext.CustomerId, customer);
                             break;
 
                         default:
-                            SetMemberPtAndComSettingForAgentEditMember(settingContext.CustId, settingContext.UplineId, customer);
+                            SetMemberPtAndComSettingForAgentEditMember(settingContext.CustomerId, settingContext.ParentId, customer);
                             break;
                     }
 
@@ -991,11 +993,11 @@
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(positionTaking, "positionTaking");
-            Check.Argument.IsNotNegativeOrZero((int)settingContext.TargetRole, "TargetRole");
-            Check.Argument.IsNotNegativeOrZero(settingContext.CustId, "TargetCustId");
+            Check.Argument.IsNotNegativeOrZero((int)settingContext.CustomerLevel, "TargetRole");
+            Check.Argument.IsNotNegativeOrZero(settingContext.CustomerId, "TargetCustId");
 
             ICommandResultsDTO updateResults = new CommandResultsDTO();
-            switch (settingContext.TargetRole)
+            switch (settingContext.CustomerLevel)
             {
                 case CustomerLevel.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
@@ -1010,7 +1012,7 @@
                     break;
 
                 case CustomerLevel.Member:
-                    switch (settingContext.UplineRole)
+                    switch (settingContext.ParentLevel)
                     {
                         case CustomerLevel.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -1058,8 +1060,8 @@
 
             foreach (var custInfo in custInfoes)
             {
-                settingContextMultiple.CustId = custInfo.CustId;
-                var subResult = UpdatePtComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                settingContextMultiple.CustomerId = custInfo.CustId;
+                var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.CustId;
                 subResult.Name = custInfo.UserName;
                 mainResults.CommandResultsList.Add(subResult);
@@ -1160,10 +1162,10 @@
         {
             ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
+                UserId = settingContext.UserId,
                 SuperCommission = (decimal)commission.Value,
                 S4 = (decimal)positionTaking.S4,
                 N4 = (decimal)positionTaking.N4,
@@ -1293,11 +1295,11 @@
         {
             var criteria = new UpdateMasterSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                SRecommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
+                SRecommend = settingContext.ParentId,
+                UserId = settingContext.UserId,
                 SubAccID = settingContext.SubAccId,
                 MasterCommission = (decimal)commission.Value,
                 M3 = (decimal)positionTaking.M3,
@@ -1338,11 +1340,11 @@
         {
             var criteria = new UpdateAgentSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                MRecommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
+                MRecommend = settingContext.ParentId,
+                UserId = settingContext.UserId,
                 SubAccID = settingContext.SubAccId,
                 AgentCommission = (decimal)commission.Value,
                 M2 = (decimal)positionTaking.M2,
@@ -1380,11 +1382,11 @@
         {
             ICriteria criteria = new AgentUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                Recommend = settingContext.UplineId,
-                UserId = settingContext.UserIdDoAction,
+                Recommend = settingContext.ParentId,
+                UserId = settingContext.UserId,
                 SubAccID = settingContext.SubAccId,
                 MemberCommission = (decimal)commission.Value,
                 A1 = (decimal)positionTaking.A1
@@ -1406,10 +1408,10 @@
         {
             var criteria = new SuperUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
+                UserId = settingContext.UserId,
                 SubAccID = settingContext.SubAccId,
                 S1 = (decimal)positionTaking.S1,
                 Is1 = (bool)positionTaking.Is1,
@@ -1443,10 +1445,10 @@
         {
             var criteria = new MasterUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustId,
+                CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.UserIdDoAction,
+                UserId = settingContext.UserId,
                 SubAccID = settingContext.SubAccId,
                 M1 = (decimal)positionTaking.M1,
                 Im1 = (bool)positionTaking.Im1,

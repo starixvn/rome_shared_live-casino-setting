@@ -15,13 +15,48 @@
         }
 
         /// <summary>
+        /// Gets or sets Target customer id of edited customer.
+        /// </summary>
+        public int CustomerId { get; set; }
+
+        public string Username { get; set; }
+
+        public string ToUsername { get; set; }
+
+        /// <summary>
+        /// Gets or sets Role id of edited customer.
+        /// </summary>
+        public CustomerLevel CustomerLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets Current login customer id or customer that is performing.
+        /// </summary>
+        public int ParentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets Current login customer user name.
+        /// </summary>
+        public string ParentUsername { get; set; }
+
+        /// <summary>
+        /// Gets or sets Current role id of customer that is performing.
+        /// </summary>
+        public CustomerLevel ParentLevel { get; set; }
+
+        public int UserId
+        {
+            get
+            {
+                return AdminId > 0 ? AdminId : ParentId;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets Administrator id, using in Accounting or internal agent.
         /// </summary>
         public int AdminId { get; set; }
 
-        public int AgentId { get; set; }
-
-        public int DirectUplineId { get; set; }
+        public int DirectParentId { get; set; }
 
         /// <summary>
         /// Gets or sets Currency identify.
@@ -59,7 +94,7 @@
 
         public bool IsEditMultiple { get; set; }
 
-        public bool IsTargetSyncedLiveCS { get; set; }
+        public bool IsCustomerSyncedLiveCS { get; set; }
 
         /// <summary>
         /// Gets or sets LangKey of current request.
@@ -70,8 +105,6 @@
         /// Gets or sets Language of current request.
         /// </summary>
         public string Language { get; set; }
-
-        public int MasterId { get; set; }
 
         public int OldCustId { get; set; }
 
@@ -87,45 +120,13 @@
 
         public string SubAccName { get; set; }
 
+        public int AgentId { get; set; }
+
+        public int MasterId { get; set; }
+
         public int SuperId { get; set; }
 
         public int SystemId { get; set; }
 
-        /// <summary>
-        /// Gets or sets Target customer id of edited customer.
-        /// </summary>
-        public int CustId { get; set; }
-
-        /// <summary>
-        /// Gets or sets Role id of edited customer.
-        /// </summary>
-        public CustomerLevel TargetRole { get; set; }
-
-        public string Username { get; set; }
-
-        public string ToUsername { get; set; }
-
-        /// <summary>
-        /// Gets or sets Current login customer id or customer that is performing.
-        /// </summary>
-        public int UplineId { get; set; }
-
-        /// <summary>
-        /// Gets or sets Current role id of customer that is performing.
-        /// </summary>
-        public CustomerLevel UplineRole { get; set; }
-
-        /// <summary>
-        /// Gets or sets Current login customer user name.
-        /// </summary>
-        public string UplineUsername { get; set; }
-
-        public int UserIdDoAction
-        {
-            get
-            {
-                return AdminId > 0 ? AdminId : UplineId;
-            }
-        }
     }
 }

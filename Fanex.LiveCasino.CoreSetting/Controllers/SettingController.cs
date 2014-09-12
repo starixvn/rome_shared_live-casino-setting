@@ -62,11 +62,11 @@
         {
             var settingContext = new SettingContext
                 {
-                    UplineId = uplineId,
-                    DirectUplineId = directUplineId,
-                    UplineRole = (CustomerLevel)uplineRoleId,
-                    CustId = targetCustId,
-                    TargetRole = (CustomerLevel)targetRoleId,
+                    ParentId = uplineId,
+                    DirectParentId = directUplineId,
+                    ParentLevel = (CustomerLevel)uplineRoleId,
+                    CustomerId = targetCustId,
+                    CustomerLevel = (CustomerLevel)targetRoleId,
                     FormType = (FormType)formType,
                     AdminId = adminId,
                     Language = language,
@@ -113,10 +113,10 @@
         {
             var settingContextMultiple = new SettingContextMultiple
             {
-                UplineId = uplineId,
-                DirectUplineId = directUplineId,
-                UplineRole = (CustomerLevel)uplineRoleId,
-                TargetRole = (CustomerLevel)targetRoleId,
+                ParentId = uplineId,
+                DirectParentId = directUplineId,
+                ParentLevel = (CustomerLevel)uplineRoleId,
+                CustomerLevel = (CustomerLevel)targetRoleId,
                 TargetCustIds = targetCustIds,
                 TargetUsernames = targetUsernames,
                 FormType = (FormType)formType,
@@ -129,8 +129,8 @@
                 LangKey = GetLanguageKey()
             };
 
-            settingContextMultiple.CustId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
-            if (settingContextMultiple.CustId == 0)
+            settingContextMultiple.CustomerId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
+            if (settingContextMultiple.CustomerId == 0)
             {
                 return View(ViewPath.NoInformationPage);
             }
@@ -153,12 +153,13 @@
             SettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers,
-            int updateType = (int)UpdateType.AllSetting)
+            float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
-
-                updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContext, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+            ICommandResultsDTO updateResult = _settingService.UpdateSingleCustomerAllSetting(
+                settingContext, 
+                customer, 
+                isApplyPositionTakingAllMembers, 
+                positionTakingOnMembers);
 
 
             return Json(updateResult);
@@ -168,12 +169,18 @@
         public JsonResult UpdateLiveCasinoSettingMultiple(
             SettingContextMultiple settingContextMultiple,
             Customer customer,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            updateResult = _settingService.UpdateMultipleCustomerAllSetting(settingContextMultiple, customer, uplinePositionTakingOnMember, updateType);
+            updateResult = _settingService.UpdateMultipleCustomerAllSetting(
+                settingContextMultiple, 
+                customer, 
+                updateType, 
+                isApplyPositionTakingAllMembers,
+                positionTakingOnMembers);
 
 
             return Json(updateResult);
@@ -270,10 +277,12 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
-
-                updateResult = _settingService.UpdatePtComSettingMultiple(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-
+            ICommandResultsDTO updateResult = _settingService.UpdatePtComSetting(
+                settingContext, 
+                commission, 
+                positionTaking, 
+                isApplyPositionTakingAllMembers, 
+                positionTakingOnMembers);
 
             return Json(updateResult);
         }
@@ -283,11 +292,15 @@
             SettingContextMultiple settingContextMultiple,
             Commission commission,
             PositionTaking positionTaking,
-            UplinePositionTakingOnMember uplinePositionTakingOnMember)
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
-
-            updateResult = _settingService.UpdatePtComSettingMultiple(settingContextMultiple, commission, positionTaking, uplinePositionTakingOnMember);
+            IMultipleCommandResultsDTO updateResult = _settingService.UpdatePtComSettingMultiple(
+                settingContextMultiple, 
+                commission, 
+                positionTaking, 
+                isApplyPositionTakingAllMembers, 
+                positionTakingOnMembers);
 
             return Json(updateResult);
         }
@@ -301,7 +314,7 @@
         private void SetCustomerSettingViewModelToViewBag(SettingContext settingContext)
         {
             var customer = _settingService.GetCustomer(settingContext);
-            settingContext.IsTargetSyncedLiveCS = customer.IsSyncLiveCasino;
+            settingContext.IsCustomerSyncedLiveCS = customer.IsSyncLiveCasino;
 
             var custSettingViewModel = new CustomerSettingViewModel
             {

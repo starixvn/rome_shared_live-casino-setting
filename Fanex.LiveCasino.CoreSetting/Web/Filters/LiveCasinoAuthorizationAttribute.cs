@@ -72,24 +72,24 @@
             var settingContext = new SettingContextMultiple();
             if (formCollection.Count > 0)
             {
-                settingContext.UplineId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
-                settingContext.UplineRole = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
+                settingContext.ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
+                settingContext.ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId"));
                 settingContext.SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId"));
-                settingContext.CustId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
-                settingContext.TargetRole = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
+                settingContext.CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
+                settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
                 settingContext.Username = GetFormValue(formCollection, "targetUsername");
                 settingContext.TargetCustIds = GetFormValue(formCollection, "targetCustIds");
                 settingContext.TargetUsernames = GetFormValue(formCollection, "targetUsernames");
             }
             else
             {
-                settingContext.UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
-                settingContext.UplineRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
+                settingContext.ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "uplineId"));
+                settingContext.ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "uplineRoleId"));
                 settingContext.SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "subAccId"));
                 settingContext.AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "adminId"));
-                settingContext.CustId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
-                settingContext.TargetRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
+                settingContext.CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
+                settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
                 settingContext.Username = GetActionParameterValue(valueProvider, "targetUsername");
                 settingContext.TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds");
                 settingContext.TargetUsernames = GetActionParameterValue(valueProvider, "targetUsernames");
@@ -108,13 +108,13 @@
             var valueProvider = filterContext.Controller.ValueProvider;
             var settingContext = new SettingContextMultiple
             {
-                UplineId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
-                UplineRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
                 SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
-                CustId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
+                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
                 Username = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
-                TargetRole = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
                 TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
                 TargetUsernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
                 TargetSyncStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")

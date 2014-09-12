@@ -16,7 +16,7 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.TargetRole)
+                switch (SettingContext.CustomerLevel)
                 {
                     case CustomerLevel.Super:
                         logAction = LogActions.UpdateStakeLevel_Super;
@@ -82,14 +82,14 @@
             var trackingValue = string.Format(
                      TrackingTemplate,
                      SpName,
-                     SettingContext.CustId,
+                     SettingContext.CustomerId,
                      TrackingSubAccount,
                      gameType.Id,
                      gameType.BetTypeId,
                      gameType.CheckedStakeLevelRange,
                      SettingContext.IP,
                      SettingContext.Language,
-                     SettingContext.TargetRole,
+                     SettingContext.CustomerLevel,
                      ErrCode,
                      ErrMsg);
 

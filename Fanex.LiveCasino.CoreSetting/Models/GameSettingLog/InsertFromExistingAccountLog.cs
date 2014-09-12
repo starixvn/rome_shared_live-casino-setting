@@ -13,7 +13,7 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.TargetRole)
+                switch (SettingContext.CustomerLevel)
                 {
                     case CustomerLevel.Master:
                         logAction = LogActions.AutoInsertExisting_Master;
