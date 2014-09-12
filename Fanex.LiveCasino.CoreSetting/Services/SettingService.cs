@@ -989,7 +989,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         public ICommandResultsDTO UpdatePtComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1045,7 +1045,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         public IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
             LiveCasinoSettingContextMultiple settingContextMultiple,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1160,7 +1160,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         private List<ICommandResult> UpdateSuperPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             ICommandResult commandResult = _settingRepository.Save(new UpdateSuperSettingCriteria
@@ -1179,7 +1179,7 @@
 
         private List<ICommandResult> UpdateMasterPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1192,7 +1192,7 @@
 
         private List<ICommandResult> UpdateAgentPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1205,7 +1205,7 @@
 
         private List<ICommandResult> AgentUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -1216,7 +1216,7 @@
 
         private List<ICommandResult> SuperUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -1227,7 +1227,7 @@
 
         private List<ICommandResult> MasterUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
@@ -1291,7 +1291,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1336,7 +1336,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -1380,7 +1380,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = new AgentUpdateMemberSettingCriteria
@@ -1406,7 +1406,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             var criteria = new SuperUpdateMemberSettingCriteria
@@ -1443,7 +1443,7 @@
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking)
         {
             var criteria = new MasterUpdateMemberSettingCriteria

@@ -212,7 +212,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -230,7 +230,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSettingMultiple(
             LiveCasinoSettingContextMultiple settingContextMultiple,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)

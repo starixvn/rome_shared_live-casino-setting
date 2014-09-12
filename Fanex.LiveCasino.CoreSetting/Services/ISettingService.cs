@@ -33,7 +33,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         ICommandResultsDTO UpdatePtComSetting(
             LiveCasinoSettingContext settingContext,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
@@ -47,7 +47,7 @@
         /// <returns>Update status and information for showing on web.</returns>
         IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
             LiveCasinoSettingContextMultiple settingContextMultiple,
-            Commission commission,
+            float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
