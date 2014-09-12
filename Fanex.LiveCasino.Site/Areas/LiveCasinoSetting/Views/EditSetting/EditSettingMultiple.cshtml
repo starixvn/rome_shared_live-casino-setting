@@ -1,7 +1,8 @@
 ﻿@{
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
-    ViewBag.Title = "EditSettingMultiple";
+    ViewBag.Title = LiveCasinoLang.lblEditMultipleLiveCasino;
     var customerNames = string.Join<string>(",", Model.Customers.Select<Customer, string>(customer => customer.Username));
+}
 @model LiveCasinoSettingContextMultiple
 
 @section CustomerInfomation

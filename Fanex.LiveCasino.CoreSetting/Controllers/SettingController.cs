@@ -46,7 +46,7 @@
         {
             SetCustomerSettingViewModelToViewBag(settingContext);
 
-            return View(ViewPath.EditSettingPage, settingContext);
+            return View(ViewPath.EditSettingSinglePage, settingContext);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
 
             SetCustomerSettingViewModelToViewBag(settingContextMultiple);
 
-            return View(ViewPath.EditSettingPage, settingContextMultiple);
+            return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
         }
 
         /// <summary>

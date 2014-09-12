@@ -33,6 +33,10 @@
             }
         }
 
+              
+
+        public string IP { get; set; }
+
         public string Language { get; set; }
     }
 }
