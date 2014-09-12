@@ -18,7 +18,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         $scope.isEditPresetOnMember = function () {
             var currentPt = $scope.PositionTaking;
             switch (custSetting.SettingContext.) {
-                case fanex.liveCasinoSetting.custRole.Master:
+                case fanex.liveCasinoSetting.customerLevel.Master:
                     if (custSetting.PtAndComSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
                         $scope.uplinePTOnMember = fanex.roundNumber(currentPt.S4 - currentPt.M3);
@@ -35,7 +35,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                         return true;
                     }
                     break;
-                case fanex.liveCasinoSetting.custRole.Agent:
+                case fanex.liveCasinoSetting.customerLevel.Agent:
                     if (custSetting.PtAndComSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
                         $scope.uplinePTOnMember = fanex.roundNumber(currentPt.M3 - currentPt.A2);

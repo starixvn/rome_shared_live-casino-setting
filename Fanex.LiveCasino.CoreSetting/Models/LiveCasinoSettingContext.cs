@@ -24,7 +24,7 @@
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(_ip) ? HttpContext.Current.Request.UserHostAddress : _ip;
+                return string.IsNullOrWhiteSpace(_ip) ? HttpContext.Current.Request.UserHostAddress : _ip;
             }
 
             set

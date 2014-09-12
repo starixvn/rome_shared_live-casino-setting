@@ -36,7 +36,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should show popup when super change from is auto preset to not', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: true
         };
@@ -51,7 +51,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when super change from not auto to take auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: false
         };
@@ -66,7 +66,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should show popup when master change from is auto preset to not', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
         custSetting.PtAndComSetting.PositionTaking = {
             Im2: true
         };
@@ -81,7 +81,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when master change from is not auto to take auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Agent;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
         custSetting.PtAndComSetting.PositionTaking = {
             Im2: false
         };
@@ -96,7 +96,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when form has no auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Member;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Member;
 
         //// When
         var isEditOnMember = $scope.isEditPresetOnMember();
@@ -114,7 +114,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not update setting and show popup when update setting', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.custRole.Master;
+        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
         custSetting.PtAndComSetting.PositionTaking = {
             Is3: true
         };
