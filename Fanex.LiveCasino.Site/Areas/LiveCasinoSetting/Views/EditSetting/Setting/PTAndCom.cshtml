@@ -1,4 +1,4 @@
-﻿@model SettingContext
+﻿@model LiveCasinoSettingContext
 @{
     Layout = null;
 }
@@ -43,7 +43,7 @@
                     <button type="button" class="close custom-close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <span class="modal-title custom-modal-title">
-                        @if (Model.SystemId != (int)SystemType.Agency)
+                        @if (LiveCasinoSettings.Settings.SystemId != (int)SystemType.Agency)
                         {
                             @LiveCasinoLang.lblConfirmUpdateMemberPT
                         }
@@ -54,7 +54,7 @@
                     </span>
                 </div>
                 <div class="modal-body custom-modal-body">
-                    <p>@(Model.IsEdittingMaster ? LiveCasinoLang.lblHaveChangeMasterPositionTaking : LiveCasinoLang.lblHaveChangeAgentPositionTaking)</p>
+                    <p>@(Model.Customer.Level == CustomerLevel.Master ? LiveCasinoLang.lblHaveChangeMasterPositionTaking : LiveCasinoLang.lblHaveChangeAgentPositionTaking)</p>
                     <p>@LiveCasinoLang.lblChangePTTo:</p>
                      <select 
                         data-ng-model="uplinePTOnMember.NewUplinePositionTaking" 

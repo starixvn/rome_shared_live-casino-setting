@@ -1,4 +1,4 @@
-﻿@model SettingContext
+﻿@model LiveCasinoSettingContext
 <div id="tblMaxWinLimit" class="pt-container col-xs-12"
     data-ng-controller="CustomerWinLimitController"
     <div class="pt-title">
@@ -24,14 +24,14 @@
                     </label>
                 </td>
             </tr>
-            @if (Model.TargetRole == CustomerRole.Member)
+            @if (Model.Customer.Level == CustomerLevel.Member)
             { 
                 <tr>
                     <td class="col-xs-3 right bold">
                         @LiveCasinoLang.lblCurrentWinLimit
                     </td>
                     <td class="col-xs-3 left ng-binding">
-                        <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.TargetCustId)" data-ng-show="!isShowCurrentWinLimit">
+                        <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.Customer.Id)" data-ng-show="!isShowCurrentWinLimit">
                             @LiveCasinoLang.lblClickToViewCurrentWinLimit
                         </div>
                         <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">

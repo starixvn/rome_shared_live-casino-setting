@@ -1,4 +1,4 @@
-﻿@model SettingContext
+﻿@model LiveCasinoSettingContext
 <div id="tblGameSetting" class="pt-container col-xs-12" 
     data-ng-controller="CustGameSettingController" 
     <div class="pt-title">
@@ -24,7 +24,7 @@
                 <td class="betting-limit-container">
                     <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
                         <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
-                        @if (Model.TargetRole != CustomerRole.Member)
+                        @if (Model.TargetRole != CustomerLevel.Member)
                         {
                             <label class="checkbox-inline betting-limit-label">
                                 <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
