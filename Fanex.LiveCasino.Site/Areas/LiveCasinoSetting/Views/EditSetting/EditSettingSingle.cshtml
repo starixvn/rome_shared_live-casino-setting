@@ -2,7 +2,7 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     Layout = null;
 }
-@model SettingContext
+@model LiveCasinoSettingContext
 
 @section CustomerInfomation
 {
@@ -65,7 +65,7 @@
                 <td class="left info-value">
                     {{custInfo.Fax}}
                 </td>
-                @if (Model.IsAgentEditingMember)
+                @if (Model.Customer.Level == CustomerLevel.Member && Model.Upline.Level == CustomerLevel.Agent)
                 {
                     <td class="right bold info-lable">
                         @LiveCasinoLang.lblEnable

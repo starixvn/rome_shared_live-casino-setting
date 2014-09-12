@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = "EditSettingMultiple";
-}
-@model SettingContext
+    var customerNames = string.Join<string>(",", Model.Customers.Select<Customer, string>(customer => customer.Username));
+@model LiveCasinoSettingContextMultiple
 
 @section CustomerInfomation
 {
@@ -11,10 +11,10 @@
             <tbody>
                 <tr>
                     <td class="bold left">
-                        @(string.Join(", ", Model.TargetUsernames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)))
+                        @(customerNames)
                     </td>
                 </tr>
-                @if (Model.IsAgentEditingMember)
+                @if (Model.Customer.Level == CustomerLevel.Member && Model.Upline.Level == CustomerLevel.Agent)
                 {
                     <tr>
                         <td class="right">
