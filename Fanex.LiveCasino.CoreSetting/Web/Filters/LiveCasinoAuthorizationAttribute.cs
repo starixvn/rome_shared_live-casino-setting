@@ -83,15 +83,15 @@
             var formCollection = filterContext.HttpContext.Request.Form;
             var settingContext = new SettingContextMultiple
             {
-                ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId")),
-                ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "uplineRoleId")),
+                ParentId = Converter.ToInt(GetFormValue(formCollection, "parentId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "parentLevel")),
                 SubAccId = Converter.ToInt(GetFormValue(formCollection, "subAccId")),
                 AdminId = Converter.ToInt(GetFormValue(formCollection, "adminId")),
-                CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId")),
-                CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId")),
-                Username = GetFormValue(formCollection, "targetUsername"),
-                TargetCustIds = GetFormValue(formCollection, "targetCustIds"),
-                TargetUsernames = GetFormValue(formCollection, "targetUsernames"),
+                CustomerId = Converter.ToInt(GetFormValue(formCollection, "customerId")),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "customerLevel")),
+                Username = GetFormValue(formCollection, "username"),
+                CustomerIds = GetFormValue(formCollection, "customerIds"),
+                Usernames = GetFormValue(formCollection, "usernames"),
             };
 
             return LiveCasinoAuthenticationService.IsAuthorizedReadMultiple(filterContext, settingContext);
@@ -107,13 +107,13 @@
             var valueProvider = filterContext.Controller.ValueProvider;
             var settingContext = new SettingContext
             {
-                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
-                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentLevel")),
                 SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
                 AdminId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
-                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
-                Username = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
-                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId"))
+                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerId")),
+                Username = GetActionParameterValue(valueProvider, "settingContext.Username"),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerLevel"))
             };
 
             return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
@@ -124,16 +124,16 @@
             var valueProvider = filterContext.Controller.ValueProvider;
             var settingContextMultiple = new SettingContextMultiple
             {
-                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
-                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),
+                ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentId")),
+                ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentLevel")),
                 SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
                 Admin = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
-                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
-                Username = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
-                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
-                CustomerIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
-                Usernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
-                CustomerSyncedStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")
+                CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerId")),
+                Username = GetActionParameterValue(valueProvider, "settingContext.Username"),
+                CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerLevel")),
+                CustomerIds = GetActionParameterValue(valueProvider, "settingContext.CustomerIds"),
+                Usernames = GetActionParameterValue(valueProvider, "settingContext.Usernames"),
+                CustomerSyncedStatus = GetActionParameterValue(valueProvider, "settingContext.CustomerSyncedStatus")
             };
 
             return LiveCasinoAuthenticationService.IsAuthorizedHostMultiple(filterContext, settingContextMultiple);

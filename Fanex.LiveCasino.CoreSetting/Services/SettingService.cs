@@ -26,7 +26,6 @@
     /// <summary>
     /// Setting service for update position taking setting, Commission, member win limit.
     /// </summary>
-    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public class SettingService : ISettingService
     {
         private const string CasinoNo = "01";
@@ -74,6 +73,11 @@
             }
 
             //// Super/Master multiple member
+            return RemoveCustomerNotSyncAndGetFirstSyncCustomerId(settingContextMultiple, custInfoList);
+        }
+
+        private int RemoveCustomerNotSyncAndGetFirstSyncCustomerId(SettingContextMultiple settingContextMultiple, List<Customer> custInfoList)
+        {
             var newCustIdList = string.Empty;
             var newUsernameList = string.Empty;
             var newTargetSyncList = string.Empty;
@@ -97,7 +101,6 @@
             settingContextMultiple.CustomerIds = newCustIdList.TrimEnd(',');
             settingContextMultiple.Usernames = newUsernameList.TrimEnd(',');
             settingContextMultiple.CustomerSyncedStatus = newTargetSyncList.TrimEnd(',');
-
             return firstSyncCustId;
         }
 
