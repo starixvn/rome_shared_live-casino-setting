@@ -42,6 +42,9 @@
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
             Customer customer = GetCustomerInfo(settingContext.Customer.Id);
+
+            settingContext.Customer.CurrencyId = customer.CurrencyId;
+
             settingContext.Customer.Username = customer.Username;
             SetCustomerPtAndComSetting(settingContext, customer);
             customer.LiveCasinoSetting.GameSetting = GetGameSetting(settingContext);
@@ -210,9 +213,9 @@
             Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
             Check.Argument.IsNotNegativeOrZero((int)settingContext.Customer.Level, "settingContext.Customer.Level");
             Check.Argument.IsNotNull(settingContext.Customer.IsSyncLiveCasino, "settingContext.Customer.IsSyncLiveCasino");
-            //Check.Argument.IsNotEmpty(settingContext.Customer.Username, "settingContext.Customer.Username");
-            //Check.Argument.IsNotNegativeOrZero(settingContext.Customer.CurrencyId, "settingContext.Customer.CurrencyId");
-            //Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Parent.Id, "settingContext.Customer.Parent.Id");
+            Check.Argument.IsNotEmpty(settingContext.Customer.Username, "settingContext.Customer.Username");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.CurrencyId, "settingContext.Customer.CurrencyId");
+            Check.Argument.IsNotNegative(settingContext.Customer.Parent.Id, "settingContext.Customer.Parent.Id");
 
             var gameSettings = new List<GameType>();
 
