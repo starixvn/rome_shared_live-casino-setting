@@ -12,6 +12,7 @@
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.ViewModels;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
+    using Fanex.LiveCasino.CoreSetting.Web.Binders;
 
     /// <summary>
     /// Controller handles setting request.
@@ -40,7 +41,7 @@
         /// Edit customer page.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSetting(LiveCasinoSettingContext settingContext)
+        public ActionResult EditSetting([ModelBinder(typeof(SettingContextModelBinder))]SettingContext settingContext)
         {
             SetCustomerSettingViewModelToViewBag(settingContext);
 
