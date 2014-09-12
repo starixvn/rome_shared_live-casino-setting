@@ -8,15 +8,17 @@ if (fanex.liveCasinoSetting) {
         'CustomerWinLimitService',
         function ($scope, $http, customerWinLimitService) {
             'use strict';
-            $scope.maxWinLimitModel = fanex.cloneObject(custSetting.CustInfo.MemberWinLimit);
-            var memberWinLimit = custSetting.CustInfo.MemberWinLimit;
+            $scope.maxWinLimitModel = fanex.cloneObject(custSetting.Customer.LiveCasinoSetting.WinLimit);
+            var customer = custSetting.Customer;
+            var winLimit = custSetting.Customer.LiveCasinoSetting.WinLimit;
+            var uplineWinLimit = custSetting.Customer.Parent.LiveCasinoSetting.WinLimit;
             $scope.isShowCurrentWinLimit = false;
             $scope.maxWinLimits = [{ lable: "3X", value: 3 },
                                    { lable: "5X", value: 5 },
                                    { lable: "10X", value: 10 },
                                    { lable: language.getString("lblUnlimited"), value: 0}];
 
-            switch (memberWinLimit.Upline.Max) {
+            switch (uplineWinLimit.Max) {
                 case 3:
                     $scope.maxWinLimits.splice(1, 3);
                     break;
@@ -30,7 +32,7 @@ if (fanex.liveCasinoSetting) {
 
             var index = 0;
 
-            switch (memberWinLimit.Max) {
+            switch (winLimit.Max) {
                 case 3:
                     index = 0;
                     break;
@@ -48,8 +50,8 @@ if (fanex.liveCasinoSetting) {
 
             $scope.maxWinLimitModel = {
                 Max: $scope.maxWinLimits[index],
-                IsAutoReset: memberWinLimit.IsAutoReset,
-                UplineAutoReset: custSetting.SettingContext.TargetRoleId === fanex.liveCasinoSetting.custRole.Super ? true : memberWinLimit.Upline.IsAutoReset
+                IsAutoReset: winLimit.IsAutoReset,
+                UplineAutoReset: customer.Level === fanex.liveCasinoSetting.customerLevel.Super ? true : uplineWinLimit.IsAutoReset
             };
 
             $scope.maxWinLimits = $scope.maxWinLimits.reverse();
@@ -69,7 +71,7 @@ if (fanex.liveCasinoSetting) {
             };
 
             $scope.updateWinLimitSetting = function () {
-                if (!custSetting.CustInfo.IsSyncLiveCasino) {
+                if (!customer.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.WinLimit);
                     return;
                 }
