@@ -17,7 +17,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         $scope.isEditPresetOnMember = function () {
             var currentPt = $scope.PositionTaking;
-            switch (custSetting.SettingContext.) {
+            switch (custSetting.SettingContext.Customer.Level) {
                 case fanex.liveCasinoSetting.customerLevel.Master:
                     if (custSetting.PtAndComSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
