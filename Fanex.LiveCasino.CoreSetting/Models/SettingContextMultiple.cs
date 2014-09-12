@@ -8,13 +8,13 @@
         /// <summary>
         /// Gets or sets Target customers id for edit multiple.
         /// </summary>
-        public string TargetCustIds { get; set; }
+        public string CustomerIds { get; set; }
 
-        public string TargetSyncStatus { get; set; }
+        public string CustomerSyncedStatus { get; set; }
 
         /// <summary>
         /// Gets or sets Target User.
         /// </summary>
-        public string TargetUsernames { get; set; }
+        public string Usernames { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
 
     /// <summary>
     /// Setting repository class.
@@ -49,7 +50,23 @@
                                 custInfo.Mobile = reader.To<string>("mobilephone");
                                 custInfo.NickName = reader.To<string>("username2");
                                 custInfo.Phone = reader.To<string>("phone");
-                                custInfo.RoleId = reader.To<byte>("roleid");
+                                var roleId = reader.To<byte>("roleid");
+                                switch (roleId)
+                                {
+                                    case (byte)CustomerLevel.Super:
+                                        custInfo.Level = CustomerLevel.Super;
+                                        break;
+                                    case (byte)CustomerLevel.Master:
+                                        custInfo.Level = CustomerLevel.Master;
+                                        break;
+                                    case (byte)CustomerLevel.Agent:
+                                        custInfo.Level = CustomerLevel.Agent;
+                                        break;
+                                    default:
+                                        custInfo.Level = CustomerLevel.Member;
+                                        break;
+                                }
+
                                 custInfo.Site = reader.To<string>("site");
                                 custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
                                 custInfo.UserName = reader.To<string>("username");

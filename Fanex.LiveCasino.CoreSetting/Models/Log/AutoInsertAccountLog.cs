@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Models.GameSettingLog
+﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.Enumerations;

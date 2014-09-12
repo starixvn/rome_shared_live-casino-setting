@@ -79,8 +79,8 @@
                 settingContext.CustomerId = Converter.ToInt(GetFormValue(formCollection, "targetCustId"));
                 settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetFormValue(formCollection, "targetRoleId"));
                 settingContext.Username = GetFormValue(formCollection, "targetUsername");
-                settingContext.TargetCustIds = GetFormValue(formCollection, "targetCustIds");
-                settingContext.TargetUsernames = GetFormValue(formCollection, "targetUsernames");
+                settingContext.CustomerIds = GetFormValue(formCollection, "targetCustIds");
+                settingContext.Usernames = GetFormValue(formCollection, "targetUsernames");
             }
             else
             {
@@ -91,8 +91,8 @@
                 settingContext.CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "targetCustId"));
                 settingContext.CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "targetRoleId"));
                 settingContext.Username = GetActionParameterValue(valueProvider, "targetUsername");
-                settingContext.TargetCustIds = GetActionParameterValue(valueProvider, "targetCustIds");
-                settingContext.TargetUsernames = GetActionParameterValue(valueProvider, "targetUsernames");
+                settingContext.CustomerIds = GetActionParameterValue(valueProvider, "targetCustIds");
+                settingContext.Usernames = GetActionParameterValue(valueProvider, "targetUsernames");
             }
 
             return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
@@ -115,9 +115,9 @@
                 CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetCustId")),
                 Username = GetActionParameterValue(valueProvider, "settingContext.TargetUsername"),
                 CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.TargetRoleId")),
-                TargetCustIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
-                TargetUsernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
-                TargetSyncStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")
+                CustomerIds = GetActionParameterValue(valueProvider, "settingContext.TargetCustIds"),
+                Usernames = GetActionParameterValue(valueProvider, "settingContext.TargetUsernames"),
+                CustomerSyncedStatus = GetActionParameterValue(valueProvider, "settingContext.TargetSyncStatus")
             };
             return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
         }

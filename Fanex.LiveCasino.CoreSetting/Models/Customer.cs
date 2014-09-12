@@ -25,7 +25,7 @@
 
         public string Fax { get; set; }
 
-        public byte RoleId { get; set; }
+        public CustomerLevel Level { get; set; }
 
         public bool IsSyncLiveCasino { get; set; }
 
@@ -44,37 +44,5 @@
         public PositionTaking PositionTaking { get; set; }
 
         public List<GameType> GameSetting { get; set; }
-
-        public bool IsSuper
-        {
-            get
-            {
-                return RoleId == (int)CustomerLevel.Super;
-            }
-        }
-
-        public bool IsMaster
-        {
-            get
-            {
-                return RoleId == (int)CustomerLevel.Master;
-            }
-        }
-
-        public bool IsAgent
-        {
-            get
-            {
-                return RoleId == (int)CustomerLevel.Agent;
-            }
-        }
-
-        public bool IsMember
-        {
-            get
-            {
-                return RoleId == (int)CustomerLevel.Member;
-            }
-        }
     }
 }

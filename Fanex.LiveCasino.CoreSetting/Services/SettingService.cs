@@ -17,7 +17,7 @@
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.GameSettingLog;
+    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
@@ -59,7 +59,7 @@
         /// <returns>Customer id representative.</returns>
         public int GetRepresentativeCustIdForEditingMultiple(SettingContextMultiple settingContextMultiple)
         {
-            var custInfoList = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
+            var custInfoList = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
             if (!custInfoList.Any())
             {
@@ -94,9 +94,9 @@
                 }
             }
 
-            settingContextMultiple.TargetCustIds = newCustIdList.TrimEnd(',');
-            settingContextMultiple.TargetUsernames = newUsernameList.TrimEnd(',');
-            settingContextMultiple.TargetSyncStatus = newTargetSyncList.TrimEnd(',');
+            settingContextMultiple.CustomerIds = newCustIdList.TrimEnd(',');
+            settingContextMultiple.Usernames = newUsernameList.TrimEnd(',');
+            settingContextMultiple.CustomerSyncedStatus = newTargetSyncList.TrimEnd(',');
 
             return firstSyncCustId;
         }
@@ -166,7 +166,7 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            var custInfoes = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
+            var custInfoes = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
             IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
 
@@ -501,7 +501,7 @@
         public IMultipleCommandResultsDTO UpdateGameSettingMultiple(SettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResultsDTO();
-            List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
+            List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -611,7 +611,7 @@
         public IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
         {
             var results = new MultipleCommandResultsDTO();
-            List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
+            List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
             foreach (var custInfo in custInfos)
             {
@@ -1048,13 +1048,13 @@
             float positionTakingOnMembers)
         {
             Check.Argument.IsNotNull(settingContextMultiple, "settingContext");
-            Check.Argument.IsNotEmpty(settingContextMultiple.TargetCustIds, "TargetCustIds");
-            Check.Argument.IsNotEmpty(settingContextMultiple.TargetUsernames, "TargetUsernames");
-            Check.Argument.IsNotEmpty(settingContextMultiple.TargetSyncStatus, "TargetSyncStatus");
-            Check.Argument.IsNotEmpty(settingContextMultiple.TargetCustIds, "TargetCustIds");
+            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerIds, "TargetCustIds");
+            Check.Argument.IsNotEmpty(settingContextMultiple.Usernames, "TargetUsernames");
+            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerSyncedStatus, "TargetSyncStatus");
+            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerIds, "TargetCustIds");
             Check.Argument.IsNotNull(positionTaking, "positionTaking");
 
-            var custInfoes = GetCustomerInfo(settingContextMultiple.TargetCustIds, settingContextMultiple.TargetUsernames, settingContextMultiple.TargetSyncStatus);
+            var custInfoes = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
             IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
 

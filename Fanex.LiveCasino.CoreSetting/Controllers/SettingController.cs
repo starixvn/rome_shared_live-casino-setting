@@ -35,15 +35,7 @@
         /// <summary>
         /// Edit single customer setting.
         /// </summary>
-        /// <param name="uplineId">Customer Id is doing action.</param>
-        /// <param name="directUplineId">The direct UPLINE identifier.</param>
-        /// <param name="uplineRoleId">Role id of current customer doing action.</param>
-        /// <param name="targetCustId">Target customer is being edited.</param>
-        /// <param name="targetRoleId">Target role of customer being edited.</param>
-        /// <param name="adminId">Admin id doing action.</param>
-        /// <param name="subAccId">Sub account id for doing action.</param>
-        /// <param name="formType">Current Form.</param>
-        /// <param name="language">Current language key.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <returns>
         /// Edit customer page.
         /// </returns>
@@ -58,17 +50,7 @@
         /// <summary>
         /// Edit multiple customer.
         /// </summary>
-        /// <param name="uplineId">Customer id is doing edit.</param>
-        /// <param name="directUplineId">Customer direct up-line id is doing edit.</param>
-        /// <param name="uplineRoleId">Customer role id of user is doing edit.</param>
-        /// <param name="targetCustIds">List of customer id are being edited.</param>
-        /// <param name="targetUsernames">List of customer name are being edited.</param>
-        /// <param name="targetSyncStatus">List of sync customer status are being edited.</param>
-        /// <param name="targetRoleId">Target customer role id of Customer is being edited.</param>
-        /// <param name="adminId">Admin id is doing action.</param>
-        /// <param name="subAccId">Sub account id for doing action.</param>
-        /// <param name="formType">Current form type.</param>
-        /// <param name="language">Current language.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <returns>
         /// Edit multiple form.
         /// </returns>
@@ -91,9 +73,11 @@
         /// </summary>
         /// <param name="settingContext">Setting context for update current customer.</param>
         /// <param name="customer">Customer setting for update data.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <param name="updateType">Update type for multiple.</param>
-        /// <returns>Update result information.</returns>
+        /// <param name="isApplyPositionTakingAllMembers">if set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Update result information.
+        /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(
             SettingContext settingContext,
@@ -111,6 +95,15 @@
             return Json(updateResult);
         }
 
+        /// <summary>
+        /// Updates the live casino setting multiple.
+        /// </summary>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="customer">The customer.</param>
+        /// <param name="isApplyPositionTakingAllMembers">if set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <param name="updateType">Type of the update.</param>
+        /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSettingMultiple(
             SettingContextMultiple settingContextMultiple,
