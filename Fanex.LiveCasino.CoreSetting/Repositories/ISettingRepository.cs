@@ -1,13 +1,14 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Repositories
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
 
     public interface ISettingRepository : IBaseRepository
     {
+        UplineCustomerInfoDTO GetUplineCustomerInfo(ICriteria criteria);
+
         Customer GetCustomerInfo(ICriteria criteria);
 
         CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria);

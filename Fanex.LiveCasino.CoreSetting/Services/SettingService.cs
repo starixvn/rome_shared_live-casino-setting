@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common;
     using Fanex.Common.Helper;
@@ -10,14 +9,12 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
-    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.Logging;
@@ -44,9 +41,9 @@
 
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
-            Customer customer = GetCustomerInfo(settingContext.CustomerId);
+            Customer customer = GetCustomerInfo(settingContext.Customer.Id);
             SetCustomerPtAndComSetting(settingContext, customer);
-            customer.GameSetting = GetGameSetting(settingContext);
+            customer.LiveCasinoSetting.GameSetting = GetGameSetting(settingContext);
 
             return customer;
         }
@@ -102,7 +99,7 @@
             }
 
             var positionTakingAndCommResults = UpdatePtComSetting(
-                settingContext, 
+                settingContext,
                 customer.LiveCasinoSetting.Commission, 
                 customer.LiveCasinoSetting.PositionTaking,
                 isApplyPositionTakingAllMembers,
@@ -149,11 +146,11 @@
             foreach (var custInfo in settingContextMultiple.Customers)
             {
                 settingContextMultiple.Customer.Id = custInfo.Id;
-                settingContextMultiple.Customer.UserName = custInfo.UserName;
+                settingContextMultiple.Customer.Username = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.Id;
-                subResult.Name = custInfo.UserName;
+                subResult.Name = custInfo.Username;
                 mainResults.CommandResultsList.Add(subResult);
             }
 
@@ -189,7 +186,7 @@
         /// <returns>Customer information.</returns>
         public Customer GetCustomerInfo(int custId)
         {
-            var criteria = new GetCustomerInfoCriteria
+            var criteria = new GetCustomerLiveCasinoInfoCriteria
             {
                 CustId = custId
             };
@@ -207,30 +204,32 @@
         public List<GameType> GetGameSetting(LiveCasinoSettingContext settingContext)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNegativeOrZero(settingContext.CustomerId, "TargetCustId");
-            Check.Argument.IsNotNegativeOrZero((int)settingContext.CustomerLevel, "TargetRole");
-            Check.Argument.IsNotNull(settingContext.IsCustomerSyncedLiveCS, "IsTargetSyncedLiveCS");
-            Check.Argument.IsNotEmpty(settingContext.Username, "TargetUsername");
-            Check.Argument.IsNotNegativeOrZero(settingContext.ExchangeId, "ExchangeId");
-            Check.Argument.IsNotNegativeOrZero(settingContext.DirectParentId, "DirectUplineId");
+            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
+            Check.Argument.IsNotNull(settingContext.Customer.Parent, "settingContext.Customer.Parent");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
+            Check.Argument.IsNotNegativeOrZero((int)settingContext.Customer.Level, "settingContext.Customer.Level");
+            Check.Argument.IsNotNull(settingContext.Customer.IsSyncLiveCasino, "settingContext.Customer.IsSyncLiveCasino");
+            Check.Argument.IsNotEmpty(settingContext.Customer.Username, "settingContext.Customer.Username");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.CurrencyId, "settingContext.Customer.CurrencyId");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Parent.Id, "settingContext.Customer.Parent.Id");
 
             var gameSettings = new List<GameType>();
 
-            if (settingContext.CustomerLevel == CustomerLevel.Super && !settingContext.IsCustomerSyncedLiveCS)
+            if (settingContext.Customer.Level == CustomerLevel.Super && !settingContext.Customer.IsSyncLiveCasino)
             {
-                var site = GetCustomerSite(settingContext.Username);
-                gameSettings = _settingRepository.GetGameSetting(settingContext.ExchangeId, site, defaultCheckedValue: true);
+                var site = GetCustomerSite(settingContext.Customer.Username);
+                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site, defaultCheckedValue: true);
             }
-            else if (settingContext.CustomerLevel != CustomerLevel.Super && !settingContext.IsCustomerSyncedLiveCS)
+            else if (settingContext.Customer.Level != CustomerLevel.Super && !settingContext.Customer.IsSyncLiveCasino)
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.DirectParentId);
+                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
                 gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
 
                 // Check all by default
                 foreach (var gameSettingItem in gameSettings)
                 {
                     gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
-                    if (settingContext.CustomerLevel == CustomerLevel.Member)
+                    if (settingContext.Customer.Level == CustomerLevel.Member)
                     {
                         for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
                         {
@@ -241,65 +240,94 @@
             }
             else
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.CustomerId);
+                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.Id);
             }
 
             return gameSettings;
         }
 
-        /// <summary>
-        /// Inserts the automatic account.
-        /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, ActorId, IP, SuperId, TargetUsername, DirectParentId.</param>
-        /// <returns>Insert account command results.</returns>
-        public ICommandResult InsertAutoAccount(LiveCasinoSettingContext settingContext)
+        public ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string ip, string language)
         {
+            var uplineCustomerInfo = GetUplineCustomerInfo(custId);
+
             var criteria = new InsertAutoAccountCriteria
             {
-                AgentId = settingContext.AgentId,
+                AgentId = uplineCustomerInfo.AgentId,
                 CasinoNo = CasinoNo,
-                CustId = settingContext.CustomerId,
-                ExchangeId = settingContext.ExchangeId,
-                MasterId = settingContext.MasterId,
-                ModifyUsername = settingContext.ParentUsername,
-                RoleId = (int)settingContext.CustomerLevel,
-                SignupBy = settingContext.ActorId,
+                CustId = custId,
+                ExchangeId = uplineCustomerInfo.CurrencyId,
+                MasterId = uplineCustomerInfo.MasterId,
+                ModifyUsername = actorUsername,
+                RoleId = uplineCustomerInfo.RoleId,
+                SignupBy = actorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
-                SignupIp = settingContext.IP,
-                SuperId = settingContext.SuperId,
-                Username = settingContext.Username
+                SignupIp = ip,
+                SuperId = uplineCustomerInfo.SuperId,
+                Username = uplineCustomerInfo.Username,
+                Language = language
             };
+
+            var directUplineId = 0;
+            switch (uplineCustomerInfo.RoleId)
+            {
+                case (int)CustomerLevel.Master:
+                    directUplineId = uplineCustomerInfo.SuperId;
+                    break;
+
+                case (int)CustomerLevel.Agent:
+                    directUplineId = uplineCustomerInfo.MasterId;
+                    break;
+
+                default:
+                    directUplineId = uplineCustomerInfo.AgentId;
+                    break;
+            }
 
             var gameTypes = new List<GameType>();
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             if (result.IsSuccessful)
             {
+                var settingContext = new LiveCasinoSettingContext
+                {
+                    Customer = new Customer
+                    {
+                        Id = custId
+                    },
+                    ActorId = actorId,
+                    SubAccount = new User
+                    {
+                        Id = subAccountId
+                    },
+                    IP = ip,
+                    Language = language
+                };
+
                 ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
                 {
-                    var uplineCustInfo = GetCustomerInfo(settingContext.DirectParentId);
+                    var uplineCustInfo = GetCustomerInfo(directUplineId);
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
                 if (gameTypes == null || !gameTypes.Any())
                 {
-                    gameTypes = _settingRepository.GetGameSetting(settingContext.DirectParentId);
+                    gameTypes = _settingRepository.GetGameSetting(directUplineId);
 
                     Logger.Log.Info(
-                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.CustomerId, settingContext.DirectParentId),
+                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, directUplineId),
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                var logModel = new AutoInsertAccountLog
-                {
-                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
-                    GameSetting = gameTypes,
-                    SettingContext = settingContext
-                };
+                //var logModel = new AutoInsertAccountLog
+                //{
+                //    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                //    GameSetting = gameTypes,
+                //    Criteria = criteria
+                //};
 
-                WriteLog(logModel);
+                //WriteLog(logModel);
             }
 
             return result;
@@ -353,32 +381,31 @@
                         LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                var log = new InsertFromExistingAccountLog
-                {
-                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
-                    GameSetting = gameTypes,
-                    SettingContext = settingContext
-                };
+                //var log = new InsertFromExistingAccountLog
+                //{
+                //    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                //    GameSetting = gameTypes,
+                //    SettingContext = settingContext
+                //};
 
-                WriteLog(log);
+                //WriteLog(log);
             }
 
             return result;
         }
 
-        /// <summary>
-        /// Updates the live casino status.
-        /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
-        /// <returns>
-        /// Command result update status.
-        /// </returns>
         public ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
+            Check.Argument.IsNotNegativeOrZero(settingContext.ActorId, "settingContext.ActorId");
+            Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
+            Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
+
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 UserID = settingContext.ActorId,
                 DisabledLiveCS = disableLiveCasino,
                 EnableDownlinesLiveCS = !disableLiveCasino,
@@ -482,13 +509,13 @@
             foreach (var custInfo in custInfos)
             {
                 settingContextMultiple.CustomerId = custInfo.Id;
-                settingContextMultiple.Username = custInfo.UserName;
+                settingContextMultiple.Username = custInfo.Username;
                 settingContextMultiple.IsCustomerSyncedLiveCS = custInfo.IsSyncLiveCasino;
 
                 var updateResult = (CommandResultsDTO)UpdateGameSetting(settingContextMultiple, gameTypes);
 
                 updateResult.Id = custInfo.Id;
-                updateResult.Name = custInfo.UserName;
+                updateResult.Name = custInfo.Username;
 
                 results.CommandResultsList.Add(updateResult);
             }
@@ -496,21 +523,23 @@
             return results;
         }
 
-        /// <summary>
-        /// Updates the synchronize live casino.
-        /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <param name="isSynced">If set to <c>true</c> [is synchronize].</param>
-        /// <returns>Command result update sync.</returns>
         public ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
+            Check.Argument.IsNotNull(settingContext.SubAccount, "settingContext.SubAccount");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
+            Check.Argument.IsNotNegativeOrZero(settingContext.ActorId, "settingContext.ActorId");
+            Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
+            Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
+
             var criteria = new UpdateSyncLiveCasinoCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 UserId = settingContext.ActorId,
                 Ip = settingContext.IP,
                 Language = settingContext.Language,
-                SubAccId = settingContext.SubAccId,
+                SubAccId = settingContext.SubAccount.Id,
                 SyncLiveCS = isSynced
             };
 
@@ -595,7 +624,7 @@
                 var updateResult = UpdateWinLimit(settingContextMultiple, memberWinLimit);
 
                 updateResult.Id = custInfo.Id;
-                updateResult.Name = custInfo.UserName;
+                updateResult.Name = custInfo.Username;
 
                 results.CommandResultsList.Add(updateResult);
             }
@@ -614,13 +643,13 @@
 
             if (resultInsertAccount.IsSuccessful)
             {
-                var log = new ManualInsertAccountLog
-                {
-                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
-                    SettingContext = settingContext
-                };
+                //var log = new ManualInsertAccountLog
+                //{
+                //    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                //    SettingContext = settingContext
+                //};
 
-                WriteLog(log);
+                //WriteLog(log);
 
                 var syncResult = (CommandResultDTO)UpdateSyncLiveCasino(settingContext, isSynced: true);
                 var disableLiveCasino = false;
@@ -667,17 +696,17 @@
                     {
                         var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
 
-                        var log = new LogUpdateStakeLevel
-                        {
-                            SettingContext = settingContext,
-                            NewGameType = newGameType,
-                            OldGameType = oldGameType
-                        };
+                        //var log = new LogUpdateStakeLevel
+                        //{
+                        //    SettingContext = settingContext,
+                        //    NewGameType = newGameType,
+                        //    OldGameType = oldGameType
+                        //};
 
-                        if (oldGameType == null || newGameType.CheckedStakeLevelId != oldGameType.CheckedStakeLevelId)
-                        {
-                            WriteLog(log);
-                        }
+                        //if (oldGameType == null || newGameType.CheckedStakeLevelId != oldGameType.CheckedStakeLevelId)
+                        //{
+                        //    WriteLog(log);
+                        //}
                     }
                 }
             }
@@ -827,7 +856,7 @@
                     list.Add(new Customer
                     {
                         Id = Converter.ToInt(arrayCustId[i]),
-                        UserName = arrayUsername[i],
+                        Username = arrayUsername[i],
                         IsSyncLiveCasino = arraySyncStatus[i] == "1"
                     });
                 }
@@ -873,38 +902,33 @@
             }
         }
 
-        /// <summary>
-        /// Writes the log.
-        /// </summary>
-        /// <param name="logData">The log data.</param>
-        /// <returns>Command results.</returns>
-        public ICommandResult WriteLog(IGameSettingLog logData)
-        {
-            var criteria = new InsertLogUserRunSPCriteria
-            {
-                UserId = logData.SettingContext.ActorId,
-                CustId = logData.SettingContext.CustomerId,
-                SpName = logData.SpName,
-                Doing = string.Empty,
-                ActionId = (int)logData.Action,
-                TrackingValue = logData.NewValue,
-                TrackingValue2 = logData.OldValue,
-                Duration = 0
-            };
+        //public ICommandResult WriteLog(IGameSettingLog logData)
+        //{
+        //    var criteria = new InsertLogUserRunSPCriteria
+        //    {
+        //        UserId = logData.SettingContext.ActorId,
+        //        CustId = logData.SettingContext.CustomerId,
+        //        SpName = logData.SpName,
+        //        Doing = string.Empty,
+        //        ActionId = (int)logData.Action,
+        //        TrackingValue = logData.NewValue,
+        //        TrackingValue2 = logData.OldValue,
+        //        Duration = 0
+        //    };
 
-            try
-            {
-                var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+        //    try
+        //    {
+        //        var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
-                return updateResult;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error(string.Format("{0}\n{1}", ex.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
+        //        return updateResult;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Log.Error(string.Format("{0}\n{1}", ex.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
 
-                throw ex;
-            }
-        }
+        //        throw ex;
+        //    }
+        //}
 
         /// <summary>
         /// Get Customer Setting for Editing.
@@ -1030,7 +1054,7 @@
                 settingContextMultiple.Customer = customer;
                 var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = customer.Id;
-                subResult.Name = customer.UserName;
+                subResult.Name = custInfo.Username;
                 mainResults.CommandResultsList.Add(subResult);
             }
 
@@ -1427,6 +1451,16 @@
             }
 
             return criteria;
+        }
+
+        private UplineCustomerInfoDTO GetUplineCustomerInfo(int custId)
+        {
+            var criteria = new GetCustomerInfoCriteria
+            {
+                CustId = custId
+            };
+
+            return _settingRepository.GetUplineCustomerInfo(custId);
         }
     }
 }

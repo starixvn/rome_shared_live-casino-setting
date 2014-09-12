@@ -22,7 +22,12 @@
         {
             get
             {
-                return HttpContext.Current.Request.UserHostAddress;
+                return !string.IsNullOrWhiteSpace(IP) ? HttpContext.Current.Request.UserHostAddress : IP;
+            }
+
+            set
+            {
+                IP = value;
             }
         }
 

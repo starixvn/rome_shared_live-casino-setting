@@ -7,10 +7,8 @@
     /// Setting key : Acc_CustomerUpdLiveCS_WinLimit.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    internal class UpdateCustomerWinLimitCriteria : CriteriaBase
+    internal class UpdateCustomerWinLimitCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         [SpParam(SqlParamName = "MaxWinLiveCasino")]
         public decimal MaxWinLimit { get; set; }
 
@@ -28,11 +26,6 @@
         public override string GetSettingKey()
         {
             return "Acc_CustomerUpdLiveCS_WinLimit";
-        }
-
-        public override bool IsValid()
-        {
-            return CustId > 0;
         }
 
         /// <summary>

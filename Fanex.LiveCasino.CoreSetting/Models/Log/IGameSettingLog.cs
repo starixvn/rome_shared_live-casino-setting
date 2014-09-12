@@ -1,21 +1,22 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using Fanex.NAP.Framework.Data;
 
-    public interface IGameSettingLog
+    internal interface IGameSettingLog
     {
+        ICriteria Criteria { get; set; }
+
         LogActions Action { get; }
-
-        string ErrCode { get; set; }
-
-        string ErrMsg { get; set; }
 
         string NewValue { get; }
 
         string OldValue { get; }
 
-        LiveCasinoSettingContext SettingContext { get; set; }
-
         string SpName { get; }
+
+        string ErrCode { get; set; }
+
+        string ErrMsg { get; set; }
     }
 }

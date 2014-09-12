@@ -65,12 +65,7 @@
         /// <returns>The game setting.</returns>
         List<GameType> GetGameSetting(LiveCasinoSettingContext settingContext);
 
-        /// <summary>
-        /// Inserts the automatic account.
-        /// </summary>
-        /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, ActorId, IP, SuperId, TargetUsername, DirectParentId.</param>
-        /// <returns>Insert account command results.</returns>
-        ICommandResult InsertAutoAccount(LiveCasinoSettingContext settingContext);
+        ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string ip, string language);
 
         ICommandResult InsertFromExistingAccount(LiveCasinoSettingContext settingContext);
 

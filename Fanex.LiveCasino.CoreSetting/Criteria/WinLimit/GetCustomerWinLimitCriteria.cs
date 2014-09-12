@@ -7,18 +7,11 @@
     /// Setting key : Acc_CustomerSelWinLimitLiveCS.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    internal class GetCustomerWinLimitCriteria : CriteriaBase
+    internal class GetCustomerWinLimitCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public override string GetSettingKey()
         {
             return "Acc_CustomerSelWinLimitLiveCS";
-        }
-
-        public override bool IsValid()
-        {
-            return CustId > 0;
         }
     }
 }

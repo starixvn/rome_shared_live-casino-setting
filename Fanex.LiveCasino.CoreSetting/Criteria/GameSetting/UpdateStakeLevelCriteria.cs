@@ -7,10 +7,8 @@
     /// Setting key : TP_User_CustGameType_UpdStakeLevel.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    internal class UpdateStakeLevelCriteria : CriteriaBase
+    internal class UpdateStakeLevelCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public int RoleId { get; set; }
 
         public int GameTypeId { get; set; }

@@ -1,22 +1,13 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
     /// <summary>
-    /// Get customer information criteria.
+    /// TODO: Update summary.
     /// </summary>
-    internal class GetCustomerInfoCriteria : CriteriaBase
+    internal class GetCustomerInfoCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public override string GetSettingKey()
         {
-            return "Acc_CustomerSelInfoLiveCS";
-        }
-
-        public override bool IsValid()
-        {
-            return CustId > 0;
+            return "Age_CustomerSelUserInfo";
         }
     }
 }

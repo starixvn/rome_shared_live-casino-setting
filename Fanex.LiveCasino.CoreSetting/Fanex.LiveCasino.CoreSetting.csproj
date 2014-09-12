@@ -107,12 +107,13 @@
     <Compile Include="Criteria\GameSetting\InsertFromExistingAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\InsertManualAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteria.cs" />
+    <Compile Include="Criteria\GetCustomerLiveCasinoInfoCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\GetCustomerSiteByUsernameCriteria.cs" />
     <Compile Include="Criteria\Log\InsertLogUserRunSPCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\AgentUpdateMemberSettingCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditAgentCriteria.cs" />
-    <Compile Include="Criteria\PtAndCom\CustomerCriteriaBase.cs" />
+    <Compile Include="Criteria\CustomerCriteriaBase.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMasterCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditMemberCriteria.cs" />
     <Compile Include="Criteria\PtAndCom\GetSettingForEditSuperCriteria.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
     <Compile Include="DTO\PTComDTO.cs" />
+    <Compile Include="DTO\UplineCustomerInfoDTO.cs" />
     <Compile Include="Enumerations\CustomerRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
@@ -143,12 +145,6 @@
     <Compile Include="DTO\CommandResult\ICommandResultsDTO.cs" />
     <Compile Include="DTO\CommandResult\WinLimitCommandResultDTO.cs" />
     <Compile Include="Models\LiveCasinoSetting.cs" />
-    <Compile Include="Models\Log\IGameSettingLog.cs" />
-    <Compile Include="Models\Log\AutoInsertAccountLog.cs" />
-    <Compile Include="Models\Log\GameSettingLog.cs" />
-    <Compile Include="Models\Log\InsertFromExistingAccountLog.cs" />
-    <Compile Include="Models\Log\ManualInsertAccountLog.cs" />
-    <Compile Include="Models\Log\UpdateStakeLevelLog.cs" />
     <Compile Include="DTO\CurrentMemberWinLimitDTO.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />

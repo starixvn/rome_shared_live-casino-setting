@@ -1,4 +1,4 @@
-﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom
+﻿namespace Fanex.LiveCasino.CoreSetting.Criteria
 {
     using Fanex.NAP.Framework.Data;
 

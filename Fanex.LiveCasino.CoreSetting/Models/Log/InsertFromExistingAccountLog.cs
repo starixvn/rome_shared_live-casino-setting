@@ -5,7 +5,7 @@
     /// <summary>
     /// Log insert account from existing account.
     /// </summary>
-    public class InsertFromExistingAccountLog : AutoInsertAccountLog
+    internal class InsertFromExistingAccountLog : AutoInsertAccountLog
     {
         public override LogActions Action
         {

@@ -1,15 +1,28 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
 
     /// <summary>
     /// Log manual insert account to Live Casino setting.
     /// </summary>
-    public class ManualInsertAccountLog : GameSettingLog, IGameSettingLog
+    internal class ManualInsertAccountLog : GameSettingLog, IGameSettingLog
     {
         private const string TrackingTemplate = "<{0} CustID=\"{1}\" UserName=\"{2}\" CasinoNo=\"{3}\" ExchangeID=\"{4}\"" +
                                                 " SCustID=\"{5}\" MCustID=\"{6}\" ACustID=\"{7}\" RoleID=\"{8}\" SignupIP=\"{9}\" SignupBy=\"{10}\"" +
                                                 " AddFrom=\"{11}\" Lang=\"{12}\" ErrCode=\"{13}\" ErrMsg=\"{14}\" {15} CustSite=\"{16}\" />";
+
+        private InsertManualAccountCriteria InsertManualAccountCriteria
+        {
+            get
+            {
+                return (InsertManualAccountCriteria)Criteria;
+            }
+        }
+
+        public override ICriteria Criteria { get; set; }
+
 
         public override LogActions Action
         {
@@ -17,17 +30,17 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.CustomerLevel)
+                switch (InsertManualAccountCriteria.RoleId)
                 {
-                    case CustomerLevel.Super:
+                    case (int)CustomerLevel.Super:
                         logAction = LogActions.ManualInsert_Super;
                         break;
 
-                    case CustomerLevel.Master:
+                    case (int)CustomerLevel.Master:
                         logAction = LogActions.ManualInsert_Master;
                         break;
 
-                    case CustomerLevel.Agent:
+                    case (int)CustomerLevel.Agent:
                         logAction = LogActions.ManualInsert_Agent;
                         break;
 
@@ -49,22 +62,22 @@
                 return string.Format(
                    TrackingTemplate,
                    SpName,
-                   SettingContext.CustomerId,
-                   SettingContext.Username,
+                   InsertManualAccountCriteria.CustId,
+                   InsertManualAccountCriteria.Username,
                    CasinoNo,
-                   SettingContext.ExchangeId,
-                   SettingContext.SuperId,
-                   SettingContext.MasterId,
-                   SettingContext.AgentId,
-                   SettingContext.CustomerId,
-                   SettingContext.IP,
-                   SettingContext.ActorId,
+                   InsertManualAccountCriteria.ExchangeId,
+                   InsertManualAccountCriteria.SuperId,
+                   InsertManualAccountCriteria.MasterId,
+                   InsertManualAccountCriteria.AgentId,
+                   InsertManualAccountCriteria.CustId,
+                   InsertManualAccountCriteria.SignupIp,
+                   InsertManualAccountCriteria.SignupBy,
                    SignUpForm,
-                   SettingContext.Language,
+                   InsertManualAccountCriteria.Language,
                    ErrCode,
                    ErrMsg,
-                   TrackingSubAccount,
-                   SettingContext.SiteName);
+                   GetTrackingSubAccount(InsertManualAccountCriteria.RoleId,InsertManualAccountCriteria.,
+                   InsertManualAccountCriteria.CustSite);
             }
         }
 

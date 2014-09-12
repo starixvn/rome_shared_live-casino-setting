@@ -5,7 +5,7 @@
     /// <summary>
     /// Log update stake level.
     /// </summary>
-    public class LogUpdateStakeLevel : GameSettingLog, IGameSettingLog
+    internal class LogUpdateStakeLevel : GameSettingLog, IGameSettingLog
     {
         private const string TrackingTemplate = "<{0} CustID=\"{1}\" {2} GameTypeId=\"{3}\" BetTypeId=\"{4}\" StakeLevel=\"{5}\"" +
                                                   " Ip=\"{6}\" Lang=\"{7}\" RoleID=\"{8}\" ErrCode=\"{9}\" ErrMsg=\"{10}\" />";
@@ -83,7 +83,7 @@
                      TrackingTemplate,
                      SpName,
                      SettingContext.CustomerId,
-                     TrackingSubAccount,
+                     GetTrackingSubAccount,
                      gameType.Id,
                      gameType.BetTypeId,
                      gameType.CheckedStakeLevelRange,

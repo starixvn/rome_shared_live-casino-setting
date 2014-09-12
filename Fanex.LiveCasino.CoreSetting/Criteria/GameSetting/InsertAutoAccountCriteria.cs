@@ -6,10 +6,8 @@
     /// <summary>
     /// Setting key : TP_User_Customer_AutoInsertAccount.
     /// </summary>
-    internal class InsertAutoAccountCriteria : CriteriaBase
+    internal class InsertAutoAccountCriteria : CustomerCriteriaBase
     {
-        public int CustId { get; set; }
-
         public string CasinoNo { get; set; }
 
         public int ExchangeId { get; set; }
@@ -35,16 +33,14 @@
 
         public string Username { get; set; }
 
-        public override bool IsValid()
-        {
-            return CustId > 0;
-        }
+        [SpParam(Ignored = true)]
+        public string Language { get; set; }
 
         public override string GetSettingKey()
         {
             return "TP_User_Customer_AutoInsertAccount";
         }
-           
+
         public override string ToString()
         {
             return string.Format("SP Name = '{0}'\n{1}", GetSettingKey(), GetString());
