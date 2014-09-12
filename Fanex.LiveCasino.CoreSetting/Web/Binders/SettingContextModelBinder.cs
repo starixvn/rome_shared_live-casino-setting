@@ -12,7 +12,7 @@
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            var settingContext = new SettingContext
+            var settingContext = new LiveCasinoSettingContext
             {
                 CustomerId = Converter.ToInt(request["customerId"]),
                 ParentId = 10

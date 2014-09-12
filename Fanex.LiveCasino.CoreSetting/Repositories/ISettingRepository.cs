@@ -12,17 +12,17 @@
 
         CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria);
 
-        object[] GetSettingForEditSuper(ICriteria criteria);
+        PTComDTO GetSettingForEditSuper(ICriteria criteria);
 
-        object[] GetSettingForEditMaster(ICriteria criteria);
+        PTComDTO GetSettingForEditMaster(ICriteria criteria);
 
-        object[] GetSettingForEditAgent(ICriteria criteria);
+        PTComDTO GetSettingForEditAgent(ICriteria criteria);
 
-        object[] GetSettingForEditMember(ICriteria criteria);
+        PTComDTO GetSettingForEditMember(ICriteria criteria);
 
-        object[] GetSettingForSuperEditMember(ICriteria criteria);
+        PTComDTO GetSettingForSuperEditMember(ICriteria criteria);
 
-        object[] GetSettingForMasterEditMember(ICriteria criteria);
+        PTComDTO GetSettingForMasterEditMember(ICriteria criteria);
 
         List<GameType> GetGameSetting(int custId);
 

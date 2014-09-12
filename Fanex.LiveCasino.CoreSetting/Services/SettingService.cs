@@ -93,18 +93,18 @@
         {
             ICommandResultsDTO resultList = new CommandResultsDTO();
 
-            if (settingContext.CustomerLevel == CustomerLevel.Member
-                && settingContext.ParentLevel == CustomerLevel.Agent
+            if (settingContext.Customer.Level == CustomerLevel.Member
+                && settingContext.Upline.Level == CustomerLevel.Agent
                 && customer.IsSyncLiveCasino
-                && !customer.UplineDisableLiveCasino)
+                && !customer.Parent.IsSyncLiveCasino)
             {
                 resultList.Results.Add(UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
             var positionTakingAndCommResults = UpdatePtComSetting(
                 settingContext, 
-                customer.Commission, 
-                customer.PositionTaking,
+                customer.LiveCasinoSetting.Commission, 
+                customer.LiveCasinoSetting.PositionTaking,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
@@ -144,14 +144,12 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            var custInfoes = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
-
             IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
 
-            foreach (var custInfo in custInfoes)
+            foreach (var custInfo in settingContextMultiple.Customers)
             {
-                settingContextMultiple.CustomerId = custInfo.Id;
-                settingContextMultiple.Username = custInfo.UserName;
+                settingContextMultiple.Customer.Id = custInfo.Id;
+                settingContextMultiple.Customer.UserName = custInfo.UserName;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.Id;
@@ -1025,23 +1023,14 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            Check.Argument.IsNotNull(settingContextMultiple, "settingContext");
-            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerIds, "TargetCustIds");
-            Check.Argument.IsNotEmpty(settingContextMultiple.Usernames, "TargetUsernames");
-            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerSyncedStatus, "TargetSyncStatus");
-            Check.Argument.IsNotEmpty(settingContextMultiple.CustomerIds, "TargetCustIds");
-            Check.Argument.IsNotNull(positionTaking, "positionTaking");
-
-            var custInfoes = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
-
             IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
 
-            foreach (var custInfo in custInfoes)
+            foreach (var customer in settingContextMultiple.Customers)
             {
-                settingContextMultiple.CustomerId = custInfo.Id;
+                settingContextMultiple.Customer = customer;
                 var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                subResult.Id = custInfo.Id;
-                subResult.Name = custInfo.UserName;
+                subResult.Id = customer.Id;
+                subResult.Name = customer.UserName;
                 mainResults.CommandResultsList.Add(subResult);
             }
 
@@ -1050,62 +1039,62 @@
 
         private void SetSuperPtAndCom(int superId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
             {
                 CustId = superId
             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         private void SetMasterPtAndCom(int masterId, int superId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
             {
                 CustId = masterId,
                 SRecommend = superId
             });
 
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         private void SetAgentPtAndCom(int agentId, int masterId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
             {
                 CustId = agentId,
                 MRecommend = masterId
             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForAgentEditMember(int memberId, int agentId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
             {
                 CustId = memberId,
                 Recommend = agentId
             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForSuperEditMember(int memberId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
             {
                 CustId = memberId
             });
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         private void SetMemberPtAndComSettingForMasterEditMember(int memberId, Customer customer)
         {
-            object[] positionTakingAndCommissionData = _settingRepository.GetSettingForMasterEditMember(
+            PTComDTO ptAndComDTO = _settingRepository.GetSettingForMasterEditMember(
                 new GetSettingForMasterEditMemberCriteria
                 {
                     CustId = memberId
                 });
 
-            SetDataToCustomerPtComSetting(positionTakingAndCommissionData, customer);
+            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
         }
 
         /// <summary>
@@ -1113,17 +1102,11 @@
         /// </summary>
         /// <param name="positionTakingAndCommission">Array contains position taking and commission setting.</param>
         /// <param name="customer">Customer need be set position taking and commission data.</param>
-        private void SetDataToCustomerPtComSetting(object[] positionTakingAndCommission, Customer customer)
+        private void SetDataToCustomerPtComSetting(PTComDTO ptAndComDTO, Customer customer)
         {
-            if (positionTakingAndCommission[0] is PositionTaking)
-            {
-                customer.PositionTaking = positionTakingAndCommission[0] as PositionTaking;
-            }
-
-            if (positionTakingAndCommission[1] is Commission)
-            {
-                customer.Commission = positionTakingAndCommission[1] as Commission;
-            }
+            customer.LiveCasinoSetting.PositionTaking = ptAndComDTO.PositionTaking;
+            customer.LiveCasinoSetting.Commission = ptAndComDTO.Commission;
+            customer.Parent.LiveCasinoSetting.Commission = ptAndComDTO.Commission;
         }
 
         /// <summary>
@@ -1140,11 +1123,11 @@
         {
             ICommandResult commandResult = _settingRepository.Save(new UpdateSuperSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.ActorId,
-                SuperCommission = (decimal)commission.Value,
+                SuperCommission = (decimal)commission,
                 S4 = (decimal)positionTaking.S4,
                 N4 = (decimal)positionTaking.N4,
             });
@@ -1273,13 +1256,13 @@
         {
             var criteria = new UpdateMasterSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                SRecommend = settingContext.ParentId,
+                SRecommend = settingContext.Upline.Id,
                 UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccId,
-                MasterCommission = (decimal)commission.Value,
+                SubAccID = settingContext.SubAccount.Id,
+                MasterCommission = (decimal)commission,
                 M3 = (decimal)positionTaking.M3,
                 N3 = (decimal)positionTaking.N3,
                 Is3 = (bool)positionTaking.Is3,
@@ -1318,13 +1301,13 @@
         {
             var criteria = new UpdateAgentSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                MRecommend = settingContext.ParentId,
+                MRecommend = settingContext.Upline.Id,
                 UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccId,
-                AgentCommission = (decimal)commission.Value,
+                SubAccID = settingContext.SubAccount.Id,
+                AgentCommission = (decimal)commission,
                 M2 = (decimal)positionTaking.M2,
                 N2 = (decimal)positionTaking.N2,
                 Im2 = (bool)positionTaking.Im2,
@@ -1360,13 +1343,13 @@
         {
             ICriteria criteria = new AgentUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                Recommend = settingContext.ParentId,
+                Recommend = settingContext.Upline.Id,
                 UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccId,
-                MemberCommission = (decimal)commission.Value,
+                SubAccID = settingContext.SubAccount.Id,
+                MemberCommission = (decimal)commission,
                 A1 = (decimal)positionTaking.A1
             };
             return criteria;
@@ -1386,11 +1369,11 @@
         {
             var criteria = new SuperUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccId,
+                SubAccID = settingContext.SubAccount.Id,
                 S1 = (decimal)positionTaking.S1,
                 Is1 = (bool)positionTaking.Is1,
                 Us1 = (decimal)positionTaking.Us1,
@@ -1423,11 +1406,11 @@
         {
             var criteria = new MasterUpdateMemberSettingCriteria
             {
-                CustId = settingContext.CustomerId,
+                CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccId,
+                SubAccID = settingContext.SubAccount.Id,
                 M1 = (decimal)positionTaking.M1,
                 Im1 = (bool)positionTaking.Im1,
                 Um1 = (decimal)positionTaking.Um1,
