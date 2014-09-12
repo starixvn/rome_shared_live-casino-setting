@@ -856,7 +856,7 @@
             {
                 case (int)UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            UpdatePtComSetting(settingContext, customer.Commission, customer.PositionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers)
+                            UpdatePtComSetting(settingContext, customer.LiveCasinoSetting.Commission, customer.LiveCasinoSetting.PositionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers)
                             : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case (int)UpdateType.WinLimit:
                     return isSync ?

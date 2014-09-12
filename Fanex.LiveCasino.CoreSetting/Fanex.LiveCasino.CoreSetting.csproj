@@ -199,7 +199,8 @@
     <Compile Include="ViewModels\CustomerSettingViewModel.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
-    <Compile Include="Web\Binders\SettingContextModelBinder.cs" />
+    <Compile Include="Web\Binders\LiveCasinoSettingContextModelBinder.cs" />
+    <Compile Include="Web\Binders\LiveCasinoSettingContextMultipleModelBinder.cs" />
     <Compile Include="Web\Filters\LiveCasinoAuthorizationAttribute.cs" />
     <Compile Include="Web\HtmlHelpers\JavascriptHelper.cs" />
     <Compile Include="Web\LiveCasinoSettingAreRegistration.cs" />

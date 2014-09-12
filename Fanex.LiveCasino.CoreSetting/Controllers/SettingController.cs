@@ -41,7 +41,8 @@
         /// Edit customer page.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSetting([ModelBinder(typeof(SettingContextModelBinder))]LiveCasinoSettingContext settingContext)
+        public ActionResult EditSetting(
+            [ModelBinder(typeof(LiveCasinoSettingContextModelBinder))]LiveCasinoSettingContext settingContext)
         {
             SetCustomerSettingViewModelToViewBag(settingContext);
 
@@ -56,7 +57,8 @@
         /// Edit multiple form.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
+        public ActionResult EditSettingMultiple(
+            [ModelBinder(typeof(LiveCasinoSettingContextMultipleModelBinder))] LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             settingContextMultiple.Customer = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
             if (settingContextMultiple.Customer == null)
