@@ -948,33 +948,33 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(customer, "customer");
 
-            switch (settingContext.CustomerLevel)
+            switch (settingContext.Customer.Level)
             {
                 case CustomerLevel.Super:
-                    SetSuperPtAndCom(settingContext.CustomerId, customer);
+                    SetSuperPtAndCom(settingContext.Customer.Id, customer);
                     break;
 
                 case CustomerLevel.Master:
-                    SetMasterPtAndCom(settingContext.CustomerId, settingContext.ParentId, customer);
+                    SetMasterPtAndCom(settingContext.Customer.Id, settingContext.Upline.Id, customer);
                     break;
 
                 case CustomerLevel.Agent:
-                    SetAgentPtAndCom(settingContext.CustomerId, settingContext.ParentId, customer);
+                    SetAgentPtAndCom(settingContext.Customer.Id, settingContext.Upline.Id, customer);
                     break;
 
                 case CustomerLevel.Member:
-                    switch (settingContext.ParentLevel)
+                    switch (settingContext.Upline.Level)
                     {
                         case CustomerLevel.Super:
-                            SetMemberPtAndComSettingForSuperEditMember(settingContext.CustomerId, customer);
+                            SetMemberPtAndComSettingForSuperEditMember(settingContext.Customer.Id, customer);
                             break;
 
                         case CustomerLevel.Master:
-                            SetMemberPtAndComSettingForMasterEditMember(settingContext.CustomerId, customer);
+                            SetMemberPtAndComSettingForMasterEditMember(settingContext.Customer.Id, customer);
                             break;
 
                         default:
-                            SetMemberPtAndComSettingForAgentEditMember(settingContext.CustomerId, settingContext.ParentId, customer);
+                            SetMemberPtAndComSettingForAgentEditMember(settingContext.Customer.Id, settingContext.Upline.Id, customer);
                             break;
                     }
 
@@ -996,13 +996,9 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(positionTaking, "positionTaking");
-            Check.Argument.IsNotNegativeOrZero((int)settingContext.CustomerLevel, "TargetRole");
-            Check.Argument.IsNotNegativeOrZero(settingContext.CustomerId, "TargetCustId");
 
             ICommandResultsDTO updateResults = new CommandResultsDTO();
-            switch (settingContext.CustomerLevel)
+            switch (settingContext.Customer.Level)
             {
                 case CustomerLevel.Super:
                     updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
@@ -1017,7 +1013,7 @@
                     break;
 
                 case CustomerLevel.Member:
-                    switch (settingContext.ParentLevel)
+                    switch (settingContext.Upline.Level)
                     {
                         case CustomerLevel.Super:
                             updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
