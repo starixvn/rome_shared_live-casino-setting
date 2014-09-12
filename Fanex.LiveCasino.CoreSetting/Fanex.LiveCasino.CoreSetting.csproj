@@ -151,11 +151,11 @@
     <Compile Include="DTO\CurrentMemberWinLimitDTO.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
-    <Compile Include="Models\SettingContextMultiple.cs" />
+    <Compile Include="Models\LiveCasinoSettingContextMultiple.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />
-    <Compile Include="Models\SettingContext.cs" />
+    <Compile Include="Models\LiveCasinoSettingContext.cs" />
     <Compile Include="Models\StakeLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

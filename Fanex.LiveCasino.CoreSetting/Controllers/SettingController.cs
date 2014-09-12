@@ -40,7 +40,7 @@
         /// Edit customer page.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSetting(SettingContext settingContext)
+        public ActionResult EditSetting(LiveCasinoSettingContext settingContext)
         {
             SetCustomerSettingViewModelToViewBag(settingContext);
 
@@ -55,7 +55,7 @@
         /// Edit multiple form.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSettingMultiple(SettingContextMultiple settingContextMultiple)
+        public ActionResult EditSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             settingContextMultiple.CustomerId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
             if (settingContextMultiple.CustomerId == 0)
@@ -80,7 +80,7 @@
         /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -106,7 +106,7 @@
         /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSettingMultiple(
-            SettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers,
@@ -147,7 +147,7 @@
         /// <param name="model">Data for update win limit.</param>
         /// <returns>Result after updating win limit.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateWinLimit(SettingContext settingContext, WinLimit model)
+        public ActionResult UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit model)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
@@ -157,7 +157,7 @@
         }
 
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateWinLimitMultiple(SettingContextMultiple settingContextMultiple, WinLimit model)
+        public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit model)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
@@ -177,7 +177,7 @@
         /// <param name="gameSetting">Game setting information for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateGameSetting(SettingContext settingContext, List<GameType> gameSetting)
+        public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
@@ -187,7 +187,7 @@
         }
 
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateGameSettingMultiple(SettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
+        public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
@@ -210,7 +210,7 @@
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -228,7 +228,7 @@
 
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSettingMultiple(
-            SettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContextMultiple,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -250,7 +250,7 @@
         /// Set customer setting view model to View Bag to pre loading data for JAVASCRIP using.
         /// </summary>
         /// <param name="settingContext">Setting context for get customer information to edit.</param>
-        private void SetCustomerSettingViewModelToViewBag(SettingContext settingContext)
+        private void SetCustomerSettingViewModelToViewBag(LiveCasinoSettingContext settingContext)
         {
             var customer = _settingService.GetCustomer(settingContext);
             settingContext.IsCustomerSyncedLiveCS = customer.IsSyncLiveCasino;

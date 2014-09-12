@@ -14,7 +14,7 @@
 
         string OldValue { get; }
 
-        SettingContext SettingContext { get; set; }
+        LiveCasinoSettingContext SettingContext { get; set; }
 
         string SpName { get; }
     }

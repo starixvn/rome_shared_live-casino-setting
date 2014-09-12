@@ -11,12 +11,12 @@
 
         public GameSettingLog()
         {
-            SettingContext = new SettingContext();
+            SettingContext = new LiveCasinoSettingContext();
         }
 
         public virtual LogActions Action { get; set; }
 
-        public SettingContext SettingContext { get; set; }
+        public LiveCasinoSettingContext SettingContext { get; set; }
 
         public string CopiedFrom { get; set; }
 

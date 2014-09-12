@@ -5,7 +5,7 @@
     /// <summary>
     /// Setting Context Multiple class.
     /// </summary>
-    public class SettingContextMultiple : SettingContext
+    public class LiveCasinoSettingContextMultiple : LiveCasinoSettingContext
     {
         public List<Customer> Customers { get; set; }
     }

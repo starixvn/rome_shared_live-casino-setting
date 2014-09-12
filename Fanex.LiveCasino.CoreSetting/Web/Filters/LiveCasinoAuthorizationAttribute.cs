@@ -69,7 +69,7 @@
         {
             var valueProvider = filterContext.Controller.ValueProvider;
             var formCollection = filterContext.HttpContext.Request.Form;
-            var settingContext = new SettingContextMultiple();
+            var settingContext = new LiveCasinoSettingContextMultiple();
             if (formCollection.Count > 0)
             {
                 settingContext.ParentId = Converter.ToInt(GetFormValue(formCollection, "uplineId"));
@@ -106,7 +106,7 @@
         private bool IsAuthorizedHost(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContext = new SettingContextMultiple
+            var settingContext = new LiveCasinoSettingContextMultiple
             {
                 ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineId")),
                 ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.UplineRoleId")),

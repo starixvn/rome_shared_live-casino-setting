@@ -8,7 +8,7 @@
     /// </summary>
     public class CustomerSettingViewModel
     {
-        public SettingContext SettingContext { get; set; }
+        public LiveCasinoSettingContext SettingContext { get; set; }
 
         public Customer Customer { get; set; }
     }

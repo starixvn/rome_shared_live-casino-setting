@@ -43,7 +43,7 @@
             _settingRepository = settingRepository ?? new SettingRepository();
         }
 
-        public Customer GetCustomer(SettingContext settingContext)
+        public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
             Customer customer = GetCustomerInfo(settingContext.CustomerId);
             SetCustomerPtAndComSetting(settingContext, customer);
@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="settingContextMultiple">Setting context for getting customer id list, username list, status list.</param>
         /// <returns>Customer id representative.</returns>
-        public int GetRepresentativeCustIdForEditingMultiple(SettingContextMultiple settingContextMultiple)
+        public int GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             var custInfoList = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
 
@@ -108,7 +108,7 @@
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
         public ICommandResultsDTO UpdateSingleCustomerAllSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
@@ -160,7 +160,7 @@
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
         public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
-            SettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             int updateType,
             bool isApplyPositionTakingAllMembers,
@@ -228,7 +228,7 @@
         /// </summary>
         /// <param name="settingContext">TargetCustId, CustomerLevel, IsCustomerSyncedLiveCS, TargetUsername, ExchangeId, DirectParentId. </param>
         /// <returns>The game setting.</returns>
-        public List<GameType> GetGameSetting(SettingContext settingContext)
+        public List<GameType> GetGameSetting(LiveCasinoSettingContext settingContext)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNegativeOrZero(settingContext.CustomerId, "TargetCustId");
@@ -276,7 +276,7 @@
         /// </summary>
         /// <param name="settingContext">AgentId, TargetCustId, ExchangeId, MasterId, ParentUsername, CustomerLevel, ActorId, IP, SuperId, TargetUsername, DirectParentId.</param>
         /// <returns>Insert account command results.</returns>
-        public ICommandResult InsertAutoAccount(SettingContext settingContext)
+        public ICommandResult InsertAutoAccount(LiveCasinoSettingContext settingContext)
         {
             var criteria = new InsertAutoAccountCriteria
             {
@@ -336,7 +336,7 @@
         /// <returns>
         /// Command result insert from existing account.
         /// </returns>
-        public ICommandResult InsertFromExistingAccount(SettingContext settingContext)
+        public ICommandResult InsertFromExistingAccount(LiveCasinoSettingContext settingContext)
         {
             var criteria = new InsertFromExistingAccountCriteria
             {
@@ -398,7 +398,7 @@
         /// <returns>
         /// Command result update status.
         /// </returns>
-        public ICommandResult UpdateLiveCasinoStatus(SettingContext settingContext, bool disableLiveCasino)
+        public ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
         {
             var criteria = new UpdateLiveCasinoStatusCriteria
             {
@@ -410,7 +410,7 @@
                 Language = settingContext.Language
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
             if (updateResult.IsSuccessful)
             {
@@ -437,7 +437,7 @@
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResultsDTO UpdateGameSetting(SettingContext settingContext, List<GameType> gameTypes)
+        public ICommandResultsDTO UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
         {
             var gameTypeOlds = new List<GameType>();
             var gameTypeNews = CloneGameTypes(gameTypes);
@@ -498,7 +498,7 @@
         /// <param name="settingContextMultiple">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Multiple result command.</returns>
-        public IMultipleCommandResultsDTO UpdateGameSettingMultiple(SettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
+        public IMultipleCommandResultsDTO UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResultsDTO();
             List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
@@ -526,7 +526,7 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="isSynced">If set to <c>true</c> [is synchronize].</param>
         /// <returns>Command result update sync.</returns>
-        public ICommandResult UpdateSyncLiveCasino(SettingContext settingContext, bool isSynced)
+        public ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced)
         {
             var criteria = new UpdateSyncLiveCasinoCriteria
             {
@@ -538,7 +538,7 @@
                 SyncLiveCS = isSynced
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -571,7 +571,7 @@
         /// <param name="settingContext">Setting context information.</param>
         /// <param name="memberWinLimit">Member win limit information.</param>
         /// <returns>Result after updating.</returns>
-        public ICommandResultsDTO UpdateWinLimit(SettingContext settingContext, WinLimit memberWinLimit)
+        public ICommandResultsDTO UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit)
         {
             var criteria = new UpdateCustomerWinLimitCriteria
             {
@@ -583,7 +583,7 @@
                 Language = settingContext.Language
             };
 
-            var result = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+            var result = (CommandResultDTO)_settingRepository.Save(criteria);
 
             var winLimitResult = new WinLimitCommandResultDTO(result);
 
@@ -608,7 +608,7 @@
         /// <param name="settingContextMultiple">The setting context.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
         /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(SettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
+        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
         {
             var results = new MultipleCommandResultsDTO();
             List<Customer> custInfos = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
@@ -632,7 +632,7 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <returns>Insert successfully.</returns>
-        private ICommandResult ManualSyncAccount(SettingContext settingContext)
+        private ICommandResult ManualSyncAccount(LiveCasinoSettingContext settingContext)
         {
             ICommandResult resultInsertAccount = InsertManualAccount(settingContext);
 
@@ -672,7 +672,7 @@
         /// <param name="gameTypeOlds">The game type olds.</param>
         /// <param name="resultUpdateStakeLevels">The result update stake levels.</param>
         private void WriteLogUpdateStakeLevel(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             List<GameType> gameTypes,
             List<GameType> gameTypeOlds,
             ICommandResultsDTO resultUpdateStakeLevels)
@@ -712,7 +712,7 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <returns>Command result insert manual account.</returns>
-        private ICommandResult InsertManualAccount(SettingContext settingContext)
+        private ICommandResult InsertManualAccount(LiveCasinoSettingContext settingContext)
         {
             var criteria = new InsertManualAccountCriteria
             {
@@ -731,7 +731,7 @@
                 CustSite = settingContext.SiteName
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -787,7 +787,7 @@
                 StakeLevelList = gameType.CheckedStakeLevelId
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
             var gameSettingResult = new GameSettingCommandResultDTO(updateResult);
 
@@ -869,7 +869,7 @@
         /// <param name="updateType">Update form type.</param>
         /// <returns>Command result after updating.</returns>
         private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Customer customer,
             int updateType,
             bool isApplyPositionTakingAllMembers,
@@ -918,7 +918,7 @@
 
             try
             {
-                var updateResult = (CommandResultDTO)_settingRepository.InsertOrUpdate(criteria);
+                var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
                 return updateResult;
             }
@@ -937,7 +937,7 @@
         /// <param name="customer">Current customer need be set position taking and commission data.</param>
         /// <returns>Position taking and Commission setting.</returns>
         public void SetCustomerPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Customer customer)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -985,7 +985,7 @@
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
         public ICommandResultsDTO UpdatePtComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -1041,7 +1041,7 @@
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
         public IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
-            SettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContextMultiple,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -1156,11 +1156,11 @@
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
         private List<ICommandResult> UpdateSuperPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(new UpdateSuperSettingCriteria
+            ICommandResult commandResult = _settingRepository.Save(new UpdateSuperSettingCriteria
             {
                 CustId = settingContext.CustomerId,
                 IP = settingContext.IP,
@@ -1175,60 +1175,60 @@
         }
 
         private List<ICommandResult> UpdateMasterPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
             ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult commandResult = _settingRepository.Save(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
 
         private List<ICommandResult> UpdateAgentPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
             ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult commandResult = _settingRepository.Save(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
 
         private List<ICommandResult> AgentUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult commandResult = _settingRepository.Save(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
 
         private List<ICommandResult> SuperUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult commandResult = _settingRepository.Save(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
 
         private List<ICommandResult> MasterUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
             ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.InsertOrUpdate(criteria);
+            ICommandResult commandResult = _settingRepository.Save(criteria);
 
             return GetPtAndComResultDetails(commandResult);
         }
@@ -1287,7 +1287,7 @@
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -1332,7 +1332,7 @@
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
@@ -1376,7 +1376,7 @@
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
@@ -1402,7 +1402,7 @@
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {
@@ -1439,7 +1439,7 @@
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <returns>Criteria for update customer.</returns>
         private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(
-            SettingContext settingContext,
+            LiveCasinoSettingContext settingContext,
             Commission commission,
             PositionTaking positionTaking)
         {

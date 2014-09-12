@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Command results class.</returns>
-        public ICommandResult InsertOrUpdate(ICriteria criteria)
+        public ICommandResult Save(ICriteria criteria)
         {
             if (criteria.IsValid())
             {

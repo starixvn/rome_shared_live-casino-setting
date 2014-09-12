@@ -6,7 +6,7 @@
     /// <summary>
     /// Setting Context.
     /// </summary>
-    public class SettingContext
+    public class LiveCasinoSettingContext
     {
         public Customer Customer { get; set; }
 

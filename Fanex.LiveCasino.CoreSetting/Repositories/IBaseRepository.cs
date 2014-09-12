@@ -4,6 +4,6 @@
 
     public interface IBaseRepository : IDynamicRepository
     {
-        ICommandResult InsertOrUpdate(ICriteria criteria);
+        ICommandResult Save(ICriteria criteria);
     }
 }
