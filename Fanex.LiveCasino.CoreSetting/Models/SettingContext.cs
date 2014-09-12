@@ -12,8 +12,6 @@
 
         public Customer Upline { get; set; }
 
-        public User Admin { get; set; }
-
         public User SubAccount { get; set; }
 
         public FormType FormType { get; set; }
