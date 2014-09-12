@@ -90,7 +90,7 @@
                 {
                     Id = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.Customer.Id")),
                     Level = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.Customer.Level")),
-                    UserName = GetActionParameterValue(valueProvider, "settingContext.Customer.Username")
+                    Username = GetActionParameterValue(valueProvider, "settingContext.Customer.Username")
                 },
                 Upline = new Customer
                 {

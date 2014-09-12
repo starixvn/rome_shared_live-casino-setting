@@ -57,12 +57,13 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         //// Properties
-        $scope.positionTaking = fanex.cloneObject(custSetting.Customer.PositionTaking);
-        $scope.commission = fanex.cloneObject(custSetting.Customer.Commission);
+        $scope.positionTaking = fanex.cloneObject(custSetting.Customer.LiveCasinoSetting.PositionTaking);
+        $scope.commission = custSetting.Customer.LiveCasinoSetting.Commission;
+        $scope.parentCommission = custSetting.Parent.LiveCasinoSetting.Commission;
         $scope.uplinePTOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
-        me.updatePTComUrl = $('#tblPtComSetting').data('update-href');
+        me.updatePTComUrl = $('#UpdatePtComSettingUrl').val();
 
         //// Action
         $scope.updatePtAndComSetting = function () {
@@ -88,7 +89,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                             me.updatePTComUrl,
                             $scope.commission,
                             $scope.positionTaking,
-                            $scope.uplinePTOnMember, 
+                            $scope.uplinePTOnMember,
                             $scope.$parent);
             }
         };

@@ -14,9 +14,9 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
                     $scope.superMaxOptions = fanex.createOptionsFromRange(currentPt.S4, 0, currentPt.L4, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.superMinOptions = fanex.createOptionsFromRange(currentPt.N4, 0, currentPt.S4, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.superCommissionOptions = fanex.createOptionsFromRange(
-                                                            currentCom.Value, 
+                                                            currentCom, 
                                                             0, 
-                                                            currentCom.Upline.Value, 
+                                                            $scope.parentCommission, 
                                                             fanex.liveCasinoSetting.COM_INTERVAL, 
                                                             fanex.liveCasinoSetting.COM_DECIMAL);
                     $scope.updateSuperMax = function () {
@@ -92,9 +92,9 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
 
                     // Com
                     $scope.masterCommissionOptions = fanex.createOptionsFromRange(
-                                                            currentCom.Value,
+                                                            currentCom,
                                                             0,
-                                                            currentCom.Upline.Value,
+                                                            $scope.parentCommission,
                                                             fanex.liveCasinoSetting.COM_INTERVAL, 
                                                             fanex.liveCasinoSetting.COM_DECIMAL);
 
@@ -169,9 +169,9 @@ fanex.liveCasinoSetting.directive('editSuperPtAndCom', [
 
                     // Com
                     $scope.agentCommissionOptions = fanex.createOptionsFromRange(
-                                                                    currentCom.Value,
+                                                                    currentCom,
                                                                     0,
-                                                                    currentCom.Upline.Value,
+                                                                    $scope.parentCommission,
                                                                     fanex.liveCasinoSetting.COM_INTERVAL, 
                                                                     fanex.liveCasinoSetting.COM_DECIMAL);
 
@@ -199,9 +199,9 @@ fanex.liveCasinoSetting.directive('agentEditMemberPtAndCom', [
                     $scope.agentPresetOptions = fanex.createOptionsFromRange(currentPt.A1, currentPt.N2, currentPt.A2, fanex.liveCasinoSetting.PT_INTERVAL);
                     $scope.isAgentPresetOutOfRange = currentPt.A1 < currentPt.A2 || currentPt.A1 > currentPt.N2;
                     $scope.memberCommissionOptions = fanex.createOptionsFromRange(
-                                                                    currentCom.Value,
+                                                                    currentCom,
                                                                     0,
-                                                                    currentCom.Upline.Value,
+                                                                    $scope.parentCommission,
                                                                     fanex.liveCasinoSetting.COM_INTERVAL,
                                                                     fanex.liveCasinoSetting.COM_DECIMAL);
                     $scope.agentPresetChange = function () {

@@ -66,7 +66,7 @@
                     list.Add(new Customer
                     {
                         Id = Converter.ToInt(arrayCustId[i]),
-                        UserName = arrayUsername[i],
+                        Username = arrayUsername[i],
                         IsSyncLiveCasino = arraySyncStatus[i] == "1"
                     });
                 }

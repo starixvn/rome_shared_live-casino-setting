@@ -146,7 +146,7 @@
             foreach (var custInfo in settingContextMultiple.Customers)
             {
                 settingContextMultiple.Customer.Id = custInfo.Id;
-                settingContextMultiple.Customer.Username = custInfo.UserName;
+                settingContextMultiple.Customer.Username = custInfo.Username;
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.Id;
@@ -1054,7 +1054,7 @@
                 settingContextMultiple.Customer = customer;
                 var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = customer.Id;
-                subResult.Name = custInfo.Username;
+                subResult.Name = customer.Username;
                 mainResults.CommandResultsList.Add(subResult);
             }
 
