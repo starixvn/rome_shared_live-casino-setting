@@ -10,7 +10,7 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
     {
-        int GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple);
+        Customer GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple);
 
         ICommandResultsDTO UpdateSingleCustomerAllSetting(LiveCasinoSettingContext settingContext,
             Customer customer,

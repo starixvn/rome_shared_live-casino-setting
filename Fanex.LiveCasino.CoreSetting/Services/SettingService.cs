@@ -56,52 +56,27 @@
         /// </summary>
         /// <param name="settingContextMultiple">Setting context for getting customer id list, username list, status list.</param>
         /// <returns>Customer id representative.</returns>
-        public int GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
+        public Customer GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
-            var custInfoList = GetCustomerInfo(settingContextMultiple.CustomerIds, settingContextMultiple.Usernames, settingContextMultiple.CustomerSyncedStatus);
-
-            if (!custInfoList.Any())
+            if (!settingContextMultiple.Customers.Any())
             {
-                return 0;
+                return null;
             }
 
             //// Edit multiple direct downline. Load setting info of the first selected downline in customer list
-            int levelGap = (int)settingContextMultiple.ParentLevel - (int)settingContextMultiple.CustomerLevel;
+            int levelGap = (int)settingContextMultiple.Upline.Level - (int)settingContextMultiple.Customer.Level;
             if (levelGap == 1)
             {
-                return Converter.ToInt(custInfoList[0].Id);
+                return settingContextMultiple.Customers.First();
             }
+
+            settingContextMultiple.Customers = settingContextMultiple.Customers.Where(customer =>
+                {
+                    return customer.IsSyncLiveCasino;
+                }).ToList();
 
             //// Super/Master multiple member
-            return RemoveCustomerNotSyncAndGetFirstSyncCustomerId(settingContextMultiple, custInfoList);
-        }
-
-        private int RemoveCustomerNotSyncAndGetFirstSyncCustomerId(SettingContextMultiple settingContextMultiple, List<Customer> custInfoList)
-        {
-            var newCustIdList = string.Empty;
-            var newUsernameList = string.Empty;
-            var newTargetSyncList = string.Empty;
-            var firstSyncCustId = 0;
-
-            foreach (var custInfo in custInfoList)
-            {
-                if (custInfo.IsSyncLiveCasino)
-                {
-                    if (firstSyncCustId == 0)
-                    {
-                        firstSyncCustId = custInfo.Id;
-                    }
-
-                    newCustIdList += custInfo.Id.ToString() + ",";
-                    newUsernameList += custInfo.UserName + ",";
-                    newTargetSyncList += (custInfo.IsSyncLiveCasino ? "1" : "0") + ",";
-                }
-            }
-
-            settingContextMultiple.CustomerIds = newCustIdList.TrimEnd(',');
-            settingContextMultiple.Usernames = newUsernameList.TrimEnd(',');
-            settingContextMultiple.CustomerSyncedStatus = newTargetSyncList.TrimEnd(',');
-            return firstSyncCustId;
+            return settingContextMultiple.Customers.FirstOrDefault();
         }
 
         /// <summary>

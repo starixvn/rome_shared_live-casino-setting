@@ -41,7 +41,7 @@
         /// Edit customer page.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSetting([ModelBinder(typeof(SettingContextModelBinder))]SettingContext settingContext)
+        public ActionResult EditSetting([ModelBinder(typeof(SettingContextModelBinder))]LiveCasinoSettingContext settingContext)
         {
             SetCustomerSettingViewModelToViewBag(settingContext);
 
@@ -58,8 +58,8 @@
         [LiveCasinoAuthorization]
         public ActionResult EditSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
-            settingContextMultiple.CustomerId = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
-            if (settingContextMultiple.CustomerId == 0)
+            settingContextMultiple.Customer = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
+            if (settingContextMultiple.Customer == null)
             {
                 return View(ViewPath.NoInformationPage);
             }
@@ -254,7 +254,6 @@
         private void SetCustomerSettingViewModelToViewBag(LiveCasinoSettingContext settingContext)
         {
             var customer = _settingService.GetCustomer(settingContext);
-            settingContext.IsCustomerSyncedLiveCS = customer.IsSyncLiveCasino;
 
             var custSettingViewModel = new CustomerSettingViewModel
             {
