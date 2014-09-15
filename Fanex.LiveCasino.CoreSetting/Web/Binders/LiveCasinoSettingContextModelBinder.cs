@@ -28,7 +28,7 @@
                     Level = (CustomerLevel)Converter.ToInt(request["customerLevel"]),
                     Parent = new Customer
                     {
-                        Id = Converter.ToInt(request["directUplineId"])
+                        Id = Converter.ToInt(request["parentId"])
                     }
                 },
                 Upline = new Customer

@@ -2,9 +2,14 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = LiveCasinoLang.lblEditLiveCasino;
 }
-@model LiveCasinoSettingContext
-
-@section CustomerInfomation
+@model CustomerSettingViewModel
+@section modeldata
+{
+    <script type="text/javascript">
+        @(Html.ToJavascriptObject(Model, "custSetting"))
+    </script>
+}
+@section Customer
 {
     <div id="tblCustInfo" class="col-xs-12">
         <table data-ng-controller="CustomerInfoController" class="cust-info">
@@ -65,7 +70,8 @@
                 <td class="left info-value">
                     {{custInfo.Fax}}
                 </td>
-                @if (Model.Customer.Level == CustomerLevel.Member && Model.Upline.Level == CustomerLevel.Agent)
+                @if (Model.SettingContext.Customer.Level == CustomerLevel.Member 
+                    && Model.SettingContext.Upline.Level == CustomerLevel.Agent)
                 {
                     <td class="right bold info-lable">
                         @LiveCasinoLang.lblEnable
@@ -84,6 +90,9 @@
             </tr>
         </table>
     </div>
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContext)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContext)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContext)
 }
 
 @Html.Hidden("UpdateLiveCasinoSettingMultipleUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSettingMultiple"))

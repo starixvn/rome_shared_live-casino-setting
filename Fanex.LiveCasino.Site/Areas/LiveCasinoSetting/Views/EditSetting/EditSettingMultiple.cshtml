@@ -1,11 +1,18 @@
 ﻿@{
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = LiveCasinoLang.lblEditMultipleLiveCasino;
-    var customerNames = string.Join<string>(",", Model.Customers.Select<Customer, string>(customer => customer.Username));
+    var customerNames = string.Join<string>(", ", Model.SettingContextMultiple.Customers.Select<Customer, string>(customer => customer.Username));
 }
-@model LiveCasinoSettingContextMultiple
+@model CustomerSettingMultipleViewModel
 
-@section CustomerInfomation
+@section modeldata
+{
+    <script type="text/javascript">
+        @(Html.ToJavascriptObject(Model, "custSetting"))
+    </script>
+}
+
+@section Customer
 {
     <div id="tblCustInfo" class="col-xs-12">
         <table data-ng-controller="CustomerInfoController" class="cust-info">
@@ -15,7 +22,8 @@
                         @(customerNames)
                     </td>
                 </tr>
-                @if (Model.Customer.Level == CustomerLevel.Member && Model.Upline.Level == CustomerLevel.Agent)
+                @if (Model.SettingContextMultiple.Customer.Level == CustomerLevel.Member 
+                    && Model.SettingContextMultiple.Upline.Level == CustomerLevel.Agent)
                 {
                     <tr>
                         <td class="right">
@@ -28,6 +36,9 @@
             </tbody>
         </table>
     </div>
+        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContextMultiple)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContextMultiple)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContextMultiple)
 }
 
 @Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSettingMultiple"))

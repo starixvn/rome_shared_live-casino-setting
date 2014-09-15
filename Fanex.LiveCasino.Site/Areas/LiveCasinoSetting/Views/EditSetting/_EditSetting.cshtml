@@ -1,14 +1,7 @@
 ﻿@{
     Layout = "~/Areas/LiveCasinoSetting/Views/Shared/_Layout.cshtml";
 }
-
-@section modeldata
-{
-    <script type="text/javascript">
-        @(Html.ToJavascriptObject((CustomerSettingViewModel)(ViewBag.CustSettingViewModel), "custSetting"))
-    </script>
-}
-
+@RenderSection("modeldata", false)
 
 <div id="tblSetting" 
     data-ng-app="fanex.liveCasinoSetting" 
@@ -76,10 +69,7 @@
         </div>
     </div>
 
-    @RenderSection("CustomerInfomation", true)
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml")
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml")
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml")
+    @RenderSection("Customer", true)
 
     <div class="update-setting col-xs-12">
         @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Agency)

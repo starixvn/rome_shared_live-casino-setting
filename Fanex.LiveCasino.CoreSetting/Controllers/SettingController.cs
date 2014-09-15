@@ -46,13 +46,13 @@
         {
             var customer = _settingService.GetCustomer(settingContext);
 
-            ViewBag.CustSettingViewModel = new CustomerSettingViewModel
+            var custSettingViewModel = new CustomerSettingViewModel
             {
                 SettingContext = settingContext,
                 Customer = customer
             };
 
-            return View(ViewPath.EditSettingSinglePage, settingContext);
+            return View(ViewPath.EditSettingSinglePage, custSettingViewModel);
         }
 
         /// <summary>
@@ -66,21 +66,23 @@
         public ActionResult EditSettingMultiple(
             [ModelBinder(typeof(LiveCasinoSettingContextMultipleModelBinder))] LiveCasinoSettingContextMultiple settingContextMultiple)
         {
-            settingContextMultiple.Customer = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
-            if (settingContextMultiple.Customer == null)
+            Customer representiveCustomer = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
+            if (representiveCustomer == null)
             {
                 return View(ViewPath.NoInformationPage);
             }
 
-            var customer = _settingService.GetCustomer(settingContextMultiple);
+            settingContextMultiple.Customer.Id = representiveCustomer.Id;
+            settingContextMultiple.Customer.IsSyncLiveCasino = representiveCustomer.IsSyncLiveCasino;
+            settingContextMultiple.Customer.Username = representiveCustomer.Username;
 
-            ViewBag.CustSettingViewModel = new CustomerSettingMultipleViewModel
+            var custSettingViewModel = new CustomerSettingMultipleViewModel
             {
                 SettingContextMultiple = settingContextMultiple,
-                Customer = customer
+                Customer = _settingService.GetCustomer(settingContextMultiple)
             };
 
-            return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
+            return View(ViewPath.EditSettingMultiplePage, custSettingViewModel);
         }
 
         /// <summary>

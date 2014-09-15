@@ -364,7 +364,7 @@
 
             //        if (updateSyncResult.IsSuccessful)
             //        {
-            //            var fromCustInfo = GetCustomerInfo(settingContext.OldCustId);
+            //            var fromCustInfo = BuildCustomers(settingContext.OldCustId);
             //            UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
             //        }
 
@@ -446,7 +446,7 @@
             //    var insertCommandResult = ManualSyncAccount(settingContext);
             //    if (settingContext.CustomerLevel != CustomerLevel.Super && insertCommandResult.IsSuccessful)
             //    {
-            //        Customer directUplineInfo = GetCustomerInfo(settingContext.DirectParentId);
+            //        Customer directUplineInfo = BuildCustomers(settingContext.DirectParentId);
             //        if (directUplineInfo.IsSyncLiveCasino)
             //        {
             //            if (gameTypeNews == null)
@@ -652,7 +652,7 @@
 
             //    if (settingContext.CustomerLevel != CustomerLevel.Super)
             //    {
-            //        var uplineCustInfo = GetCustomerInfo(settingContext.DirectParentId);
+            //        var uplineCustInfo = BuildCustomers(settingContext.DirectParentId);
             //        disableLiveCasino = uplineCustInfo.DisableLiveCasino;
             //    }
 
@@ -832,7 +832,7 @@
             return list;
         }
 
-        private List<Customer> GetCustomerInfo(string custIds, string usernames, string syncStatus)
+        public static List<Customer> BuildCustomers(string custIds, string usernames, string syncStatus)
         {
             var list = new List<Customer>();
 
