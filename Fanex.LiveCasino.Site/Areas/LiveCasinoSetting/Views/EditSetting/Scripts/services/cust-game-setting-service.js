@@ -7,7 +7,7 @@ if (fanex.liveCasinoSetting) {
 
         $this.updateGameSetting = function (gameSetting, settingContextScope) {
             var gameSettingModel = {
-                settingContext: settingContext.SettingContext,
+                settingContext: settingContext,
                 gameSetting: gameSetting
             };            
 

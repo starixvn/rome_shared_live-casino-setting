@@ -8,11 +8,10 @@ if (fanex.liveCasinoSetting) {
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
             'use strict';
-            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);
-            var customer = settingContext.Customer;
+            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);            
             var uplineUncheckedAllMsg = '';
 
-            if (customer.Level === fanex.liveCasinoSetting.customerLevel.Member && customer.IsSyncLiveCasino) {
+            if (settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member && settingContext.Customer.IsSyncLiveCasino) {
                 angular.forEach($scope.gameSetting, function (gameType) {
                     if (gameType.CheckedStakeLevelId === '') {
                         gameType.BettingLimit[0].IsChecked = true;
@@ -31,7 +30,7 @@ if (fanex.liveCasinoSetting) {
             }
 
             $scope.getGameSetting = function () {
-                if (customer.Level === fanex.liveCasinoSetting.customerLevel.Member) {
+                if (settingContext.Customer.Level === fanex.liveCasinoSetting.customerLevel.Member) {
                     for (var i = 0; i < $scope.gameSetting.length; i++) {
                         var gameType = $scope.gameSetting[i];
                         for (var j = 0; j < gameType.BettingLimit.length; j++) {
@@ -45,7 +44,7 @@ if (fanex.liveCasinoSetting) {
             };
 
             $scope.updateGameSetting = function () {
-                if (!customer.IsSyncLiveCasino) {
+                if (!settingContext.Customer.IsSyncLiveCasino) {
                     $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.GameSetting);
                     return;
                 }

@@ -14,12 +14,10 @@ if (fanex.liveCasinoSetting) {
         };
 
         $this.updateWinLimitSetting = function (winLimitModel, settingContextScope) {
+            
             var winLimitUpdate = {
-                settingContext: settingContext.SettingContext,
-                model: {
-                    Max: winLimitModel.Max.value,
-                    IsAutoReset: winLimitModel.IsAutoReset
-                }
+                settingContext: settingContext,
+                model: winLimitModel
             };
 
             $http({

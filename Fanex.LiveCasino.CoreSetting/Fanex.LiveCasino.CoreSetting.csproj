@@ -151,6 +151,9 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\LiveCasinoSettingContextMultiple.cs" />
+    <Compile Include="Models\Log\GameSettingLog.cs" />
+    <Compile Include="Models\Log\IGameSettingLog.cs" />
+    <Compile Include="Models\Log\UpdateStakeLevelLog.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WinLimit.cs" />
     <Compile Include="Models\PositionTaking.cs" />

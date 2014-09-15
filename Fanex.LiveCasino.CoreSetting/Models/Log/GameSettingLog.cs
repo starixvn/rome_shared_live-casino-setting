@@ -1,7 +1,6 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Models.Log
 {
     using Fanex.LiveCasino.CoreSetting.Enumerations;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Log data base class.
@@ -10,7 +9,7 @@
     {
         private const string TrackingSubAcc = "SubAccId=\"{0}\" SubAccName=\"{1}\"";
 
-        public virtual ICriteria Criteria { get; set; }
+        public virtual LiveCasinoSettingContext SettingContext { get; set; }
 
         public virtual LogActions Action { get; set; }
 
@@ -24,16 +23,20 @@
 
         public string ErrMsg { get; set; }
 
-        public string GetTrackingSubAccount(int roleId, int subAccountId, string subAccountUsername)
+        public string TrackingSubAccount
         {
-            var tracking = string.Empty;
-
-            if (roleId == (int)CustomerLevel.Super)
+            get
             {
-                tracking = string.Format(TrackingSubAcc, subAccountId, subAccountUsername);
-            }
+                var tracking = string.Empty;
 
-            return tracking;
+                if (SettingContext.SubAccount.Id > 0 &&
+                    SettingContext.Customer.Level == CustomerLevel.Super)
+                {
+                    tracking = string.Format(TrackingSubAcc, SettingContext.SubAccount.Id, SettingContext.SubAccount.Username);
+                }
+
+                return tracking;
+            }
         }
     }
 }

@@ -34,12 +34,12 @@
                         <div id="showWinLimit" style="cursor: pointer; color: Blue" data-ng-click="showCurrentWinLimit(@Model.Customer.Id)" data-ng-show="!isShowCurrentWinLimit">
                             @LiveCasinoLang.lblClickToViewCurrentWinLimit
                         </div>
-                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">
+                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">
                             {{percent}} %</div>
-                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && winLimit == '-1'">
+                        <div style="width: 84px; float: left; text-indent: 5px" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && currentWinLimit == '-1'">
                             @LiveCasinoLang.lblUnlimited</div>
-                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && winLimit !='-1'">@LiveCasinoLang.lblOf
-                            {{winLimit}}</span>
+                        <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">@LiveCasinoLang.lblOf
+                            {{currentWinLimit}}</span>
                     </td>
                     <td class="col-xs-3">
                     </td>

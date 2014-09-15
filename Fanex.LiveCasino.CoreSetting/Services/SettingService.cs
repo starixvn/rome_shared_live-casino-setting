@@ -9,11 +9,13 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using Fanex.LiveCasino.CoreSetting.Criteria.Log;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
+    using Fanex.LiveCasino.CoreSetting.Models.Log;
     using Fanex.LiveCasino.CoreSetting.Repositories;
     using Fanex.LiveCasino.CoreSetting.Repositories.PTCom;
     using Fanex.LiveCasino.CoreSetting.Resources;
@@ -214,13 +216,16 @@
                     custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
                     custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
                     break;
+
                 case CustomerLevel.Agent:
                     custInfo.Parent.Id = uplineInfo.MasterId;
                     custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
                     break;
+
                 case CustomerLevel.Master:
                     custInfo.Parent.Id = uplineInfo.SuperId;
                     break;
+
                 default:
                     custInfo.Parent.Id = 0;
                     break;
@@ -455,59 +460,52 @@
         /// </returns>
         public ICommandResultsDTO UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
         {
-            //var gameTypeOlds = new List<GameType>();
-            //var gameTypeNews = CloneGameTypes(gameTypes);
+            var oldGameTypes = new List<GameType>();
+            var newGameTypes = CloneGameTypes(gameTypes);
 
-            //if (!settingContext.IsCustomerSyncedLiveCS)
-            //{
-            //    var insertCommandResult = ManualSyncAccount(settingContext);
-            //    if (settingContext.CustomerLevel != CustomerLevel.Super && insertCommandResult.IsSuccessful)
-            //    {
-            //        Customer directUplineInfo = BuildCustomers(settingContext.DirectParentId);
-            //        if (directUplineInfo.IsSyncLiveCasino)
-            //        {
-            //            if (gameTypeNews == null)
-            //            {
-            //                string site = GetCustomerSite(settingContext.Username);
-            //                gameTypeNews = _settingRepository.GetGameSetting(directUplineInfo.CurrencyId, site);
-            //            }
-            //            else
-            //            {
-            //                List<GameType> directUplineGameTypes = _settingRepository.GetGameSetting(settingContext.DirectParentId);
-            //                if (gameTypeNews.Count < directUplineGameTypes.Count)
-            //                {
-            //                    var gameTypeUncheckeds = new List<GameType>();
-            //                    foreach (var itemGameType in directUplineGameTypes)
-            //                    {
-            //                        var foundedGameType = gameTypeNews.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
-            //                        if (foundedGameType == null)
-            //                        {
-            //                            gameTypeUncheckeds.Add(itemGameType);
-            //                        }
-            //                    }
+            if (!settingContext.Customer.IsSyncLiveCasino)
+            {
+                var insertCommandResult = ManualSyncAccount(settingContext);
+                if (settingContext.Customer.Level != CustomerLevel.Super && insertCommandResult.IsSuccessful)
+                {
+                    Customer directUplineInfo = GetCustomerInfo(settingContext.Customer.Parent.Id);
+                    if (directUplineInfo.IsSyncLiveCasino)
+                    {
+                        if (newGameTypes == null)
+                        {
+                            string site = GetCustomerSite(settingContext.Customer.Username);
+                            newGameTypes = _settingRepository.GetGameSetting(directUplineInfo.CurrencyId, site);
+                        }
+                        else
+                        {
+                            List<GameType> directUplineGameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
+                            if (newGameTypes.Count < directUplineGameTypes.Count)
+                            {
+                                var gameTypeUncheckeds = new List<GameType>();
+                                foreach (var itemGameType in directUplineGameTypes)
+                                {
+                                    var foundedGameType = newGameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
+                                    if (foundedGameType == null)
+                                    {
+                                        gameTypeUncheckeds.Add(itemGameType);
+                                    }
+                                }
 
-            //                    gameTypeNews.AddRange(gameTypeUncheckeds);
-            //                    gameTypeNews = gameTypeNews.OrderBy(x => x.Id).ToList();
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    gameTypeOlds = _settingRepository.GetGameSetting(settingContext.CustomerId);
-            //}
+                                newGameTypes.AddRange(gameTypeUncheckeds);
+                                newGameTypes = newGameTypes.OrderBy(x => x.Id).ToList();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                oldGameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Id);
+            }
 
-            //ICommandResultsDTO resultUpdateStakeLevels = UpdateListStakeLevel(
-            //    settingContext.CustomerId,
-            //    settingContext.CustomerLevel,
-            //    gameTypeNews,
-            //    settingContext.Language);
-            //WriteLogUpdateStakeLevel(settingContext, gameTypeNews, gameTypeOlds, resultUpdateStakeLevels);
+            ICommandResultsDTO resultUpdateGameTypes = UpdateGameTypes(settingContext, newGameTypes, oldGameTypes);
 
-            //return resultUpdateStakeLevels;
-
-            throw new Exception();
+            return resultUpdateGameTypes;
         }
 
         /// <summary>
@@ -685,49 +683,6 @@
         }
 
         /// <summary>
-        /// Writes the log update stake level.
-        /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <param name="gameTypes">The game types.</param>
-        /// <param name="gameTypeOlds">The game type olds.</param>
-        /// <param name="resultUpdateStakeLevels">The result update stake levels.</param>
-        private void WriteLogUpdateStakeLevel(
-            LiveCasinoSettingContext settingContext,
-            List<GameType> gameTypes,
-            List<GameType> gameTypeOlds,
-            ICommandResultsDTO resultUpdateStakeLevels)
-        {
-            if (resultUpdateStakeLevels.IsSuccessful)
-            {
-                var successResultUpdateStakeLevel = resultUpdateStakeLevels.Results.Where(x => x.IsSuccessful);
-
-                foreach (var itemResult in successResultUpdateStakeLevel)
-                {
-                    var gameSettingResult = (GameSettingCommandResultDTO)itemResult;
-
-                    var newGameType = gameTypes.Where(x => x.Id == gameSettingResult.Id).FirstOrDefault();
-
-                    if (newGameType != null)
-                    {
-                        var oldGameType = gameTypeOlds.Where(x => x.Id == newGameType.Id).FirstOrDefault();
-
-                        //var log = new LogUpdateStakeLevel
-                        //{
-                        //    SettingContext = settingContext,
-                        //    NewGameType = newGameType,
-                        //    OldGameType = oldGameType
-                        //};
-
-                        //if (oldGameType == null || newGameType.CheckedStakeLevelId != oldGameType.CheckedStakeLevelId)
-                        //{
-                        //    WriteLog(log);
-                        //}
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Inserts the manual account.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
@@ -766,22 +721,23 @@
         /// <summary>
         /// Updates the list stake level.
         /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="roleId">The role identifier.</param>
-        /// <param name="gameTypes">The game types.</param>
-        /// <param name="language">The language.</param>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="newGameTypes">The game types.</param>
+        /// <param name="oldGameTypes">The old game types.</param>
         /// <returns>
         /// Command results update list stake level.
         /// </returns>
-        private ICommandResultsDTO UpdateListStakeLevel(int custId, CustomerLevel role, List<GameType> gameTypes, string language)
+        private ICommandResultsDTO UpdateGameTypes(LiveCasinoSettingContext settingContext, List<GameType> newGameTypes, List<GameType> oldGameTypes)
         {
             var results = new CommandResultsDTO();
 
-            if (gameTypes != null && gameTypes.Any())
+            if (newGameTypes != null && newGameTypes.Any())
             {
-                foreach (var itemGameType in gameTypes)
+                foreach (var itemNewGameType in newGameTypes)
                 {
-                    var result = UpdateStakeLevel(custId, role, itemGameType, language);
+                    var itemOldGameType = oldGameTypes.Where(x => x.Id == itemNewGameType.Id).FirstOrDefault();
+                    var result = UpdateStakeLevel(settingContext, itemNewGameType, itemOldGameType);
+
                     results.Results.Add(result);
                 }
             }
@@ -792,21 +748,20 @@
         /// <summary>
         /// Updates the stake level.
         /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="roleId">The role identifier.</param>
-        /// <param name="gameType">Type of the game.</param>
-        /// <param name="language">The language.</param>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="newGameType">Type of the game.</param>
+        /// <param name="oldGameType">Old type of the game.</param>
         /// <returns>
         /// Command result update stake level.
         /// </returns>
-        private ICommandResult UpdateStakeLevel(int custId, CustomerLevel role, GameType gameType, string language)
+        private ICommandResult UpdateStakeLevel(LiveCasinoSettingContext settingContext, GameType newGameType, GameType oldGameType)
         {
             var criteria = new UpdateStakeLevelCriteria
             {
-                CustId = custId,
-                RoleId = (int)role,
-                GameTypeId = gameType.Id,
-                StakeLevelList = gameType.CheckedStakeLevelId
+                CustId = settingContext.Customer.Id,
+                RoleId = (int)settingContext.Customer.Level,
+                GameTypeId = newGameType.Id,
+                StakeLevelList = newGameType.CheckedStakeLevelId
             };
 
             var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
@@ -815,12 +770,24 @@
 
             if (gameSettingResult.IsSuccessful)
             {
-                gameSettingResult.Id = gameType.Id;
-                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdateSuccessfully);
+                gameSettingResult.Id = newGameType.Id;
+                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, newGameType.Name, LiveCasinoLang.UpdateSuccessfully);
+
+                var log = new UpdateStakeLevelLog
+                {
+                    SettingContext = settingContext,
+                    NewGameType = newGameType,
+                    OldGameType = oldGameType
+                };
+
+                if (oldGameType == null || newGameType.CheckedStakeLevelId != oldGameType.CheckedStakeLevelId)
+                {
+                    WriteLog(log);
+                }
             }
             else
             {
-                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, gameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
+                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, newGameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
                 Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
@@ -919,33 +886,33 @@
             }
         }
 
-        //public ICommandResult WriteLog(IGameSettingLog logData)
-        //{
-        //    var criteria = new InsertLogUserRunSPCriteria
-        //    {
-        //        UserId = logData.SettingContext.ActorId,
-        //        CustId = logData.SettingContext.CustomerId,
-        //        SpName = logData.SpName,
-        //        Doing = string.Empty,
-        //        ActionId = (int)logData.Action,
-        //        TrackingValue = logData.NewValue,
-        //        TrackingValue2 = logData.OldValue,
-        //        Duration = 0
-        //    };
+        private ICommandResult WriteLog(IGameSettingLog logData)
+        {
+            var criteria = new InsertLogUserRunSPCriteria
+            {
+                UserId = logData.SettingContext.ActorId,
+                CustId = logData.SettingContext.Customer.Id,
+                SpName = logData.SpName,
+                Doing = string.Empty,
+                ActionId = (int)logData.Action,
+                TrackingValue = logData.NewValue,
+                TrackingValue2 = logData.OldValue,
+                Duration = 0
+            };
 
-        //    try
-        //    {
-        //        var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+            try
+            {
+                var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
 
-        //        return updateResult;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Log.Error(string.Format("{0}\n{1}", ex.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
+                return updateResult;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(string.Format("{0}\n{1}", ex.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
 
-        //        throw ex;
-        //    }
-        //}
+                throw ex;
+            }
+        }
 
         /// <summary>
         /// Get Customer Setting for Editing.
