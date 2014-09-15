@@ -18,7 +18,7 @@
 
         public FormType FormType { get; set; }
 
-        public int ActorId { get; set; }
+        public User Actor { get; set; }
 
         public string IP
         {

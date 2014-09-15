@@ -40,7 +40,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
                 CustId = settingContext.Customer.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language,
-                UserId = settingContext.ActorId,
+                UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
                 M1 = (decimal)base.PositionTaking.M1,
                 Im1 = (bool)base.PositionTaking.Im1,

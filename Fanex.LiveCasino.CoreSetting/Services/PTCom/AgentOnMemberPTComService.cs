@@ -42,7 +42,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
                 IP = settingContext.IP,
                 Language = settingContext.Language,
                 Recommend = settingContext.Upline.Id,
-                UserId = settingContext.ActorId,
+                UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
                 MemberCommission = (decimal)base.Commission,
                 A1 = (decimal)base.PositionTaking.A1

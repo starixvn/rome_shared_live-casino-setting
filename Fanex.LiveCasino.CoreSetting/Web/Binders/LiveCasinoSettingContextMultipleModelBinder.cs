@@ -44,7 +44,11 @@
                 {
                     Id = Converter.ToInt(formCollection["subAccId"])
                 },
-                ActorId = Converter.ToInt(formCollection["actorId"]),
+                Actor = new User
+                {
+                    Id = Converter.ToInt(formCollection["actorId"]),
+                    Username = Converter.To<string>(formCollection["actorUsername"])
+                },
                 Language = formCollection["language"] ?? "E",
                 FormType = (FormType)Converter.ToInt(formCollection["formType"])
             };

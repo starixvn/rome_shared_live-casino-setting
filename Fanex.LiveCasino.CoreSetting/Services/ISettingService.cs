@@ -57,8 +57,8 @@
         Customer GetCustomerInfo(int custId);
 
         string GetCustomerSite(string username);
-        
-        List<GameType> SetGameSetting(Customer customer);
+
+        void SetGameSetting(Customer customer);
 
         ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string ip, string language);
 

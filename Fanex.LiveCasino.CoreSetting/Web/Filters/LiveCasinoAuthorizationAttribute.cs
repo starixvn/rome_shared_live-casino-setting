@@ -101,7 +101,11 @@
                 {
                     Id = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccount.Id"))
                 },
-                ActorId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ActorId"))
+                Actor = new User
+                {
+                    Id = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.Actor.Id")),
+                    Username = Converter.To<string>(GetActionParameterValue(valueProvider, "settingContext.Actor.Username"))
+                }
             };
 
             return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
@@ -147,7 +151,7 @@
 
         private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
         {
-            
+
             return valueProvider.GetValue(parameterName) != null
                                 ? valueProvider.GetValue(parameterName).AttemptedValue
                                 : string.Empty;
