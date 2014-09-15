@@ -50,10 +50,52 @@
                 }
             }
 
-            return new CommandResultDTO { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
+            return new CommandResultDTO
+            {
+                Code = ErrCode.InvalidCriteria,
+                Message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey())
+            };
         }
 
-        /// <summary>
+         /// <summary>
+        /// Gets the common setting for edit.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="mapSetting">The map setting.</param>
+        /// <returns>Position taking and Commission setting models.</returns>
+        protected PTComDTO GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PTComDTO> mapSetting)
+        {
+            if (!criteria.IsValid())
+            {
+                throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
+            }
+
+            try
+            {
+                PTComDTO pTComSectionDTO = new PTComDTO();
+
+                using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            mapSetting(reader, pTComSectionDTO);
+                        }
+                    }
+                }
+
+                return pTComSectionDTO;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message);
+
+                throw ex;
+            }
+        }
+
+
         /// Gets the command result.
         /// </summary>
         /// <param name="outParameters">The out parameters.</param>

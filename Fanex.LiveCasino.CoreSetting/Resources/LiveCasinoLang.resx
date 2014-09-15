@@ -310,7 +310,7 @@
     <value>You have changed this agent not to take auto position taking.</value>
   </data>
   <data name="InvalidCriteriaMsg" xml:space="preserve">
-    <value>Invalid Criteria - Do nothing</value>
+    <value>Invalid Criteria - Setting Key : {0}</value>
   </data>
   <data name="InvalidCustomer" xml:space="preserve">
     <value>Invalid customer</value>
