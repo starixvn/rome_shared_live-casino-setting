@@ -17,13 +17,13 @@ if (fanex.liveCasinoSetting) {
             };
             $scope.isUpdateAllSetting = false;
 
-            $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
-            $scope.isEditMultiple = custSetting.SettingContext.Customers && custSetting.SettingContext.Customers.length > 0;
-            $scope.isEditDirect = (custSetting.SettingContext.Upline.Level - custSetting.SettingContext.Customer.Level === 1);
+            $scope.isReadOnly = settingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
+            $scope.isEditMultiple = settingContext.Customers && settingContext.Customers.length > 0;
+            $scope.isEditDirect = (settingContext.Upline.Level - settingContext.Customer.Level === 1);
             if ($scope.isEditMultiple
-                && custSetting.SettingContext.Customers.IsSyncLiveCasino
+                && settingContext.Customers.IsSyncLiveCasino
                 && $scope.isEditDirect) {
-                custSetting.CustInfo.IsSyncLiveCasino = custSetting.SettingContext.TargetSyncStatus.indexOf('0') === -1;
+                custSetting.CustInfo.IsSyncLiveCasino = settingContext.TargetSyncStatus.indexOf('0') === -1;
             }
 
             $scope.validateAndUpdateSetting = function (updateType) {
@@ -51,7 +51,7 @@ if (fanex.liveCasinoSetting) {
                 customer.gameSetting = gameSettingScope.getGameSetting();
 
                 var custSettingForUpdate = {
-                    settingContext: custSetting.SettingContext,
+                    settingContext: settingContext,
                     customer: customer,
                     isApplyPositionTakingAllMembers: ptAndComScope.uplinePTOnMember.isApplyNewUplinePositionTaking,
                     positionTakingOnMembers: ptAndComScope.uplinePTOnMember.newUplinePositionTaking,

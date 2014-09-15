@@ -5,7 +5,6 @@ if (fanex.liveCasinoSetting) {
         'use strict';
         var me = this;
 
-        me.custSetting = custSetting;
         me.updateAllSetting = function (updateAllSettingUrl, custSettingForUpdate, scope) {
             $http({
                 method: 'POST',
