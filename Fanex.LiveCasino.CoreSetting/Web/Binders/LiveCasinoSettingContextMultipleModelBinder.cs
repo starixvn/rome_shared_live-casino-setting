@@ -47,7 +47,7 @@
                 Actor = new User
                 {
                     Id = Converter.ToInt(formCollection["actorId"]),
-                    Username = Converter.To<string>(formCollection["actorUsername"])
+                    Username = formCollection["actorUsername"]
                 },
                 Language = formCollection["language"] ?? "E",
                 FormType = (FormType)Converter.ToInt(formCollection["formType"])

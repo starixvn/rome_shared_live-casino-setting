@@ -43,7 +43,7 @@
                 Actor = new User
                 {
                     Id = Converter.ToInt(request["actorId"]),
-                    Username = Converter.To<string>(request["actorUsername"])
+                    Username = request["actorUsername"]
                 },
                 Language = request["language"] ?? "E",
                 FormType = (FormType)Converter.ToInt(request["formType"])
