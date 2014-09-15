@@ -45,10 +45,10 @@ if (fanex.liveCasinoSetting) {
                     gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
 
                 var customer = custInfoScope.getCustInfo();
-                customer.memberWinLimit = winLimitScope.getWinLimit();
-                customer.positionTaking = ptAndComScope.positionTaking;
-                customer.commission = ptAndComScope.commission;
-                customer.gameSetting = gameSettingScope.getGameSetting();
+                customer.LiveCasinoSetting.MemberWinLimit = winLimitScope.getWinLimit();
+                customer.LiveCasinoSetting.PositionTaking = ptAndComScope.positionTaking;
+                customer.LiveCasinoSetting.Commission = ptAndComScope.commission;
+                customer.LiveCasinoSetting.GameSetting = gameSettingScope.getGameSetting();
 
                 var settingContextForUpdate = {
                     settingContext: settingContext,

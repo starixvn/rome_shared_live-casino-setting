@@ -1,9 +1,9 @@
-﻿/*global settingContext, language*/
+﻿/*global custSetting, language*/
 fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($http) {
     'use strict';
     var me = this;
 
-    me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, settingContextScope) {
+    me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, custSettingScope) {
         var ptAndComUpdateModel = {
             settingContext: settingContext,
             commission: commission,
@@ -19,7 +19,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
             data: ptAndComUpdateModel
         }).
             success(function (mainResult) {
-                settingContextScope.afterServerReturnSuccess(mainResult, true);
+                custSettingScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
@@ -28,7 +28,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
                 else {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
                 }
-                settingContextScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
             });
     };
 

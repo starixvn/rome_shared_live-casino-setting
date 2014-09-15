@@ -86,11 +86,13 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            ICommandResultsDTO updateResult = _settingService.UpdateSingleCustomerAllSetting(
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+
+            updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(
                 settingContext,
                 customer,
                 isApplyPositionTakingAllMembers,
-                positionTakingOnMembers);
+                positionTakingOnMembers));
 
             return Json(updateResult);
         }
@@ -112,9 +114,7 @@
             float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
-
-            updateResult = _settingService.UpdateMultipleCustomerAllSetting(
+            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultipleCustomerAllSetting(
                 settingContextMultiple,
                 customer,
                 updateType,
