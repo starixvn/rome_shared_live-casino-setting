@@ -11,6 +11,8 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Web.Binders;
+    using System.Globalization;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Live casino authorization filter.
@@ -84,7 +86,14 @@
         private bool IsAuthorizedHost(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContext = new LiveCasinoSettingContext
+            var settingContext = GetAjaxPostInformation(valueProvider);
+
+            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
+        }
+
+        private LiveCasinoSettingContextMultiple GetAjaxPostInformation(IValueProvider valueProvider)
+        {
+            var settingContext = new LiveCasinoSettingContextMultiple
             {
                 Customer = new Customer
                 {
@@ -107,28 +116,32 @@
                     Username = Converter.To<string>(GetActionParameterValue(valueProvider, "settingContext.Actor.Username"))
                 }
             };
-
-            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
+            return settingContext;
         }
 
         private bool IsAuthorizedHostMultiple(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContextMultiple = new LiveCasinoSettingContextMultiple
+            LiveCasinoSettingContextMultiple settingContext = GetAjaxPostInformation(valueProvider);
+            settingContext.Customers = new List<Customer>();
+            int customerIndex = 0;
+            string keyFormat = "settingContext.Customers[{0}]";
+            string customerIdKeyFormat = "settingContext.Customers[{0}].Id";
+            string usernameKeyFormat = "settingContext.Customers[{0}].Username";
+            string syncKeyFormat = "settingContext.Customers[{0}].IsSyncLiveCasino";
+            while (valueProvider.ContainsPrefix(string.Format(keyFormat, customerIndex)))
             {
-                //ParentId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentId")),
-                //ParentLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.ParentLevel")),
-                //SubAccId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.SubAccId")),
-                //Admin = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.AdminId")),
-                //CustomerId = Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerId")),
-                //Username = GetActionParameterValue(valueProvider, "settingContext.Username"),
-                //CustomerLevel = (CustomerLevel)Converter.ToInt(GetActionParameterValue(valueProvider, "settingContext.CustomerLevel")),
-                //CustomerIds = GetActionParameterValue(valueProvider, "settingContext.CustomerIds"),
-                //Usernames = GetActionParameterValue(valueProvider, "settingContext.Usernames"),
-                //CustomerSyncedStatus = GetActionParameterValue(valueProvider, "settingContext.CustomerSyncedStatus")
-            };
+                settingContext.Customers.Add(new Customer
+                    {
+                        Id = Converter.ToInt(GetActionParameterValue(valueProvider, string.Format(customerIdKeyFormat, customerIndex))),
+                        Username = GetActionParameterValue(valueProvider, string.Format(usernameKeyFormat, customerIndex)),
+                        IsSyncLiveCasino = Converter.ToBool(GetActionParameterValue(valueProvider, string.Format(syncKeyFormat, customerIndex))),
+                    });
 
-            return LiveCasinoAuthenticationService.IsAuthorizedHostMultiple(filterContext, settingContextMultiple);
+                customerIndex++;
+            }
+
+            return LiveCasinoAuthenticationService.IsAuthorizedHostMultiple(filterContext, settingContext);
         }
 
         private void UnAuthorizedAction(AuthorizationContext filterContext)
