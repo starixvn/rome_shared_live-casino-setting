@@ -9,14 +9,15 @@
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
     using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.Criteria.WinLimit;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Repositories;
+    using Fanex.LiveCasino.CoreSetting.Repositories.PTCom;
     using Fanex.LiveCasino.CoreSetting.Resources;
+    using Fanex.LiveCasino.CoreSetting.Services.PTCom;
     using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
@@ -27,16 +28,22 @@
     {
         private const string CasinoNo = "01";
         private readonly ISettingRepository _settingRepository;
+        private readonly IPTComServiceFactory _ptComServiceFactory;
+        private IPTComService _ptComService;
 
         public SettingService()
-            : this(null)
+            : this(null, null, null, null)
         {
         }
 
         public SettingService(
-            ISettingRepository settingRepository)
+            ISettingRepository settingRepository,
+            IPTComService ptComService,
+            IPTComServiceFactory ptComServiceFactory,
+            IPTComRepository ptComRepository)
         {
             _settingRepository = settingRepository ?? new SettingRepository();
+            _ptComServiceFactory = ptComServiceFactory ?? new PTComServiceFactory(ptComService, ptComRepository);
         }
 
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
@@ -936,38 +943,9 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(customer, "customer");
 
-            switch (settingContext.Customer.Level)
-            {
-                case CustomerLevel.Super:
-                    SetSuperPtAndCom(settingContext.Customer.Id, customer);
-                    break;
-
-                case CustomerLevel.Master:
-                    SetMasterPtAndCom(settingContext.Customer.Id, settingContext.Upline.Id, customer);
-                    break;
-
-                case CustomerLevel.Agent:
-                    SetAgentPtAndCom(settingContext.Customer.Id, settingContext.Upline.Id, customer);
-                    break;
-
-                case CustomerLevel.Member:
-                    switch (settingContext.Upline.Level)
-                    {
-                        case CustomerLevel.Super:
-                            SetMemberPtAndComSettingForSuperEditMember(settingContext.Customer.Id, customer);
-                            break;
-
-                        case CustomerLevel.Master:
-                            SetMemberPtAndComSettingForMasterEditMember(settingContext.Customer.Id, customer);
-                            break;
-
-                        default:
-                            SetMemberPtAndComSettingForAgentEditMember(settingContext.Customer.Id, settingContext.Upline.Id, customer);
-                            break;
-                    }
-
-                    break;
-            }
+            _ptComServiceFactory
+                .GetService(settingContext)
+                .SetPTComSetting(customer, settingContext);
         }
 
         /// <summary>
@@ -984,42 +962,11 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
+            _ptComService = _ptComServiceFactory.GetService(settingContext);
 
-            ICommandResultsDTO updateResults = new CommandResultsDTO();
-            switch (settingContext.Customer.Level)
-            {
-                case CustomerLevel.Super:
-                    updateResults.Results = UpdateSuperPtAndComSetting(settingContext, commission, positionTaking);
-                    break;
+            _ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
 
-                case CustomerLevel.Master:
-                    updateResults.Results = UpdateMasterPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                    break;
-
-                case CustomerLevel.Agent:
-                    updateResults.Results = UpdateAgentPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                    break;
-
-                case CustomerLevel.Member:
-                    switch (settingContext.Upline.Level)
-                    {
-                        case CustomerLevel.Super:
-                            updateResults.Results = SuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-                            break;
-
-                        case CustomerLevel.Master:
-                            updateResults.Results = MasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-                            break;
-
-                        default:
-                            updateResults.Results = AgentUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-                            break;
-                    }
-
-                    break;
-            }
-
-            return updateResults;
+            return _ptComService.Update(settingContext);
         }
 
         /// <summary>
@@ -1036,410 +983,11 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
+            _ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
 
-            foreach (var customer in settingContextMultiple.Customers)
-            {
-                settingContextMultiple.Customer = customer;
-                var subResult = UpdatePtComSetting(settingContextMultiple, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                subResult.Id = customer.Id;
-                subResult.Name = customer.Username;
-                mainResults.CommandResultsList.Add(subResult);
-            }
+            _ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
 
-            return mainResults;
-        }
-
-        private void SetSuperPtAndCom(int superId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditSuper(new GetSettingForEditSuperCriteria
-            {
-                CustId = superId
-            });
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        private void SetMasterPtAndCom(int masterId, int superId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditMaster(new GetSettingForEditMasterCriteria
-            {
-                CustId = masterId,
-                SRecommend = superId
-            });
-
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        private void SetAgentPtAndCom(int agentId, int masterId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditAgent(new GetSettingForEditAgentCriteria
-            {
-                CustId = agentId,
-                MRecommend = masterId
-            });
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        private void SetMemberPtAndComSettingForAgentEditMember(int memberId, int agentId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForEditMember(new GetSettingForEditMemberCriteria
-            {
-                CustId = memberId,
-                Recommend = agentId
-            });
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        private void SetMemberPtAndComSettingForSuperEditMember(int memberId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForSuperEditMember(new GetSettingForSuperEditMemberCriteria
-            {
-                CustId = memberId
-            });
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        private void SetMemberPtAndComSettingForMasterEditMember(int memberId, Customer customer)
-        {
-            PTComDTO ptAndComDTO = _settingRepository.GetSettingForMasterEditMember(
-                new GetSettingForMasterEditMemberCriteria
-                {
-                    CustId = memberId
-                });
-
-            SetDataToCustomerPtComSetting(ptAndComDTO, customer);
-        }
-
-        /// <summary>
-        /// Set position taking and commission setting to customer.
-        /// </summary>
-        /// <param name="positionTakingAndCommission">Array contains position taking and commission setting.</param>
-        /// <param name="customer">Customer need be set position taking and commission data.</param>
-        private void SetDataToCustomerPtComSetting(PTComDTO ptAndComDTO, Customer customer)
-        {
-            customer.LiveCasinoSetting.PositionTaking = ptAndComDTO.PositionTaking;
-            customer.LiveCasinoSetting.Commission = ptAndComDTO.Commission;
-            customer.Parent.LiveCasinoSetting.Commission = ptAndComDTO.Commission;
-        }
-
-        /// <summary>
-        /// Update super position taking and Commission setting.
-        /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        private List<ICommandResult> UpdateSuperPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            ICommandResult commandResult = _settingRepository.Save(new UpdateSuperSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.ActorId,
-                SuperCommission = (decimal)commission,
-                S4 = (decimal)positionTaking.S4,
-                N4 = (decimal)positionTaking.N4,
-            });
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> UpdateMasterPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingMasterPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-            ICommandResult commandResult = _settingRepository.Save(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> UpdateAgentPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            ICriteria criteria = GetCriteriaForUpdatingAgentPtAndComSetting(settingContext, commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-            ICommandResult commandResult = _settingRepository.Save(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> AgentUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            ICriteria criteria = GetCriteriaForAgentUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.Save(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> SuperUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            ICriteria criteria = GetCriteriaForSuperUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.Save(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        private List<ICommandResult> MasterUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            ICriteria criteria = GetCriteriaForMasterUpdateMemberPtAndComSetting(settingContext, commission, positionTaking);
-            ICommandResult commandResult = _settingRepository.Save(criteria);
-
-            return GetPtAndComResultDetails(commandResult);
-        }
-
-        /// <summary>
-        /// Get information after updated.
-        /// </summary>
-        /// <param name="commandResult">General information for analyzing to small message.</param>
-        /// <returns>List message for showing on web.</returns>
-        private List<ICommandResult> GetPtAndComResultDetails(ICommandResult commandResult)
-        {
-            List<ICommandResult> resultDetails = new List<ICommandResult>();
-
-            if (commandResult.Code != null
-                && Converter.ToString2(commandResult.Code) == ErrCode.InvalidCriteria.ToString())
-            {
-                resultDetails.Add(commandResult);
-                return resultDetails;
-            }
-
-            string[] errCodes = commandResult.Code.Split('\a');
-            string[] errMsgs = commandResult.Message.Split('\a');
-
-            for (int i = 0; i < errCodes.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(errCodes[i]))
-                {
-                    var errCode = Converter.ToInt(errCodes[i]);
-                    if (errCode < 0)
-                    {
-                        resultDetails.Add(new PtAndComCommandResultDTO
-                        {
-                            Code = errCode,
-                            Message = LiveCasinoLang.ResourceManager.GetString(string.Format("_{0}", Math.Abs(errCode)))
-                        });
-                    }
-                    else
-                    {
-                        resultDetails.Add(new PtAndComCommandResultDTO
-                        {
-                            Code = errCode,
-                            Message = errMsgs[i]
-                        });
-                    }
-                }
-            }
-
-            return resultDetails;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingMasterPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            var criteria = new UpdateMasterSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                SRecommend = settingContext.Upline.Id,
-                UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccount.Id,
-                MasterCommission = (decimal)commission,
-                M3 = (decimal)positionTaking.M3,
-                N3 = (decimal)positionTaking.N3,
-                Is3 = (bool)positionTaking.Is3,
-                Us3 = (decimal)positionTaking.Us3,
-                UpdateAllMembers = isApplyPositionTakingAllMembers,
-                S3 = (decimal)positionTaking.S3,
-                NewSuperPositionTakingOnMember = (decimal)positionTakingOnMembers
-            };
-
-            if (criteria.Is3)
-            {
-                criteria.S3 = 0;
-            }
-            else
-            {
-                criteria.Us3 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="commission">Commission setting for updating.</param>
-        /// <param name="positionTaking">Position taking setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForUpdatingAgentPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            var criteria = new UpdateAgentSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                MRecommend = settingContext.Upline.Id,
-                UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccount.Id,
-                AgentCommission = (decimal)commission,
-                M2 = (decimal)positionTaking.M2,
-                N2 = (decimal)positionTaking.N2,
-                Im2 = (bool)positionTaking.Im2,
-                Um2 = (decimal)positionTaking.Um2,
-                UpdateAllMembers = (bool)isApplyPositionTakingAllMembers,
-                A2 = (decimal)positionTaking.A2,
-                NewMasterPtOnMember = (decimal)positionTakingOnMembers
-            };
-
-            if (criteria.Im2)
-            {
-                criteria.M2 = 0;
-            }
-            else
-            {
-                criteria.Um2 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="commission">Commission setting for updating.</param>
-        /// <param name="positionTaking">Position taking setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForAgentUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            ICriteria criteria = new AgentUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                Recommend = settingContext.Upline.Id,
-                UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccount.Id,
-                MemberCommission = (decimal)commission,
-                A1 = (decimal)positionTaking.A1
-            };
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="commission">Commission setting for updating.</param>
-        /// <param name="positionTaking">Position taking setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForSuperUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            var criteria = new SuperUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccount.Id,
-                S1 = (decimal)positionTaking.S1,
-                Is1 = (bool)positionTaking.Is1,
-                Us1 = (decimal)positionTaking.Us1,
-                IsUpdateSuperPt = !(bool)positionTaking.Is3
-            };
-
-            if (criteria.Is1)
-            {
-                criteria.S1 = 0;
-            }
-            else
-            {
-                criteria.Us1 = 0;
-            }
-
-            return criteria;
-        }
-
-        /// <summary>
-        /// Get store procedure parameter value for updating customer.
-        /// </summary>
-        /// <param name="settingContext">Setting context for updating customer.</param>
-        /// <param name="commission">Commission setting for updating.</param>
-        /// <param name="positionTaking">Position taking setting for updating.</param>
-        /// <returns>Criteria for update customer.</returns>
-        private ICriteria GetCriteriaForMasterUpdateMemberPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking)
-        {
-            var criteria = new MasterUpdateMemberSettingCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                IP = settingContext.IP,
-                Language = settingContext.Language,
-                UserId = settingContext.ActorId,
-                SubAccID = settingContext.SubAccount.Id,
-                M1 = (decimal)positionTaking.M1,
-                Im1 = (bool)positionTaking.Im1,
-                Um1 = (decimal)positionTaking.Um1,
-                Im2 = (bool)positionTaking.Im2
-            };
-
-            if (criteria.Im1)
-            {
-                criteria.M1 = 0;
-            }
-            else
-            {
-                criteria.Um1 = 0;
-            }
-
-            return criteria;
+            return _ptComService.UpdateMultiple(settingContextMultiple.Customers, settingContextMultiple);
         }
 
         private UplineCustomerInfoDTO GetUplineCustomerInfo(int custId)

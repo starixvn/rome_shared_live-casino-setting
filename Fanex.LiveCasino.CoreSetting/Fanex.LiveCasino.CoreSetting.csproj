@@ -160,6 +160,14 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\ISettingRepository.cs" />
+    <Compile Include="Repositories\PTCom\AgentOnMemberPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\AgentPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\IPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\MasterOnMemberPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\MasterPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\PTComRepositoryBase.cs" />
+    <Compile Include="Repositories\PTCom\SuperOnMemberPTComRepository.cs" />
+    <Compile Include="Repositories\PTCom\SuperPTComRepository.cs" />
     <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Resources\LiveCasinoLang.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -193,6 +201,16 @@
     </Compile>
     <Compile Include="Services\ILiveCasinoAuthorizationService.cs" />
     <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Services\PTCom\AgentOnMemberPTComService.cs" />
+    <Compile Include="Services\PTCom\AgentPTComService.cs" />
+    <Compile Include="Services\PTCom\IPTComService.cs" />
+    <Compile Include="Services\PTCom\IPTComServiceFactory.cs" />
+    <Compile Include="Services\PTCom\MasterOnMemberPTComService.cs" />
+    <Compile Include="Services\PTCom\MasterPTComService.cs" />
+    <Compile Include="Services\PTCom\PTComServiceBase.cs" />
+    <Compile Include="Services\PTCom\PTComServiceFactory.cs" />
+    <Compile Include="Services\PTCom\SuperOnMemberPTComService.cs" />
+    <Compile Include="Services\PTCom\SuperPTComService.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="ViewModels\CustomerSettingMultipleViewModel.cs" />
     <Compile Include="ViewModels\CustomerSettingViewModel.cs" />

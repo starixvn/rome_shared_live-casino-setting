@@ -13,18 +13,6 @@
 
         CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria);
 
-        PTComDTO GetSettingForEditSuper(ICriteria criteria);
-
-        PTComDTO GetSettingForEditMaster(ICriteria criteria);
-
-        PTComDTO GetSettingForEditAgent(ICriteria criteria);
-
-        PTComDTO GetSettingForEditMember(ICriteria criteria);
-
-        PTComDTO GetSettingForSuperEditMember(ICriteria criteria);
-
-        PTComDTO GetSettingForMasterEditMember(ICriteria criteria);
-
         List<GameType> GetGameSetting(int custId);
 
         List<GameType> GetGameSetting(int exchangeId, string site, bool defaultCheckedValue = false);
