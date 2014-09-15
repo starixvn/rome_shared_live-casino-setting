@@ -1,11 +1,11 @@
-﻿/*global custSetting, language*/
+﻿/*global settingContext, language*/
 fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($http) {
     'use strict';
     var me = this;
 
-    me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, custSettingScope) {
+    me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, settingContextScope) {
         var ptAndComUpdateModel = {
-            settingContext: custSetting.SettingContext,
+            settingContext: settingContext.SettingContext,
             commission: commission,
             positionTaking: positionTaking,
             isApplyPositionTakingAllMembers: uplinePTOnMember.isApplyNewUplinePositionTaking,
@@ -19,7 +19,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
             data: ptAndComUpdateModel
         }).
             success(function (mainResult) {
-                custSettingScope.afterServerReturnSuccess(mainResult, true);
+                settingContextScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
@@ -28,7 +28,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
                 else {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
                 }
-                custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                settingContextScope.mainResult = fanex.liveCasinoSetting.errorResult;
             });
     };
 

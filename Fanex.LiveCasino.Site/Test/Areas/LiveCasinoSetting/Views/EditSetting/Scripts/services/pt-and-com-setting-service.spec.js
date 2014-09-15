@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../../../custSetting.js" />
+﻿/// <reference path="../../../../../../settingContext.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
@@ -34,21 +34,21 @@ describe('pt-and-com-setting-service', function () {
         },
             urlRequest = 'request/url',
             ptAndComSetting = {},
-            custSettingScope = {
+            settingContextScope = {
                 afterServerReturnSuccess: function () { }
             };
-        spyOn(custSettingScope, 'afterServerReturnSuccess');
+        spyOn(settingContextScope, 'afterServerReturnSuccess');
 
         // expectGET to make sure this is called once.
         httpBackend.expect('POST', urlRequest).respond(200, result);
 
         // make the call.
-        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, settingContextScope);
 
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
+        expect(settingContextScope.afterServerReturnSuccess).toHaveBeenCalled();
     });
 
     it('should send the msg and return the response, show result message and then hide', function () {
@@ -64,38 +64,38 @@ describe('pt-and-com-setting-service', function () {
         },
             urlRequest = 'request/url',
             ptAndComSetting = {},
-            custSettingScope = {
+            settingContextScope = {
                 afterServerReturnSuccess: function () { }
             };
-            spyOn(custSettingScope, 'afterServerReturnSuccess');
+            spyOn(settingContextScope, 'afterServerReturnSuccess');
 
         // expectGET to make sure this is called once.
         httpBackend.expect('POST', urlRequest).respond(200, result);
 
         // make the call.
-        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, settingContextScope);
 
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();
 
-        expect(custSettingScope.afterServerReturnSuccess).toHaveBeenCalled();
+        expect(settingContextScope.afterServerReturnSuccess).toHaveBeenCalled();
     });
 
     it('should send msg and return the error response, show result message', function () {
         // set up some data for the http call to return and test later.
         var urlRequest = 'request/url',
             ptAndComSetting = {},
-            custSettingScope = {
+            settingContextScope = {
                 afterServerReturnSuccess: function () { }
             },
             errorMessage = 'error message';
-        spyOn(custSettingScope, 'afterServerReturnSuccess');
+        spyOn(settingContextScope, 'afterServerReturnSuccess');
 
         // expectGET to make sure this is called once.
         httpBackend.expect('POST', urlRequest).respond(403, errorMessage);
 
         // make the call.
-        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, custSettingScope);
+        ptAndComSettingService.updatePtAndComSetting(urlRequest, ptAndComSetting, settingContextScope);
 
         // flush the backend to "execute" the request to do the expectedGET assertion.
         httpBackend.flush();

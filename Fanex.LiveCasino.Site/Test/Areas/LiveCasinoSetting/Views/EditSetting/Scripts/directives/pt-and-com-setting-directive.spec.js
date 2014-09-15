@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../../../custSetting.js" />
+﻿/// <reference path="../../../../../../settingContext.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
@@ -16,7 +16,7 @@
 /// <reference path="../services/pt-and-com-setting-service.spec.js" />
 
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/directives/pt-and-com-setting-directive.js" />
-/*global describe, beforeEach, inject, custSetting, it, expect*/
+/*global describe, beforeEach, inject, settingContext, it, expect*/
 
 describe('editSuperPtAndCom', function () {
     'use strict';
@@ -33,7 +33,7 @@ describe('editSuperPtAndCom', function () {
     }));
 
     beforeEach(function () {
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             S4: 0.9900,
             L4: 1.0,
             N4: 0.3900
@@ -80,7 +80,7 @@ describe('editMasterPtAndCom', function () {
     }));
 
     beforeEach(function () {
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             NewPresetOnMember: 0.0,
             UpdateAllMembers: false,
             S4: 0.9900,
@@ -169,7 +169,7 @@ describe('editAgentPtAndCom', function () {
     }));
 
     beforeEach(function () {
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             IsDisableAuto: false,
             NewPresetOnMember: 0.0,
             UpdateAllMembers: false,
@@ -261,7 +261,7 @@ describe('superEditMemberPt', function () {
 
     it('should assign right range for member', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             S1Min: 0.1,
             S1Max: 0.2500,
             S4: 0.9900,
@@ -287,7 +287,7 @@ describe('superEditMemberPt', function () {
 
     it('should add one option out of range for super get position taking on member', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             S1Min: 0.1,
             S1Max: 0.2500,
             S4: 0.9900,
@@ -313,7 +313,7 @@ describe('superEditMemberPt', function () {
 
     it('should remove 0.08 option, and supper range in [0.1:0.25]', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             S1Min: 0.1,
             S1Max: 0.2500,
             S4: 0.9900,
@@ -356,7 +356,7 @@ describe('masterEditMemberPt', function () {
 
     it('should assign right range', function () {
         //// Given 
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             IsDisableAuto: false,
             M1Max: 0.4200,
             M1Min: 0.1,
@@ -382,7 +382,7 @@ describe('masterEditMemberPt', function () {
 
     it('should render master pt option include 0.08 and range [0.1:0.42]', function () {
         //// Given 
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             IsDisableAuto: false,
             M1Max: 0.4200,
             M1Min: 0.1,
@@ -408,7 +408,7 @@ describe('masterEditMemberPt', function () {
 
     it('should remove 0.08 of master on member position taking options', function () {
         //// Given 
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             IsDisableAuto: false,
             M1Max: 0.4200,
             M1Min: 0.1,
@@ -455,13 +455,13 @@ describe('agentEditMemberPtAndCom', function () {
 
     it('should assign right range', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             A2: 0.3300,
             A1: 0.3200,
             N2: 0.2500
         };
 
-        custSetting.PtAndComSetting.Commission = {
+        settingContext.PtAndComSetting.Commission = {
             Value: 0.006,
             Upline: {
                 Value: 0.0065
@@ -483,7 +483,7 @@ describe('agentEditMemberPtAndCom', function () {
 
     it('should render agent pt range [0.25:0.33] and include 0.12', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             A2: 0.3300,
             A1: 0.12,
             N2: 0.2500
@@ -501,7 +501,7 @@ describe('agentEditMemberPtAndCom', function () {
 
     it('should remove 0.12 from agent on member position taking options', function () {
         //// Given
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.PtAndComSetting.PositionTaking = {
             A2: 0.3300,
             A1: 0.12,
             N2: 0.2500

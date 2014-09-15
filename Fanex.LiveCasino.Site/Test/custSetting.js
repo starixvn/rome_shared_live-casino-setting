@@ -1,6 +1,6 @@
 ﻿/* File Created: July 30, 2014 */
-/*exported custSetting*/
-var custSetting = {
+/*exported settingContext*/
+var settingContext = {
     "SettingContext": {
         "CustId": 1176083,
         "TargetCustId": 11901082,

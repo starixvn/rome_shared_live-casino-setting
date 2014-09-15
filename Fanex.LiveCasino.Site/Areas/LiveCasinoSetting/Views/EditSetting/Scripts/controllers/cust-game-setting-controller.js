@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting, language*/
+/*global settingContext, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustGameSettingController',
     [
@@ -8,8 +8,8 @@ if (fanex.liveCasinoSetting) {
         'CustomerGameSettingService',
         function ($scope, $http, customerGameSettingService) {
             'use strict';
-            $scope.gameSetting = fanex.cloneObject(custSetting.Customer.LiveCasinoSetting.GameSetting);
-            var customer = custSetting.Customer;
+            $scope.gameSetting = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.GameSetting);
+            var customer = settingContext.Customer;
             var uplineUncheckedAllMsg = '';
 
             if (customer.Level === fanex.liveCasinoSetting.customerLevel.Member && customer.IsSyncLiveCasino) {

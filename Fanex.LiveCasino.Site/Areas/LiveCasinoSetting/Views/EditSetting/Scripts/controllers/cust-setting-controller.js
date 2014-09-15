@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting*/
+/*global settingContext*/
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.js" />
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerSettingController',
@@ -23,7 +23,7 @@ if (fanex.liveCasinoSetting) {
             if ($scope.isEditMultiple
                 && settingContext.Customers.IsSyncLiveCasino
                 && $scope.isEditDirect) {
-                custSetting.CustInfo.IsSyncLiveCasino = settingContext.TargetSyncStatus.indexOf('0') === -1;
+                settingContext.CustInfo.IsSyncLiveCasino = settingContext.TargetSyncStatus.indexOf('0') === -1;
             }
 
             $scope.validateAndUpdateSetting = function (updateType) {
@@ -50,7 +50,7 @@ if (fanex.liveCasinoSetting) {
                 customer.commission = ptAndComScope.commission;
                 customer.gameSetting = gameSettingScope.getGameSetting();
 
-                var custSettingForUpdate = {
+                var settingContextForUpdate = {
                     settingContext: settingContext,
                     customer: customer,
                     isApplyPositionTakingAllMembers: ptAndComScope.uplinePTOnMember.isApplyNewUplinePositionTaking,
@@ -58,7 +58,7 @@ if (fanex.liveCasinoSetting) {
                     updateType: updateType
                 };
 
-                customerSettingService.updateAllSetting(updateAllSettingUrl, custSettingForUpdate, $scope);
+                customerSettingService.updateAllSetting(updateAllSettingUrl, settingContextForUpdate, $scope);
                 $scope.isUpdateAllSetting = false;
             };
 

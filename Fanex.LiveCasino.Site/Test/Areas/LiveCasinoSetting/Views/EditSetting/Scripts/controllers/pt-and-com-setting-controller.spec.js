@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../../../custSetting.js" />
+﻿/// <reference path="../../../../../../settingContext.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/jquery-2.1.1.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/libs/angular-sanitize.js" />
@@ -11,7 +11,7 @@
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Views/EditSetting/Scripts/services/pt-and-com-setting-service.js" />
 /// <reference path="../../../../../../../Areas/LiveCasinoSetting/Scripts/core/live-casino-lang.js" />
 /// <reference path="../../../../Scripts/core/live-casino-lang.spec.js" />
-/*global describe, beforeEach, inject, spyOn, it, custSetting, expect*/
+/*global describe, beforeEach, inject, spyOn, it, settingContext, expect*/
 describe('pt-and-com-setting-controller', function () {
     'use strict';
     var $scope, ptAndComSettingService;
@@ -36,8 +36,8 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should show popup when super change from is auto preset to not', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
+        settingContext.PtAndComSetting.PositionTaking = {
             Is3: true
         };
 
@@ -51,8 +51,8 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when super change from not auto to take auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
+        settingContext.PtAndComSetting.PositionTaking = {
             Is3: false
         };
 
@@ -66,8 +66,8 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should show popup when master change from is auto preset to not', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
+        settingContext.PtAndComSetting.PositionTaking = {
             Im2: true
         };
 
@@ -81,8 +81,8 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when master change from is not auto to take auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Agent;
+        settingContext.PtAndComSetting.PositionTaking = {
             Im2: false
         };
 
@@ -96,7 +96,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when form has no auto', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Member;
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Member;
 
         //// When
         var isEditOnMember = $scope.isEditPresetOnMember();
@@ -114,8 +114,8 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not update setting and show popup when update setting', function () {
         //// Given
-        custSetting.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
-        custSetting.PtAndComSetting.PositionTaking = {
+        settingContext.SettingContext.TargetRoleId = fanex.liveCasinoSetting.customerLevel.Master;
+        settingContext.PtAndComSetting.PositionTaking = {
             Is3: true
         };
 
@@ -157,7 +157,7 @@ describe('pt-and-com-setting-controller', function () {
 
     it('should not show popup when form has no auto', function () {
         //// Given
-        custSetting.CustInfo.IsSyncLiveCasino = false;
+        settingContext.CustInfo.IsSyncLiveCasino = false;
         $scope.$parent.validateAndUpdateSetting = function () { return; };
         spyOn($scope.$parent, 'validateAndUpdateSetting');
 

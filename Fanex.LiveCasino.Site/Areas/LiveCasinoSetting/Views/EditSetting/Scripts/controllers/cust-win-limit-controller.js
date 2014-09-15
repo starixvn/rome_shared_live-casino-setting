@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting,language, numeral*/
+/*global settingContext,language, numeral*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerWinLimitController',
     [
@@ -8,10 +8,10 @@ if (fanex.liveCasinoSetting) {
         'CustomerWinLimitService',
         function ($scope, $http, customerWinLimitService) {
             'use strict';
-            $scope.maxWinLimitModel = fanex.cloneObject(custSetting.Customer.LiveCasinoSetting.WinLimit);
-            var customer = custSetting.Customer;
-            var winLimit = custSetting.Customer.LiveCasinoSetting.WinLimit;
-            var uplineWinLimit = custSetting.Customer.Parent.LiveCasinoSetting.WinLimit;
+            $scope.maxWinLimitModel = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.WinLimit);
+            var customer = settingContext.Customer;
+            var winLimit = settingContext.Customer.LiveCasinoSetting.WinLimit;
+            var uplineWinLimit = settingContext.Customer.Parent.LiveCasinoSetting.WinLimit;
             $scope.isShowCurrentWinLimit = false;
             $scope.maxWinLimits = [{ lable: "3X", value: 3 },
                                    { lable: "5X", value: 5 },

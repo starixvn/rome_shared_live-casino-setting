@@ -1,4 +1,4 @@
-﻿/*global custSetting, language*/
+﻿/*global settingContext, language*/
 fanex.liveCasinoSetting.controller('PtAndComSettingController',
     [
     '$scope',

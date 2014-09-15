@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting, language*/
+/*global settingContext, language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerWinLimitService', ['$http', function ($http) {
         'use strict';
@@ -13,9 +13,9 @@ if (fanex.liveCasinoSetting) {
             });
         };
 
-        $this.updateWinLimitSetting = function (winLimitModel, custSettingScope) {
+        $this.updateWinLimitSetting = function (winLimitModel, settingContextScope) {
             var winLimitUpdate = {
-                settingContext: custSetting.SettingContext,
+                settingContext: settingContext.SettingContext,
                 model: {
                     Max: winLimitModel.Max.value,
                     IsAutoReset: winLimitModel.IsAutoReset
@@ -28,7 +28,7 @@ if (fanex.liveCasinoSetting) {
                 headers: { 'Content-Type': 'application/json' },
                 data: winLimitUpdate
             }).success(function (mainResult) {
-                custSettingScope.afterServerReturnSuccess(mainResult, true);
+                settingContextScope.afterServerReturnSuccess(mainResult, true);
             }).
             error(function (data, status) {
                 if (status === fanex.liveCasinoSetting.UN_AUTHORIZED_CODE) {
@@ -37,7 +37,7 @@ if (fanex.liveCasinoSetting) {
                 else {
                     fanex.liveCasinoSetting.errorResult.CommandResultsList[0].Results[0].Message = language.getString('lblUpdateFailed');
                 }
-                custSettingScope.mainResult = fanex.liveCasinoSetting.errorResult;
+                settingContextScope.mainResult = fanex.liveCasinoSetting.errorResult;
             });
         };
     } ]);

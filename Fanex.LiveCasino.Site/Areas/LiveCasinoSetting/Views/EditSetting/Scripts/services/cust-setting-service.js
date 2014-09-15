@@ -5,12 +5,12 @@ if (fanex.liveCasinoSetting) {
         'use strict';
         var me = this;
 
-        me.updateAllSetting = function (updateAllSettingUrl, custSettingForUpdate, scope) {
+        me.updateAllSetting = function (updateAllSettingUrl, settingContextForUpdate, scope) {
             $http({
                 method: 'POST',
                 url: updateAllSettingUrl,
                 headers: { 'Content-Type': 'application/json' },
-                data: custSettingForUpdate
+                data: settingContextForUpdate
             }).
             success(function (mainResult) {
                 scope.afterServerReturnSuccess(mainResult, false);
