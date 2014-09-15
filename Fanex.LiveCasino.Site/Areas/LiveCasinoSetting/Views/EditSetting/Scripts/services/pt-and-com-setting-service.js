@@ -5,7 +5,7 @@ fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($h
 
     me.updatePtAndComSetting = function (updatePtAndComUrl, commission, positionTaking, uplinePTOnMember, settingContextScope) {
         var ptAndComUpdateModel = {
-            settingContext: settingContext.SettingContext,
+            settingContext: settingContext,
             commission: commission,
             positionTaking: positionTaking,
             isApplyPositionTakingAllMembers: uplinePTOnMember.isApplyNewUplinePositionTaking,
