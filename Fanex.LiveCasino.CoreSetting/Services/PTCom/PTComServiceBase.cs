@@ -93,7 +93,7 @@
         {
             customer.LiveCasinoSetting.PositionTaking = ptComDTO.PositionTaking;
             customer.LiveCasinoSetting.Commission = ptComDTO.Commission;
-            customer.Parent.LiveCasinoSetting.Commission = ptComDTO.Commission;
+            customer.Parent.LiveCasinoSetting.Commission = ptComDTO.ParentCommission;
         }
     }
 }

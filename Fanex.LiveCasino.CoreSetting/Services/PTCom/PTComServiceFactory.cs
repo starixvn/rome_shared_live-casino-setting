@@ -29,29 +29,36 @@
             switch (settingContext.Customer.Level)
             {
                 case CustomerLevel.Super:
-                    return new SuperPTComService(_ptComRepository);
+                    _ptComService = new SuperPTComService(_ptComRepository);
+                    break;
 
                 case CustomerLevel.Master:
-                    return new MasterPTComService(_ptComRepository);
+                    _ptComService = new MasterPTComService(_ptComRepository);
+                    break;
 
                 case CustomerLevel.Agent:
-                    return new AgentPTComService(_ptComRepository);
+                    _ptComService = new AgentPTComService(_ptComRepository);
+                    break;
 
                 case CustomerLevel.Member:
                     switch (settingContext.Upline.Level)
                     {
                         case CustomerLevel.Super:
-                            return new SuperOnMemberPTComService(_ptComRepository);
+                            _ptComService = new SuperOnMemberPTComService(_ptComRepository);
+                            break;
 
                         case CustomerLevel.Master:
-                            return new MasterOnMemberPTComService(_ptComRepository);
+                            _ptComService = new MasterOnMemberPTComService(_ptComRepository);
+                            break;
 
                         default:
-                            return new AgentOnMemberPTComService(_ptComRepository);
+                            _ptComService = new AgentOnMemberPTComService(_ptComRepository);
+                            break;
                     }
-                default:
-                    return _ptComService;
+                    break;
             }
+
+            return _ptComService;
         }
     }
 }

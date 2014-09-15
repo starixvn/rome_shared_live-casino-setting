@@ -29,7 +29,6 @@
         private const string CasinoNo = "01";
         private readonly ISettingRepository _settingRepository;
         private readonly IPTComServiceFactory _ptComServiceFactory;
-        private IPTComService _ptComService;
 
         public SettingService()
             : this(null, null, null, null)
@@ -962,11 +961,11 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            _ptComService = _ptComServiceFactory.GetService(settingContext);
+            var ptComService = _ptComServiceFactory.GetService(settingContext);
 
-            _ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
 
-            return _ptComService.Update(settingContext);
+            return ptComService.Update(settingContext);
         }
 
         /// <summary>
@@ -983,11 +982,11 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            _ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
+            var ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
 
-            _ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
 
-            return _ptComService.UpdateMultiple(settingContextMultiple.Customers, settingContextMultiple);
+            return ptComService.UpdateMultiple(settingContextMultiple.Customers, settingContextMultiple);
         }
 
         private UplineCustomerInfoDTO GetUplineCustomerInfo(int custId)

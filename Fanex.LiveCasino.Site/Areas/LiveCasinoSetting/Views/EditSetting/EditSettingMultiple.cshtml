@@ -39,9 +39,10 @@
         @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContextMultiple)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContextMultiple)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContextMultiple)
+    @Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateLiveCasinoSettingMultiple"))
+    @Html.Hidden("UpdatePtComSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdatePtComSettingMultiple"))
+    @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateWinLimitMultiple"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateGameSettingMultiple"))
 }
 
-@Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSettingMultiple"))
-@Html.Hidden("UpdatePtComSettingUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtComSettingMultiple"))
-@Html.Hidden("UpdateWinLimitUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimitMultiple"))
-@Html.Hidden("UpdateGameSettingUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSettingMultiple"))
+

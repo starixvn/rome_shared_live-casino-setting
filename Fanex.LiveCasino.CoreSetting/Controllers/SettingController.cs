@@ -233,12 +233,18 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            ICommandResultsDTO updateResult = _settingService.UpdatePtComSetting(
-                settingContext, 
-                commission, 
-                positionTaking, 
-                isApplyPositionTakingAllMembers, 
-                positionTakingOnMembers);
+            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO
+            {
+                CommandResultsList = new List<ICommandResultsDTO>
+                {
+                    _settingService.UpdatePtComSetting(
+                        settingContext, 
+                        commission, 
+                        positionTaking, 
+                        isApplyPositionTakingAllMembers, 
+                        positionTakingOnMembers)
+                }
+            };
 
             return Json(updateResult);
         }

@@ -23,7 +23,7 @@
                     @LiveCasinoLang.lblUsername
                 </td>
                 <td class="left info-value">
-                    {{custInfo.UserName}}
+                    @Model.Customer.Username
                 </td>
                 <td class="right bold info-lable">
                     @LiveCasinoLang.lblNickname
@@ -31,7 +31,7 @@
                 <td class="left info-value">
                     @if (LiveCasinoSettings.Settings.SystemId != (int)SystemType.Agency)
                     {
-                        @:{{custInfo.NickName}}
+                        @Model.Customer.NickName
                     }
                 </td>
             </tr>
@@ -40,13 +40,13 @@
                     @LiveCasinoLang.lblFirstName
                 </td>
                 <td class="left info-value">
-                    {{custInfo.FirstName}}
+                    @Model.Customer.FirstName
                 </td>
                 <td class="right bold info-lable">
                     @LiveCasinoLang.lblLastName
                 </td>
                 <td class="left info-value">
-                    {{custInfo.LastName}}
+                    @Model.Customer.LastName
                 </td>
             </tr>
             <tr>
@@ -54,13 +54,13 @@
                     @LiveCasinoLang.lblPhone
                 </td>
                 <td class="left info-value">
-                    {{custInfo.Phone}}
+                    @Model.Customer.Phone
                 </td>
                 <td class="right bold info-lable">
                     @LiveCasinoLang.lblMobilePhone
                 </td>
                 <td class="left info-value">
-                    {{custInfo.Mobile}}
+                    @Model.Customer.Mobile
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@
                     @LiveCasinoLang.lblFax
                 </td>
                 <td class="left info-value">
-                    {{custInfo.Fax}}
+                    @Model.Customer.Fax
                 </td>
                 @if (Model.SettingContext.Customer.Level == CustomerLevel.Member 
                     && Model.SettingContext.Upline.Level == CustomerLevel.Agent)
@@ -93,10 +93,9 @@
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContext)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContext)
     @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContext)
+    @Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateLiveCasinoSetting"))
+    @Html.Hidden("UpdatePtComSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdatePtComSetting"))
+    @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateWinLimit"))
+    @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateGameSetting"))
 }
-
-@Html.Hidden("UpdateLiveCasinoSettingMultipleUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateLiveCasinoSettingMultiple"))
-@Html.Hidden("UpdatePtComSettingMultipleUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdatePtComSetting"))
-@Html.Hidden("UpdateWinLimitMultipleUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateWinLimit"))
-@Html.Hidden("UpdateGameSettingMultipleUrl", Url.Content("~/LiveCasinoSetting/LiveCSSetting/UpdateGameSetting"))
 

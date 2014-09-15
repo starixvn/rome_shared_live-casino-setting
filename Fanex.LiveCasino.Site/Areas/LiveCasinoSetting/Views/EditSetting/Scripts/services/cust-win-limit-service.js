@@ -24,7 +24,7 @@ if (fanex.liveCasinoSetting) {
 
             $http({
                 method: 'POST',
-                url: $('#tblMaxWinLimit').data('update-href'),
+                url: $('#UpdateWinLimitUrl').val(),
                 headers: { 'Content-Type': 'application/json' },
                 data: winLimitUpdate
             }).success(function (mainResult) {

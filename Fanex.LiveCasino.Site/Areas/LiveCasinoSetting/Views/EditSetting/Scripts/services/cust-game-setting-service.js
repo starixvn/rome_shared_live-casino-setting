@@ -13,7 +13,7 @@ if (fanex.liveCasinoSetting) {
 
             $http({
                 method: 'POST',
-                url: $('#tblGameSetting').data('update-href'),
+                url: $('#UpdateGameSettingUrl').val(),
                 headers: { 'Content-Type': 'application/json' },
                 data: gameSettingModel
             }).success(function (mainResult) {

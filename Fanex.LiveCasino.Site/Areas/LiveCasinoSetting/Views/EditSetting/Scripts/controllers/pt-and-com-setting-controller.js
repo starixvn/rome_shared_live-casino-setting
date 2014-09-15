@@ -11,21 +11,21 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         me.$presetOnMemberModal = $('#presetOnMemberModal');
         $scope.uplinePTOnMember =
         {
-            NewUplinePositionTaking: 0,
-            IsApplyNewUplinePositionTaking: false
+            newUplinePositionTaking: 0,
+            isApplyNewUplinePositionTaking: false
         };
 
         $scope.isEditPresetOnMember = function () {
-            var currentPt = $scope.PositionTaking;
+            var currentPt = $scope.positionTaking;
             switch (custSetting.SettingContext.Customer.Level) {
                 case fanex.liveCasinoSetting.customerLevel.Master:
-                    if (custSetting.PtAndComSetting.PositionTaking.Is3
+                    if (custSetting.Customer.LiveCasinoSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
-                        $scope.uplinePTOnMember = fanex.roundNumber(currentPt.S4 - currentPt.M3);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
-                                                            currentPt.NewPresetOnMember,
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
-                                                            currentPt.NewPresetOnMember,
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
@@ -36,13 +36,13 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                     }
                     break;
                 case fanex.liveCasinoSetting.customerLevel.Agent:
-                    if (custSetting.PtAndComSetting.PositionTaking.Im2
+                    if (custSetting.Customer.LiveCasinoSetting.PtAndComSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
-                        $scope.uplinePTOnMember = fanex.roundNumber(currentPt.M3 - currentPt.A2);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
-                                                            currentPt.NewPresetOnMember,
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
-                                                            currentPt.NewPresetOnMember,
+                                                            $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             fanex.liveCasinoSetting.PT_INTERVAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
@@ -80,7 +80,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         $scope.updatePTOnMember = function (isUpdate) {
-            $scope.ptAndComSetting.PositionTaking.UpdateAllMembers = isUpdate;
+            $scope.uplinePTOnMember.isApplyNewUplinePositionTaking = isUpdate;
             if ($scope.$parent.isUpdateAllSetting) {
                 $scope.$parent.updateAllSetting();
             }
