@@ -7,7 +7,7 @@
     /// </summary>
     public class CustomerSettingMultipleViewModel
     {
-        public LiveCasinoSettingContextMultiple SettingContextMultiple { get; set; }
+        public LiveCasinoSettingContextMultiple SettingContext { get; set; }
 
         public Customer Customer { get; set; }
     }

@@ -36,7 +36,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                     }
                     break;
                 case fanex.liveCasinoSetting.customerLevel.Agent:
-                    if (custSetting.Customer.LiveCasinoSetting.PtAndComSetting.PositionTaking.Im2
+                    if (custSetting.Customer.LiveCasinoSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
                         $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(

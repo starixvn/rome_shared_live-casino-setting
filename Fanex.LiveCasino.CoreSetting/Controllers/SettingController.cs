@@ -79,7 +79,7 @@
 
             var custSettingViewModel = new CustomerSettingMultipleViewModel
             {
-                SettingContextMultiple = settingContextMultiple,
+                SettingContext = settingContextMultiple,
                 Customer = _settingService.GetCustomer(settingContextMultiple)
             };
 

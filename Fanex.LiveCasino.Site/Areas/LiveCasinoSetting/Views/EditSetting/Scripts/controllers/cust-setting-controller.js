@@ -17,14 +17,12 @@ if (fanex.liveCasinoSetting) {
             };
             $scope.isUpdateAllSetting = false;
 
-            if (!custSetting.SettingContext) {
-                custSetting.SettingContext = custSetting.SettingContextMultiple;
-            }
-
             $scope.isReadOnly = custSetting.SettingContext.FormType === fanex.liveCasinoSetting.formType.ReadOnly;
-            if (custSetting.SettingContext.IsEditMultiple
-                && custSetting.SettingContext.TargetSyncStatus
-                && custSetting.SettingContext.IsEditDirectDownline) {
+            $scope.isEditMultiple = custSetting.SettingContext.Customers && custSetting.SettingContext.Customers.length > 0;
+            $scope.isEditDirect = (custSetting.SettingContext.Upline.Level - custSetting.SettingContext.Customer.Level === 1);
+            if ($scope.isEditMultiple
+                && custSetting.SettingContext.Customers.IsSyncLiveCasino
+                && $scope.isEditDirect) {
                 custSetting.CustInfo.IsSyncLiveCasino = custSetting.SettingContext.TargetSyncStatus.indexOf('0') === -1;
             }
 
@@ -55,7 +53,8 @@ if (fanex.liveCasinoSetting) {
                 var custSettingForUpdate = {
                     settingContext: custSetting.SettingContext,
                     customer: customer,
-                    uplinePositionTakingOnMember: ptAndComScope.uplinePositionTakingOnMember,
+                    isApplyPositionTakingAllMembers: ptAndComScope.uplinePTOnMember.isApplyNewUplinePositionTaking,
+                    positionTakingOnMembers: ptAndComScope.uplinePTOnMember.newUplinePositionTaking,
                     updateType: updateType
                 };
 
@@ -69,7 +68,7 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if (custSetting.SettingContext.IsEditMultiple
+                        if ($scope.isEditDirect
                             && $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
                         }

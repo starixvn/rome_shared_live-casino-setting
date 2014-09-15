@@ -41,7 +41,7 @@
                     Id = Converter.ToInt(request["subAccId"])
                 },
                 ActorId = Converter.ToInt(request["actorId"]),
-                Language = request["language"],
+                Language = request["language"] ?? "E",
                 FormType = (FormType)Converter.ToInt(request["formType"])
             };
         }
