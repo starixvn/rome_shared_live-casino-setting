@@ -3,16 +3,14 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
-    using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.ViewModels;
-    using Fanex.LiveCasino.CoreSetting.Web.Filters;
     using Fanex.LiveCasino.CoreSetting.Web.Binders;
+    using Fanex.LiveCasino.CoreSetting.Web.Filters;
 
     /// <summary>
     /// Controller handles setting request.
@@ -44,16 +42,9 @@
         public ActionResult EditSetting(
             [ModelBinder(typeof(LiveCasinoSettingContextModelBinder))]LiveCasinoSettingContext settingContext)
         {
-            var customer = _settingService.GetCustomer(settingContext);
-            settingContext.Customer.IsSyncLiveCasino = customer.IsSyncLiveCasino;
+            settingContext.Customer = _settingService.GetCustomer(settingContext);
 
-            var custSettingViewModel = new CustomerSettingViewModel
-            {
-                SettingContext = settingContext,
-                Customer = customer
-            };
-
-            return View(ViewPath.EditSettingSinglePage, custSettingViewModel);
+            return View(ViewPath.EditSettingSinglePage, settingContext);
         }
 
         /// <summary>
@@ -73,17 +64,9 @@
                 return View(ViewPath.NoInformationPage);
             }
 
-            settingContextMultiple.Customer.Id = representiveCustomer.Id;
-            settingContextMultiple.Customer.IsSyncLiveCasino = representiveCustomer.IsSyncLiveCasino;
-            settingContextMultiple.Customer.Username = representiveCustomer.Username;
+            settingContextMultiple.Customer = representiveCustomer;
 
-            var custSettingViewModel = new CustomerSettingMultipleViewModel
-            {
-                SettingContext = settingContextMultiple,
-                Customer = _settingService.GetCustomer(settingContextMultiple)
-            };
-
-            return View(ViewPath.EditSettingMultiplePage, custSettingViewModel);
+            return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
         }
 
         /// <summary>
@@ -108,7 +91,6 @@
                 customer,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
-
 
             return Json(updateResult);
         }
@@ -138,7 +120,6 @@
                 updateType,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
-
 
             return Json(updateResult);
         }
@@ -251,10 +232,10 @@
                 CommandResultsList = new List<ICommandResultsDTO>
                 {
                     _settingService.UpdatePtComSetting(
-                        settingContext, 
-                        commission, 
-                        positionTaking, 
-                        isApplyPositionTakingAllMembers, 
+                        settingContext,
+                        commission,
+                        positionTaking,
+                        isApplyPositionTakingAllMembers,
                         positionTakingOnMembers)
                 }
             };

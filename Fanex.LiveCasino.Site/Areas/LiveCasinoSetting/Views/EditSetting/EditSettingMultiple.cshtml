@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = LiveCasinoLang.lblEditMultipleLiveCasino;
-    var customerNames = string.Join<string>(", ", Model.SettingContextMultiple.Customers.Select<Customer, string>(customer => customer.Username));
+    var customerNames = string.Join<string>(", ", Model.Customers.Select<Customer, string>(customer => customer.Username));
 }
-@model CustomerSettingMultipleViewModel
+@model LiveCasinoSettingContextMultiple
 
 @section modeldata
 {
@@ -22,8 +22,8 @@
                         @(customerNames)
                     </td>
                 </tr>
-                @if (Model.SettingContextMultiple.Customer.Level == CustomerLevel.Member 
-                    && Model.SettingContextMultiple.Upline.Level == CustomerLevel.Agent)
+                @if (Model.Customer.Level == CustomerLevel.Member 
+                    && Model.Upline.Level == CustomerLevel.Agent)
                 {
                     <tr>
                         <td class="right">
@@ -36,9 +36,9 @@
             </tbody>
         </table>
     </div>
-        @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContextMultiple)
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContextMultiple)
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContextMultiple)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
     @Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateLiveCasinoSettingMultiple"))
     @Html.Hidden("UpdatePtComSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdatePtComSettingMultiple"))
     @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateWinLimitMultiple"))

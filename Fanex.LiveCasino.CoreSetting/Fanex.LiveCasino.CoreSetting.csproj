@@ -212,8 +212,6 @@
     <Compile Include="Services\PTCom\SuperOnMemberPTComService.cs" />
     <Compile Include="Services\PTCom\SuperPTComService.cs" />
     <Compile Include="Services\SettingService.cs" />
-    <Compile Include="ViewModels\CustomerSettingMultipleViewModel.cs" />
-    <Compile Include="ViewModels\CustomerSettingViewModel.cs" />
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Binders\LiveCasinoSettingContextModelBinder.cs" />

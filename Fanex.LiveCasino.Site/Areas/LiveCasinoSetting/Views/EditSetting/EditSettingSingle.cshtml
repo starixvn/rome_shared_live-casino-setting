@@ -2,7 +2,7 @@
     Layout = "~/Areas/LiveCasinoSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = LiveCasinoLang.lblEditLiveCasino;
 }
-@model CustomerSettingViewModel
+@model LiveCasinoSettingContext
 @section modeldata
 {
     <script type="text/javascript">
@@ -70,8 +70,8 @@
                 <td class="left info-value">
                     @Model.Customer.Fax
                 </td>
-                @if (Model.SettingContext.Customer.Level == CustomerLevel.Member 
-                    && Model.SettingContext.Upline.Level == CustomerLevel.Agent)
+                @if (Model.Customer.Level == CustomerLevel.Member 
+                    && Model.Upline.Level == CustomerLevel.Agent)
                 {
                     <td class="right bold info-lable">
                         @LiveCasinoLang.lblEnable
@@ -90,9 +90,9 @@
             </tr>
         </table>
     </div>
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model.SettingContext)
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model.SettingContext)
-    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model.SettingContext)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/MemberWinLimit.cshtml", Model)
+    @Html.Partial("~/Areas/LiveCasinoSetting/Views/EditSetting/Setting/GameSetting.cshtml", Model)
     @Html.Hidden("UpdateLiveCasinoSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateLiveCasinoSetting"))
     @Html.Hidden("UpdatePtComSettingUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdatePtComSetting"))
     @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/LiveCasinoSetting/Setting/UpdateWinLimit"))

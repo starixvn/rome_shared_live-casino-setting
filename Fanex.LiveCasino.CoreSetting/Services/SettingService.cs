@@ -71,7 +71,7 @@
             int levelGap = (int)settingContextMultiple.Upline.Level - (int)settingContextMultiple.Customer.Level;
             if (levelGap == 1)
             {
-                return settingContextMultiple.Customers.First();
+                return GetCustomerInfo(settingContextMultiple.Customer.Id);
             }
 
             settingContextMultiple.Customers = settingContextMultiple.Customers.Where(customer =>
@@ -80,7 +80,12 @@
                 }).ToList();
 
             //// Super/Master multiple member
-            return settingContextMultiple.Customers.FirstOrDefault();
+            if (settingContextMultiple.Customers.Any())
+            {
+                GetCustomerInfo(settingContextMultiple.Customers.First().Id);
+            }
+
+            return null;
         }
 
         /// <summary>
