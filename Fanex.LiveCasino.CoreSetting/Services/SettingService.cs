@@ -47,7 +47,7 @@
 
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
-            Customer customer = GetCustomerInfo(settingContext.Customer.Id);            
+            Customer customer = GetCustomerInfo(settingContext.Customer.Id);
 
             SetCustomerPtAndComSetting(settingContext, customer);
             customer.LiveCasinoSetting.GameSetting = SetGameSetting(customer);
@@ -198,13 +198,34 @@
                 CustId = custId
             };
 
-            Customer custInfo = _settingRepository.GetCustomerInfo(criteria);
+            Customer custInfo = _settingRepository.GetCustomerLiveCasinoInfo(criteria);
+
+            UplineCustomerInfoDTO uplineInfo = _settingRepository.GetUplineCustomerInfo(new GetCustomerInfoCriteria { CustId = custId });
+
+            switch (custInfo.Level)
+            {
+                case CustomerLevel.Member:
+                    custInfo.Parent.Id = uplineInfo.AgentId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
+                    custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+                case CustomerLevel.Agent:
+                    custInfo.Parent.Id = uplineInfo.MasterId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+                case CustomerLevel.Master:
+                    custInfo.Parent.Id = uplineInfo.SuperId;
+                    break;
+                default:
+                    custInfo.Parent.Id = 0;
+                    break;
+            }
 
             return custInfo;
         }
-        
+
         public List<GameType> SetGameSetting(Customer customer)
-        {            
+        {
             Check.Argument.IsNotNull(customer, "customer");
             Check.Argument.IsNotNull(customer.Parent, "customer.Parent");
             Check.Argument.IsNotNegativeOrZero(customer.Id, "customer.Id");
@@ -249,7 +270,7 @@
 
         public ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string ip, string language)
         {
-            var uplineCustomerInfo = GetUplineCustomerInfo(custId);
+            /*var uplineCustomerInfo = GetUplineCustomerInfo(custId);
 
             var criteria = new InsertAutoAccountCriteria
             {
@@ -315,7 +336,8 @@
                 //WriteLog(logModel);
             }
 
-            return result;
+            return result;*/
+            throw new Exception();
         }
 
         /// <summary>

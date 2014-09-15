@@ -45,6 +45,7 @@
             [ModelBinder(typeof(LiveCasinoSettingContextModelBinder))]LiveCasinoSettingContext settingContext)
         {
             var customer = _settingService.GetCustomer(settingContext);
+            settingContext.Customer.IsSyncLiveCasino = customer.IsSyncLiveCasino;
 
             var custSettingViewModel = new CustomerSettingViewModel
             {
@@ -103,9 +104,9 @@
             float positionTakingOnMembers)
         {
             ICommandResultsDTO updateResult = _settingService.UpdateSingleCustomerAllSetting(
-                settingContext, 
-                customer, 
-                isApplyPositionTakingAllMembers, 
+                settingContext,
+                customer,
+                isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
 
 
@@ -132,9 +133,9 @@
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
             updateResult = _settingService.UpdateMultipleCustomerAllSetting(
-                settingContextMultiple, 
-                customer, 
-                updateType, 
+                settingContextMultiple,
+                customer,
+                updateType,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
 
@@ -173,6 +174,12 @@
             return Json(updateResult);
         }
 
+        /// <summary>
+        /// Updates the win limit multiple.
+        /// </summary>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit model)
         {
@@ -203,6 +210,12 @@
             return Json(updateResult);
         }
 
+        /// <summary>
+        /// Updates the game setting multiple.
+        /// </summary>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="gameSetting">The game setting.</param>
+        /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
         {
@@ -258,10 +271,10 @@
             float positionTakingOnMembers)
         {
             IMultipleCommandResultsDTO updateResult = _settingService.UpdatePtComSettingMultiple(
-                settingContextMultiple, 
-                commission, 
-                positionTaking, 
-                isApplyPositionTakingAllMembers, 
+                settingContextMultiple,
+                commission,
+                positionTaking,
+                isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
 
             return Json(updateResult);

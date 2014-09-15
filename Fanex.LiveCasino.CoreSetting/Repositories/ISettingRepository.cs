@@ -9,7 +9,7 @@
     {
         UplineCustomerInfoDTO GetUplineCustomerInfo(ICriteria criteria);
 
-        Customer GetCustomerInfo(ICriteria criteria);
+        Customer GetCustomerLiveCasinoInfo(ICriteria criteria);
 
         CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria);
 

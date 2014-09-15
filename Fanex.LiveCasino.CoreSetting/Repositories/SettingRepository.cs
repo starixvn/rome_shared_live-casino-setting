@@ -21,7 +21,6 @@
     /// </summary>
     public class SettingRepository : BaseRepository, ISettingRepository
     {
-
         public UplineCustomerInfoDTO GetUplineCustomerInfo(ICriteria criteria)
         {
             if (!criteria.IsValid())
@@ -40,7 +39,7 @@
         /// <param name="criteria">The criteria.</param>
         /// <returns>Customer information.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public Customer GetCustomerInfo(ICriteria criteria)
+        public Customer GetCustomerLiveCasinoInfo(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
