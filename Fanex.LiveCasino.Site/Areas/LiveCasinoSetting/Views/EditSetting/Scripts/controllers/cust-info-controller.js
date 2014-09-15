@@ -1,17 +1,17 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting*/
+/*global settingContext*/
 fanex.liveCasinoSetting.controller('CustomerInfoController',
     [
         '$scope',
         function ($scope) {
             'use strict';
-            $scope.enableLiveCasino = !custSetting.Customer.DisableLiveCasino;
-            $scope.disableCheckBoxLiveCasino = custSetting.Customer.UplineDisableLiveCasino;
+            $scope.enableLiveCasino = !settingContext.Customer.DisableLiveCasino;
+            $scope.disableCheckBoxLiveCasino = settingContext.Customer.UplineDisableLiveCasino;
 
             //// Functions
             $scope.getCustInfo = function () {
-                custSetting.Customer.DisableLiveCasino = !$scope.enableLiveCasino;
-                return custSetting.Customer;
+                settingContext.Customer.DisableLiveCasino = !$scope.enableLiveCasino;
+                return settingContext.Customer;
             };
         }
         ]);

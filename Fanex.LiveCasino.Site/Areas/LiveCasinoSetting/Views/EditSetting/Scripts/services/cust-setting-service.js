@@ -1,5 +1,5 @@
 /* File Created: July 21, 2014 */
-/*global custSetting, language*/
+/*global language*/
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.service('CustomerSettingService', ['$http', function ($http) {
         'use strict';

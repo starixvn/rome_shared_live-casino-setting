@@ -17,9 +17,9 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         $scope.isEditPresetOnMember = function () {
             var currentPt = $scope.positionTaking;
-            switch (custSetting.SettingContext.Customer.Level) {
+            switch (settingContext.SettingContext.Customer.Level) {
                 case fanex.liveCasinoSetting.customerLevel.Master:
-                    if (custSetting.Customer.LiveCasinoSetting.PositionTaking.Is3
+                    if (settingContext.Customer.LiveCasinoSetting.PositionTaking.Is3
                         && !currentPt.Is3) {
                         $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
@@ -36,7 +36,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
                     }
                     break;
                 case fanex.liveCasinoSetting.customerLevel.Agent:
-                    if (custSetting.Customer.LiveCasinoSetting.PositionTaking.Im2
+                    if (settingContext.Customer.LiveCasinoSetting.PositionTaking.Im2
                         && !currentPt.Im2) {
                         $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
@@ -57,9 +57,9 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         };
 
         //// Properties
-        $scope.positionTaking = fanex.cloneObject(custSetting.Customer.LiveCasinoSetting.PositionTaking);
-        $scope.commission = custSetting.Customer.LiveCasinoSetting.Commission;
-        $scope.parentCommission = custSetting.Customer.Parent.LiveCasinoSetting.Commission;
+        $scope.positionTaking = fanex.cloneObject(settingContext.Customer.LiveCasinoSetting.PositionTaking);
+        $scope.commission = settingContext.Customer.LiveCasinoSetting.Commission;
+        $scope.parentCommission = settingContext.Customer.Parent.LiveCasinoSetting.Commission;
         $scope.uplinePTOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
@@ -67,7 +67,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
 
         //// Action
         $scope.updatePtAndComSetting = function () {
-            if (!custSetting.Customer.IsSyncLiveCasino) {
+            if (!settingContext.Customer.IsSyncLiveCasino) {
                 $scope.$parent.validateAndUpdateSetting(fanex.liveCasinoSetting.updateType.PositionTakingAndCommission);
                 return;
             }
