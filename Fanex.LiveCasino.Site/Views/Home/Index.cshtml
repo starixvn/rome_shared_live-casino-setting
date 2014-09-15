@@ -8,7 +8,7 @@
     var totalTargetCustId = string.Empty;
     var totalTargetSyncStatus = string.Empty;
     var totalTargetUsernames = string.Empty;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 1; i++)
     {
         totalTargetCustId += targetCustId + ", ";
         totalTargetSyncStatus += targetSyncStatus + ",";
@@ -74,11 +74,13 @@
 <form id="target" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/Setting/EditSettingMultiple")">
 
   <input type="hidden" name="uplineId" value="1176086" />
+  <input type="hidden" name="parentId" value="1176086" />
   <input type="hidden" name="customerIds" value="@(totalTargetCustId)" />
   <input type="hidden" name="syncStatuses" value="@(totalTargetSyncStatus)" />
   <input type="hidden" name="usernames" value="@(totalTargetUsernames)" />
   <input type="hidden" name="uplineLevel" value="2" />
   <input type="hidden" name="customerLevel" value="1" />
+  <input type="hidden" name="actorId" value="8" />
 
   <input type="submit" value="Go">
 </form>

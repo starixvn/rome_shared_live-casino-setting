@@ -60,22 +60,23 @@
         /// <summary>
         /// Get Representative customer for editing multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">Setting context for getting customer id list, username list, status list.</param>
+        /// <param name="settingContext">Setting context for getting customer id list, username list, status list.</param>
         /// <returns>Customer id representative.</returns>
-        public Customer GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple)
+        public int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             if (!settingContextMultiple.Customers.Any())
             {
-                return null;
+                return 0;
             }
 
             //// Edit multiple direct downline. Load setting info of the first selected downline in customer list
             int levelGap = (int)settingContextMultiple.Upline.Level - (int)settingContextMultiple.Customer.Level;
             if (levelGap == 1)
             {
-                return GetCustomerInfo(settingContextMultiple.Customer.Id);
+                return settingContextMultiple.Customers.First().Id;
             }
 
+            //// Remove UnSync Member
             settingContextMultiple.Customers = settingContextMultiple.Customers.Where(customer =>
                 {
                     return customer.IsSyncLiveCasino;
@@ -84,10 +85,10 @@
             //// Super/Master multiple member
             if (settingContextMultiple.Customers.Any())
             {
-                GetCustomerInfo(settingContextMultiple.Customers.First().Id);
+                return settingContextMultiple.Customers.First().Id;
             }
 
-            return null;
+            return 0;
         }
 
         /// <summary>
@@ -144,7 +145,7 @@
         /// <summary>
         /// Update multiple customer all setting.
         /// </summary>
-        /// <param name="settingContextMultiple">Setting context for updating.</param>
+        /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
@@ -511,7 +512,7 @@
         /// <summary>
         /// Updates the manual multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Multiple result command.</returns>
         public IMultipleCommandResultsDTO UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
@@ -622,7 +623,7 @@
         /// <summary>
         /// Updates the win limit multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
         /// <returns>Update win limit multiple result.</returns>
         public IMultipleCommandResultsDTO UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
@@ -956,7 +957,7 @@
         /// <summary>
         /// Update multiple Customer Position Taking and Commission.
         /// </summary>
-        /// <param name="settingContextMultiple">Setting context of current update setting.</param>
+        /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>

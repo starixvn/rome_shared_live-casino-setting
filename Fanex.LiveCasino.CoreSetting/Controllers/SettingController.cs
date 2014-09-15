@@ -50,7 +50,7 @@
         /// <summary>
         /// Edit multiple customer.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <returns>
         /// Edit multiple form.
         /// </returns>
@@ -58,13 +58,14 @@
         public ActionResult EditSettingMultiple(
             [ModelBinder(typeof(LiveCasinoSettingContextMultipleModelBinder))] LiveCasinoSettingContextMultiple settingContextMultiple)
         {
-            Customer representiveCustomer = _settingService.GetRepresentativeCustIdForEditingMultiple(settingContextMultiple);
-            if (representiveCustomer == null)
+            int customerId = _settingService.GetRepresentativeCustomerId(settingContextMultiple);
+            if (customerId == 0)
             {
                 return View(ViewPath.NoInformationPage);
             }
 
-            settingContextMultiple.Customer = representiveCustomer;
+            settingContextMultiple.Customer.Id = customerId;
+            settingContextMultiple.Customer = _settingService.GetCustomer(settingContextMultiple);
 
             return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
         }
@@ -100,7 +101,7 @@
         /// <summary>
         /// Updates the live casino setting multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="customer">The customer.</param>
         /// <param name="isApplyPositionTakingAllMembers">if set to <c>true</c> [is apply position taking all members].</param>
         /// <param name="positionTakingOnMembers">The position taking on members.</param>
@@ -108,14 +109,14 @@
         /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSettingMultiple(
-            LiveCasinoSettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
             IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultipleCustomerAllSetting(
-                settingContextMultiple,
+                settingContext,
                 customer,
                 updateType,
                 isApplyPositionTakingAllMembers,
@@ -158,7 +159,7 @@
         /// <summary>
         /// Updates the win limit multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
@@ -194,7 +195,7 @@
         /// <summary>
         /// Updates the game setting multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="gameSetting">The game setting.</param>
         /// <returns></returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
@@ -245,14 +246,14 @@
 
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSettingMultiple(
-            LiveCasinoSettingContextMultiple settingContextMultiple,
+            LiveCasinoSettingContextMultiple settingContext,
             float commission,
             PositionTaking positionTaking,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
             IMultipleCommandResultsDTO updateResult = _settingService.UpdatePtComSettingMultiple(
-                settingContextMultiple,
+                settingContext,
                 commission,
                 positionTaking,
                 isApplyPositionTakingAllMembers,

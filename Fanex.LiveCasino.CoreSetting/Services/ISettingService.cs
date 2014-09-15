@@ -10,7 +10,7 @@
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
     public interface ISettingService
     {
-        Customer GetRepresentativeCustIdForEditingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple);
+        int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple);
 
         ICommandResultsDTO UpdateSingleCustomerAllSetting(LiveCasinoSettingContext settingContext,
             Customer customer,
@@ -41,7 +41,7 @@
         /// <summary>
         /// Update multiple Customer Position Taking and Commission.
         /// </summary>
-        /// <param name="settingContextMultiple">Setting context of current update setting.</param>
+        /// <param name="settingContext">Setting context of current update setting.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
