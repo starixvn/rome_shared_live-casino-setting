@@ -57,7 +57,7 @@
             };
         }
 
-         /// <summary>
+        /// <summary>
         /// Gets the common setting for edit.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
@@ -94,7 +94,6 @@
                 throw ex;
             }
         }
-
 
         /// Gets the command result.
         /// </summary>
