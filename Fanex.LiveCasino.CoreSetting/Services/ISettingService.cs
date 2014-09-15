@@ -57,13 +57,8 @@
         Customer GetCustomerInfo(int custId);
 
         string GetCustomerSite(string username);
-
-        /// <summary>
-        /// Gets the game setting.
-        /// </summary>
-        /// <param name="settingContext">TargetCustId, CustomerLevel, IsCustomerSyncedLiveCS, TargetUsername, ExchangeId, DirectParentId. </param>                
-        /// <returns>The game setting.</returns>
-        List<GameType> GetGameSetting(LiveCasinoSettingContext settingContext);
+        
+        List<GameType> SetGameSetting(Customer customer);
 
         ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string ip, string language);
 

@@ -47,13 +47,10 @@
 
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
-            Customer customer = GetCustomerInfo(settingContext.Customer.Id);
+            Customer customer = GetCustomerInfo(settingContext.Customer.Id);            
 
-            settingContext.Customer.CurrencyId = customer.CurrencyId;
-
-            settingContext.Customer.Username = customer.Username;
             SetCustomerPtAndComSetting(settingContext, customer);
-            customer.LiveCasinoSetting.GameSetting = GetGameSetting(settingContext);
+            customer.LiveCasinoSetting.GameSetting = SetGameSetting(customer);
 
             return customer;
         }
@@ -205,41 +202,35 @@
 
             return custInfo;
         }
-
-        /// <summary>
-        /// Gets the game setting.
-        /// </summary>
-        /// <param name="settingContext">TargetCustId, CustomerLevel, IsCustomerSyncedLiveCS, TargetUsername, ExchangeId, DirectParentId. </param>
-        /// <returns>The game setting.</returns>
-        public List<GameType> GetGameSetting(LiveCasinoSettingContext settingContext)
-        {
-            Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
-            Check.Argument.IsNotNull(settingContext.Customer.Parent, "settingContext.Customer.Parent");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
-            Check.Argument.IsNotNegativeOrZero((int)settingContext.Customer.Level, "settingContext.Customer.Level");
-            Check.Argument.IsNotNull(settingContext.Customer.IsSyncLiveCasino, "settingContext.Customer.IsSyncLiveCasino");
-            Check.Argument.IsNotEmpty(settingContext.Customer.Username, "settingContext.Customer.Username");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.CurrencyId, "settingContext.Customer.CurrencyId");
-            Check.Argument.IsNotNegative(settingContext.Customer.Parent.Id, "settingContext.Customer.Parent.Id");
+        
+        public List<GameType> SetGameSetting(Customer customer)
+        {            
+            Check.Argument.IsNotNull(customer, "customer");
+            Check.Argument.IsNotNull(customer.Parent, "customer.Parent");
+            Check.Argument.IsNotNegativeOrZero(customer.Id, "customer.Id");
+            Check.Argument.IsNotNegativeOrZero((int)customer.Level, "customer.Level");
+            Check.Argument.IsNotNull(customer.IsSyncLiveCasino, "customer.IsSyncLiveCasino");
+            Check.Argument.IsNotEmpty(customer.Username, "customer.Username");
+            Check.Argument.IsNotNegativeOrZero(customer.CurrencyId, "customer.CurrencyId");
+            Check.Argument.IsNotNegative(customer.Parent.Id, "customer.Parent.Id");
 
             var gameSettings = new List<GameType>();
 
-            if (settingContext.Customer.Level == CustomerLevel.Super && !settingContext.Customer.IsSyncLiveCasino)
+            if (customer.Level == CustomerLevel.Super && !customer.IsSyncLiveCasino)
             {
-                var site = GetCustomerSite(settingContext.Customer.Username);
-                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site, defaultCheckedValue: true);
+                var site = GetCustomerSite(customer.Username);
+                gameSettings = _settingRepository.GetGameSetting(customer.CurrencyId, site, defaultCheckedValue: true);
             }
-            else if (settingContext.Customer.Level != CustomerLevel.Super && !settingContext.Customer.IsSyncLiveCasino)
+            else if (customer.Level != CustomerLevel.Super && !customer.IsSyncLiveCasino)
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
+                gameSettings = _settingRepository.GetGameSetting(customer.Parent.Id);
                 gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
 
                 // Check all by default
                 foreach (var gameSettingItem in gameSettings)
                 {
                     gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
-                    if (settingContext.Customer.Level == CustomerLevel.Member)
+                    if (customer.Level == CustomerLevel.Member)
                     {
                         for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
                         {
@@ -250,7 +241,7 @@
             }
             else
             {
-                gameSettings = _settingRepository.GetGameSetting(settingContext.Customer.Id);
+                gameSettings = _settingRepository.GetGameSetting(customer.Id);
             }
 
             return gameSettings;
