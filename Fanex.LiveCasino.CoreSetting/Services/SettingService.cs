@@ -173,6 +173,70 @@
         }
 
         /// <summary>
+        /// Get Customer Setting for Editing.
+        /// </summary>
+        /// <param name="settingContext">Current context for getting customer information.</param>
+        /// <param name="customer">Current customer need be set position taking and commission data.</param>
+        public void SetCustomerPtAndComSetting(
+            LiveCasinoSettingContext settingContext,
+            Customer customer)
+        {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(customer, "customer");
+
+            _ptComServiceFactory
+                .GetService(settingContext)
+                .SetPTComSetting(customer, settingContext);
+        }
+
+        /// <summary>
+        /// Update position taking and Commission setting, depend on setting context,
+        /// we will decide which store procedure and function will be called.
+        /// </summary>
+        /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
+        /// <param name="commission">Customer commission.</param>
+        /// <param name="positionTaking">Customer position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
+        /// <returns>Update command results.</returns>
+        public ICommandResults UpdatePTComSetting(
+            LiveCasinoSettingContext settingContext,
+            float commission,
+            PositionTaking positionTaking,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
+        {
+            var ptComService = _ptComServiceFactory.GetService(settingContext);
+
+            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+
+            return ptComService.Update(settingContext);
+        }
+
+        /// <summary>
+        /// Update multiple Customer Position Taking and Commission.
+        /// </summary>
+        /// <param name="settingContextMultiple">Setting context of current update setting.</param>
+        /// <param name="commission">Customer commission.</param>
+        /// <param name="positionTaking">Customer position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
+        /// <returns>Update command results.</returns>
+        public IMultipleCommandResults UpdateMultiplePTComSetting(
+            LiveCasinoSettingContextMultiple settingContextMultiple,
+            float commission,
+            PositionTaking positionTaking,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
+        {
+            var ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
+
+            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+
+            return ptComService.UpdateMultiple(settingContextMultiple.Customers, settingContextMultiple);
+        }
+
+        /// <summary>
         /// Automatics insert account to Live Casino.
         /// </summary>
         /// <param name="custId">The customer identifier.</param>
@@ -877,70 +941,6 @@
 
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// Get Customer Setting for Editing.
-        /// </summary>
-        /// <param name="settingContext">Current context for getting customer information.</param>
-        /// <param name="customer">Current customer need be set position taking and commission data.</param>
-        public void SetCustomerPtAndComSetting(
-            LiveCasinoSettingContext settingContext,
-            Customer customer)
-        {
-            Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(customer, "customer");
-
-            _ptComServiceFactory
-                .GetService(settingContext)
-                .SetPTComSetting(customer, settingContext);
-        }
-
-        /// <summary>
-        /// Update position taking and Commission setting, depend on setting context,
-        /// we will decide which store procedure and function will be called.
-        /// </summary>
-        /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
-        /// <param name="commission">Customer commission.</param>
-        /// <param name="positionTaking">Customer position taking.</param>
-        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
-        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
-        /// <returns>Update command results.</returns>
-        public ICommandResults UpdatePTComSetting(
-            LiveCasinoSettingContext settingContext,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            var ptComService = _ptComServiceFactory.GetService(settingContext);
-
-            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-
-            return ptComService.Update(settingContext);
-        }
-
-        /// <summary>
-        /// Update multiple Customer Position Taking and Commission.
-        /// </summary>
-        /// <param name="settingContextMultiple">Setting context of current update setting.</param>
-        /// <param name="commission">Customer commission.</param>
-        /// <param name="positionTaking">Customer position taking.</param>
-        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
-        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
-        /// <returns>Update command results.</returns>
-        public IMultipleCommandResults UpdateMultiplePTComSetting(
-            LiveCasinoSettingContextMultiple settingContextMultiple,
-            float commission,
-            PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
-        {
-            var ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
-
-            ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-
-            return ptComService.UpdateMultiple(settingContextMultiple.Customers, settingContextMultiple);
         }
 
         private CustomerInfoDTO GetCustomerInfo(int custId)
