@@ -170,11 +170,11 @@
             }
 
             return mainResults;
-        }        
+        }
 
-        public ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
+        public ICommandResult AutoInsertAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
         {
-            var customerInfo = GetCustomerInfo(custId);
+            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
 
             var criteria = new InsertAutoAccountCriteria
             {
@@ -260,66 +260,79 @@
             return result;
         }
 
-        /// <summary>
-        /// Inserts from existing account.
-        /// </summary>
-        /// <param name="settingContext">The setting context.</param>
-        /// <returns>
-        /// Command result insert from existing account.
-        /// </returns>
-        public ICommandResult InsertFromExistingAccount(LiveCasinoSettingContext settingContext)
+        public ICommandResult AutoInsertAccountFromExisting(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
         {
-            //    var criteria = new InsertFromExistingAccountCriteria
-            //    {
-            //        AgentId = settingContext.AgentId,
-            //        CasinoNo = CasinoNo,
-            //        CustId = settingContext.CustomerId,
-            //        ExchangeId = settingContext.ExchangeId,
-            //        MasterId = settingContext.MasterId,
-            //        ModifyUsername = settingContext.ParentUsername,
-            //        RoleId = (int)settingContext.CustomerLevel,
-            //        SignupBy = settingContext.ActorId,
-            //        SignupFrom = LiveCasinoSettings.Settings.SystemId,
-            //        SignupIp = settingContext.IP,
-            //        SuperId = settingContext.SuperId,
-            //        Username = settingContext.Username,
-            //        OldCustId = settingContext.OldCustId,
-            //        ToUserName = settingContext.ToUsername
-            //    };
+            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
 
-            //    var gameTypes = new List<GameType>();
-            //    ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
+            var criteria = new InsertFromExistingAccountCriteria
+            {
+                AgentId = customerInfo.AgentId,
+                CasinoNo = CasinoNo,
+                CustId = custId,
+                ExchangeId = customerInfo.CurrencyId,
+                MasterId = customerInfo.MasterId,
+                ModifyUsername = actorUsername,
+                RoleId = customerInfo.RoleId,
+                SignupBy = actorId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupIp = ip,
+                SuperId = customerInfo.SuperId,
+                Username = customerInfo.Username,
+                OldCustId = oldCustId,
+                ToUserName = toUsername
+            };
 
-            //    if (result.IsSuccessful)
-            //    {
-            //        ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
+            var gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
-            //        if (updateSyncResult.IsSuccessful)
-            //        {
-            //            var fromCustInfo = BuildCustomers(settingContext.OldCustId);
-            //            UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
-            //        }
+            if (result.IsSuccessful)
+            {
+                var settingContext = new LiveCasinoSettingContext
+                {
+                    Customer = new Customer
+                    {
+                        Id = custId
+                    },
+                    Actor = new User
+                    {
+                        Id = subAccountId,
+                        Username = subAccountUsername
+                    },
+                    SubAccount = new User
+                    {
+                        Id = subAccountId
+                    },
+                    IP = ip,
+                    Language = language
+                };
 
-            //        if (gameTypes == null || !gameTypes.Any())
-            //        {
-            //            gameTypes = _settingRepository.GetGameSetting(settingContext.OldCustId);
-            //            Logger.Log.Info(
-            //                string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, settingContext.CustomerId, settingContext.OldCustId),
-            //                LiveCasinoSettings.Settings.LogCategory);
-            //        }
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
-            //        //var log = new InsertFromExistingAccountLog
-            //        //{
-            //        //    SignUpForm = LiveCasinoSettings.Settings.SystemId,
-            //        //    GameSetting = gameTypes,
-            //        //    SettingContext = settingContext
-            //        //};
+                if (updateSyncResult.IsSuccessful)
+                {
+                    var fromCustInfo = GetCustomerLiveCasinoInfo(oldCustId);
+                    UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
+                }
 
-            //        //WriteLog(log);
-            //    }
+                if (gameTypes == null || !gameTypes.Any())
+                {
+                    gameTypes = _settingRepository.GetGameSetting(oldCustId);
+                    Logger.Log.Info(
+                        string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId),
+                        LiveCasinoSettings.Settings.LogCategory);
+                }
 
-            //    return result;
-            throw new Exception();
+                var log = new InsertFromExistingAccountLog
+                {
+                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                    GameSetting = gameTypes,
+                    SettingContext = settingContext
+                };
+
+                WriteLog(log);
+            }
+
+            return result;
         }
 
         public ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
@@ -962,6 +975,6 @@
             var userInfo = _settingRepository.Get<Customer>(criteria);
 
             return userInfo.Site;
-        }        
+        }
     }
 }

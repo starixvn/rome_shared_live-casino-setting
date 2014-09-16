@@ -56,9 +56,9 @@
 
         Customer GetCustomer(LiveCasinoSettingContext settingContext);
 
-        ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
+        ICommandResult AutoInsertAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
 
-        ICommandResult InsertFromExistingAccount(LiveCasinoSettingContext settingContext);
+        ICommandResult AutoInsertAccountFromExisting(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
 
         ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino);
 
