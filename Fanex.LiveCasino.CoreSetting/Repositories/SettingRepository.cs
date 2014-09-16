@@ -21,14 +21,14 @@
     /// </summary>
     public class SettingRepository : BaseRepository, ISettingRepository
     {
-        public UplineCustomerInfoDTO GetUplineCustomerInfo(ICriteria criteria)
+        public CustomerInfoDTO GetCustomerInfo(ICriteria criteria)
         {
             if (!criteria.IsValid())
             {
                 throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
             }
 
-            var uplineCustomerInfo = Get<UplineCustomerInfoDTO>(criteria);
+            var uplineCustomerInfo = Get<CustomerInfoDTO>(criteria);
 
             return uplineCustomerInfo;
         }

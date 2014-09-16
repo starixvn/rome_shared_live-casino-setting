@@ -132,7 +132,7 @@
     <Compile Include="Criteria\WinLimit\GetCustomerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimit\UpdateCustomerWinLimitCriteria.cs" />
     <Compile Include="DTO\PTComDTO.cs" />
-    <Compile Include="DTO\UplineCustomerInfoDTO.cs" />
+    <Compile Include="DTO\CustomerInfoDTO.cs" />
     <Compile Include="Enumerations\CustomerRole.cs" />
     <Compile Include="Enumerations\FormType.cs" />
     <Compile Include="Enumerations\LogAction.cs" />
@@ -153,6 +153,7 @@
     <Compile Include="Models\LiveCasinoSettingContextMultiple.cs" />
     <Compile Include="Models\Log\GameSettingLog.cs" />
     <Compile Include="Models\Log\IGameSettingLog.cs" />
+    <Compile Include="Models\Log\ManualInsertAccountLog.cs" />
     <Compile Include="Models\Log\UpdateStakeLevelLog.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WinLimit.cs" />

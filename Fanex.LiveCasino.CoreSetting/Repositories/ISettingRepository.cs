@@ -7,7 +7,7 @@
 
     public interface ISettingRepository : IBaseRepository
     {
-        UplineCustomerInfoDTO GetUplineCustomerInfo(ICriteria criteria);
+        CustomerInfoDTO GetCustomerInfo(ICriteria criteria);
 
         Customer GetCustomerLiveCasinoInfo(ICriteria criteria);
 
