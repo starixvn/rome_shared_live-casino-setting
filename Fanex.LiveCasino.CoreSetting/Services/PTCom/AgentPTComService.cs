@@ -27,7 +27,7 @@
             bool isApplyPositionTakingOnMembers = false, 
             float newPositionTakingOnMembers = 0)
         {
-            SetModifiedData(commission, positionTaking);
+            base.SetModifiedData(commission, positionTaking);
 
             this._isApplyPositionTakingOnMembers = isApplyPositionTakingOnMembers;
             this._newPositionTakingOnMember = newPositionTakingOnMembers;

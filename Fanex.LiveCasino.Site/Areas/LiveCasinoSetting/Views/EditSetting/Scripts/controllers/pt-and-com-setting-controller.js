@@ -63,7 +63,7 @@ fanex.liveCasinoSetting.controller('PtAndComSettingController',
         $scope.uplinePTOnMemberOptions = [];
         $scope.isUpdateAllSetting = false;
         $scope.language = language;
-        me.updatePTComUrl = $('#UpdatePtComSettingUrl').val();
+        me.updatePTComUrl = $('#UpdatePTComSettingUrl').val();
 
         //// Action
         $scope.updatePtAndComSetting = function () {

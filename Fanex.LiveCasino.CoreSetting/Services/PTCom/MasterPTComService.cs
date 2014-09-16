@@ -21,6 +21,17 @@
 
         private float _newPositionTakingOnMember { get; set; }
 
+        public override void SetModifiedData(
+            float commission, 
+            PositionTaking positionTaking, 
+            bool isApplyPositionTakingOnMembers = false, 
+            float newPositionTakingOnMembers = 0)
+        {
+            base.SetModifiedData(commission, positionTaking);
+            _isApplyPositionTakingOnMembers = isApplyPositionTakingOnMembers;
+            _newPositionTakingOnMember = newPositionTakingOnMembers;
+        }
+
         public override void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext)
         {
             PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForEditMasterCriteria

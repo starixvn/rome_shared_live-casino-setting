@@ -55,7 +55,7 @@
         /// Edit multiple form.
         /// </returns>
         [LiveCasinoAuthorization]
-        public ActionResult EditSettingMultiple(
+        public ActionResult EditMultipleSetting(
             [ModelBinder(typeof(LiveCasinoSettingContextMultipleModelBinder))] LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             int customerId = _settingService.GetRepresentativeCustomerId(settingContextMultiple);
@@ -67,7 +67,7 @@
             settingContextMultiple.Customer.Id = customerId;
             settingContextMultiple.Customer = _settingService.GetCustomer(settingContextMultiple);
 
-            return View(ViewPath.EditSettingMultiplePage, settingContextMultiple);
+            return View(ViewPath.EditMultipleSettingPage, settingContextMultiple);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@
         /// Update result information.
         /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdateLiveCasinoSettingMultiple(
+        public JsonResult UpdateMultipleLiveCasinoSetting(
             LiveCasinoSettingContextMultiple settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
@@ -224,7 +224,7 @@
         /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdatePtComSetting(
+        public JsonResult UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
@@ -257,7 +257,7 @@
         /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
         /// <returns>Update result.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public JsonResult UpdatePtComSettingMultiple(
+        public JsonResult UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContext,
             float commission,
             PositionTaking positionTaking,

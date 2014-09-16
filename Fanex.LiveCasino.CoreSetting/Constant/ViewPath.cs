@@ -5,7 +5,7 @@
     /// </summary>
     public class ViewPath
     {
-        public const string EditSettingMultiplePage = "~/Areas/LiveCasinoSetting/Views/EditSetting/EditSettingMultiple.cshtml";
+        public const string EditMultipleSettingPage = "~/Areas/LiveCasinoSetting/Views/EditSetting/EditSettingMultiple.cshtml";
 
         public const string EditSettingSinglePage = "~/Areas/LiveCasinoSetting/Views/EditSetting/EditSettingSingle.cshtml";
 

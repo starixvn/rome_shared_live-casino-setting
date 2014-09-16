@@ -17,7 +17,7 @@
     }
 
 
-@*<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSettingMultiple?uplineId=1176086&customerIds=" + totalTargetCustId + "&syncStatuses=" + totalTargetSyncStatus + "&usernames=" + totalTargetUsernames + "&uplineLevel=2&customerLevel=1")">Test Max Query String For Edit Multiple</a> <br />*@
+@*<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting?uplineId=1176086&customerIds=" + totalTargetCustId + "&syncStatuses=" + totalTargetSyncStatus + "&usernames=" + totalTargetUsernames + "&uplineLevel=2&customerLevel=1")">Test Max Query String For Edit Multiple</a> <br />*@
 
 <h2>SuperTest1</h2>
 <a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=8&actorUsername=actorUsername&customerId=1176070&customerLevel=4")">Edit Super</a> <br />
@@ -57,7 +57,7 @@
         document.getElementById("target").submit();
     };
 </script>
-<form id="target" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/Setting/EditSettingMultiple")">
+<form id="target" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting")">
 
   <input type="hidden" name="uplineId" value="1176086" />
   <input type="hidden" name="parentId" value="1176086" />
