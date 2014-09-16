@@ -33,8 +33,13 @@
         /// we will decide which store procedure and function will be called.
         /// </summary>
         /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
+        /// <param name="commission">The commission.</param>
+        /// <param name="positionTaking">The position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Update status and information for showing on web.
+        /// </returns>
         ICommandResults UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
@@ -45,10 +50,14 @@
         /// <summary>
         /// Update multiple Customer Position Taking and Commission.
         /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <returns>Update status and information for showing on web.</returns>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="commission">The commission.</param>
+        /// <param name="positionTaking">The position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Update status and information for showing on web.
+        /// </returns>
         IMultipleCommandResults UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
@@ -64,7 +73,7 @@
         /// <param name="actorUsername">The actor username.</param>
         /// <param name="subAccountId">The sub account identifier.</param>
         /// <param name="subAccountUsername">The sub account username.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
         ICommandResult AutoInsertAccount(
@@ -86,7 +95,7 @@
         /// <param name="actorUsername">The actor username.</param>
         /// <param name="subAccountId">The sub account identifier.</param>
         /// <param name="subAccountUsername">The sub account username.</param>
-        /// <param name="ip">The ip.</param>
+        /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
         ICommandResult AutoInsertAccountFromExisting(

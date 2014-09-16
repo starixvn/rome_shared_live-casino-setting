@@ -16,6 +16,35 @@
 
         public List<GameType> GameSetting { get; set; }
 
+        /// <summary>
+        /// Gets the action.
+        /// </summary>
+        /// <value>
+        /// The action.
+        /// </value>
+        public override LogActions Action
+        {
+            get
+            {
+                LogActions logAction;
+
+                switch (SettingContext.Customer.Level)
+                {
+                    case CustomerLevel.Master:
+                        logAction = LogActions.AutoInsert_Master;
+                        break;
+                    case CustomerLevel.Agent:
+                        logAction = LogActions.AutoInsert_Agent;
+                        break;
+                    default:
+                        logAction = LogActions.AutoInsert_Member;
+                        break;
+                }
+
+                return logAction;
+            }
+        }
+
         public override string NewValue
         {
             get
@@ -91,30 +120,6 @@
                                             SpName);
 
             return trackingValue;
-        }
-
-        public override LogActions Action
-        {
-            get
-            {
-                LogActions logAction;
-
-                switch (SettingContext.Customer.Level)
-                {
-                    case CustomerLevel.Master:
-                        logAction = LogActions.AutoInsert_Master;
-                        break;
-                    case CustomerLevel.Agent:
-                        logAction = LogActions.AutoInsert_Agent;
-                        break;
-                    default:
-                        logAction = LogActions.AutoInsert_Member;
-                        break;
-                }
-
-                return logAction;
-            }
-        }
-
+        }       
     }
 }

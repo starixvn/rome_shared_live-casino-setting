@@ -167,7 +167,6 @@
             return new CurrentMemberWinLimitDTO();
         }
 
-        
         /// <summary>
         /// Gets the game setting by customer identifier.
         /// </summary>
@@ -190,7 +189,10 @@
         /// </summary>
         /// <param name="exchangeId">The exchange identifier.</param>
         /// <param name="site">The site name.</param>
-        /// <returns>Game setting by exchange and site.</returns>
+        /// <param name="defaultCheckedValue">If set to <c>true</c> [default checked value].</param>
+        /// <returns>
+        /// Game setting by exchange and site.
+        /// </returns>
         public List<GameType> GetGameSetting(int exchangeId, string site, bool defaultCheckedValue = false)
         {
             var criteria = new GetGameSettingByExchangeCriteria
@@ -272,7 +274,10 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
-        /// <returns>List of game types.</returns>
+        /// <param name="defaultCheckedValue">If set to <c>true</c> [default checked value].</param>
+        /// <returns>
+        /// List of game types.
+        /// </returns>
         private List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn, bool defaultCheckedValue = false)
         {
             if (criteria.IsValid())

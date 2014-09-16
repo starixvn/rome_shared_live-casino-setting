@@ -50,7 +50,7 @@
         /// <summary>
         /// Edit multiple customer.
         /// </summary>
-        /// <param name="settingContext">The setting context multiple.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <returns>
         /// Edit multiple form.
         /// </returns>
@@ -75,7 +75,7 @@
         /// </summary>
         /// <param name="settingContext">Setting context for update current customer.</param>
         /// <param name="customer">Customer setting for update data.</param>
-        /// <param name="isApplyPositionTakingAllMembers">if set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
         /// <param name="positionTakingOnMembers">The position taking on members.</param>
         /// <returns>
         /// Update result information.
@@ -103,10 +103,12 @@
         /// </summary>
         /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="customer">The customer.</param>
-        /// <param name="isApplyPositionTakingAllMembers">if set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
         /// <param name="positionTakingOnMembers">The position taking on members.</param>
         /// <param name="updateType">Type of the update.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Update result information.
+        /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdateLiveCasinoSettingMultiple(
             LiveCasinoSettingContextMultiple settingContext,
@@ -159,9 +161,9 @@
         /// <summary>
         /// Updates the win limit multiple.
         /// </summary>
-        /// <param name="settingContext">The setting context multiple.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="model">The model.</param>
-        /// <returns></returns>
+        /// <returns>Result after updating win limit.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit model)
         {
@@ -195,9 +197,9 @@
         /// <summary>
         /// Updates the game setting multiple.
         /// </summary>
-        /// <param name="settingContext">The setting context multiple.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameSetting">The game setting.</param>
-        /// <returns></returns>
+        /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
         {
@@ -253,6 +255,7 @@
         /// <param name="positionTaking">Position taking setting for updating.</param>
         /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
         /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
+        /// <returns>Update result.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSettingMultiple(
             LiveCasinoSettingContextMultiple settingContext,

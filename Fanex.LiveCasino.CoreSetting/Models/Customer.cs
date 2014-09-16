@@ -21,6 +21,12 @@
 
         public LiveCasinoSetting LiveCasinoSetting { get; set; }
 
+        /// <summary>
+        /// Sets the up line identifier.
+        /// </summary>
+        /// <param name="agentId">The agent identifier.</param>
+        /// <param name="masterId">The master identifier.</param>
+        /// <param name="superId">The super identifier.</param>
         public void SetUplineIdentifier(ref int agentId, ref int masterId, ref int superId)
         {
             switch (Level)
