@@ -12,19 +12,19 @@
     /// </summary>
     public class MasterPTComService : PTComServiceBase
     {
+        private bool _isApplyPositionTakingOnMembers;
+
+        private float _newPositionTakingOnMember;
+
         public MasterPTComService(IPTComRepository ptComRepository)
         {
             PTComRepository = ptComRepository ?? new MasterPTComRepository();
         }
 
-        private bool _isApplyPositionTakingOnMembers { get; set; }
-
-        private float _newPositionTakingOnMember { get; set; }
-
         public override void SetModifiedData(
-            float commission, 
-            PositionTaking positionTaking, 
-            bool isApplyPositionTakingOnMembers = false, 
+            float commission,
+            PositionTaking positionTaking,
+            bool isApplyPositionTakingOnMembers = false,
             float newPositionTakingOnMembers = 0)
         {
             base.SetModifiedData(commission, positionTaking);

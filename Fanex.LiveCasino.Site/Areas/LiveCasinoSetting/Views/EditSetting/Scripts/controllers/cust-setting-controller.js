@@ -21,11 +21,11 @@ if (fanex.liveCasinoSetting) {
             $scope.isEditMultiple = settingContext.Customers && settingContext.Customers.length > 0;
             $scope.isEditDirect = (settingContext.Upline.Level - settingContext.Customer.Level === 1);
             if ($scope.isEditMultiple
-                && settingContext.Customers.IsSyncLiveCasino
+                && settingContext.Customer.IsSyncLiveCasino
                 && $scope.isEditDirect) {
                 for (var i = 0; i < settingContext.Customers.length; i++) {
-                    if (!settingContext[i].IsSyncLiveCasino) {
-                        settingContext.CustInfo.IsSyncLiveCasino = true;
+                    if (!settingContext.Customers[i].IsSyncLiveCasino) {
+                        settingContext.Customer.IsSyncLiveCasino = false;
                         break;
                     }
                 }
