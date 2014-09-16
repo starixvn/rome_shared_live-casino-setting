@@ -17,6 +17,6 @@
 
         public int CurrencyId { get; set; }
 
-        public byte RoleId { get; set; }
+        public byte RoleId { get; set; }        
     }
 }

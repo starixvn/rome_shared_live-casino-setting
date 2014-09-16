@@ -268,38 +268,31 @@
             Check.Argument.IsNotNegativeOrZero(actorId, "actorId");
             Check.Argument.IsNotEmpty(actorUsername, "actorUsername");
             Check.Argument.IsNotNegative(subAccountId, "subAccountId");
-            Check.Argument.IsNotEmpty(subAccountUsername, "subAccountUsername");
             Check.Argument.IsNotEmpty(ip, "ip");
             Check.Argument.IsNotEmpty(language, "language");
 
-            int directUplineId = 0;
             var gameTypes = new List<GameType>();
-            ICommandResult resultInsert = InsertAccount(custId, actorId, actorUsername, ip, language, out directUplineId, gameTypes);
+            var settingContext = new LiveCasinoSettingContext();
+
+            ICommandResult resultInsert = InsertAccount(custId, actorId, actorUsername, subAccountId, subAccountUsername, ip, language, settingContext, gameTypes);
 
             if (resultInsert.IsSuccessful)
             {
-                var settingContext = new LiveCasinoSettingContext
-                {
-                    Customer = new Customer { Id = custId },
-                    Actor = new User { Id = actorId, Username = actorUsername },
-                    SubAccount = new User { Id = subAccountId, Username = subAccountUsername },
-                    IP = ip,
-                    Language = language
-                };
-
                 ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
                 {
-                    var uplineCustInfo = GetCustomerLiveCasinoInfo(directUplineId);
+                    var uplineCustInfo = GetCustomerLiveCasinoInfo(settingContext.Customer.Parent.Id);
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
                 if (gameTypes == null || !gameTypes.Any())
                 {
-                    gameTypes = _settingRepository.GetGameSetting(directUplineId);
+                    gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
 
-                    Logger.Log.Info(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, directUplineId), LiveCasinoSettings.Settings.LogCategory);
+                    Logger.Log.Info(
+                            string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, settingContext.Customer.Parent.Id),
+                            LiveCasinoSettings.Settings.LogCategory);
                 }
 
                 WriteLog(new AutoInsertAccountLog { SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
@@ -338,24 +331,27 @@
             Check.Argument.IsNotNegativeOrZero(actorId, "actorId");
             Check.Argument.IsNotEmpty(actorUsername, "actorUsername");
             Check.Argument.IsNotNegative(subAccountId, "subAccountId");
-            Check.Argument.IsNotEmpty(subAccountUsername, "subAccountUsername");
             Check.Argument.IsNotEmpty(ip, "ip");
             Check.Argument.IsNotEmpty(language, "language");
 
             var gameTypes = new List<GameType>();
-            ICommandResult resultInsert = InsertAccount(custId, oldCustId, toUsername, actorId, actorUsername, ip, gameTypes);
+            var settingContext = new LiveCasinoSettingContext();
+
+            ICommandResult resultInsert = InsertAccount(
+                                            custId,
+                                            oldCustId,
+                                            toUsername,
+                                            subAccountId,
+                                            subAccountUsername,
+                                            actorId,
+                                            actorUsername,
+                                            ip,
+                                            language,
+                                            settingContext,
+                                            gameTypes);
 
             if (resultInsert.IsSuccessful)
             {
-                var settingContext = new LiveCasinoSettingContext
-                {
-                    Customer = new Customer { Id = custId },
-                    Actor = new User { Id = actorId, Username = actorUsername },
-                    SubAccount = new User { Id = subAccountId, Username = subAccountUsername },
-                    IP = ip,
-                    Language = language
-                };
-
                 ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
@@ -680,14 +676,54 @@
         /// <param name="custId">The customer identifier.</param>
         /// <param name="oldCustId">The old customer identifier.</param>
         /// <param name="toUsername">To username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
         /// <param name="actorId">The actor identifier.</param>
         /// <param name="actorUsername">The actor username.</param>
         /// <param name="ip">The internet protocol.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Insert result.</returns>
-        private ICommandResult InsertAccount(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, string ip, List<GameType> gameTypes)
+        /// <returns>
+        /// Insert result.
+        /// </returns>
+        private ICommandResult InsertAccount(
+            int custId,
+            int oldCustId,
+            string toUsername,
+            int subAccountId,
+            string subAccountUsername,
+            int actorId,
+            string actorUsername,
+            string ip,
+            string language,
+            LiveCasinoSettingContext settingContext,
+            List<GameType> gameTypes)
         {
             CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
+
+            var level = CustomerLevel.Member;
+            switch (customerInfo.RoleId)
+            {
+                case (int)CustomerLevel.Master:
+                    level = CustomerLevel.Master;
+                    break;
+                case (int)CustomerLevel.Agent:
+                    level = CustomerLevel.Agent;
+                    break;
+            }
+
+            settingContext.Customer = new Customer
+            {
+                Id = custId,
+                Username = customerInfo.Username,
+                Level = level,
+                CurrencyId = (byte)customerInfo.CurrencyId
+            };
+            settingContext.Actor = new User { Id = actorId, Username = actorUsername };
+            settingContext.SubAccount = new User { Id = subAccountId, Username = subAccountUsername };
+            settingContext.IP = ip;
+            settingContext.Language = language;
 
             var criteria = new AutoInsertAccountFromExistingCriteria
             {
@@ -719,9 +755,11 @@
         /// <param name="custId">The customer identifier.</param>
         /// <param name="actorId">The actor identifier.</param>
         /// <param name="actorUsername">The actor username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
         /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
-        /// <param name="directUplineId">The direct up line identifier.</param>
+        /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>
         /// Insert result.
@@ -730,28 +768,41 @@
             int custId,
             int actorId,
             string actorUsername,
+            int subAccountId,
+            string subAccountUsername,
             string ip,
             string language,
-            out int directUplineId,
+            LiveCasinoSettingContext settingContext,
             List<GameType> gameTypes)
         {
             CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
+            var directUplineId = customerInfo.AgentId;
+            var level = CustomerLevel.Member;
 
             switch (customerInfo.RoleId)
             {
                 case (int)CustomerLevel.Master:
                     directUplineId = customerInfo.SuperId;
+                    level = CustomerLevel.Master;
                     break;
-
                 case (int)CustomerLevel.Agent:
                     directUplineId = customerInfo.MasterId;
-                    break;
-
-                default:
-                    directUplineId = customerInfo.AgentId;
+                    level = CustomerLevel.Agent;
                     break;
             }
 
+            settingContext.Customer = new Customer
+            {
+                Id = custId,
+                Username = customerInfo.Username,
+                Level = level,
+                CurrencyId = (byte)customerInfo.CurrencyId,
+                Parent = new Customer { Id = directUplineId }
+            };
+            settingContext.Actor = new User { Id = actorId, Username = actorUsername };
+            settingContext.SubAccount = new User { Id = subAccountId, Username = subAccountUsername };
+            settingContext.IP = ip;
+            settingContext.Language = language;
             var criteria = new AutoInsertAccountCriteria
             {
                 AgentId = customerInfo.AgentId,
@@ -768,8 +819,7 @@
                 Username = customerInfo.Username,
                 Language = language
             };
-
-            gameTypes = new List<GameType>();
+            
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             return result;
