@@ -167,7 +167,7 @@
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult = _settingService.UpdateWinLimitMultiple(settingContextMultiple, model);
+            updateResult = _settingService.UpdateMultipleWinLimit(settingContextMultiple, model);
 
             return Json(updateResult);
         }
@@ -203,7 +203,7 @@
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult = _settingService.UpdateGameSettingMultiple(settingContextMultiple, gameSetting);
+            updateResult = _settingService.UpdateMultipleGameSetting(settingContextMultiple, gameSetting);
 
             return Json(updateResult);
         }

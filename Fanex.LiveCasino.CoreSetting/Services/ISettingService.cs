@@ -13,6 +13,8 @@
     {
         int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple);
 
+        Customer GetCustomer(LiveCasinoSettingContext settingContext);
+
         ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
@@ -54,24 +56,103 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
 
-        Customer GetCustomer(LiveCasinoSettingContext settingContext);
+        /// <summary>
+        /// Automatics insert account to Live Casino.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
+        /// <param name="ip">The ip.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>Update result.</returns>
+        ICommandResult AutoInsertAccount(
+            int custId,
+            int actorId,
+            string actorUsername,
+            int subAccountId,
+            string subAccountUsername,
+            string ip,
+            string language);
 
-        ICommandResult AutoInsertAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
+        /// <summary>
+        /// Automatics insert account to Live Casino from existing account.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="oldCustId">The old customer identifier.</param>
+        /// <param name="toUsername">To username.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
+        /// <param name="ip">The ip.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>Update result.</returns>
+        ICommandResult AutoInsertAccountFromExisting(
+            int custId,
+            int oldCustId,
+            string toUsername,
+            int actorId,
+            string actorUsername,
+            int subAccountId,
+            string subAccountUsername,
+            string ip,
+            string language);
 
-        ICommandResult AutoInsertAccountFromExisting(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
-
+        /// <summary>
+        /// Updates the live casino status.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>Update result.</returns>
         ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes);
-
-        IMultipleCommandResults UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes);
-
+        /// <summary>
+        /// Updates the synchronize live casino.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="isSynced">If set to <c>true</c> [is synced].</param>
+        /// <returns>Update result.</returns>
         ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced);
 
+        /// <summary>
+        /// Updates the game setting.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Update result.</returns>
+        ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes);
+
+        /// <summary>
+        /// Updates the multiple game setting.
+        /// </summary>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Update result.</returns>
+        IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes);
+
+        /// <summary>
+        /// Gets the current win limit.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Current member win limit.</returns>
         CurrentMemberWinLimitDTO GetCurrentWinLimit(int custId);
 
+        /// <summary>
+        /// Updates the win limit.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="memberWinLimit">The member win limit.</param>
+        /// <returns>Update result.</returns>
         ICommandResults UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit);
 
-        IMultipleCommandResults UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit);
+        /// <summary>
+        /// Updates the multiple win limit.
+        /// </summary>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="memberWinLimit">The member win limit.</param>
+        /// <returns>Update result.</returns>
+        IMultipleCommandResults UpdateMultipleWinLimit(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit);
     }
 }

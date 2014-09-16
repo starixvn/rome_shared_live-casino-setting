@@ -6,7 +6,7 @@
     /// <summary>
     /// Setting key : TP_User_Customer_AutoInsertAccount.
     /// </summary>
-    internal class InsertAutoAccountCriteria : CustomerCriteriaBase
+    internal class AutoInsertAccountCriteria : CustomerCriteriaBase
     {
         public string CasinoNo { get; set; }
 

@@ -105,9 +105,9 @@
     </Compile>
     <Compile Include="Criteria\GameSetting\GetGameSettingByExchangeCriteria.cs" />
     <Compile Include="Criteria\GameSetting\GetGameSettingByCustomerIdCriteria.cs" />
-    <Compile Include="Criteria\GameSetting\InsertAutoAccountCriteria.cs" />
-    <Compile Include="Criteria\GameSetting\InsertFromExistingAccountCriteria.cs" />
-    <Compile Include="Criteria\GameSetting\InsertManualAccountCriteria.cs" />
+    <Compile Include="Criteria\GameSetting\AutoInsertAccountCriteria.cs" />
+    <Compile Include="Criteria\GameSetting\AutoInsertAccountFromExistingCriteria.cs" />
+    <Compile Include="Criteria\GameSetting\ManualInsertAccountCriteria.cs" />
     <Compile Include="Criteria\GameSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\GetCustomerLiveCasinoInfoCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoCriteria.cs" />
@@ -217,7 +217,9 @@
     <Compile Include="Services\PTCom\PTComServiceFactory.cs" />
     <Compile Include="Services\PTCom\SuperOnMemberPTComService.cs" />
     <Compile Include="Services\PTCom\SuperPTComService.cs" />
-    <Compile Include="Services\SettingService.cs" />
+    <Compile Include="Services\SettingService.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Web\App_Start\BundleConfig.cs" />
     <Compile Include="Web\App_Start\RouteConfig.cs" />
     <Compile Include="Web\Binders\LiveCasinoSettingContextModelBinder.cs" />

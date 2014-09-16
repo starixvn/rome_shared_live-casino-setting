@@ -3,7 +3,7 @@
     /// <summary>
     /// Setting key : TP_User_Customer_AutoInsertAccountFromExisting.
     /// </summary>
-    internal class InsertFromExistingAccountCriteria : InsertAutoAccountCriteria
+    internal class AutoInsertAccountFromExistingCriteria : AutoInsertAccountCriteria
     {
         public int OldCustId { get; set; }
 

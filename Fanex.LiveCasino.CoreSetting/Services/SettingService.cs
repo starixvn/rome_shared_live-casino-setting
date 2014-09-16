@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Common;
     using Fanex.Common.Helper;
     using Fanex.LiveCasino.CoreSetting.Configuration;
     using Fanex.LiveCasino.CoreSetting.Constant;
@@ -60,8 +59,10 @@
         /// <summary>
         /// Get Representative customer for editing multiple.
         /// </summary>
-        /// <param name="settingContext">Setting context for getting customer id list, username list, status list.</param>
-        /// <returns>Customer id representative.</returns>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <returns>
+        /// Customer id representative.
+        /// </returns>
         public int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             if (!settingContextMultiple.Customers.Any())
@@ -96,12 +97,12 @@
         /// </summary>
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
-        /// <returns>Update result.</returns>
-        public ICommandResults UpdateCustomerSetting(
-            LiveCasinoSettingContext settingContext,
-            Customer customer,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Update result.
+        /// </returns>
+        public ICommandResults UpdateCustomerSetting(LiveCasinoSettingContext settingContext, Customer customer, bool isApplyPositionTakingAllMembers, float positionTakingOnMembers)
         {
             ICommandResults resultList = new CommandResults();
 
@@ -145,16 +146,15 @@
         /// <summary>
         /// Update multiple customer all setting.
         /// </summary>
-        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
-        /// <returns>Multiple result return to user.</returns>
-        public IMultipleCommandResults UpdateMultipleCustomerSetting(
-            LiveCasinoSettingContextMultiple settingContextMultiple,
-            Customer customer,
-            UpdateType updateType,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Multiple result return to user.
+        /// </returns>
+        public IMultipleCommandResults UpdateMultipleCustomerSetting(LiveCasinoSettingContextMultiple settingContextMultiple, Customer customer, UpdateType updateType, bool isApplyPositionTakingAllMembers, float positionTakingOnMembers)
         {
             IMultipleCommandResults mainResults = new MultipleCommandResults();
 
@@ -172,29 +172,22 @@
             return mainResults;
         }
 
+        /// <summary>
+        /// Automatics insert account to Live Casino.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
+        /// <param name="ip">The internet protocol.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>Update result.</returns>
         public ICommandResult AutoInsertAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
         {
-            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
-
-            var criteria = new InsertAutoAccountCriteria
-            {
-                AgentId = customerInfo.AgentId,
-                CasinoNo = CasinoNo,
-                CustId = custId,
-                ExchangeId = customerInfo.CurrencyId,
-                MasterId = customerInfo.MasterId,
-                ModifyUsername = actorUsername,
-                RoleId = customerInfo.RoleId,
-                SignupBy = actorId,
-                SignupFrom = LiveCasinoSettings.Settings.SystemId,
-                SignupIp = ip,
-                SuperId = customerInfo.SuperId,
-                Username = customerInfo.Username,
-                Language = language
-            };
-
+            int directUplineId = 0;
             var gameTypes = new List<GameType>();
-            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
+            ICommandResult result = InsertAccount(custId, actorId, actorUsername, ip, language, out directUplineId, gameTypes);
 
             if (result.IsSuccessful)
             {
@@ -218,19 +211,6 @@
                 };
 
                 ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
-                var directUplineId = 0;
-                switch (customerInfo.RoleId)
-                {
-                    case (int)CustomerLevel.Master:
-                        directUplineId = customerInfo.SuperId;
-                        break;
-                    case (int)CustomerLevel.Agent:
-                        directUplineId = customerInfo.MasterId;
-                        break;
-                    default:
-                        directUplineId = customerInfo.AgentId;
-                        break;
-                }
 
                 if (updateSyncResult.IsSuccessful)
                 {
@@ -242,48 +222,37 @@
                 {
                     gameTypes = _settingRepository.GetGameSetting(directUplineId);
 
-                    Logger.Log.Info(
-                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, directUplineId),
-                        LiveCasinoSettings.Settings.LogCategory);
+                    Logger.Log.Info(string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, directUplineId), LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                var logModel = new AutoInsertAccountLog
+                WriteLog(new AutoInsertAccountLog
                 {
                     SignUpForm = LiveCasinoSettings.Settings.SystemId,
                     GameSetting = gameTypes,
                     SettingContext = settingContext
-                };
-
-                WriteLog(logModel);
+                });
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Automatics insert account to Live Casino from existing account.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="oldCustId">The old customer identifier.</param>
+        /// <param name="toUsername">To username.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
+        /// <param name="ip">The internet protocol.</param>
+        /// <param name="language">The language.</param>
+        /// <returns>Update result.</returns>
         public ICommandResult AutoInsertAccountFromExisting(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
         {
-            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
-
-            var criteria = new InsertFromExistingAccountCriteria
-            {
-                AgentId = customerInfo.AgentId,
-                CasinoNo = CasinoNo,
-                CustId = custId,
-                ExchangeId = customerInfo.CurrencyId,
-                MasterId = customerInfo.MasterId,
-                ModifyUsername = actorUsername,
-                RoleId = customerInfo.RoleId,
-                SignupBy = actorId,
-                SignupFrom = LiveCasinoSettings.Settings.SystemId,
-                SignupIp = ip,
-                SuperId = customerInfo.SuperId,
-                Username = customerInfo.Username,
-                OldCustId = oldCustId,
-                ToUserName = toUsername
-            };
-
             var gameTypes = new List<GameType>();
-            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
+            ICommandResult result = InsertAccount(custId, oldCustId, toUsername, actorId, actorUsername, ip, gameTypes);
 
             if (result.IsSuccessful)
             {
@@ -317,24 +286,26 @@
                 if (gameTypes == null || !gameTypes.Any())
                 {
                     gameTypes = _settingRepository.GetGameSetting(oldCustId);
-                    Logger.Log.Info(
-                        string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId),
-                        LiveCasinoSettings.Settings.LogCategory);
+                    Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                var log = new InsertFromExistingAccountLog
+                WriteLog(new InsertFromExistingAccountLog
                 {
                     SignUpForm = LiveCasinoSettings.Settings.SystemId,
                     GameSetting = gameTypes,
                     SettingContext = settingContext
-                };
-
-                WriteLog(log);
+                });
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Updates the live casino status.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>Update result.</returns>
         public ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -374,14 +345,48 @@
         }
 
         /// <summary>
+        /// Updates the synchronize live casino.
+        /// </summary>
+        /// <param name="settingContext">The setting context.</param>
+        /// <param name="isSynced">If set to <c>true</c> [is synced].</param>
+        /// <returns>Update result.</returns>
+        public ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced)
+        {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
+            Check.Argument.IsNotNull(settingContext.SubAccount, "settingContext.SubAccount");
+            Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
+            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.Actor.Id");
+            Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
+            Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
+
+            var criteria = new UpdateSyncLiveCasinoCriteria
+            {
+                CustId = settingContext.Customer.Id,
+                UserId = settingContext.Actor.Id,
+                Ip = settingContext.IP,
+                Language = settingContext.Language,
+                SubAccId = settingContext.SubAccount.Id,
+                SyncLiveCS = isSynced
+            };
+
+            var updateResult = (CommandResult)_settingRepository.Save(criteria);
+
+            if (!updateResult.IsSuccessful)
+            {
+                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
+            }
+
+            return updateResult;
+        }
+
+        /// <summary>
         /// Updates the manual.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <param name="customer">The customer information.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>
-        /// Game setting command result.
-        /// </returns>
+        /// <returns>Update result.</returns>
         public ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -395,7 +400,7 @@
 
             if (!settingContext.Customer.IsSyncLiveCasino)
             {
-                var insertCommandResult = ManualSyncAccount(settingContext);
+                var insertCommandResult = InsertAccount(settingContext);
                 if (settingContext.Customer.Level != CustomerLevel.Super && insertCommandResult.IsSuccessful)
                 {
                     Customer directUplineInfo = GetCustomerLiveCasinoInfo(settingContext.Customer.Parent.Id);
@@ -439,12 +444,12 @@
         }
 
         /// <summary>
-        /// Updates the manual multiple.
+        /// Updates the multiple game setting.
         /// </summary>
-        /// <param name="settingContext">The setting context.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Multiple result command.</returns>
-        public IMultipleCommandResults UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
+        /// <returns>Update result.</returns>
+        public IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
         {
             var results = new MultipleCommandResults();
 
@@ -463,37 +468,6 @@
             }
 
             return results;
-        }
-
-        public ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced)
-        {
-            Check.Argument.IsNotNull(settingContext, "settingContext");
-            Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
-            Check.Argument.IsNotNull(settingContext.SubAccount, "settingContext.SubAccount");
-            Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
-            Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.Actor.Id");
-            Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
-            Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
-
-            var criteria = new UpdateSyncLiveCasinoCriteria
-            {
-                CustId = settingContext.Customer.Id,
-                UserId = settingContext.Actor.Id,
-                Ip = settingContext.IP,
-                Language = settingContext.Language,
-                SubAccId = settingContext.SubAccount.Id,
-                SyncLiveCS = isSynced
-            };
-
-            var updateResult = (CommandResult)_settingRepository.Save(criteria);
-
-            if (!updateResult.IsSuccessful)
-            {
-                Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
-            }
-
-            return updateResult;
         }
 
         /// <summary>
@@ -553,10 +527,12 @@
         /// <summary>
         /// Updates the win limit multiple.
         /// </summary>
-        /// <param name="settingContext">The setting context.</param>
+        /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
-        /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResults UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
+        /// <returns>
+        /// Update win limit multiple result.
+        /// </returns>
+        public IMultipleCommandResults UpdateMultipleWinLimit(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
         {
             var results = new MultipleCommandResults();
 
@@ -579,12 +555,12 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <returns>Insert successfully.</returns>
-        private ICommandResult ManualSyncAccount(LiveCasinoSettingContext settingContext)
+        private ICommandResult InsertAccount(LiveCasinoSettingContext settingContext)
         {
             int agentId = 0, masterId = 0, superId = 0;
             settingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
 
-            var criteria = new InsertManualAccountCriteria
+            var criteria = new ManualInsertAccountCriteria
             {
                 CustId = settingContext.Customer.Id,
                 CasinoNo = CasinoNo,
@@ -635,6 +611,98 @@
             }
 
             return updateResult;
+        }
+
+        /// <summary>
+        /// Inserts the account.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="oldCustId">The old customer identifier.</param>
+        /// <param name="toUsername">To username.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="ip">The internet protocol.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>Insert result.</returns>
+        private ICommandResult InsertAccount(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, string ip, List<GameType> gameTypes)
+        {
+            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
+
+            var criteria = new AutoInsertAccountFromExistingCriteria
+            {
+                AgentId = customerInfo.AgentId,
+                CasinoNo = CasinoNo,
+                CustId = custId,
+                ExchangeId = customerInfo.CurrencyId,
+                MasterId = customerInfo.MasterId,
+                ModifyUsername = actorUsername,
+                RoleId = customerInfo.RoleId,
+                SignupBy = actorId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupIp = ip,
+                SuperId = customerInfo.SuperId,
+                Username = customerInfo.Username,
+                OldCustId = oldCustId,
+                ToUserName = toUsername
+            };
+
+            gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Inserts the account.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="ip">The internet protocol.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="directUplineId">The direct up line identifier.</param>
+        /// <param name="gameTypes">The game types.</param>
+        /// <returns>
+        /// Insert result.
+        /// </returns>
+        private ICommandResult InsertAccount(int custId, int actorId, string actorUsername, string ip, string language, out int directUplineId, List<GameType> gameTypes)
+        {
+            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
+
+            switch (customerInfo.RoleId)
+            {
+                case (int)CustomerLevel.Master:
+                    directUplineId = customerInfo.SuperId;
+                    break;
+                case (int)CustomerLevel.Agent:
+                    directUplineId = customerInfo.MasterId;
+                    break;
+                default:
+                    directUplineId = customerInfo.AgentId;
+                    break;
+            }
+
+            var criteria = new AutoInsertAccountCriteria
+            {
+                AgentId = customerInfo.AgentId,
+                CasinoNo = CasinoNo,
+                CustId = custId,
+                ExchangeId = customerInfo.CurrencyId,
+                MasterId = customerInfo.MasterId,
+                ModifyUsername = actorUsername,
+                RoleId = customerInfo.RoleId,
+                SignupBy = actorId,
+                SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                SignupIp = ip,
+                SuperId = customerInfo.SuperId,
+                Username = customerInfo.Username,
+                Language = language
+            };
+
+            gameTypes = new List<GameType>();
+            ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
+
+            return result;
         }
 
         /// <summary>
@@ -742,7 +810,11 @@
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="customer">Customer setting.</param>
         /// <param name="updateType">Update form type.</param>
-        /// <returns>Command result after updating.</returns>
+        /// <param name="isApplyPositionTakingAllMembers">If set to <c>true</c> [is apply position taking all members].</param>
+        /// <param name="positionTakingOnMembers">The position taking on members.</param>
+        /// <returns>
+        /// Command result after updating.
+        /// </returns>
         private ICommandResults UpdateEachCustomerInMultipleEdit(
             LiveCasinoSettingContext settingContext,
             Customer customer,
@@ -775,7 +847,11 @@
             }
         }
 
-        private ICommandResult WriteLog(IGameSettingLog logData)
+        /// <summary>
+        /// Writes the log.
+        /// </summary>
+        /// <param name="logData">The log data.</param>
+        private void WriteLog(IGameSettingLog logData)
         {
             var criteria = new InsertLogUserRunSPCriteria
             {
@@ -791,9 +867,7 @@
 
             try
             {
-                var updateResult = (CommandResult)_settingRepository.Save(criteria);
-
-                return updateResult;
+                _settingRepository.Save(criteria);
             }
             catch (Exception ex)
             {
@@ -808,7 +882,6 @@
         /// </summary>
         /// <param name="settingContext">Current context for getting customer information.</param>
         /// <param name="customer">Current customer need be set position taking and commission data.</param>
-        /// <returns>Position taking and Commission setting.</returns>
         public void SetCustomerPtAndComSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer)
@@ -878,6 +951,10 @@
             return _settingRepository.GetCustomerInfo(criteria);
         }
 
+        /// <summary>
+        /// Sets the game setting.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
         private void SetGameSetting(Customer customer)
         {
             Check.Argument.IsNotNull(customer, "customer");
