@@ -97,13 +97,13 @@
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
-        public ICommandResultsDTO UpdateCustomerSetting(
+        public ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            ICommandResultsDTO resultList = new CommandResultsDTO();
+            ICommandResults resultList = new CommandResults();
 
             if (settingContext.Customer.Level == CustomerLevel.Member
                 && settingContext.Upline.Level == CustomerLevel.Agent
@@ -132,7 +132,7 @@
             }
             else
             {
-                resultList.Results.Add(new CommandResultDTO
+                resultList.Results.Add(new CommandResult
                 {
                     Code = ErrCode.UpdateGameSettingFail,
                     Message = string.Format("{0}: {1}", LiveCasinoLang.lblGameSetting, LiveCasinoLang.UpdatedUnsuccessfully)
@@ -149,14 +149,14 @@
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
-        public IMultipleCommandResultsDTO UpdateMultipleCustomerSetting(
+        public IMultipleCommandResults UpdateMultipleCustomerSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             UpdateType updateType,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
+            IMultipleCommandResults mainResults = new MultipleCommandResults();
 
             foreach (var custInfo in settingContextMultiple.Customers)
             {
@@ -355,11 +355,11 @@
                 Language = settingContext.Language
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+            var updateResult = (CommandResult)_settingRepository.Save(criteria);
 
             if (updateResult.IsSuccessful)
             {
-                updateResult = new CommandResultDTO
+                updateResult = new CommandResult
                 {
                     Code = 0,
                     Message = LiveCasinoLang.UpdateLiveCasinoStatusSuccess
@@ -382,7 +382,7 @@
         /// <returns>
         /// Game setting command result.
         /// </returns>
-        public ICommandResultsDTO UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
+        public ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
@@ -433,7 +433,7 @@
                 oldGameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Id);
             }
 
-            ICommandResultsDTO resultUpdateGameTypes = UpdateGameTypes(settingContext, newGameTypes, oldGameTypes);
+            ICommandResults resultUpdateGameTypes = UpdateGameTypes(settingContext, newGameTypes, oldGameTypes);
 
             return resultUpdateGameTypes;
         }
@@ -444,9 +444,9 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Multiple result command.</returns>
-        public IMultipleCommandResultsDTO UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
+        public IMultipleCommandResults UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
         {
-            var results = new MultipleCommandResultsDTO();
+            var results = new MultipleCommandResults();
 
             foreach (var custInfo in settingContextMultiple.Customers)
             {
@@ -454,7 +454,7 @@
                 settingContextMultiple.Customer.Username = custInfo.Username;
                 settingContextMultiple.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
 
-                var updateResult = (CommandResultsDTO)UpdateGameSetting(settingContextMultiple, gameTypes);
+                var updateResult = (CommandResults)UpdateGameSetting(settingContextMultiple, gameTypes);
 
                 updateResult.Id = custInfo.Id;
                 updateResult.Name = custInfo.Username;
@@ -486,7 +486,7 @@
                 SyncLiveCS = isSynced
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+            var updateResult = (CommandResult)_settingRepository.Save(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -519,7 +519,7 @@
         /// <param name="settingContext">Setting context information.</param>
         /// <param name="memberWinLimit">Member win limit information.</param>
         /// <returns>Result after updating.</returns>
-        public ICommandResultsDTO UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit)
+        public ICommandResults UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit)
         {
             var criteria = new UpdateCustomerWinLimitCriteria
             {
@@ -531,9 +531,9 @@
                 Language = settingContext.Language
             };
 
-            var result = (CommandResultDTO)_settingRepository.Save(criteria);
+            var result = (CommandResult)_settingRepository.Save(criteria);
 
-            var winLimitResult = new WinLimitCommandResultDTO(result);
+            var winLimitResult = new WinLimitCommandResult(result);
 
             if (winLimitResult.IsSuccessful)
             {
@@ -544,7 +544,7 @@
                 Logger.Log.Info(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
-            var commandResults = new CommandResultsDTO();
+            var commandResults = new CommandResults();
             commandResults.Results.Add(winLimitResult);
 
             return commandResults;
@@ -556,9 +556,9 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="memberWinLimit">The member win limit.</param>
         /// <returns>Update win limit multiple result.</returns>
-        public IMultipleCommandResultsDTO UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
+        public IMultipleCommandResults UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit)
         {
-            var results = new MultipleCommandResultsDTO();
+            var results = new MultipleCommandResults();
 
             foreach (var custInfo in settingContextMultiple.Customers)
             {
@@ -601,7 +601,7 @@
                 CustSite = settingContext.Customer.Site
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+            var updateResult = (CommandResult)_settingRepository.Save(criteria);
 
             if (!updateResult.IsSuccessful)
             {
@@ -619,7 +619,7 @@
 
                 WriteLog(log);
 
-                var syncResult = (CommandResultDTO)UpdateSyncLiveCasino(settingContext, isSynced: true);
+                var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSynced: true);
                 var disableLiveCasino = false;
 
                 if (settingContext.Customer.Level != CustomerLevel.Super)
@@ -646,9 +646,9 @@
         /// <returns>
         /// Command results update list stake level.
         /// </returns>
-        private ICommandResultsDTO UpdateGameTypes(LiveCasinoSettingContext settingContext, List<GameType> newGameTypes, List<GameType> oldGameTypes)
+        private ICommandResults UpdateGameTypes(LiveCasinoSettingContext settingContext, List<GameType> newGameTypes, List<GameType> oldGameTypes)
         {
-            var results = new CommandResultsDTO();
+            var results = new CommandResults();
 
             if (newGameTypes != null && newGameTypes.Any())
             {
@@ -683,9 +683,9 @@
                 StakeLevelList = newGameType.CheckedStakeLevelId
             };
 
-            var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+            var updateResult = (CommandResult)_settingRepository.Save(criteria);
 
-            var gameSettingResult = new GameSettingCommandResultDTO(updateResult);
+            var gameSettingResult = new GameSettingCommandResult(updateResult);
 
             if (gameSettingResult.IsSuccessful)
             {
@@ -743,7 +743,7 @@
         /// <param name="customer">Customer setting.</param>
         /// <param name="updateType">Update form type.</param>
         /// <returns>Command result after updating.</returns>
-        private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(
+        private ICommandResults UpdateEachCustomerInMultipleEdit(
             LiveCasinoSettingContext settingContext,
             Customer customer,
             UpdateType updateType,
@@ -768,7 +768,7 @@
                 case UpdateType.AllSetting:
                     return UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 default:
-                    return new CommandResultsDTO();
+                    return new CommandResults();
             }
         }
 
@@ -788,7 +788,7 @@
 
             try
             {
-                var updateResult = (CommandResultDTO)_settingRepository.Save(criteria);
+                var updateResult = (CommandResult)_settingRepository.Save(criteria);
 
                 return updateResult;
             }
@@ -823,9 +823,12 @@
         /// we will decide which store procedure and function will be called.
         /// </summary>
         /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        public ICommandResultsDTO UpdatePTComSetting(
+        /// <param name="commission">Customer commission.</param>
+        /// <param name="positionTaking">Customer position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
+        /// <returns>Update command results.</returns>
+        public ICommandResults UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
@@ -842,11 +845,13 @@
         /// <summary>
         /// Update multiple Customer Position Taking and Commission.
         /// </summary>
-        /// <param name="settingContext">Setting context of current update setting.</param>
-        /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
-        /// <returns>Update status and information for showing on web.</returns>
-        public IMultipleCommandResultsDTO UpdateMultiplePTComSetting(
+        /// <param name="settingContextMultiple">Setting context of current update setting.</param>
+        /// <param name="commission">Customer commission.</param>
+        /// <param name="positionTaking">Customer position taking.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
+        /// <returns>Update command results.</returns>
+        public IMultipleCommandResults UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
             PositionTaking positionTaking,

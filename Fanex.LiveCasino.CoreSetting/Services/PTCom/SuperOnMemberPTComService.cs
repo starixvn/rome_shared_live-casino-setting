@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SuperOnMemberPTComService.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
+﻿namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
 {
     using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
     using Fanex.LiveCasino.CoreSetting.DTO;
@@ -14,7 +8,7 @@ namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Super Update Member PT And COM service.
     /// </summary>
     public class SuperOnMemberPTComService : PTComServiceBase
     {
@@ -33,7 +27,12 @@ namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
             base.MapSetting(ptComDTO, customer);
         }
 
-        public override ICommandResultsDTO Update(LiveCasinoSettingContext settingContext)
+        /// <summary>
+        /// Update PT and Com Setting.
+        /// </summary>
+        /// <param name="settingContext">Customer information for updating.</param>
+        /// <returns>Update result status.</returns>
+        public override ICommandResults Update(LiveCasinoSettingContext settingContext)
         {
             var criteria = new SuperUpdateMemberSettingCriteria
             {

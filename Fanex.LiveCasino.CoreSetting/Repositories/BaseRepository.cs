@@ -28,7 +28,7 @@
             {
                 try
                 {
-                    var result = new CommandResultDTO();
+                    var result = new CommandResult();
 
                     using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
@@ -50,7 +50,7 @@
                 }
             }
 
-            return new CommandResultDTO
+            return new CommandResult
             {
                 Code = ErrCode.InvalidCriteria,
                 Message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey())
@@ -61,9 +61,9 @@
         /// </summary>
         /// <param name="outParameters">The out parameters.</param>
         /// <returns>Error code and error message.</returns>
-        protected CommandResultDTO GetCommandResult(Hashtable outParameters)
+        protected CommandResult GetCommandResult(Hashtable outParameters)
         {
-            var result = new CommandResultDTO();
+            var result = new CommandResult();
 
             if (outParameters != null)
             {

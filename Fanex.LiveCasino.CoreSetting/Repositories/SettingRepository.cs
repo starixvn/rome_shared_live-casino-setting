@@ -217,7 +217,7 @@
             {
                 try
                 {
-                    var result = new GameSettingCommandResultDTO();
+                    var result = new GameSettingCommandResult();
                     GameType current = null;
                     using (var objDb = new ObjectDb(criteria.GetSettingKey()))
                     {
@@ -247,7 +247,7 @@
                         }
 
                         var outParameters = objDb.GetOuputParams();
-                        result = new GameSettingCommandResultDTO(GetCommandResult(outParameters));
+                        result = new GameSettingCommandResult(GetCommandResult(outParameters));
                     }
 
                     if (!result.IsSuccessful)
@@ -264,7 +264,7 @@
                 }
             }
 
-            return new GameSettingCommandResultDTO();
+            return new GameSettingCommandResult();
         }
 
         /// <summary>

@@ -5,9 +5,9 @@
     /// <summary>
     /// Multiple Command Results.
     /// </summary>
-    public interface IMultipleCommandResultsDTO
+    public interface IMultipleCommandResults
     {
-        List<ICommandResultsDTO> CommandResultsList { get; set; }
+        List<ICommandResults> CommandResultsList { get; set; }
 
         bool IsSuccessful { get; }
     }

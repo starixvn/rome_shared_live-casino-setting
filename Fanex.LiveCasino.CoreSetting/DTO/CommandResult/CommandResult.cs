@@ -5,7 +5,7 @@
     /// <summary>
     /// Command result.
     /// </summary>
-    public class CommandResultDTO : CommandResultBase
+    public class CommandResult : CommandResultBase
     {
         public override bool IsSuccessful
         {

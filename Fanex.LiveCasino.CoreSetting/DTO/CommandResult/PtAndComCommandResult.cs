@@ -5,13 +5,13 @@
     /// <summary>
     /// Position taking And Commission CommandResultDTO.
     /// </summary>
-    public class PtAndComCommandResultDTO : CommandResultDTO
+    public class PtAndComCommandResult : CommandResult
     {
-        public PtAndComCommandResultDTO()
+        public PtAndComCommandResult()
         {
         }
 
-        public PtAndComCommandResultDTO(CommandResultDTO result)
+        public PtAndComCommandResult(CommandResult result)
         {
             Code = result.Code;
             Message = result.Message;

@@ -3,13 +3,13 @@
     /// <summary>
     /// Game setting command result class.
     /// </summary>
-    public class GameSettingCommandResultDTO : WinLimitCommandResultDTO
+    public class GameSettingCommandResult : WinLimitCommandResult
     {
-        public GameSettingCommandResultDTO()
+        public GameSettingCommandResult()
         {
         }
 
-        public GameSettingCommandResultDTO(CommandResultDTO result)
+        public GameSettingCommandResult(CommandResult result)
             : base(result)
         {
         }

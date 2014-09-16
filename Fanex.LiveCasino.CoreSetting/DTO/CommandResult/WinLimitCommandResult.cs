@@ -5,13 +5,13 @@
     /// <summary>
     /// Win limit command result class.
     /// </summary>
-    public class WinLimitCommandResultDTO : CommandResultDTO
+    public class WinLimitCommandResult : CommandResult
     {
-        public WinLimitCommandResultDTO()
+        public WinLimitCommandResult()
         {
         }
 
-        public WinLimitCommandResultDTO(CommandResultDTO result)
+        public WinLimitCommandResult(CommandResult result)
         {
             Code = result.Code;
             Message = result.Message;

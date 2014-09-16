@@ -87,7 +87,7 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult.CommandResultsList.Add(_settingService.UpdateCustomerSetting(
                 settingContext,
@@ -115,7 +115,7 @@
             float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
-            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultipleCustomerSetting(
+            IMultipleCommandResults updateResult = _settingService.UpdateMultipleCustomerSetting(
                 settingContext,
                 customer,
                 (UpdateType)updateType,
@@ -149,7 +149,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit model)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
 
@@ -165,7 +165,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit model)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult = _settingService.UpdateWinLimitMultiple(settingContextMultiple, model);
 
@@ -185,7 +185,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting));
 
@@ -201,7 +201,7 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult = _settingService.UpdateGameSettingMultiple(settingContextMultiple, gameSetting);
 
@@ -228,9 +228,9 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO
+            IMultipleCommandResults updateResult = new MultipleCommandResults
             {
-                CommandResultsList = new List<ICommandResultsDTO>
+                CommandResultsList = new List<ICommandResults>
                 {
                     _settingService.UpdatePTComSetting(
                         settingContext,
@@ -252,7 +252,7 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultiplePTComSetting(
+            IMultipleCommandResults updateResult = _settingService.UpdateMultiplePTComSetting(
                 settingContext,
                 commission,
                 positionTaking,

@@ -5,7 +5,7 @@
     using Fanex.LiveCasino.CoreSetting.Repositories.PTCom;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Factory for get PT COM service.
     /// </summary>
     public class PTComServiceFactory : IPTComServiceFactory
     {
@@ -19,6 +19,11 @@
             _ptComRepository = ptComRepository;
         }
 
+        /// <summary>
+        /// Get Service for handling PT Com setting.
+        /// </summary>
+        /// <param name="settingContext">Context for getting service.</param>
+        /// <returns>PT COM service.</returns>
         public IPTComService GetService(LiveCasinoSettingContext settingContext)
         {
             if (_ptComService != null)

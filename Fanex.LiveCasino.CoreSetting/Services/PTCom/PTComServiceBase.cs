@@ -30,11 +30,11 @@
 
         public abstract void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext);
 
-        public abstract ICommandResultsDTO Update(LiveCasinoSettingContext settingContext);
+        public abstract ICommandResults Update(LiveCasinoSettingContext settingContext);
 
-        public virtual IMultipleCommandResultsDTO UpdateMultiple(List<Customer> customers, LiveCasinoSettingContext settingContext)
+        public virtual IMultipleCommandResults UpdateMultiple(List<Customer> customers, LiveCasinoSettingContext settingContext)
         {
-            IMultipleCommandResultsDTO mainResults = new MultipleCommandResultsDTO();
+            IMultipleCommandResults mainResults = new MultipleCommandResults();
 
             foreach (var customer in customers)
             {
@@ -48,9 +48,14 @@
             return mainResults;
         }
 
-        protected ICommandResultsDTO GetResultDetails(ICommandResult commandResult)
+        /// <summary>
+        /// Get result detail by error code combined.
+        /// </summary>
+        /// <param name="commandResult">Result contains error code combined.</param>
+        /// <returns>Command result list.</returns>
+        protected ICommandResults GetResultDetails(ICommandResult commandResult)
         {
-            CommandResultsDTO resultDetails = new CommandResultsDTO();
+            CommandResults resultDetails = new CommandResults();
 
             if (commandResult.Code != null
                 && Converter.ToString2(commandResult.Code) == ErrCode.InvalidCriteria.ToString())
@@ -69,7 +74,7 @@
                     var errCode = Converter.ToInt(errCodes[i]);
                     if (errCode < 0)
                     {
-                        resultDetails.Results.Add(new PtAndComCommandResultDTO
+                        resultDetails.Results.Add(new PtAndComCommandResult
                         {
                             Code = errCode,
                             Message = LiveCasinoLang.ResourceManager.GetString(string.Format("_{0}", Math.Abs(errCode)))
@@ -77,7 +82,7 @@
                     }
                     else
                     {
-                        resultDetails.Results.Add(new PtAndComCommandResultDTO
+                        resultDetails.Results.Add(new PtAndComCommandResult
                         {
                             Code = errCode,
                             Message = errMsgs[i]

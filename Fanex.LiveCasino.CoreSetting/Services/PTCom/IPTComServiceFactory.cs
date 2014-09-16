@@ -1,14 +1,9 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Repositories.PTCom;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Factory for generating PT COM service for updating.
     /// </summary>
     public interface IPTComServiceFactory
     {

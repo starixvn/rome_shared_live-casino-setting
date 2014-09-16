@@ -6,14 +6,14 @@
     /// <summary>
     /// Multiple Command Results.
     /// </summary>
-    public class MultipleCommandResultsDTO : IMultipleCommandResultsDTO
+    public class MultipleCommandResults : IMultipleCommandResults
     {
-        public MultipleCommandResultsDTO()
+        public MultipleCommandResults()
         {
-            CommandResultsList = new List<ICommandResultsDTO>();
+            CommandResultsList = new List<ICommandResults>();
         }
 
-        public List<ICommandResultsDTO> CommandResultsList { get; set; }
+        public List<ICommandResults> CommandResultsList { get; set; }
 
         public bool IsSuccessful
         {

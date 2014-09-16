@@ -7,9 +7,9 @@
     /// <summary>
     /// Class contain list command results.
     /// </summary>
-    public class CommandResultsDTO : ICommandResultsDTO
+    public class CommandResults : ICommandResults
     {
-        public CommandResultsDTO()
+        public CommandResults()
         {
             Results = new List<ICommandResult>();
         }

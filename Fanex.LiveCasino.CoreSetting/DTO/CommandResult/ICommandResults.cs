@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Data;
 
-    public interface ICommandResultsDTO
+    public interface ICommandResults
     {
         List<ICommandResult> Results { get; set; }
 

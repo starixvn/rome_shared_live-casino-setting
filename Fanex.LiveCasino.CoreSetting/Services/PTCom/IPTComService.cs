@@ -1,17 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IPTComService.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
+﻿namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
 {
     using System.Collections.Generic;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// PT and Com setting interface.
     /// </summary>
     public interface IPTComService
     {
@@ -19,8 +13,8 @@ namespace Fanex.LiveCasino.CoreSetting.Services.PTCom
 
         void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext);
 
-        ICommandResultsDTO Update(LiveCasinoSettingContext settingContext);
+        ICommandResults Update(LiveCasinoSettingContext settingContext);
 
-        IMultipleCommandResultsDTO UpdateMultiple(List<Customer> customers, LiveCasinoSettingContext settingContext);
+        IMultipleCommandResults UpdateMultiple(List<Customer> customers, LiveCasinoSettingContext settingContext);
     }
 }

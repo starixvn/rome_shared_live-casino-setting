@@ -13,13 +13,13 @@
     {
         int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple);
 
-        ICommandResultsDTO UpdateCustomerSetting(
+        ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
 
-        IMultipleCommandResultsDTO UpdateMultipleCustomerSetting(
+        IMultipleCommandResults UpdateMultipleCustomerSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             UpdateType updateType,
@@ -33,7 +33,7 @@
         /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        ICommandResultsDTO UpdatePTComSetting(
+        ICommandResults UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
@@ -47,7 +47,7 @@
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        IMultipleCommandResultsDTO UpdateMultiplePTComSetting(
+        IMultipleCommandResults UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
             PositionTaking positionTaking,
@@ -62,16 +62,16 @@
 
         ICommandResult UpdateLiveCasinoStatus(LiveCasinoSettingContext settingContext, bool disableLiveCasino);
 
-        ICommandResultsDTO UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes);
+        ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes);
 
-        IMultipleCommandResultsDTO UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes);
+        IMultipleCommandResults UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes);
 
         ICommandResult UpdateSyncLiveCasino(LiveCasinoSettingContext settingContext, bool isSynced);
 
         CurrentMemberWinLimitDTO GetCurrentWinLimit(int custId);
 
-        ICommandResultsDTO UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit);
+        ICommandResults UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit memberWinLimit);
 
-        IMultipleCommandResultsDTO UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit);
+        IMultipleCommandResults UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit memberWinLimit);
     }
 }
