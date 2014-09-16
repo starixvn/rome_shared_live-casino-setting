@@ -151,6 +151,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GameType.cs" />
     <Compile Include="Models\LiveCasinoSettingContextMultiple.cs" />
+    <Compile Include="Models\Log\AutoInsertAccountLog.cs" />
     <Compile Include="Models\Log\GameSettingLog.cs" />
     <Compile Include="Models\Log\IGameSettingLog.cs" />
     <Compile Include="Models\Log\ManualInsertAccountLog.cs" />

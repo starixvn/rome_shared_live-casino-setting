@@ -66,25 +66,27 @@
         private string GetTrackingValue()
         {
             string gameTypeLog = GetGameTypeLogData();
+            int agentId = 0, masterId = 0, superId = 0;
+            SettingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
 
             string trackingValue = string.Format(
                                             TrackingTemplate,
                                             SpName,
-                                            SettingContext.CustomerId,
-                                            SettingContext.Username,
+                                            SettingContext.Customer.Id,
+                                            SettingContext.Customer.Username,
                                             CasinoNo,
-                                            SettingContext.ExchangeId,
-                                            SettingContext.SuperId,
-                                            SettingContext.MasterId,
-                                            SettingContext.AgentId,
-                                            SettingContext.CustomerLevel,
+                                            SettingContext.Customer.CurrencyId,
+                                            superId,
+                                            masterId,
+                                            agentId,
+                                            SettingContext.Customer.Level,
                                             SettingContext.IP,
-                                            SettingContext.ActorId,
+                                            SettingContext.Actor.Id,
                                             SignUpForm,
                                             SettingContext.Language,
                                             ErrCode,
                                             ErrMsg,
-                                            GetTrackingSubAccount,
+                                            TrackingSubAccount,
                                             gameTypeLog,
                                             SpName);
 
@@ -97,16 +99,14 @@
             {
                 LogActions logAction;
 
-                switch (SettingContext.CustomerLevel)
+                switch (SettingContext.Customer.Level)
                 {
                     case CustomerLevel.Master:
                         logAction = LogActions.AutoInsert_Master;
                         break;
-
                     case CustomerLevel.Agent:
                         logAction = LogActions.AutoInsert_Agent;
                         break;
-
                     default:
                         logAction = LogActions.AutoInsert_Member;
                         break;
@@ -116,6 +116,5 @@
             }
         }
 
-        
     }
 }
