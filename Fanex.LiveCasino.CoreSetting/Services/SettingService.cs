@@ -170,114 +170,7 @@
             }
 
             return mainResults;
-        }
-
-        /// <summary>
-        /// Gets the customer site by username.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>Customer site name.</returns>
-        public string GetCustomerSite(string username)
-        {
-            var criteria = new GetCustomerSiteByUsernameCriteria
-            {
-                Username = username
-            };
-
-            if (!criteria.IsValid())
-            {
-                throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
-            }
-
-            var userInfo = _settingRepository.Get<Customer>(criteria);
-
-            return userInfo.Site;
-        }
-
-        /// <summary>
-        /// Get customer information with customer id.
-        /// </summary>
-        /// <param name="custId">Get criteria information.</param>
-        /// <returns>Customer information.</returns>
-        public Customer GetCustomerLiveCasinoInfo(int custId)
-        {
-            var criteria = new GetCustomerLiveCasinoInfoCriteria
-            {
-                CustId = custId
-            };
-
-            Customer custInfo = _settingRepository.GetCustomerLiveCasinoInfo(criteria);
-
-            CustomerInfoDTO uplineInfo = GetCustomerInfo(custId);
-
-            switch (custInfo.Level)
-            {
-                case CustomerLevel.Member:
-                    custInfo.Parent.Id = uplineInfo.AgentId;
-                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
-                    custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
-                    break;
-
-                case CustomerLevel.Agent:
-                    custInfo.Parent.Id = uplineInfo.MasterId;
-                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
-                    break;
-
-                case CustomerLevel.Master:
-                    custInfo.Parent.Id = uplineInfo.SuperId;
-                    break;
-
-                default:
-                    custInfo.Parent.Id = 0;
-                    break;
-            }
-
-            return custInfo;
-        }
-
-        public void SetGameSetting(Customer customer)
-        {
-            Check.Argument.IsNotNull(customer, "customer");
-            Check.Argument.IsNotNull(customer.Parent, "customer.Parent");
-            Check.Argument.IsNotNegativeOrZero(customer.Id, "customer.Id");
-            Check.Argument.IsNotNegativeOrZero((int)customer.Level, "customer.Level");
-            Check.Argument.IsNotNull(customer.IsSyncLiveCasino, "customer.IsSyncLiveCasino");
-            Check.Argument.IsNotEmpty(customer.Username, "customer.Username");
-            Check.Argument.IsNotNegativeOrZero(customer.CurrencyId, "customer.CurrencyId");
-            Check.Argument.IsNotNegative(customer.Parent.Id, "customer.Parent.Id");
-
-            var gameSettings = new List<GameType>();
-
-            if (customer.Level == CustomerLevel.Super && !customer.IsSyncLiveCasino)
-            {
-                var site = GetCustomerSite(customer.Username);
-                gameSettings = _settingRepository.GetGameSetting(customer.CurrencyId, site, defaultCheckedValue: true);
-            }
-            else if (customer.Level != CustomerLevel.Super && !customer.IsSyncLiveCasino)
-            {
-                gameSettings = _settingRepository.GetGameSetting(customer.Parent.Id);
-                gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
-
-                // Check all by default
-                foreach (var gameSettingItem in gameSettings)
-                {
-                    gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
-                    if (customer.Level == CustomerLevel.Member)
-                    {
-                        for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
-                        {
-                            gameSettingItem.BettingLimit[i].IsChecked = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                gameSettings = _settingRepository.GetGameSetting(customer.Id);
-            }
-
-            customer.LiveCasinoSetting.GameSetting = gameSettings;
-        }
+        }        
 
         public ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
         {
@@ -963,5 +856,112 @@
 
             return _settingRepository.GetCustomerInfo(criteria);
         }
+
+        private void SetGameSetting(Customer customer)
+        {
+            Check.Argument.IsNotNull(customer, "customer");
+            Check.Argument.IsNotNull(customer.Parent, "customer.Parent");
+            Check.Argument.IsNotNegativeOrZero(customer.Id, "customer.Id");
+            Check.Argument.IsNotNegativeOrZero((int)customer.Level, "customer.Level");
+            Check.Argument.IsNotNull(customer.IsSyncLiveCasino, "customer.IsSyncLiveCasino");
+            Check.Argument.IsNotEmpty(customer.Username, "customer.Username");
+            Check.Argument.IsNotNegativeOrZero(customer.CurrencyId, "customer.CurrencyId");
+            Check.Argument.IsNotNegative(customer.Parent.Id, "customer.Parent.Id");
+
+            var gameSettings = new List<GameType>();
+
+            if (customer.Level == CustomerLevel.Super && !customer.IsSyncLiveCasino)
+            {
+                var site = GetCustomerSite(customer.Username);
+                gameSettings = _settingRepository.GetGameSetting(customer.CurrencyId, site, defaultCheckedValue: true);
+            }
+            else if (customer.Level != CustomerLevel.Super && !customer.IsSyncLiveCasino)
+            {
+                gameSettings = _settingRepository.GetGameSetting(customer.Parent.Id);
+                gameSettings.RemoveAll(x => string.IsNullOrWhiteSpace(x.CheckedStakeLevelRange));
+
+                // Check all by default
+                foreach (var gameSettingItem in gameSettings)
+                {
+                    gameSettingItem.BettingLimit.RemoveAll(x => !x.IsChecked);
+                    if (customer.Level == CustomerLevel.Member)
+                    {
+                        for (int i = 1; i < gameSettingItem.BettingLimit.Count; i++)
+                        {
+                            gameSettingItem.BettingLimit[i].IsChecked = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                gameSettings = _settingRepository.GetGameSetting(customer.Id);
+            }
+
+            customer.LiveCasinoSetting.GameSetting = gameSettings;
+        }
+
+        /// <summary>
+        /// Get customer information with customer id.
+        /// </summary>
+        /// <param name="custId">Get criteria information.</param>
+        /// <returns>Customer information.</returns>
+        private Customer GetCustomerLiveCasinoInfo(int custId)
+        {
+            var criteria = new GetCustomerLiveCasinoInfoCriteria
+            {
+                CustId = custId
+            };
+
+            Customer custInfo = _settingRepository.GetCustomerLiveCasinoInfo(criteria);
+
+            CustomerInfoDTO uplineInfo = GetCustomerInfo(custId);
+
+            switch (custInfo.Level)
+            {
+                case CustomerLevel.Member:
+                    custInfo.Parent.Id = uplineInfo.AgentId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
+                    custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+
+                case CustomerLevel.Agent:
+                    custInfo.Parent.Id = uplineInfo.MasterId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+
+                case CustomerLevel.Master:
+                    custInfo.Parent.Id = uplineInfo.SuperId;
+                    break;
+
+                default:
+                    custInfo.Parent.Id = 0;
+                    break;
+            }
+
+            return custInfo;
+        }
+
+        /// <summary>
+        /// Gets the customer site by username.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>Customer site name.</returns>
+        private string GetCustomerSite(string username)
+        {
+            var criteria = new GetCustomerSiteByUsernameCriteria
+            {
+                Username = username
+            };
+
+            if (!criteria.IsValid())
+            {
+                throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
+            }
+
+            var userInfo = _settingRepository.Get<Customer>(criteria);
+
+            return userInfo.Site;
+        }        
     }
 }

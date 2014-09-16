@@ -56,12 +56,6 @@
 
         Customer GetCustomer(LiveCasinoSettingContext settingContext);
 
-        Customer GetCustomerLiveCasinoInfo(int custId);
-
-        string GetCustomerSite(string username);
-
-        void SetGameSetting(Customer customer);
-
         ICommandResult InsertAutoAccount(int custId, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language);
 
         ICommandResult InsertFromExistingAccount(LiveCasinoSettingContext settingContext);
