@@ -218,7 +218,8 @@
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="commission">Commission setting for updating.</param>
         /// <param name="positionTaking">Position taking setting for updating.</param>
-        /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSetting(
@@ -244,6 +245,14 @@
             return Json(updateResult);
         }
 
+        /// <summary>
+        /// Update position taking and Commission multiple setting.
+        /// </summary>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <param name="commission">Commission setting for updating.</param>
+        /// <param name="positionTaking">Position taking setting for updating.</param>
+        /// <param name="isApplyPositionTakingAllMembers">Apply new position taking on member or not for case change from auto to none.</param>
+        /// <param name="positionTakingOnMembers">New position taking on member for case change from auto to none.</param>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public JsonResult UpdatePtComSettingMultiple(
             LiveCasinoSettingContextMultiple settingContext,

@@ -7,17 +7,15 @@
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Model binding for GET Request.
     /// </summary>
     public class LiveCasinoSettingContextModelBinder : IModelBinder
     {
-        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
-        {
-            var request = controllerContext.HttpContext.Request;
-
-            return GetLiveCasinoSettingContext(request);
-        }
-
+        /// <summary>
+        /// Analysis request and parse to setting context object.
+        /// </summary>
+        /// <param name="request">Request be parsed.</param>
+        /// <returns>Live casino setting context after parsed.</returns>
         public static LiveCasinoSettingContext GetLiveCasinoSettingContext(HttpRequestBase request)
         {
             return new LiveCasinoSettingContext
@@ -48,6 +46,13 @@
                 Language = request["language"] ?? "E",
                 FormType = (FormType)Converter.ToInt(request["formType"])
             };
+        }
+
+        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+            var request = controllerContext.HttpContext.Request;
+
+            return GetLiveCasinoSettingContext(request);
         }
     }
 }

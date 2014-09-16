@@ -1,7 +1,7 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Web.Filters
 {
     using System;
-    using System.Collections.Specialized;
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Common;
@@ -11,17 +11,15 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Web.Binders;
-    using System.Globalization;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Live casino authorization filter.
     /// </summary>
     public class LiveCasinoAuthorizationAttribute : AuthorizeAttribute
     {
-        public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
-
         public bool IsHost { get; set; }
+
+        public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
 
         /// <summary>
         /// Execute before each action for authorization.
@@ -58,39 +56,18 @@
             return true;
         }
 
-        /// <summary>
-        /// Authorize user have permission read.
-        /// </summary>
-        /// <param name="filterContext">Current filter for checking authorization.</param>
-        /// <returns>Is authorized or not.</returns>
-        private bool IsAuthorizedRead(AuthorizationContext filterContext)
+        private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
         {
-            var settingContext = LiveCasinoSettingContextModelBinder.GetLiveCasinoSettingContext(filterContext.HttpContext.Request);
-
-            return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
-        }
-
-        private bool IsAuthorizedReadMultiple(AuthorizationContext filterContext)
-        {
-            var settingContext = LiveCasinoSettingContextMultipleModelBinder
-                                .GetLiveCasinoSettingContextMultiple(filterContext.HttpContext.Request.Form);
-
-            return LiveCasinoAuthenticationService.IsAuthorizedReadMultiple(filterContext, settingContext);
+            return valueProvider.GetValue(parameterName) != null
+                                ? valueProvider.GetValue(parameterName).AttemptedValue
+                                : string.Empty;
         }
 
         /// <summary>
-        /// Authorize user have permission host.
+        /// Get Setting context.
         /// </summary>
-        /// <param name="filterContext">Current filter for checking authorization.</param>
-        /// <returns>Is authorized or not.</returns>
-        private bool IsAuthorizedHost(AuthorizationContext filterContext)
-        {
-            var valueProvider = filterContext.Controller.ValueProvider;
-            var settingContext = GetAjaxPostInformation(valueProvider);
-
-            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
-        }
-
+        /// <param name="valueProvider">Provider for getting data.</param>
+        /// <returns>Setting context.</returns>
         private LiveCasinoSettingContextMultiple GetAjaxPostInformation(IValueProvider valueProvider)
         {
             var settingContext = new LiveCasinoSettingContextMultiple
@@ -119,6 +96,24 @@
             return settingContext;
         }
 
+        /// <summary>
+        /// Authorize user have permission host.
+        /// </summary>
+        /// <param name="filterContext">Current filter for checking authorization.</param>
+        /// <returns>Is authorized or not.</returns>
+        private bool IsAuthorizedHost(AuthorizationContext filterContext)
+        {
+            var valueProvider = filterContext.Controller.ValueProvider;
+            var settingContext = GetAjaxPostInformation(valueProvider);
+
+            return LiveCasinoAuthenticationService.IsAuthorizedHost(filterContext, settingContext);
+        }
+
+        /// <summary>
+        /// Authorize user have permission host on multiple.
+        /// </summary>
+        /// <param name="filterContext">Current filter for checking authorization.</param>
+        /// <returns>Is authorized or not.</returns>
         private bool IsAuthorizedHostMultiple(AuthorizationContext filterContext)
         {
             var valueProvider = filterContext.Controller.ValueProvider;
@@ -144,6 +139,35 @@
             return LiveCasinoAuthenticationService.IsAuthorizedHostMultiple(filterContext, settingContext);
         }
 
+        /// <summary>
+        /// Authorize user have permission read.
+        /// </summary>
+        /// <param name="filterContext">Current filter for checking authorization.</param>
+        /// <returns>Is authorized or not.</returns>
+        private bool IsAuthorizedRead(AuthorizationContext filterContext)
+        {
+            var settingContext = LiveCasinoSettingContextModelBinder.GetLiveCasinoSettingContext(filterContext.HttpContext.Request);
+
+            return LiveCasinoAuthenticationService.IsAuthorizedRead(filterContext, settingContext);
+        }
+
+        /// <summary>
+        /// Authorize user have permission read multiple.
+        /// </summary>
+        /// <param name="filterContext">Current filter for checking authorization.</param>
+        /// <returns>Is authorized or not.</returns>
+        private bool IsAuthorizedReadMultiple(AuthorizationContext filterContext)
+        {
+            var settingContext = LiveCasinoSettingContextMultipleModelBinder
+                                .GetLiveCasinoSettingContextMultiple(filterContext.HttpContext.Request.Form);
+
+            return LiveCasinoAuthenticationService.IsAuthorizedReadMultiple(filterContext, settingContext);
+        }
+
+        /// <summary>
+        /// Un authorized action.
+        /// </summary>
+        /// <param name="filterContext">Filter context for un authorized action.</param>
         private void UnAuthorizedAction(AuthorizationContext filterContext)
         {
             HttpResponseBase response = filterContext.HttpContext.Response;
@@ -160,14 +184,6 @@
             {
                 filterContext.Result = new RedirectResult("~/LiveCasinoSetting/User/UnAuthorized");
             }
-        }
-
-        private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
-        {
-
-            return valueProvider.GetValue(parameterName) != null
-                                ? valueProvider.GetValue(parameterName).AttemptedValue
-                                : string.Empty;
         }
     }
 }

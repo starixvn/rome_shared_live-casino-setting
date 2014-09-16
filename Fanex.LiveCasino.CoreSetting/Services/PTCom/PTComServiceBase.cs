@@ -22,7 +22,11 @@
 
         protected IPTComRepository PTComRepository { get; set; }
 
-        public virtual void SetModifiedData(float commission, PositionTaking positionTaking, bool isApplyPositionTakingOnMembers = false, float newPositionTakingOnMembers = 0)
+        public virtual void SetModifiedData(
+            float commission, 
+            PositionTaking positionTaking, 
+            bool isApplyPositionTakingOnMembers = false, 
+            float newPositionTakingOnMembers = 0)
         {
             Commission = commission;
             PositionTaking = positionTaking;
@@ -32,6 +36,12 @@
 
         public abstract ICommandResults Update(LiveCasinoSettingContext settingContext);
 
+        /// <summary>
+        /// Update multiple PT COM setting.
+        /// </summary>
+        /// <param name="customers">Customer list need be updated.</param>
+        /// <param name="settingContext">Setting context for updating.</param>
+        /// <returns>Result of updating.</returns>
         public virtual IMultipleCommandResults UpdateMultiple(List<Customer> customers, LiveCasinoSettingContext settingContext)
         {
             IMultipleCommandResults mainResults = new MultipleCommandResults();

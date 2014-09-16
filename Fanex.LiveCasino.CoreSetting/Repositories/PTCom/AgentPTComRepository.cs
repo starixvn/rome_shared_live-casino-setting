@@ -6,7 +6,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
-    /// Agent repository for settting.
+    /// Agent repository for setting.
     /// </summary>
     public class AgentPTComRepository : PTComRepositoryBase
     {
@@ -14,7 +14,7 @@
         /// Map PT and COM setting from database.
         /// </summary>
         /// <param name="reader">Reader for reading data.</param>
-        /// <returns>PT and COM DTO for storaging data.</returns>
+        /// <returns>PT and COM DTO for storage data.</returns>
         protected override PTComDTO MapData(IDataReader reader)
         {
             var positionTakingCommission = new PTComDTO

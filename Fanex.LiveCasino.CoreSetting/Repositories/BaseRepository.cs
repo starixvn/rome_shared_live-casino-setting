@@ -57,6 +57,7 @@
             };
         }
 
+        /// <summary>
         /// Gets the command result.
         /// </summary>
         /// <param name="outParameters">The out parameters.</param>

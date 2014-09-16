@@ -9,15 +9,15 @@
     /// </summary>
     public class PTComServiceFactory : IPTComServiceFactory
     {
-        private IPTComService _ptComService { get; set; }
-
-        private IPTComRepository _ptComRepository { get; set; }
-
         public PTComServiceFactory(IPTComService ptComService, IPTComRepository ptComRepository)
         {
             _ptComService = ptComService;
             _ptComRepository = ptComRepository;
         }
+
+        private IPTComRepository _ptComRepository { get; set; }
+
+        private IPTComService _ptComService { get; set; }
 
         /// <summary>
         /// Get Service for handling PT Com setting.
@@ -60,6 +60,7 @@
                             _ptComService = new AgentOnMemberPTComService(_ptComRepository);
                             break;
                     }
+
                     break;
             }
 

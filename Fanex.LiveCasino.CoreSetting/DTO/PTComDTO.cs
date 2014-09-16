@@ -3,7 +3,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
-    /// PT Commmission DTO for getting data.
+    /// PT Commission DTO for getting data.
     /// </summary>
     public class PTComDTO
     {

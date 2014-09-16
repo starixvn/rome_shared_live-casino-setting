@@ -14,17 +14,17 @@
     {
         public SuperOnMemberPTComService(IPTComRepository ptComRepository)
         {
-            base.PTComRepository = ptComRepository ?? new SuperOnMemberPTComRepository();
+            PTComRepository = ptComRepository ?? new SuperOnMemberPTComRepository();
         }
 
         public override void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext)
         {
-            PTComDTO ptComDTO = base.PTComRepository.Get(new GetSettingForSuperEditMemberCriteria
+            PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForSuperEditMemberCriteria
             {
                 CustId = settingContext.Customer.Id
             });
 
-            base.MapSetting(ptComDTO, customer);
+            MapSetting(ptComDTO, customer);
         }
 
         /// <summary>
@@ -41,10 +41,10 @@
                 Language = settingContext.Language,
                 UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
-                S1 = (decimal)base.PositionTaking.S1,
-                Is1 = (bool)base.PositionTaking.Is1,
-                Us1 = (decimal)base.PositionTaking.Us1,
-                IsUpdateSuperPt = !(bool)base.PositionTaking.Is3
+                S1 = (decimal)PositionTaking.S1,
+                Is1 = (bool)PositionTaking.Is1,
+                Us1 = (decimal)PositionTaking.Us1,
+                IsUpdateSuperPt = !(bool)PositionTaking.Is3
             };
 
             if (criteria.Is1)
@@ -56,7 +56,7 @@
                 criteria.Us1 = 0;
             }
 
-            ICommandResult commandResult = base.PTComRepository.Save(criteria);
+            ICommandResult commandResult = PTComRepository.Save(criteria);
 
             return GetResultDetails(commandResult);
         }

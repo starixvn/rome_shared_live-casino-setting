@@ -14,7 +14,7 @@
     {
         public MasterPTComService(IPTComRepository ptComRepository)
         {
-            base.PTComRepository = ptComRepository ?? new MasterPTComRepository();
+            PTComRepository = ptComRepository ?? new MasterPTComRepository();
         }
 
         private bool _isApplyPositionTakingOnMembers { get; set; }
@@ -23,13 +23,13 @@
 
         public override void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext)
         {
-            PTComDTO ptComDTO = base.PTComRepository.Get(new GetSettingForEditMasterCriteria
+            PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForEditMasterCriteria
             {
                 CustId = settingContext.Customer.Id,
                 SRecommend = settingContext.Upline.Id
             });
 
-            base.MapSetting(ptComDTO, customer);
+            MapSetting(ptComDTO, customer);
         }
 
         /// <summary>
@@ -47,13 +47,13 @@
                 SRecommend = settingContext.Upline.Id,
                 UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
-                MasterCommission = (decimal)base.Commission,
-                M3 = (decimal)base.PositionTaking.M3,
-                N3 = (decimal)base.PositionTaking.N3,
-                Is3 = (bool)base.PositionTaking.Is3,
-                Us3 = (decimal)base.PositionTaking.Us3,
+                MasterCommission = (decimal)Commission,
+                M3 = (decimal)PositionTaking.M3,
+                N3 = (decimal)PositionTaking.N3,
+                Is3 = (bool)PositionTaking.Is3,
+                Us3 = (decimal)PositionTaking.Us3,
                 UpdateAllMembers = this._isApplyPositionTakingOnMembers,
-                S3 = (decimal)base.PositionTaking.S3,
+                S3 = (decimal)PositionTaking.S3,
                 NewSuperPositionTakingOnMember = (decimal)this._newPositionTakingOnMember
             };
 
@@ -66,7 +66,7 @@
                 criteria.Us3 = 0;
             }
 
-            ICommandResult commandResult = base.PTComRepository.Save(criteria);
+            ICommandResult commandResult = PTComRepository.Save(criteria);
 
             return GetResultDetails(commandResult);
         }

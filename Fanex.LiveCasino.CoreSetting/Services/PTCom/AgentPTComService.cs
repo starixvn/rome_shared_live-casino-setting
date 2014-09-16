@@ -14,16 +14,20 @@
     {
         public AgentPTComService(IPTComRepository ptComRepository)
         {
-            base.PTComRepository = ptComRepository ?? new AgentPTComRepository();
+            PTComRepository = ptComRepository ?? new AgentPTComRepository();
         }
 
         private bool _isApplyPositionTakingOnMembers { get; set; }
 
         private float _newPositionTakingOnMember { get; set; }
 
-        public override void SetModifiedData(float commission, PositionTaking positionTaking, bool isApplyPositionTakingOnMembers = false, float newPositionTakingOnMembers = 0)
+        public override void SetModifiedData(
+            float commission, 
+            PositionTaking positionTaking, 
+            bool isApplyPositionTakingOnMembers = false, 
+            float newPositionTakingOnMembers = 0)
         {
-            base.SetModifiedData(commission, positionTaking);
+            SetModifiedData(commission, positionTaking);
 
             this._isApplyPositionTakingOnMembers = isApplyPositionTakingOnMembers;
             this._newPositionTakingOnMember = newPositionTakingOnMembers;
@@ -31,13 +35,13 @@
 
         public override void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext)
         {
-            PTComDTO ptComDTO = base.PTComRepository.Get(new GetSettingForEditAgentCriteria
+            PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForEditAgentCriteria
             {
                 CustId = settingContext.Customer.Id,
                 MRecommend = settingContext.Upline.Id
             });
 
-            base.MapSetting(ptComDTO, customer);
+            MapSetting(ptComDTO, customer);
         }
 
         /// <summary>
@@ -55,13 +59,13 @@
                 MRecommend = settingContext.Upline.Id,
                 UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
-                AgentCommission = (decimal)base.Commission,
-                M2 = (decimal)base.PositionTaking.M2,
-                N2 = (decimal)base.PositionTaking.N2,
-                Im2 = (bool)base.PositionTaking.Im2,
-                Um2 = (decimal)base.PositionTaking.Um2,
+                AgentCommission = (decimal)Commission,
+                M2 = (decimal)PositionTaking.M2,
+                N2 = (decimal)PositionTaking.N2,
+                Im2 = (bool)PositionTaking.Im2,
+                Um2 = (decimal)PositionTaking.Um2,
                 UpdateAllMembers = (bool)this._isApplyPositionTakingOnMembers,
-                A2 = (decimal)base.PositionTaking.A2,
+                A2 = (decimal)PositionTaking.A2,
                 NewMasterPtOnMember = (decimal)this._newPositionTakingOnMember
             };
 
@@ -74,7 +78,7 @@
                 criteria.Um2 = 0;
             }
 
-            ICommandResult commandResult = base.PTComRepository.Save(criteria);
+            ICommandResult commandResult = PTComRepository.Save(criteria);
 
             return GetResultDetails(commandResult);
         }

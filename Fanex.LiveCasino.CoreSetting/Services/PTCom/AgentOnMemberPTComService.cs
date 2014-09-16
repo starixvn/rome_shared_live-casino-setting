@@ -14,18 +14,18 @@
     {
         public AgentOnMemberPTComService(IPTComRepository ptComRepository)
         {
-            base.PTComRepository = ptComRepository ?? new AgentOnMemberPTComRepository();
+            PTComRepository = ptComRepository ?? new AgentOnMemberPTComRepository();
         }
 
         public override void SetPTComSetting(Customer customer, LiveCasinoSettingContext settingContext)
         {
-            PTComDTO ptComDTO = base.PTComRepository.Get(new GetSettingForEditMemberCriteria
+            PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForEditMemberCriteria
             {
                 CustId = settingContext.Customer.Id,
                 Recommend = settingContext.Upline.Id
             });
 
-            base.MapSetting(ptComDTO, customer);
+            MapSetting(ptComDTO, customer);
         }
 
         /// <summary>
@@ -43,11 +43,11 @@
                 Recommend = settingContext.Upline.Id,
                 UserId = settingContext.Actor.Id,
                 SubAccID = settingContext.SubAccount.Id,
-                MemberCommission = (decimal)base.Commission,
-                A1 = (decimal)base.PositionTaking.A1
+                MemberCommission = (decimal)Commission,
+                A1 = (decimal)PositionTaking.A1
             };
 
-            ICommandResult commandResult = base.PTComRepository.Save(criteria);
+            ICommandResult commandResult = PTComRepository.Save(criteria);
 
             return GetResultDetails(commandResult);
         }
