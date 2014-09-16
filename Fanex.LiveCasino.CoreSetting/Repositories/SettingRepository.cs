@@ -21,6 +21,12 @@
     /// </summary>
     public class SettingRepository : BaseRepository, ISettingRepository
     {
+        /// <summary>
+        /// Gets the customer information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Customer basic information.</returns>
+        /// <exception cref="System.Exception">Invalid criteria exception.</exception>
         public CustomerInfoDTO GetCustomerInfo(ICriteria criteria)
         {
             if (!criteria.IsValid())

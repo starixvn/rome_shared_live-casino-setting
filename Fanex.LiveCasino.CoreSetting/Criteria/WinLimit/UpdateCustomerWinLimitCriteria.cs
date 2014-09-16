@@ -1,9 +1,9 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Criteria.WinLimit
 {
-    using System.Diagnostics.CodeAnalysis;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using System;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Setting key : Acc_CustomerUpdLiveCS_WinLimit.
