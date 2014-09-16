@@ -22,7 +22,10 @@
         {
             if (!criteria.IsValid())
             {
-                throw new Exception(LiveCasinoLang.InvalidCriteriaMsg);
+                var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+                Logger.Log.Error(string.Format("{0}\n{1}", message, criteria.ToString()));
+
+                throw new Exception(message);
             }
 
             try

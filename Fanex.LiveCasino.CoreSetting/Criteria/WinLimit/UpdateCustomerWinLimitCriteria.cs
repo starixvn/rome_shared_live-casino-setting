@@ -2,6 +2,8 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
+    using System;
 
     /// <summary>
     /// Setting key : Acc_CustomerUpdLiveCS_WinLimit.
@@ -22,6 +24,11 @@
         public int UserId { get; set; }
 
         public string Language { get; set; }
+
+        public override bool IsValid()
+        {
+            return base.IsValid() && Enum.IsDefined(typeof(MaximumWinLimit), (int)MaxWinLimit);
+        }
 
         public override string GetSettingKey()
         {

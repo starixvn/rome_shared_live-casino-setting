@@ -554,6 +554,16 @@
             Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
             Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
 
+            var commandResults = new CommandResults();
+            var uplineMaximumWinLimit = (int)settingContext.Customer.Parent.LiveCasinoSetting.WinLimit.Max;
+
+            if (uplineMaximumWinLimit != (int)MaximumWinLimit.Unlimited && memberWinLimit.Max > uplineMaximumWinLimit)
+            {
+                commandResults.Results.Add(new WinLimitCommandResult { Code = ErrCode.InvalidMaximumWinLimit, Message = LiveCasinoLang.UpdatedUnsuccessfully });
+
+                return commandResults;
+            }
+
             var criteria = new UpdateCustomerWinLimitCriteria
             {
                 CustId = settingContext.Customer.Id,
@@ -577,7 +587,6 @@
                 Logger.Log.Info(string.Format("{0}\n{1}", winLimitResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
-            var commandResults = new CommandResults();
             commandResults.Results.Add(winLimitResult);
 
             return commandResults;
@@ -1048,7 +1057,10 @@
 
             if (!criteria.IsValid())
             {
-                throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
+                var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+                Logger.Log.Error(string.Format("{0}\n{1}", message, criteria.ToString()));
+
+                throw new Exception(message);
             }
 
             var userInfo = _settingRepository.Get<Customer>(criteria);

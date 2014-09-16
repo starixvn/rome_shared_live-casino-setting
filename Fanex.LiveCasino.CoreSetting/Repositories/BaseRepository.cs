@@ -50,11 +50,10 @@
                 }
             }
 
-            return new CommandResult
-            {
-                Code = ErrCode.InvalidCriteria,
-                Message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey())
-            };
+            var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+            Logger.Log.Error(string.Format("{0}\n{1}", message,criteria.ToString()));
+
+            throw new Exception(message);
         }
 
         /// <summary>

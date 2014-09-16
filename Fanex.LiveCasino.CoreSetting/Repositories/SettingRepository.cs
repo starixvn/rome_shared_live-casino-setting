@@ -25,7 +25,10 @@
         {
             if (!criteria.IsValid())
             {
-                throw new Exception(string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey()));
+                var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+                Logger.Log.Error(string.Format("{0}\n{1}", message, criteria.ToString()));
+
+                throw new Exception(message);
             }
 
             var uplineCustomerInfo = Get<CustomerInfoDTO>(criteria);

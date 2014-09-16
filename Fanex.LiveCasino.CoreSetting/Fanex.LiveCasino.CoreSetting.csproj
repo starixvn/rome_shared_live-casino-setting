@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constant\ErrCode.cs" />
+    <Compile Include="Enumerations\MaximumWinLimit.cs" />
     <Compile Include="Constant\ViewPath.cs" />
     <Compile Include="Controllers\BaseController.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
