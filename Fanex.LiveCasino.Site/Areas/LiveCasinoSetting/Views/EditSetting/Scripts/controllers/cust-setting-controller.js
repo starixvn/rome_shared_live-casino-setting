@@ -82,8 +82,9 @@ if (fanex.liveCasinoSetting) {
                                 && $window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
                                 $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePartial);
                             }
-
-                            $window.location.href = $window.location.href;
+                            else {
+                                $window.location.href = $window.location.href;
+                            }
                         }
                     }, fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE);
                 }
