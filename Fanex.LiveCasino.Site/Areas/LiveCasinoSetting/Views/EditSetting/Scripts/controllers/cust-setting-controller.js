@@ -73,7 +73,7 @@ if (fanex.liveCasinoSetting) {
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        if ($scope.isEditDirect
+                        if ($scope.isEditMultiple
                             && $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
                             $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
                         }
