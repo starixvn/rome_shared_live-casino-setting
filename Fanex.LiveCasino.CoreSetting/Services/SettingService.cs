@@ -102,7 +102,11 @@
         /// <returns>
         /// Update result.
         /// </returns>
-        public ICommandResults UpdateCustomerSetting(LiveCasinoSettingContext settingContext, Customer customer, bool isApplyPositionTakingAllMembers, float positionTakingOnMembers)
+        public ICommandResults UpdateCustomerSetting(
+            LiveCasinoSettingContext settingContext,
+            Customer customer,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             ICommandResults resultList = new CommandResults();
 
@@ -154,7 +158,12 @@
         /// <returns>
         /// Multiple result return to user.
         /// </returns>
-        public IMultipleCommandResults UpdateMultipleCustomerSetting(LiveCasinoSettingContextMultiple settingContextMultiple, Customer customer, UpdateType updateType, bool isApplyPositionTakingAllMembers, float positionTakingOnMembers)
+        public IMultipleCommandResults UpdateMultipleCustomerSetting(
+            LiveCasinoSettingContextMultiple settingContextMultiple,
+            Customer customer,
+            UpdateType updateType,
+            bool isApplyPositionTakingAllMembers,
+            float positionTakingOnMembers)
         {
             IMultipleCommandResults mainResults = new MultipleCommandResults();
 
@@ -257,19 +266,9 @@
             {
                 var settingContext = new LiveCasinoSettingContext
                 {
-                    Customer = new Customer
-                    {
-                        Id = custId
-                    },
-                    Actor = new User
-                    {
-                        Id = subAccountId,
-                        Username = subAccountUsername
-                    },
-                    SubAccount = new User
-                    {
-                        Id = subAccountId
-                    },
+                    Customer = new Customer { Id = custId },
+                    Actor = new User { Id = actorId, Username = actorUsername },
+                    SubAccount = new User { Id = subAccountId, Username = subAccountUsername },
                     IP = ip,
                     Language = language
                 };
@@ -313,7 +312,16 @@
         /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
-        public ICommandResult AutoInsertAccountFromExisting(int custId, int oldCustId, string toUsername, int actorId, string actorUsername, int subAccountId, string subAccountUsername, string ip, string language)
+        public ICommandResult AutoInsertAccountFromExisting(
+            int custId,
+            int oldCustId,
+            string toUsername,
+            int actorId,
+            string actorUsername,
+            int subAccountId,
+            string subAccountUsername,
+            string ip,
+            string language)
         {
             var gameTypes = new List<GameType>();
             ICommandResult result = InsertAccount(custId, oldCustId, toUsername, actorId, actorUsername, ip, gameTypes);
@@ -322,19 +330,9 @@
             {
                 var settingContext = new LiveCasinoSettingContext
                 {
-                    Customer = new Customer
-                    {
-                        Id = custId
-                    },
-                    Actor = new User
-                    {
-                        Id = subAccountId,
-                        Username = subAccountUsername
-                    },
-                    SubAccount = new User
-                    {
-                        Id = subAccountId
-                    },
+                    Customer = new Customer { Id = custId },
+                    Actor = new User { Id = actorId, Username = actorUsername },
+                    SubAccount = new User { Id = subAccountId, Username = subAccountUsername },
                     IP = ip,
                     Language = language
                 };
@@ -350,6 +348,7 @@
                 if (gameTypes == null || !gameTypes.Any())
                 {
                     gameTypes = _settingRepository.GetGameSetting(oldCustId);
+
                     Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
                 }
 
@@ -729,7 +728,14 @@
         /// <returns>
         /// Insert result.
         /// </returns>
-        private ICommandResult InsertAccount(int custId, int actorId, string actorUsername, string ip, string language, out int directUplineId, List<GameType> gameTypes)
+        private ICommandResult InsertAccount(
+            int custId,
+            int actorId,
+            string actorUsername,
+            string ip,
+            string language,
+            out int directUplineId,
+            List<GameType> gameTypes)
         {
             CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
 
@@ -892,9 +898,9 @@
                 case UpdateType.PositionTakingAndCommission:
                     return isSync ?
                             UpdatePTComSetting(
-                                settingContext, 
-                                customer.LiveCasinoSetting.Commission, 
-                                customer.LiveCasinoSetting.PositionTaking, 
+                                settingContext,
+                                customer.LiveCasinoSetting.Commission,
+                                customer.LiveCasinoSetting.PositionTaking,
                                 isApplyPositionTakingAllMembers,
                                 positionTakingOnMembers)
                             : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
