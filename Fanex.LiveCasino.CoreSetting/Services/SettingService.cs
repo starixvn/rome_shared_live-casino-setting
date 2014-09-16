@@ -215,6 +215,9 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
+            Check.Argument.IsNotNull(settingContext, "settingContext");
+            Check.Argument.IsNotNull(positionTaking, "positionTaking");
+
             var ptComService = _ptComServiceFactory.GetService(settingContext);
 
             ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
@@ -238,6 +241,9 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
+            Check.Argument.IsNotNull(settingContextMultiple, "settingContext");
+            Check.Argument.IsNotNull(positionTaking, "positionTaking");
+
             var ptComService = _ptComServiceFactory.GetService(settingContextMultiple);
 
             ptComService.SetModifiedData(commission, positionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers);
