@@ -4,7 +4,7 @@
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Position Taking and Commission Repository.
     /// </summary>
     public interface IPTComRepository : IBaseRepository
     {

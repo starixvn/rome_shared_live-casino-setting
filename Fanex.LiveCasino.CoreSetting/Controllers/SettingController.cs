@@ -89,7 +89,7 @@
         {
             IMultipleCommandResultsDTO updateResult = new MultipleCommandResultsDTO();
 
-            updateResult.CommandResultsList.Add(_settingService.UpdateSingleCustomerAllSetting(
+            updateResult.CommandResultsList.Add(_settingService.UpdateCustomerSetting(
                 settingContext,
                 customer,
                 isApplyPositionTakingAllMembers,
@@ -115,10 +115,10 @@
             float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
-            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultipleCustomerAllSetting(
+            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultipleCustomerSetting(
                 settingContext,
                 customer,
-                updateType,
+                (UpdateType)updateType,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
 
@@ -232,7 +232,7 @@
             {
                 CommandResultsList = new List<ICommandResultsDTO>
                 {
-                    _settingService.UpdatePtComSetting(
+                    _settingService.UpdatePTComSetting(
                         settingContext,
                         commission,
                         positionTaking,
@@ -252,7 +252,7 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            IMultipleCommandResultsDTO updateResult = _settingService.UpdatePtComSettingMultiple(
+            IMultipleCommandResultsDTO updateResult = _settingService.UpdateMultiplePTComSetting(
                 settingContext,
                 commission,
                 positionTaking,

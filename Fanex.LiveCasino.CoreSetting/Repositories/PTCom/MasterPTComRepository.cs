@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="MasterPTComRepository.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.LiveCasino.CoreSetting.Repositories.PTCom
+﻿namespace Fanex.LiveCasino.CoreSetting.Repositories.PTCom
 {
     using System.Data;
     using Fanex.Common.Extensions;
@@ -12,10 +6,15 @@ namespace Fanex.LiveCasino.CoreSetting.Repositories.PTCom
     using Fanex.LiveCasino.CoreSetting.Models;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Master PT and COM setting repository.
     /// </summary>
     public class MasterPTComRepository : PTComRepositoryBase
     {
+        /// <summary>
+        /// Map PT and COM setting from database.
+        /// </summary>
+        /// <param name="reader">Reader for reading data.</param>
+        /// <returns>PT and COM DTO for storaging data.</returns>
         protected override PTComDTO MapData(IDataReader reader)
         {
             var positionTakingCommission = new PTComDTO

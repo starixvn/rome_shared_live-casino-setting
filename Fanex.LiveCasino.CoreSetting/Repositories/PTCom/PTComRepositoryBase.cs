@@ -9,10 +9,15 @@
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// PT and COM Setting repository.
     /// </summary>
     public abstract class PTComRepositoryBase : BaseRepository, IPTComRepository
     {
+        /// <summary>
+        /// Get PT and COM setting.
+        /// </summary>
+        /// <param name="criteria">Information for get setting.</param>
+        /// <returns>PT COM plain data.</returns>
         public virtual PTComDTO Get(ICriteria criteria)
         {
             if (!criteria.IsValid())

@@ -1,4 +1,4 @@
-﻿/*global custSetting, language*/
+﻿/*global settingContext, language*/
 fanex.liveCasinoSetting.service('PtAndComSettingService', ['$http', function ($http) {
     'use strict';
     var me = this;

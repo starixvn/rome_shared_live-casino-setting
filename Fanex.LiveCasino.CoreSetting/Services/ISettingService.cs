@@ -4,6 +4,7 @@
     using System.Diagnostics.CodeAnalysis;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.NAP.Framework.Data;
 
@@ -12,15 +13,16 @@
     {
         int GetRepresentativeCustomerId(LiveCasinoSettingContextMultiple settingContextMultiple);
 
-        ICommandResultsDTO UpdateSingleCustomerAllSetting(LiveCasinoSettingContext settingContext,
+        ICommandResultsDTO UpdateCustomerSetting(
+            LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
 
-        IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
+        IMultipleCommandResultsDTO UpdateMultipleCustomerSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
-            int updateType,
+            UpdateType updateType,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers);
 
@@ -31,7 +33,7 @@
         /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        ICommandResultsDTO UpdatePtComSetting(
+        ICommandResultsDTO UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
@@ -45,7 +47,7 @@
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
+        IMultipleCommandResultsDTO UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
             PositionTaking positionTaking,

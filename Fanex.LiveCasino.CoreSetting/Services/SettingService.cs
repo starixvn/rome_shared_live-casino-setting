@@ -97,7 +97,7 @@
         /// <param name="settingContext">Current setting context.</param>
         /// <param name="customer">Customer setting information for updating.</param>
         /// <returns>Update result.</returns>
-        public ICommandResultsDTO UpdateSingleCustomerAllSetting(
+        public ICommandResultsDTO UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
             bool isApplyPositionTakingAllMembers,
@@ -113,7 +113,7 @@
                 resultList.Results.Add(UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
 
-            var positionTakingAndCommResults = UpdatePtComSetting(
+            var positionTakingAndCommResults = UpdatePTComSetting(
                 settingContext,
                 customer.LiveCasinoSetting.Commission,
                 customer.LiveCasinoSetting.PositionTaking,
@@ -149,10 +149,10 @@
         /// <param name="customer">Customer setting contains customer setting information.</param>
         /// <param name="updateType">Update type for multiple.</param>
         /// <returns>Multiple result return to user.</returns>
-        public IMultipleCommandResultsDTO UpdateMultipleCustomerAllSetting(
+        public IMultipleCommandResultsDTO UpdateMultipleCustomerSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
-            int updateType,
+            UpdateType updateType,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
@@ -829,39 +829,6 @@
             return list;
         }
 
-        public static List<Customer> BuildCustomers(string custIds, string usernames, string syncStatus)
-        {
-            var list = new List<Customer>();
-
-            if (string.IsNullOrWhiteSpace(custIds)
-                || string.IsNullOrWhiteSpace(usernames)
-                || string.IsNullOrWhiteSpace(syncStatus))
-            {
-                return list;
-            }
-
-            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (arrayCustId.Length == arrayUsername.Length
-                && arrayUsername.Length == arraySyncStatus.Length
-                && arrayCustId.Any())
-            {
-                for (int i = 0; i < arrayCustId.Length; i++)
-                {
-                    list.Add(new Customer
-                    {
-                        Id = Converter.ToInt(arrayCustId[i]),
-                        Username = arrayUsername[i],
-                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
-                    });
-                }
-            }
-
-            return list;
-        }
-
         /// <summary>
         /// Depend on status of current customer, we decide to update just part of setting or all setting
         /// This handle for updating multiple customer.
@@ -873,27 +840,27 @@
         private ICommandResultsDTO UpdateEachCustomerInMultipleEdit(
             LiveCasinoSettingContext settingContext,
             Customer customer,
-            int updateType,
+            UpdateType updateType,
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
             var isSync = customer.IsSyncLiveCasino;
             switch (updateType)
             {
-                case (int)UpdateType.PositionTakingAndCommission:
+                case UpdateType.PositionTakingAndCommission:
                     return isSync ?
-                            UpdatePtComSetting(settingContext, customer.LiveCasinoSetting.Commission, customer.LiveCasinoSetting.PositionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                case (int)UpdateType.WinLimit:
+                            UpdatePTComSetting(settingContext, customer.LiveCasinoSetting.Commission, customer.LiveCasinoSetting.PositionTaking, isApplyPositionTakingAllMembers, positionTakingOnMembers)
+                            : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                case UpdateType.WinLimit:
                     return isSync ?
                             UpdateWinLimit(settingContext, customer.LiveCasinoSetting.WinLimit)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                case (int)UpdateType.GameSetting:
+                            : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                case UpdateType.GameSetting:
                     return isSync ?
                             UpdateGameSetting(settingContext, customer.LiveCasinoSetting.GameSetting)
-                            : UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
-                case (int)UpdateType.AllSetting:
-                    return UpdateSingleCustomerAllSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                            : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
+                case UpdateType.AllSetting:
+                    return UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 default:
                     return new CommandResultsDTO();
             }
@@ -952,7 +919,7 @@
         /// <param name="settingContext">Setting context for update customer position taking and commission.</param>
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public ICommandResultsDTO UpdatePtComSetting(
+        public ICommandResultsDTO UpdatePTComSetting(
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
@@ -973,7 +940,7 @@
         /// <param name="positionTakingAndComSetting">Position taking and Commission setting for updating.</param>
         /// <param name="uplinePositionTakingOnMember">Up-line position taking on member when set from auto PT to none.</param>
         /// <returns>Update status and information for showing on web.</returns>
-        public IMultipleCommandResultsDTO UpdatePtComSettingMultiple(
+        public IMultipleCommandResultsDTO UpdateMultiplePTComSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
             PositionTaking positionTaking,

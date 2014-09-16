@@ -53,12 +53,45 @@
                 FormType = (FormType)Converter.ToInt(formCollection["formType"])
             };
 
-            settingContext.Customers = SettingService.BuildCustomers(
+            settingContext.Customers = BuildCustomers(
                 formCollection["customerIds"],
                 formCollection["usernames"],
                 formCollection["syncStatuses"]);
 
             return settingContext;
+        }
+
+        private static List<Customer> BuildCustomers(string custIds, string usernames, string syncStatus)
+        {
+            var list = new List<Customer>();
+
+            if (string.IsNullOrWhiteSpace(custIds)
+                || string.IsNullOrWhiteSpace(usernames)
+                || string.IsNullOrWhiteSpace(syncStatus))
+            {
+                return list;
+            }
+
+            string[] arrayCustId = custIds.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arrayUsername = usernames.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] arraySyncStatus = syncStatus.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (arrayCustId.Length == arrayUsername.Length
+                && arrayUsername.Length == arraySyncStatus.Length
+                && arrayCustId.Any())
+            {
+                for (int i = 0; i < arrayCustId.Length; i++)
+                {
+                    list.Add(new Customer
+                    {
+                        Id = Converter.ToInt(arrayCustId[i]),
+                        Username = arrayUsername[i],
+                        IsSyncLiveCasino = arraySyncStatus[i] == "1"
+                    });
+                }
+            }
+
+            return list;
         }
     }
 }
