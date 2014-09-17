@@ -115,7 +115,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert from existing account CustId = {0}. Get old customer betting limit (OldCustId = {1})..
+        ///   Looks up a localized string similar to Insert from existing account CustId = {0}. Can&apos;t get bettting limit of {0} then get betting limit from old customer (OldCustId = {1}) for write log..
         /// </summary>
         public static string InsertFromExistingAccountLogMsg {
             get {

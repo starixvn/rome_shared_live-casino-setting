@@ -334,7 +334,7 @@
     <value>Auto insert account CustId = {0}. Get direct upline betting limit for write log (DirectUplineId = {1}).</value>
   </data>
   <data name="InsertFromExistingAccountLogMsg" xml:space="preserve">
-    <value>Insert from existing account CustId = {0}. Get old customer betting limit (OldCustId = {1}).</value>
+    <value>Insert from existing account CustId = {0}. Can't get bettting limit of {0} then get betting limit from old customer (OldCustId = {1}) for write log.</value>
   </data>
   <data name="lblSubmit" xml:space="preserve">
     <value>Submit</value>
