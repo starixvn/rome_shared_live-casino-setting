@@ -18,15 +18,15 @@
         ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers);
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0);
 
         IMultipleCommandResults UpdateMultipleCustomerSetting(
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             UpdateType updateType,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers);
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0);
 
         /// <summary>
         /// Update position taking and Commission setting, depend on setting context,

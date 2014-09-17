@@ -51,11 +51,6 @@
             }
         }
 
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
-        {
-            return true;
-        }
-
         private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
         {
             return valueProvider.GetValue(parameterName) != null

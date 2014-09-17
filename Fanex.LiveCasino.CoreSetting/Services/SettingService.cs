@@ -106,8 +106,8 @@
         public ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0)
         {
             ICommandResults resultList = new CommandResults();
 
@@ -163,8 +163,8 @@
             LiveCasinoSettingContextMultiple settingContextMultiple,
             Customer customer,
             UpdateType updateType,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0)
         {
             IMultipleCommandResults mainResults = new MultipleCommandResults();
 
