@@ -98,7 +98,7 @@
         /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
-        ICommandResult AutoInsertAccountFromExisting(
+        ICommandResults AutoInsertAccountFromExisting(
             int custId,
             int oldCustId,
             string toUsername,

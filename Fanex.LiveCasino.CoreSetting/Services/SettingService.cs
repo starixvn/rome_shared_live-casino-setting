@@ -213,8 +213,8 @@
             LiveCasinoSettingContext settingContext,
             float commission,
             PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(positionTaking, "positionTaking");
@@ -239,8 +239,8 @@
             LiveCasinoSettingContextMultiple settingContextMultiple,
             float commission,
             PositionTaking positionTaking,
-            bool isApplyPositionTakingAllMembers,
-            float positionTakingOnMembers)
+            bool isApplyPositionTakingAllMembers = false,
+            float positionTakingOnMembers = 0)
         {
             Check.Argument.IsNotNull(settingContextMultiple, "settingContext");
             Check.Argument.IsNotNull(positionTaking, "positionTaking");
@@ -322,7 +322,7 @@
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ICommandResult AutoInsertAccountFromExisting(
+        public ICommandResults AutoInsertAccountFromExisting(
             int custId,
             int oldCustId,
             string toUsername,
@@ -342,8 +342,31 @@
             Check.Argument.IsNotEmpty(ip, "ip");
             Check.Argument.IsNotEmpty(language, "language");
 
+            var result = new CommandResults();
+            var oldSettingContext = new LiveCasinoSettingContext();
+            
+            InitSettingContext(oldCustId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, oldSettingContext);           
+            
+            if (oldSettingContext.Customer.Level == CustomerLevel.Member)
+            {
+                Customer oldCustomer = GetCustomer(oldSettingContext);
+                
+                oldCustomer.Id = custId;
+                oldCustomer.IsSyncLiveCasino = false;    
+
+                oldSettingContext.Customer = oldCustomer;
+
+                ICommandResults resultPTCom = UpdatePTComSetting(oldSettingContext, oldCustomer.LiveCasinoSetting.Commission, oldCustomer.LiveCasinoSetting.PositionTaking);
+                result.Results.AddRange(resultPTCom.Results);
+
+                ICommandResults resultWinLimit = UpdateWinLimit(oldSettingContext, oldCustomer.LiveCasinoSetting.WinLimit);
+                result.Results.AddRange(resultWinLimit.Results);
+            }
+
+            oldSettingContext.Customer.Id = custId;
+            oldSettingContext.Customer.IsSyncLiveCasino = false;
+
             var gameTypes = new List<GameType>();
-            var settingContext = new LiveCasinoSettingContext();
 
             ICommandResult resultInsert = InsertAccount(
                                             custId,
@@ -355,17 +378,19 @@
                                             actorUsername,
                                             ip,
                                             language,
-                                            settingContext,
+                                            oldSettingContext,
                                             gameTypes);
+
+            result.Results.Add(resultInsert);
 
             if (resultInsert.IsSuccessful)
             {
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(settingContext, isSynced: true);
+                ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
 
                 if (updateSyncResult.IsSuccessful)
                 {
                     var fromCustInfo = GetCustomerLiveCasinoInfo(oldCustId);
-                    UpdateLiveCasinoStatus(settingContext, fromCustInfo.DisableLiveCasino);
+                    UpdateLiveCasinoStatus(oldSettingContext, fromCustInfo.DisableLiveCasino);
                 }
 
                 if (gameTypes == null || !gameTypes.Any())
@@ -380,11 +405,11 @@
                     CasinoNo = CasinoNo,
                     SignUpForm = LiveCasinoSettings.Settings.SystemId,
                     GameSetting = gameTypes,
-                    SettingContext = settingContext
+                    SettingContext = oldSettingContext
                 });
             }
 
-            return resultInsert;
+            return result;
         }
 
         /// <summary>
@@ -715,7 +740,6 @@
             List<GameType> gameTypes)
         {
             int superId = 0, masterId = 0, agentId = 0;
-            InitSettingContext(custId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, settingContext);
             settingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
 
             var criteria = new AutoInsertAccountFromExistingCriteria
@@ -1159,6 +1183,8 @@
                 CurrencyId = (byte)customerInfo.CurrencyId,
                 Parent = new Customer { Id = customerInfo.AgentId, Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } } }
             };
+
+            settingContext.Upline = new Customer { Id = customerInfo.AgentId, Level = CustomerLevel.Agent };
 
             switch (customerInfo.RoleId)
             {
