@@ -295,7 +295,7 @@
                             LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                WriteLog(new AutoInsertAccountLog { SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
+                WriteLog(new AutoInsertAccountLog { CasinoNo = CasinoNo, SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
             }
 
             return resultInsert;
@@ -367,7 +367,7 @@
                     Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                WriteLog(new InsertFromExistingAccountLog { SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
+                WriteLog(new InsertFromExistingAccountLog { CasinoNo = CasinoNo, SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
             }
 
             return resultInsert;
@@ -819,7 +819,7 @@
                 Username = customerInfo.Username,
                 Language = language
             };
-            
+
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             return result;
