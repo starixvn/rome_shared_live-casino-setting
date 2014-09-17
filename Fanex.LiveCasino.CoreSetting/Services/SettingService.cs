@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.Common.Helper;
     using Fanex.LiveCasino.CoreSetting.Configuration;
@@ -320,6 +321,7 @@
         /// <param name="ip">The internet protocol.</param>
         /// <param name="language">The language.</param>
         /// <returns>Update result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ICommandResult AutoInsertAccountFromExisting(
             int custId,
             int oldCustId,
@@ -1164,6 +1166,7 @@
                     settingContext.Customer.Level = CustomerLevel.Master;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.SuperId };
                     break;
+
                 case (int)CustomerLevel.Agent:
                     settingContext.Customer.Level = CustomerLevel.Agent;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } };
