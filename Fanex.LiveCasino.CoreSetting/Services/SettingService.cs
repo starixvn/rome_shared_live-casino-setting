@@ -295,7 +295,13 @@
                             LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                WriteLog(new AutoInsertAccountLog { CasinoNo = CasinoNo, SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
+                WriteLog(new AutoInsertAccountLog
+                {
+                    CasinoNo = CasinoNo,
+                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                    GameSetting = gameTypes,
+                    SettingContext = settingContext
+                });
             }
 
             return resultInsert;
@@ -367,7 +373,13 @@
                     Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
                 }
 
-                WriteLog(new InsertFromExistingAccountLog { CasinoNo = CasinoNo, SignUpForm = LiveCasinoSettings.Settings.SystemId, GameSetting = gameTypes, SettingContext = settingContext });
+                WriteLog(new InsertFromExistingAccountLog
+                {
+                    CasinoNo = CasinoNo,
+                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                    GameSetting = gameTypes,
+                    SettingContext = settingContext
+                });
             }
 
             return resultInsert;
@@ -700,45 +712,24 @@
             LiveCasinoSettingContext settingContext,
             List<GameType> gameTypes)
         {
-            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
-
-            var level = CustomerLevel.Member;
-            switch (customerInfo.RoleId)
-            {
-                case (int)CustomerLevel.Master:
-                    level = CustomerLevel.Master;
-                    break;
-                case (int)CustomerLevel.Agent:
-                    level = CustomerLevel.Agent;
-                    break;
-            }
-
-            settingContext.Customer = new Customer
-            {
-                Id = custId,
-                Username = customerInfo.Username,
-                Level = level,
-                CurrencyId = (byte)customerInfo.CurrencyId
-            };
-            settingContext.Actor = new User { Id = actorId, Username = actorUsername };
-            settingContext.SubAccount = new User { Id = subAccountId, Username = subAccountUsername };
-            settingContext.IP = ip;
-            settingContext.Language = language;
+            int superId = 0, masterId = 0, agentId = 0;
+            InitSettingContext(custId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, settingContext);
+            settingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
 
             var criteria = new AutoInsertAccountFromExistingCriteria
             {
-                AgentId = customerInfo.AgentId,
+                AgentId = agentId,
                 CasinoNo = CasinoNo,
                 CustId = custId,
-                ExchangeId = customerInfo.CurrencyId,
-                MasterId = customerInfo.MasterId,
+                ExchangeId = settingContext.Customer.CurrencyId,
+                MasterId = masterId,
                 ModifyUsername = actorUsername,
-                RoleId = customerInfo.RoleId,
+                RoleId = (int)settingContext.Customer.Level,
                 SignupBy = actorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = ip,
-                SuperId = customerInfo.SuperId,
-                Username = customerInfo.Username,
+                SuperId = superId,
+                Username = settingContext.Customer.Username,
                 OldCustId = oldCustId,
                 ToUserName = toUsername
             };
@@ -775,48 +766,24 @@
             LiveCasinoSettingContext settingContext,
             List<GameType> gameTypes)
         {
-            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
-            var directUplineId = customerInfo.AgentId;
-            var level = CustomerLevel.Member;
+            int superId = 0, masterId = 0, agentId = 0;
+            InitSettingContext(custId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, settingContext);
+            settingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
 
-            switch (customerInfo.RoleId)
-            {
-                case (int)CustomerLevel.Master:
-                    directUplineId = customerInfo.SuperId;
-                    level = CustomerLevel.Master;
-                    break;
-                case (int)CustomerLevel.Agent:
-                    directUplineId = customerInfo.MasterId;
-                    level = CustomerLevel.Agent;
-                    break;
-            }
-
-            settingContext.Customer = new Customer
-            {
-                Id = custId,
-                Username = customerInfo.Username,
-                Level = level,
-                CurrencyId = (byte)customerInfo.CurrencyId,
-                Parent = new Customer { Id = directUplineId }
-            };
-            settingContext.Actor = new User { Id = actorId, Username = actorUsername };
-            settingContext.SubAccount = new User { Id = subAccountId, Username = subAccountUsername };
-            settingContext.IP = ip;
-            settingContext.Language = language;
             var criteria = new AutoInsertAccountCriteria
             {
-                AgentId = customerInfo.AgentId,
+                AgentId = agentId,
                 CasinoNo = CasinoNo,
                 CustId = custId,
-                ExchangeId = customerInfo.CurrencyId,
-                MasterId = customerInfo.MasterId,
+                ExchangeId = settingContext.Customer.CurrencyId,
+                MasterId = masterId,
                 ModifyUsername = actorUsername,
-                RoleId = customerInfo.RoleId,
+                RoleId = (int)settingContext.Customer.Level,
                 SignupBy = actorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = ip,
-                SuperId = customerInfo.SuperId,
-                Username = customerInfo.Username,
+                SuperId = superId,
+                Username = settingContext.Customer.Username,
                 Language = language
             };
 
@@ -1157,6 +1124,56 @@
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Initializes the setting context.
+        /// </summary>
+        /// <param name="custId">The customer identifier.</param>
+        /// <param name="subAccountId">The sub account identifier.</param>
+        /// <param name="subAccountUsername">The sub account username.</param>
+        /// <param name="actorId">The actor identifier.</param>
+        /// <param name="actorUsername">The actor username.</param>
+        /// <param name="ip">The internet protocol.</param>
+        /// <param name="language">The language.</param>
+        /// <param name="settingContext">The setting context.</param>
+        private void InitSettingContext(
+            int custId,
+            int subAccountId,
+            string subAccountUsername,
+            int actorId,
+            string actorUsername,
+            string ip,
+            string language,
+            LiveCasinoSettingContext settingContext)
+        {
+            CustomerInfoDTO customerInfo = GetCustomerInfo(custId);
+
+            settingContext.Customer = new Customer
+            {
+                Id = custId,
+                Username = customerInfo.Username,
+                Level = CustomerLevel.Member,
+                CurrencyId = (byte)customerInfo.CurrencyId,
+                Parent = new Customer { Id = customerInfo.AgentId, Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } } }
+            };
+
+            switch (customerInfo.RoleId)
+            {
+                case (int)CustomerLevel.Master:
+                    settingContext.Customer.Level = CustomerLevel.Master;
+                    settingContext.Customer.Parent = new Customer { Id = customerInfo.SuperId };
+                    break;
+                case (int)CustomerLevel.Agent:
+                    settingContext.Customer.Level = CustomerLevel.Agent;
+                    settingContext.Customer.Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } };
+                    break;
+            }
+
+            settingContext.Actor = new User { Id = actorId, Username = actorUsername };
+            settingContext.SubAccount = new User { Id = subAccountId, Username = subAccountUsername };
+            settingContext.IP = ip;
+            settingContext.Language = language;
         }
     }
 }
