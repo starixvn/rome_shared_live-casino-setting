@@ -44,7 +44,7 @@
                     Username = request["actorUsername"]
                 },
                 Language = request["language"] ?? "E",
-                FormType = (FormType)Converter.ToInt(request["formType"])
+                FormType = (FormType)Converter.ToInt(request["formType"], (int)FormType.Edit)
             };
         }
 

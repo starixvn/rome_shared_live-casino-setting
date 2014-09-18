@@ -46,7 +46,7 @@
                     Username = formCollection["actorUsername"]
                 },
                 Language = formCollection["language"] ?? "E",
-                FormType = (FormType)Converter.ToInt(formCollection["formType"])
+                FormType = (FormType)Converter.ToInt(formCollection["formType"], (int)FormType.Edit)
             };
 
             settingContext.Customers = BuildCustomers(
