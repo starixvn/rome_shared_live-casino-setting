@@ -385,8 +385,11 @@
 
             var result = new CommandResults();
             var oldSettingContext = new LiveCasinoSettingContext();
+            var oldCustomerSyncedStatus = false;
 
             InitSettingContext(oldCustId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, oldSettingContext);
+
+            oldCustomerSyncedStatus = oldSettingContext.Customer.IsSyncLiveCasino;
 
             if (oldSettingContext.Customer.Level == CustomerLevel.Member)
             {
@@ -404,50 +407,53 @@
                 result.Results.AddRange(resultWinLimit.Results);
             }
 
-            oldSettingContext.Customer.Id = custId;
-            oldSettingContext.Customer.IsSyncLiveCasino = false;
-
-            var gameTypes = new List<GameType>();
-
-            ICommandResult resultInsert = InsertAccount(
-                                            custId,
-                                            oldCustId,
-                                            toUsername,
-                                            subAccountId,
-                                            subAccountUsername,
-                                            actorId,
-                                            actorUsername,
-                                            ip,
-                                            language,
-                                            oldSettingContext,
-                                            gameTypes);
-
-            result.Results.Add(resultInsert);
-
-            if (resultInsert.IsSuccessful)
+            if (oldCustomerSyncedStatus)
             {
-                ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
+                oldSettingContext.Customer.Id = custId;
+                oldSettingContext.Customer.IsSyncLiveCasino = false;
 
-                if (updateSyncResult.IsSuccessful)
+                var gameTypes = new List<GameType>();
+
+                ICommandResult resultInsert = InsertAccount(
+                                                custId,
+                                                oldCustId,
+                                                toUsername,
+                                                subAccountId,
+                                                subAccountUsername,
+                                                actorId,
+                                                actorUsername,
+                                                ip,
+                                                language,
+                                                oldSettingContext,
+                                                gameTypes);
+
+                result.Results.Add(resultInsert);
+
+                if (resultInsert.IsSuccessful)
                 {
-                    var fromCustInfo = GetCustomerLiveCasinoInfo(oldCustId);
-                    UpdateLiveCasinoStatus(oldSettingContext, fromCustInfo.DisableLiveCasino);
+                    ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
+
+                    if (updateSyncResult.IsSuccessful)
+                    {
+                        var fromCustInfo = GetCustomerLiveCasinoInfo(oldCustId);
+                        UpdateLiveCasinoStatus(oldSettingContext, fromCustInfo.DisableLiveCasino);
+                    }
+
+                    if (gameTypes == null || !gameTypes.Any())
+                    {
+                        gameTypes = _settingRepository.GetGameSetting(oldCustId);
+
+                        Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
+                    }
+
+                    WriteLog(new InsertFromExistingAccountLog
+                    {
+                        CasinoNo = CasinoNo,
+                        SignUpForm = LiveCasinoSettings.Settings.SystemId,
+                        GameSetting = gameTypes,
+                        SettingContext = oldSettingContext
+                    });
                 }
-
-                if (gameTypes == null || !gameTypes.Any())
-                {
-                    gameTypes = _settingRepository.GetGameSetting(oldCustId);
-
-                    Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
-                }
-
-                WriteLog(new InsertFromExistingAccountLog
-                {
-                    CasinoNo = CasinoNo,
-                    SignUpForm = LiveCasinoSettings.Settings.SystemId,
-                    GameSetting = gameTypes,
-                    SettingContext = oldSettingContext
-                });
             }
 
             return result;
@@ -626,6 +632,7 @@
             Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
             Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
+            Check.Argument.IsNotNull(settingContext.SubAccount, "settingContext.SubAccount");
             Check.Argument.IsNotNull(memberWinLimit, "memberWinLimit");
             Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
             Check.Argument.IsNotEmpty(settingContext.Language, "settingContext.Language");
@@ -646,6 +653,7 @@
                 MaxWinLimit = (decimal)memberWinLimit.Max,
                 IsAutoDailyReset = memberWinLimit.IsAutoReset,
                 UserId = settingContext.Actor.Id,
+                SubAccID = settingContext.SubAccount.Id,
                 Ip = settingContext.IP,
                 Language = settingContext.Language
             };
@@ -1181,6 +1189,7 @@
                 Username = customerInfo.Username,
                 Level = CustomerLevel.Member,
                 CurrencyId = (byte)customerInfo.CurrencyId,
+                IsSyncLiveCasino = customerInfo.SyncLiveCasino,
                 Parent = new Customer { Id = customerInfo.AgentId, Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } } }
             };
 
