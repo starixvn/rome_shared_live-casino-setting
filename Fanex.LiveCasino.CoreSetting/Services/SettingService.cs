@@ -58,6 +58,47 @@
         }
 
         /// <summary>
+        /// Get customer information with customer id.
+        /// </summary>
+        /// <param name="custId">Get criteria information.</param>
+        /// <returns>Customer information.</returns>
+        public Customer GetCustomerLiveCasinoInfo(int custId)
+        {
+            var criteria = new GetCustomerLiveCasinoInfoCriteria
+            {
+                CustId = custId
+            };
+
+            Customer custInfo = _settingRepository.GetCustomerLiveCasinoInfo(criteria);
+
+            CustomerInfoDTO uplineInfo = GetCustomerInfo(custId);
+
+            switch (custInfo.Level)
+            {
+                case CustomerLevel.Member:
+                    custInfo.Parent.Id = uplineInfo.AgentId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
+                    custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+
+                case CustomerLevel.Agent:
+                    custInfo.Parent.Id = uplineInfo.MasterId;
+                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
+                    break;
+
+                case CustomerLevel.Master:
+                    custInfo.Parent.Id = uplineInfo.SuperId;
+                    break;
+
+                default:
+                    custInfo.Parent.Id = 0;
+                    break;
+            }
+
+            return custInfo;
+        }
+
+        /// <summary>
         /// Get Representative customer for editing multiple.
         /// </summary>
         /// <param name="settingContextMultiple">The setting context multiple.</param>
@@ -344,15 +385,15 @@
 
             var result = new CommandResults();
             var oldSettingContext = new LiveCasinoSettingContext();
-            
-            InitSettingContext(oldCustId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, oldSettingContext);           
-            
+
+            InitSettingContext(oldCustId, subAccountId, subAccountUsername, actorId, actorUsername, ip, language, oldSettingContext);
+
             if (oldSettingContext.Customer.Level == CustomerLevel.Member)
             {
                 Customer oldCustomer = GetCustomer(oldSettingContext);
-                
+
                 oldCustomer.Id = custId;
-                oldCustomer.IsSyncLiveCasino = false;    
+                oldCustomer.IsSyncLiveCasino = false;
 
                 oldSettingContext.Customer = oldCustomer;
 
@@ -1043,47 +1084,6 @@
             }
 
             customer.LiveCasinoSetting.GameSetting = gameSettings;
-        }
-
-        /// <summary>
-        /// Get customer information with customer id.
-        /// </summary>
-        /// <param name="custId">Get criteria information.</param>
-        /// <returns>Customer information.</returns>
-        private Customer GetCustomerLiveCasinoInfo(int custId)
-        {
-            var criteria = new GetCustomerLiveCasinoInfoCriteria
-            {
-                CustId = custId
-            };
-
-            Customer custInfo = _settingRepository.GetCustomerLiveCasinoInfo(criteria);
-
-            CustomerInfoDTO uplineInfo = GetCustomerInfo(custId);
-
-            switch (custInfo.Level)
-            {
-                case CustomerLevel.Member:
-                    custInfo.Parent.Id = uplineInfo.AgentId;
-                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.MasterId };
-                    custInfo.Parent.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
-                    break;
-
-                case CustomerLevel.Agent:
-                    custInfo.Parent.Id = uplineInfo.MasterId;
-                    custInfo.Parent.Parent = new Customer { Id = uplineInfo.SuperId };
-                    break;
-
-                case CustomerLevel.Master:
-                    custInfo.Parent.Id = uplineInfo.SuperId;
-                    break;
-
-                default:
-                    custInfo.Parent.Id = 0;
-                    break;
-            }
-
-            return custInfo;
         }
 
         /// <summary>
