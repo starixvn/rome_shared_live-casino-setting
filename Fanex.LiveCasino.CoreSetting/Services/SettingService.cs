@@ -808,8 +808,7 @@
                 OldCustId = oldCustId,
                 ToUserName = toUsername
             };
-
-            gameTypes = new List<GameType>();
+           
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             return result;

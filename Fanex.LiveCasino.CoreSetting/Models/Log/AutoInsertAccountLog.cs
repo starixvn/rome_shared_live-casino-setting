@@ -108,7 +108,7 @@
                                             superId,
                                             masterId,
                                             agentId,
-                                            SettingContext.Customer.Level,
+                                            (int)SettingContext.Customer.Level,
                                             SettingContext.IP,
                                             SettingContext.Actor.Id,
                                             SignUpForm,
@@ -120,6 +120,6 @@
                                             SpName);
 
             return trackingValue;
-        }       
+        }
     }
 }
