@@ -177,7 +177,7 @@
             }
             else
             {
-                filterContext.Result = new RedirectResult("~/LiveCasinoSetting/User/UnAuthorized");
+                filterContext.Result = new RedirectResult("~/LiveCasinoSetting/LiveCasinoUser/UnAuthorized");
             }
         }
     }

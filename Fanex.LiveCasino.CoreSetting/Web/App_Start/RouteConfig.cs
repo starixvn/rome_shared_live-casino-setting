@@ -19,7 +19,7 @@ namespace Fanex.LiveCasino.CoreSetting.Web.App_Start
                 new[]
                     {
                         typeof (Fanex.LiveCasino.CoreSetting.Controllers.SettingController).Namespace,
-                        typeof (Fanex.LiveCasino.CoreSetting.Controllers.UserController).Namespace
+                        typeof (Fanex.LiveCasino.CoreSetting.Controllers.LiveCasinoUserController).Namespace
                     });
         }
     }

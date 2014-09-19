@@ -6,7 +6,7 @@
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class UserController : BaseController
+    public class LiveCasinoUserController : BaseController
     {
         public ActionResult UnAuthorized()
         {
