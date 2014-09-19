@@ -133,8 +133,7 @@
         /// Get current win limit for updating.
         /// </summary>
         /// <param name="custId">Customer id for get data.</param>
-        /// <returns>JSON object for returning data.</returns>
-        [HttpGet, LiveCasinoAuthorization]
+        /// <returns>JSON object for returning data.</returns>        
         public ActionResult GetCurrentWinLimit(int custId)
         {
             CurrentMemberWinLimitDTO currentMemberWinLimit = _settingService.GetCurrentWinLimit(custId);
