@@ -161,8 +161,8 @@
 
             if (settingContext.Customer.Level == CustomerLevel.Member
                 && settingContext.Upline.Level == CustomerLevel.Agent
-                && customer.IsSyncLiveCasino
-                && !customer.Parent.IsSyncLiveCasino)
+                && settingContext.Customer.IsSyncLiveCasino
+                && !settingContext.Customer.Parent.IsSyncLiveCasino)
             {
                 resultList.Results.Add(UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
@@ -175,8 +175,8 @@
                 positionTakingOnMembers);
             resultList.Results.AddRange(positionTakingAndCommResults.Results);
 
-            if (customer.IsSyncLiveCasino
-                || (!customer.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
+            if (settingContext.Customer.IsSyncLiveCasino
+                || (!settingContext.Customer.IsSyncLiveCasino && positionTakingAndCommResults.IsSuccessful))
             {
                 var winLimitResults = UpdateWinLimit(settingContext, customer.LiveCasinoSetting.WinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
@@ -222,7 +222,6 @@
                 settingContextMultiple.Customer.Username = custInfo.Username;
                 settingContextMultiple.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
 
-                customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.Id;
                 subResult.Name = custInfo.Username;
@@ -817,7 +816,7 @@
                 OldCustId = oldCustId,
                 ToUserName = toUsername
             };
-           
+
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             return result;
@@ -987,7 +986,7 @@
             bool isApplyPositionTakingAllMembers,
             float positionTakingOnMembers)
         {
-            var isSync = customer.IsSyncLiveCasino;
+            var isSync = settingContext.Customer.IsSyncLiveCasino;
             switch (updateType)
             {
                 case UpdateType.PositionTakingAndCommission:
