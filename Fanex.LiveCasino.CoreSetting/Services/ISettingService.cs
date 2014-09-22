@@ -17,6 +17,8 @@
 
         Customer GetCustomerLiveCasinoInfo(int custId);
 
+        Customer GetCustomerInfoAndPTComSetting(LiveCasinoSettingContext settingContext);
+
         ICommandResults UpdateCustomerSetting(
             LiveCasinoSettingContext settingContext,
             Customer customer,

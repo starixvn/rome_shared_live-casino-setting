@@ -49,10 +49,17 @@
 
         public Customer GetCustomer(LiveCasinoSettingContext settingContext)
         {
+            Customer customer = GetCustomerInfoAndPTComSetting(settingContext);
+            SetGameSetting(customer);
+
+            return customer;
+        }
+
+        public Customer GetCustomerInfoAndPTComSetting(LiveCasinoSettingContext settingContext)
+        {
             Customer customer = GetCustomerLiveCasinoInfo(settingContext.Customer.Id);
 
             SetCustomerPtAndComSetting(settingContext, customer);
-            SetGameSetting(customer);
 
             return customer;
         }
