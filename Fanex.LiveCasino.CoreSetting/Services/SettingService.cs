@@ -220,6 +220,8 @@
             {
                 settingContextMultiple.Customer.Id = custInfo.Id;
                 settingContextMultiple.Customer.Username = custInfo.Username;
+                settingContextMultiple.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
+
                 customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
                 var subResult = UpdateEachCustomerInMultipleEdit(settingContextMultiple, customer, updateType, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 subResult.Id = custInfo.Id;
