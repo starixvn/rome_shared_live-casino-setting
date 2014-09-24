@@ -96,6 +96,7 @@ fanex.liveCasinoSetting.PT_DECIMAL = 2;
 fanex.liveCasinoSetting.TIME_OUT_SHOW_MESSAGE = 4000;
 fanex.liveCasinoSetting.templateVersion = '?v=' + Math.random();
 fanex.liveCasinoSetting.buildTemplateUrlWithVersion = function (templateUrl) {
+    'use strict';
     return fanex.liveCasinoSetting.rootUrl + templateUrl + fanex.liveCasinoSetting.templateVersion;
 };
 fanex.liveCasinoSetting.errorResult = {
