@@ -340,6 +340,12 @@
                 {
                     gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
 
+                    if (gameTypes == null || !gameTypes.Any())
+                    {
+                        string site = GetCustomerSite(settingContext.Customer.Username);
+                        gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site);
+                    }
+
                     Logger.Log.Info(
                             string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, settingContext.Customer.Parent.Id),
                             LiveCasinoSettings.Settings.LogCategory);
@@ -450,6 +456,12 @@
                     if (gameTypes == null || !gameTypes.Any())
                     {
                         gameTypes = _settingRepository.GetGameSetting(oldCustId);
+
+                        if (gameTypes == null || !gameTypes.Any())
+                        {
+                            string site = GetCustomerSite(oldSettingContext.Customer.Username);
+                            gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.CurrencyId, site);
+                        }
 
                         Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
                     }
@@ -571,7 +583,7 @@
 
                 if (settingContext.Customer.Level != CustomerLevel.Super && insertCommandResult.IsSuccessful)
                 {
-                    IntegrityGameSetting(settingContext, newGameTypes);
+                    IntegrityGameSetting(settingContext, ref newGameTypes);
                 }
             }
             else
@@ -1131,13 +1143,13 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <param name="newGameTypes">The new game types.</param>
-        private void IntegrityGameSetting(LiveCasinoSettingContext settingContext, List<GameType> newGameTypes)
+        private void IntegrityGameSetting(LiveCasinoSettingContext settingContext, ref List<GameType> newGameTypes)
         {
-            Customer directUplineInfo = GetCustomerLiveCasinoInfo(settingContext.Customer.Parent.Id);
+            CustomerInfoDTO directUplineInfo = GetCustomerInfo(settingContext.Customer.Parent.Id);
 
-            if (directUplineInfo.IsSyncLiveCasino)
+            if (directUplineInfo.SyncLiveCasino)
             {
-                if (newGameTypes == null)
+                if (newGameTypes == null || !newGameTypes.Any())
                 {
                     string site = GetCustomerSite(settingContext.Customer.Username);
                     newGameTypes = _settingRepository.GetGameSetting(directUplineInfo.CurrencyId, site);
