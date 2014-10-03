@@ -106,7 +106,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto insert account CustId = {0}. Get direct upline betting limit for write log (DirectUplineId = {1})..
+        ///   Looks up a localized string similar to Auto insert account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1})..
         /// </summary>
         public static string AutoInsertAccountLogMsg {
             get {
@@ -115,7 +115,7 @@ namespace Fanex.LiveCasino.CoreSetting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert from existing account CustId = {0}. Can&apos;t get bettting limit of {0} then get betting limit from old customer (OldCustId = {1}) for write log..
+        ///   Looks up a localized string similar to Insert from existing account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1})..
         /// </summary>
         public static string InsertFromExistingAccountLogMsg {
             get {

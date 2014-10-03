@@ -336,19 +336,16 @@
                     UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
                 }
 
+                gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
+
                 if (gameTypes == null || !gameTypes.Any())
                 {
-                    gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
-
-                    if (gameTypes == null || !gameTypes.Any())
-                    {
-                        string site = GetCustomerSite(settingContext.Customer.Username);
-                        gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site);
-                    }
+                    string site = GetCustomerSite(settingContext.Customer.Username);
+                    gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site);
 
                     Logger.Log.Info(
-                            string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, settingContext.Customer.Parent.Id),
-                            LiveCasinoSettings.Settings.LogCategory);
+                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, settingContext.Customer.CurrencyId),
+                        LiveCasinoSettings.Settings.LogCategory);
                 }
 
                 WriteLog(new AutoInsertAccountLog
@@ -453,17 +450,16 @@
                         UpdateLiveCasinoStatus(oldSettingContext, fromCustInfo.DisableLiveCasino);
                     }
 
+                    gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.Parent.Id);
+
                     if (gameTypes == null || !gameTypes.Any())
                     {
-                        gameTypes = _settingRepository.GetGameSetting(oldCustId);
+                        string site = GetCustomerSite(oldSettingContext.Customer.Username);
+                        gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.CurrencyId, site);
 
-                        if (gameTypes == null || !gameTypes.Any())
-                        {
-                            string site = GetCustomerSite(oldSettingContext.Customer.Username);
-                            gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.CurrencyId, site);
-                        }
-
-                        Logger.Log.Info(string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldCustId), LiveCasinoSettings.Settings.LogCategory);
+                        Logger.Log.Info(
+                            string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldSettingContext.Customer.CurrencyId),
+                            LiveCasinoSettings.Settings.LogCategory);
                     }
 
                     WriteLog(new InsertFromExistingAccountLog

@@ -331,10 +331,10 @@
     <value>do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default</value>
   </data>
   <data name="AutoInsertAccountLogMsg" xml:space="preserve">
-    <value>Auto insert account CustId = {0}. Get direct upline betting limit for write log (DirectUplineId = {1}).</value>
+    <value>Auto insert account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1}).</value>
   </data>
   <data name="InsertFromExistingAccountLogMsg" xml:space="preserve">
-    <value>Insert from existing account CustId = {0}. Can't get bettting limit of {0} then get betting limit from old customer (OldCustId = {1}) for write log.</value>
+    <value>Insert from existing account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1}).</value>
   </data>
   <data name="lblSubmit" xml:space="preserve">
     <value>Submit</value>
