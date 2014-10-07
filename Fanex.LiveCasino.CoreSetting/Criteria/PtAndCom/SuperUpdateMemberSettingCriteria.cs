@@ -17,13 +17,8 @@
         [SpParam(SqlParamName = "Auto_v162spositiontaking_1101")]
         public decimal Us1 { get; set; }
 
-        public bool V162UpdatePositiontaking_1101
-        {
-            get
-            {
-                return true;
-            }
-        }
+        [SpParam(SqlParamName = "V162UpdatePositiontaking_1101")]
+        public bool IsUpdateSuperPTOnMember { get; set; }
 
         public bool V162UpdateAutoPositiontaking_1101
         {

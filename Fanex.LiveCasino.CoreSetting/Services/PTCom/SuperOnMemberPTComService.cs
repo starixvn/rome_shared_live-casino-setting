@@ -49,6 +49,11 @@
             if (!criteria.Is1)
             {
                 criteria.Us1 = 0;
+                
+                if ((bool)PositionTaking.Is3)
+                {
+                    criteria.IsUpdateSuperPTOnMember = false;
+                }
             }
 
             ICommandResult commandResult = PTComRepository.Save(criteria);

@@ -160,7 +160,7 @@
         /// <summary>
         /// Updates the win limit multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="model">The model.</param>
         /// <returns>Result after updating win limit.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
@@ -196,7 +196,7 @@
         /// <summary>
         /// Updates the game setting multiple.
         /// </summary>
-        /// <param name="settingContextMultiple">The setting context multiple.</param>
+        /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="gameSetting">The game setting.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
