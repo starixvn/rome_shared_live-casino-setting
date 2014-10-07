@@ -47,11 +47,7 @@
                 Im2 = (bool)PositionTaking.Im2
             };
 
-            if (criteria.Im1)
-            {
-                criteria.M1 = 0;
-            }
-            else
+            if (!criteria.Im1)
             {
                 criteria.Um1 = 0;
             }

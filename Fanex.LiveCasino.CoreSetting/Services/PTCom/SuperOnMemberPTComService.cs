@@ -46,11 +46,7 @@
                 Us1 = (decimal)PositionTaking.Us1
             };
 
-            if (criteria.Is1)
-            {
-                criteria.S1 = 0;
-            }
-            else
+            if (!criteria.Is1)
             {
                 criteria.Us1 = 0;
             }
