@@ -43,7 +43,8 @@
                 SubAccID = settingContext.SubAccount.Id,
                 S1 = (decimal)PositionTaking.S1,
                 Is1 = (bool)PositionTaking.Is1,
-                Us1 = (decimal)PositionTaking.Us1
+                Us1 = (decimal)PositionTaking.Us1,
+                IsUpdateSuperPTOnMember = true
             };
 
             if (!criteria.Is1)

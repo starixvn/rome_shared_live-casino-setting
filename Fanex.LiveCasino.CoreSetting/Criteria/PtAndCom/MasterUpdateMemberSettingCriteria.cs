@@ -20,13 +20,8 @@
         [SpParam(SqlParamName = "IsAuto_v162mpositiontaking_1101")]
         public bool Im2 { get; set; }
 
-        public bool V162UpdatePositiontaking_1101
-        {
-            get
-            {
-                return true;
-            }
-        }
+        [SpParam(SqlParamName = "V162UpdatePositiontaking_1101")]
+        public bool IsUpdateMasterOnMember { get; set; }
 
         public bool V162UpdateAutoPositiontaking_1101
         {
