@@ -164,11 +164,11 @@
         /// <param name="model">The model.</param>
         /// <returns>Result after updating win limit.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, WinLimit model)
+        public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContext, WinLimit model)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult = _settingService.UpdateMultipleWinLimit(settingContextMultiple, model);
+            updateResult = _settingService.UpdateMultipleWinLimit(settingContext, model);
 
             return Json(updateResult);
         }
@@ -200,11 +200,11 @@
         /// <param name="gameSetting">The game setting.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameSetting)
+        public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContext, List<GameType> gameSetting)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult = _settingService.UpdateMultipleGameSetting(settingContextMultiple, gameSetting);
+            updateResult = _settingService.UpdateMultipleGameSetting(settingContext, gameSetting);
 
             return Json(updateResult);
         }
