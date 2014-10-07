@@ -1025,6 +1025,7 @@
         /// Writes the log.
         /// </summary>
         /// <param name="logData">The log data.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
         private void WriteLog(IGameSettingLog logData)
         {
             var criteria = new InsertLogUserRunSPCriteria

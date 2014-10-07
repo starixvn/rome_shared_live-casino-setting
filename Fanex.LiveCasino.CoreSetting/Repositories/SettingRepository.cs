@@ -19,6 +19,7 @@
     /// <summary>
     /// Setting repository class.
     /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
     public class SettingRepository : BaseRepository, ISettingRepository
     {
         /// <summary>

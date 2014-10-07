@@ -11,6 +11,7 @@
     /// <summary>
     /// PT and COM Setting repository.
     /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
     public abstract class PTComRepositoryBase : BaseRepository, IPTComRepository
     {
         /// <summary>

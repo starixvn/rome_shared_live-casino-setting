@@ -15,6 +15,7 @@
     /// <summary>
     /// The base repository class.
     /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
         /// <summary>
