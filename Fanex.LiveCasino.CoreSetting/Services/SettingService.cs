@@ -561,7 +561,10 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Update result.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result.
+        /// </returns>
         public ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes, bool disableLiveCasino)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
@@ -597,8 +600,14 @@
         /// </summary>
         /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Update result.</returns>
-        public IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes, bool disableLiveCasino)
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result.
+        /// </returns>
+        public IMultipleCommandResults UpdateMultipleGameSetting(
+            LiveCasinoSettingContextMultiple settingContextMultiple, 
+            List<GameType> gameTypes, 
+            bool disableLiveCasino)
         {
             var results = new MultipleCommandResults();
 
@@ -722,7 +731,10 @@
         /// Manuals the synchronize account.
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
-        /// <returns>Insert successfully.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Insert successfully.
+        /// </returns>
         private ICommandResult InsertAccount(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
         {
             int agentId = 0, masterId = 0, superId = 0;
@@ -746,7 +758,6 @@
             };
 
             var updateResult = (CommandResult)_settingRepository.Save(criteria);
-
             if (!updateResult.IsSuccessful)
             {
                 Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
@@ -755,7 +766,6 @@
             if (updateResult.IsSuccessful)
             {
                 WriteLog(new ManualInsertAccountLog { SignUpForm = LiveCasinoSettings.Settings.SystemId, CasinoNo = CasinoNo, SettingContext = settingContext });
-
                 var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSynced: true);
 
                 if (settingContext.Customer.Level != CustomerLevel.Super)

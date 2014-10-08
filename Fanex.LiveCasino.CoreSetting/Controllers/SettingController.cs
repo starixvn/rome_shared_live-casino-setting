@@ -182,7 +182,10 @@
         /// </summary>
         /// <param name="settingContext">Setting context for updating.</param>
         /// <param name="gameSetting">Game setting information for updating.</param>
-        /// <returns>Update result information.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result information.
+        /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {
@@ -198,7 +201,10 @@
         /// </summary>
         /// <param name="settingContext">The setting context multiple.</param>
         /// <param name="gameSetting">The game setting.</param>
-        /// <returns>Update result information.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result information.
+        /// </returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {

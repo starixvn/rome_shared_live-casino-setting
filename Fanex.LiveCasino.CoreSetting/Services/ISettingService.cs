@@ -134,7 +134,10 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Update result.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result.
+        /// </returns>
         ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes, bool disableLiveCasino);
 
         /// <summary>
@@ -142,7 +145,10 @@
         /// </summary>
         /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameTypes">The game types.</param>
-        /// <returns>Update result.</returns>
+        /// <param name="disableLiveCasino">If set to <c>true</c> [disable live casino].</param>
+        /// <returns>
+        /// Update result.
+        /// </returns>
         IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes, bool disableLiveCasino);
 
         /// <summary>
