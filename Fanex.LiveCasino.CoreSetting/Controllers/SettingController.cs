@@ -184,11 +184,11 @@
         /// <param name="gameSetting">Game setting information for updating.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting)
+        public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting));
+            updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting, disableLiveCasino));
 
             return Json(updateResult);
         }
@@ -200,11 +200,11 @@
         /// <param name="gameSetting">The game setting.</param>
         /// <returns>Update result information.</returns>
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
-        public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContext, List<GameType> gameSetting)
+        public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult = _settingService.UpdateMultipleGameSetting(settingContext, gameSetting);
+            updateResult = _settingService.UpdateMultipleGameSetting(settingContext, gameSetting, disableLiveCasino);
 
             return Json(updateResult);
         }

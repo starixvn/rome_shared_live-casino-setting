@@ -181,7 +181,7 @@
                 var winLimitResults = UpdateWinLimit(settingContext, customer.LiveCasinoSetting.WinLimit).Results;
                 resultList.Results.AddRange(winLimitResults);
 
-                var gameSettingResult = UpdateGameSetting(settingContext, customer.LiveCasinoSetting.GameSetting).Results;
+                var gameSettingResult = UpdateGameSetting(settingContext, customer.LiveCasinoSetting.GameSetting, customer.DisableLiveCasino).Results;
                 resultList.Results.AddRange(gameSettingResult);
             }
             else
@@ -562,7 +562,7 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Update result.</returns>
-        public ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes)
+        public ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes, bool disableLiveCasino)
         {
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
@@ -575,7 +575,7 @@
 
             if (!settingContext.Customer.IsSyncLiveCasino)
             {
-                var insertCommandResult = InsertAccount(settingContext);
+                var insertCommandResult = InsertAccount(settingContext, disableLiveCasino);
 
                 if (settingContext.Customer.Level != CustomerLevel.Super && insertCommandResult.IsSuccessful)
                 {
@@ -598,7 +598,7 @@
         /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Update result.</returns>
-        public IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes)
+        public IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes, bool disableLiveCasino)
         {
             var results = new MultipleCommandResults();
 
@@ -608,7 +608,7 @@
                 settingContextMultiple.Customer.Username = custInfo.Username;
                 settingContextMultiple.Customer.IsSyncLiveCasino = custInfo.IsSyncLiveCasino;
 
-                var updateResult = (CommandResults)UpdateGameSetting(settingContextMultiple, gameTypes);
+                var updateResult = (CommandResults)UpdateGameSetting(settingContextMultiple, gameTypes, disableLiveCasino);
 
                 updateResult.Id = custInfo.Id;
                 updateResult.Name = custInfo.Username;
@@ -723,7 +723,7 @@
         /// </summary>
         /// <param name="settingContext">The setting context.</param>
         /// <returns>Insert successfully.</returns>
-        private ICommandResult InsertAccount(LiveCasinoSettingContext settingContext)
+        private ICommandResult InsertAccount(LiveCasinoSettingContext settingContext, bool disableLiveCasino)
         {
             int agentId = 0, masterId = 0, superId = 0;
             settingContext.Customer.SetUplineIdentifier(ref agentId, ref masterId, ref superId);
@@ -757,17 +757,20 @@
                 WriteLog(new ManualInsertAccountLog { SignUpForm = LiveCasinoSettings.Settings.SystemId, CasinoNo = CasinoNo, SettingContext = settingContext });
 
                 var syncResult = (CommandResult)UpdateSyncLiveCasino(settingContext, isSynced: true);
-                var disableLiveCasino = false;
 
                 if (settingContext.Customer.Level != CustomerLevel.Super)
                 {
                     var uplineCustInfo = GetCustomerLiveCasinoInfo(settingContext.Customer.Parent.Id);
-                    disableLiveCasino = uplineCustInfo.DisableLiveCasino;
-                }
 
-                if (syncResult.IsSuccessful)
-                {
-                    UpdateLiveCasinoStatus(settingContext, disableLiveCasino);
+                    if (settingContext.Customer.Level != CustomerLevel.Member)
+                    {
+                        disableLiveCasino = uplineCustInfo.DisableLiveCasino;
+                    }
+
+                    if (syncResult.IsSuccessful && !uplineCustInfo.DisableLiveCasino)
+                    {
+                        UpdateLiveCasinoStatus(settingContext, disableLiveCasino);
+                    }
                 }
             }
 
@@ -1012,7 +1015,7 @@
                             : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case UpdateType.GameSetting:
                     return isSync ?
-                            UpdateGameSetting(settingContext, customer.LiveCasinoSetting.GameSetting)
+                            UpdateGameSetting(settingContext, customer.LiveCasinoSetting.GameSetting, customer.DisableLiveCasino)
                             : UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);
                 case UpdateType.AllSetting:
                     return UpdateCustomerSetting(settingContext, customer, isApplyPositionTakingAllMembers, positionTakingOnMembers);

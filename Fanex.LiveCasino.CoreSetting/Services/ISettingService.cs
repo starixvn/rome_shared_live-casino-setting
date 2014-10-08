@@ -135,7 +135,7 @@
         /// <param name="settingContext">The setting context.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Update result.</returns>
-        ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes);
+        ICommandResults UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameTypes, bool disableLiveCasino);
 
         /// <summary>
         /// Updates the multiple game setting.
@@ -143,7 +143,7 @@
         /// <param name="settingContextMultiple">The setting context multiple.</param>
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Update result.</returns>
-        IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes);
+        IMultipleCommandResults UpdateMultipleGameSetting(LiveCasinoSettingContextMultiple settingContextMultiple, List<GameType> gameTypes, bool disableLiveCasino);
 
         /// <summary>
         /// Gets the current win limit.
