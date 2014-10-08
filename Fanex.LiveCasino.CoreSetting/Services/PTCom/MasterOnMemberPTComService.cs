@@ -45,17 +45,12 @@
                 Im1 = (bool)PositionTaking.Im1,
                 Um1 = (decimal)PositionTaking.Um1,
                 Im2 = (bool)PositionTaking.Im2,
-                IsUpdateMasterOnMember = true
+                IsUpdateMasterOnMember = !(bool)PositionTaking.Im2
             };
 
             if (!criteria.Im1)
             {
                 criteria.Um1 = 0;
-
-                if ((bool)PositionTaking.Im2)
-                {
-                    criteria.IsUpdateMasterOnMember = false;
-                }
             }
 
             ICommandResult commandResult = PTComRepository.Save(criteria);

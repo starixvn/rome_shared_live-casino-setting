@@ -44,17 +44,12 @@
                 S1 = (decimal)PositionTaking.S1,
                 Is1 = (bool)PositionTaking.Is1,
                 Us1 = (decimal)PositionTaking.Us1,
-                IsUpdateSuperPTOnMember = true
+                IsUpdateSuperPTOnMember = !(bool)PositionTaking.Is3
             };
 
             if (!criteria.Is1)
             {
                 criteria.Us1 = 0;
-                
-                if ((bool)PositionTaking.Is3)
-                {
-                    criteria.IsUpdateSuperPTOnMember = false;
-                }
             }
 
             ICommandResult commandResult = PTComRepository.Save(criteria);
