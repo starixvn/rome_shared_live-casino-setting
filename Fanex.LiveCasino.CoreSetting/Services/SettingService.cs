@@ -162,7 +162,7 @@
             if (settingContext.Customer.Level == CustomerLevel.Member
                 && settingContext.Upline.Level == CustomerLevel.Agent
                 && settingContext.Customer.IsSyncLiveCasino
-                && !settingContext.Customer.Parent.IsSyncLiveCasino)
+                && !settingContext.Customer.Parent.DisableLiveCasino)
             {
                 resultList.Results.Add(UpdateLiveCasinoStatus(settingContext, customer.DisableLiveCasino));
             }
