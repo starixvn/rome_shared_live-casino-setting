@@ -342,15 +342,7 @@
 
                 gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
 
-                if (gameTypes == null || !gameTypes.Any())
-                {
-                    string site = GetCustomerSite(settingContext.Customer.Username);
-                    gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site);
-
-                    Logger.Log.Info(
-                        string.Format(LiveCasinoLang.AutoInsertAccountLogMsg, settingContext.Customer.Id, settingContext.Customer.CurrencyId),
-                        LiveCasinoSettings.Settings.LogCategory);
-                }
+                IntegrityGameSetting(settingContext, ref gameTypes);
 
                 WriteLog(new AutoInsertAccountLog
                 {
@@ -446,19 +438,11 @@
 
                 if (resultInsert.IsSuccessful)
                 {
-                    ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);                    
+                    ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
 
                     gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.Parent.Id);
 
-                    if (gameTypes == null || !gameTypes.Any())
-                    {
-                        string site = GetCustomerSite(oldSettingContext.Customer.Username);
-                        gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.CurrencyId, site);
-
-                        Logger.Log.Info(
-                            string.Format(LiveCasinoLang.InsertFromExistingAccountLogMsg, custId, oldSettingContext.Customer.CurrencyId),
-                            LiveCasinoSettings.Settings.LogCategory);
-                    }
+                    IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
                     WriteLog(new InsertFromExistingAccountLog
                     {
@@ -916,6 +900,10 @@
                     results.Results.Add(result);
                 }
             }
+            else
+            {
+                results.Results.Add(new GameSettingCommandResult { Message = LiveCasinoLang.lblBettingLimit + ": " + LiveCasinoLang.UpdateSuccessfully });
+            }
 
             return results;
         }
@@ -1153,37 +1141,26 @@
         /// <param name="newGameTypes">The new game types.</param>
         private void IntegrityGameSetting(LiveCasinoSettingContext settingContext, ref List<GameType> newGameTypes)
         {
-            CustomerInfoDTO directUplineInfo = GetCustomerInfo(settingContext.Customer.Parent.Id);
+            string site = GetCustomerSite(settingContext.Customer.Username);
+            List<GameType> defaultGameSetting = _settingRepository.GetGameSetting(settingContext.Customer.CurrencyId, site);
 
-            if (directUplineInfo.SyncLiveCasino)
+            newGameTypes = newGameTypes ?? new List<GameType>();
+            if (newGameTypes.Count < defaultGameSetting.Count)
             {
-                if (newGameTypes == null || !newGameTypes.Any())
-                {
-                    string site = GetCustomerSite(settingContext.Customer.Username);
-                    newGameTypes = _settingRepository.GetGameSetting(directUplineInfo.CurrencyId, site);
-                }
-                else
-                {
-                    List<GameType> directUplineGameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
+                var notFoundedGameTypes = new List<GameType>();
 
-                    if (newGameTypes.Count < directUplineGameTypes.Count)
+                foreach (var itemGameType in defaultGameSetting)
+                {
+                    var foundedGameType = newGameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
+
+                    if (foundedGameType == null)
                     {
-                        var gameTypeUncheckeds = new List<GameType>();
-
-                        foreach (var itemGameType in directUplineGameTypes)
-                        {
-                            var foundedGameType = newGameTypes.Where(x => x.Id == itemGameType.Id).FirstOrDefault();
-
-                            if (foundedGameType == null)
-                            {
-                                gameTypeUncheckeds.Add(itemGameType);
-                            }
-                        }
-
-                        newGameTypes.AddRange(gameTypeUncheckeds);
-                        newGameTypes = newGameTypes.OrderBy(x => x.Id).ToList();
+                        notFoundedGameTypes.Add(itemGameType);
                     }
                 }
+
+                newGameTypes.AddRange(notFoundedGameTypes);
+                newGameTypes = newGameTypes.OrderBy(x => x.Id).ToList();
             }
         }
 
