@@ -333,7 +333,11 @@
                 if (updateSyncResult.IsSuccessful)
                 {
                     var uplineCustInfo = GetCustomerLiveCasinoInfo(settingContext.Customer.Parent.Id);
-                    UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
+
+                    if (!uplineCustInfo.DisableLiveCasino)
+                    {
+                        UpdateLiveCasinoStatus(settingContext, uplineCustInfo.DisableLiveCasino);
+                    }
                 }
 
                 gameTypes = _settingRepository.GetGameSetting(settingContext.Customer.Parent.Id);
@@ -442,13 +446,7 @@
 
                 if (resultInsert.IsSuccessful)
                 {
-                    ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
-
-                    if (updateSyncResult.IsSuccessful)
-                    {
-                        var fromCustInfo = GetCustomerLiveCasinoInfo(oldCustId);
-                        UpdateLiveCasinoStatus(oldSettingContext, fromCustInfo.DisableLiveCasino);
-                    }
+                    ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);                    
 
                     gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.Parent.Id);
 
@@ -605,8 +603,8 @@
         /// Update result.
         /// </returns>
         public IMultipleCommandResults UpdateMultipleGameSetting(
-            LiveCasinoSettingContextMultiple settingContextMultiple, 
-            List<GameType> gameTypes, 
+            LiveCasinoSettingContextMultiple settingContextMultiple,
+            List<GameType> gameTypes,
             bool disableLiveCasino)
         {
             var results = new MultipleCommandResults();
