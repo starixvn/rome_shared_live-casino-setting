@@ -68,7 +68,7 @@ if (fanex.liveCasinoSetting) {
                     }
 
                     $scope.isShowCurrentWinLimit = true;
-                    $scope.isPercentShowRedColor = parseInt(data.WinPercent) > 100;
+                    $scope.isPercentShowRedColor = parseFloat(data.WinPercent) >= 100;
                 });
             };
 
