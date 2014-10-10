@@ -468,6 +468,7 @@
             Check.Argument.IsNotNull(settingContext, "settingContext");
             Check.Argument.IsNotNull(settingContext.Customer, "settingContext.Customer");
             Check.Argument.IsNotNull(settingContext.Actor, "settingContext.Actor");
+            Check.Argument.IsNotNull(settingContext.SubAccount, "settingContext.SubAccount");
             Check.Argument.IsNotNegativeOrZero(settingContext.Customer.Id, "settingContext.Customer.Id");
             Check.Argument.IsNotNegativeOrZero(settingContext.Actor.Id, "settingContext.ActorId");
             Check.Argument.IsNotEmpty(settingContext.IP, "settingContext.IP");
@@ -479,6 +480,7 @@
                 UserID = settingContext.Actor.Id,
                 DisabledLiveCS = disableLiveCasino,
                 EnableDownlinesLiveCS = !disableLiveCasino,
+                SubAccID = settingContext.SubAccount.Id,
                 IP = settingContext.IP,
                 Language = settingContext.Language
             };
