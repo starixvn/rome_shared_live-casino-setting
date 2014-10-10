@@ -36,7 +36,8 @@
                 },
                 SubAccount = new User
                 {
-                    Id = Converter.ToInt(request["subAccId"])
+                    Id = Converter.ToInt(request["subAccId"]),
+                    Username = request["subAccUsername"]
                 },
                 Actor = new User
                 {

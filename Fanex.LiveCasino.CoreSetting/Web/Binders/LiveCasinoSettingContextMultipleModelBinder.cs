@@ -38,7 +38,8 @@
                 },
                 SubAccount = new User
                 {
-                    Id = Converter.ToInt(formCollection["subAccId"])
+                    Id = Converter.ToInt(formCollection["subAccId"]),
+                    Username = formCollection["subAccUsername"]
                 },
                 Actor = new User
                 {

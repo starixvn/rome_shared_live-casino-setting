@@ -29,8 +29,7 @@
             {
                 var tracking = string.Empty;
 
-                if (SettingContext.SubAccount.Id > 0 &&
-                    SettingContext.Customer.Level == CustomerLevel.Super)
+                if (SettingContext.SubAccount.Id > 0)
                 {
                     tracking = string.Format(TrackingSubAcc, SettingContext.SubAccount.Id, SettingContext.SubAccount.Username);
                 }
