@@ -62,7 +62,6 @@
                 criteria.Um1 = 0;
             }
 
-
             ICommandResult commandResult = PTComRepository.Save(criteria);
 
             return GetResultDetails(commandResult);
