@@ -12,7 +12,7 @@
 
         private const string TrackingTemplate = "<{0} CustID=\"{1}\" UserName=\"{2}\" CasinoNo=\"{3}\" ExchangeID=\"{4}\"" +
                                                 " SCustID=\"{5}\" MCustID=\"{6}\" ACustID=\"{7}\" RoleID=\"{8}\" SignupIP=\"{9}\"" +
-                                                " SignupBy=\"{10}\" AddFrom=\"{11}\" Lang=\"{12}\" ErrCode=\"{13}\" ErrMsg=\"{14}\" {15} >{16}</{17}>";
+                                                " SignupBy=\"{10}\" AddFrom=\"{11}\" Lang=\"{12}\" ErrCode=\"{13}\" ErrMsg=\"{14}\" {15} >{16}</{0}>";
 
         public List<GameType> GameSetting { get; set; }
 
@@ -67,32 +67,13 @@
             {
                 return "TP_User_Customer_AutoInsertAccount";
             }
-        }
-
-        /// <summary>
-        /// Gets the game type log data.
-        /// </summary>
-        /// <returns>Game type log data formatted xml.</returns>
-        private string GetGameTypeLogData()
-        {
-            var gameType = string.Empty;
-
-            if (GameSetting != null)
-            {
-                foreach (var itemGameType in GameSetting)
-                {
-                    gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, itemGameType.CheckedStakeLevelRange);
-                }
-            }
-
-            return gameType;
-        }
+        }        
 
         /// <summary>
         /// Gets the tracking value.
         /// </summary>
         /// <returns>Tracking value string formatted xml.</returns>
-        private string GetTrackingValue()
+        protected virtual string GetTrackingValue()
         {
             string gameTypeLog = GetGameTypeLogData();
             int agentId = 0, masterId = 0, superId = 0;
@@ -116,10 +97,28 @@
                                             ErrCode,
                                             ErrMsg,
                                             TrackingSubAccount,
-                                            gameTypeLog,
-                                            SpName);
+                                            gameTypeLog);
 
             return trackingValue;
+        }
+
+        /// <summary>
+        /// Gets the game type log data.
+        /// </summary>
+        /// <returns>Game type log data formatted xml.</returns>
+        protected string GetGameTypeLogData()
+        {
+            var gameType = string.Empty;
+
+            if (GameSetting != null)
+            {
+                foreach (var itemGameType in GameSetting)
+                {
+                    gameType += string.Format(GameTypeTemplate, itemGameType.Id, itemGameType.BetTypeId, itemGameType.CheckedStakeLevelRange);
+                }
+            }
+
+            return gameType;
         }
     }
 }
