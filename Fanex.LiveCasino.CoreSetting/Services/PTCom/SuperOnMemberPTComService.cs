@@ -34,11 +34,6 @@
         /// <returns>Update result status.</returns>
         public override ICommandResults Update(LiveCasinoSettingContext settingContext)
         {
-            PTComDTO oldPtComDTO = PTComRepository.Get(new GetSettingForSuperEditMemberCriteria
-            {
-                CustId = settingContext.Customer.Id
-            });
-
             var criteria = new SuperUpdateMemberSettingCriteria
             {
                 CustId = settingContext.Customer.Id,
@@ -49,11 +44,20 @@
                 S1 = (decimal)PositionTaking.S1,
                 Is1 = (bool)PositionTaking.Is1,
                 Us1 = (decimal)PositionTaking.Us1,
-                IsUpdateSuperPTOnMember = oldPtComDTO.PositionTaking.S1 != PositionTaking.S1
+                IsUpdateSuperPTOnMember = true
             };
 
-            if (!criteria.Is1)
+            if (criteria.Is1)
             {
+                criteria.IsUpdateSuperPTOnMember = false;
+            }
+            else
+            {
+                if ((bool)PositionTaking.Is3)
+                {
+                    criteria.IsUpdateSuperPTOnMember = false;
+                }
+
                 criteria.Us1 = 0;
             }
 
