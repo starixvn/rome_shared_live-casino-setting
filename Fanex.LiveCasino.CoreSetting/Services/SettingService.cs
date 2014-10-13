@@ -445,7 +445,8 @@
                     IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
                     WriteLog(new InsertFromExistingAccountLog
-                    {
+                    {                        
+                        ToUsername = toUsername,
                         CasinoNo = CasinoNo,
                         SignUpForm = LiveCasinoSettings.Settings.SystemId,
                         GameSetting = gameTypes,

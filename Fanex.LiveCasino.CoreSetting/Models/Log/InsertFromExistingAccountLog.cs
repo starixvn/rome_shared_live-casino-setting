@@ -11,6 +11,8 @@
                                                 " RoleID=\"{5}\" SignupIP=\"{6}\" SignupBy=\"{7}\" AddFrom=\"{8}\" Lang=\"{9}\"" +
                                                 " ErrCode=\"{10}\" ErrMsg=\"{11}\" {12} CopiedFromUsername=\"{13}\">{14}</{0}>";
 
+        public string ToUsername { get; set; }
+
         public override LogActions Action
         {
             get
@@ -42,6 +44,12 @@
             }
         }
 
+        /// <summary>
+        /// Gets the tracking value.
+        /// </summary>
+        /// <returns>
+        /// Tracking value string formatted xml.
+        /// </returns>
         protected override string GetTrackingValue()
         {
             string gameTypeLog = GetGameTypeLogData();
@@ -50,7 +58,7 @@
                                            TrackingTemplate,
                                            SpName,
                                            SettingContext.Customer.Id,
-                                           SettingContext.Customer.Username,
+                                           ToUsername,
                                            CasinoNo,
                                            SettingContext.Customer.CurrencyId,
                                            (int)SettingContext.Customer.Level,
