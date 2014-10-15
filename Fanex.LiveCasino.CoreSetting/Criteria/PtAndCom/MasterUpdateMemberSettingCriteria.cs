@@ -6,7 +6,7 @@
     /// <summary>
     /// Master Update Member Setting Criteria.
     /// </summary>
-    public class MasterUpdateMemberSettingCriteria : CustomerCriteriaBase
+    internal class MasterUpdateMemberSettingCriteria : CustomerCriteriaBase
     {
         [SpParam(SqlParamName = "V162mpositiontaking_1101")]
         public decimal M1 { get; set; }
@@ -20,13 +20,8 @@
         [SpParam(SqlParamName = "IsAuto_v162mpositiontaking_1101")]
         public bool Im2 { get; set; }
 
-        public bool V162UpdatePositiontaking_1101
-        {
-            get
-            {
-                return true;
-            }
-        }
+        [SpParam(SqlParamName = "V162UpdatePositiontaking_1101")]
+        public bool IsUpdateMasterOnMember { get; set; }
 
         public bool V162UpdateAutoPositiontaking_1101
         {
@@ -66,7 +61,7 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nM1 = '{2}'\nUm1 = '{3}'\nIm1 = '{4}'\nIm2 = '{5}'\nUsername = '{6}'\nSubAccID = '{7}'\nUserId = '{8}'\nIP = '{9}'\nLanguage = '{10}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nM1 = '{2}'\nUm1 = '{3}'\nIm1 = '{4}'\nIm2 = '{5}'\nUsername = '{6}'\nSubAccID = '{7}'\nActorId = '{8}'\nIP = '{9}'\nLanguage = '{10}'",
                 GetSettingKey(),
                 CustId,
                 M1,

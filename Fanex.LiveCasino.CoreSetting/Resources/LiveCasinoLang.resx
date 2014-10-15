@@ -310,7 +310,7 @@
     <value>You have changed this agent not to take auto position taking.</value>
   </data>
   <data name="InvalidCriteriaMsg" xml:space="preserve">
-    <value>Invalid Criteria - Do nothing</value>
+    <value>Invalid Criteria - Setting Key : {0}</value>
   </data>
   <data name="InvalidCustomer" xml:space="preserve">
     <value>Invalid customer</value>
@@ -331,10 +331,10 @@
     <value>do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default</value>
   </data>
   <data name="AutoInsertAccountLogMsg" xml:space="preserve">
-    <value>Auto insert account CustId = {0}. Get direct upline betting limit for write log (DirectUplineId = {1}).</value>
+    <value>Auto insert account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1}).</value>
   </data>
   <data name="InsertFromExistingAccountLogMsg" xml:space="preserve">
-    <value>Insert from existing account CustId = {0}. Get old customer betting limit (OldCustId = {1}).</value>
+    <value>Insert from existing account CustId = {0}. Upline uncheck all game type then get direct default betting limit for write log (CurrencyId = {1}).</value>
   </data>
   <data name="lblSubmit" xml:space="preserve">
     <value>Submit</value>

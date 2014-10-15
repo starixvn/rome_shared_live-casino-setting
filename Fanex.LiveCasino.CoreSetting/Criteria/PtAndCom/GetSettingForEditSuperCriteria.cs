@@ -5,7 +5,7 @@
     /// <summary>
     /// Get Setting For Edit Super Criteria.
     /// </summary>
-    public class GetSettingForEditSuperCriteria : CustomerCriteriaBase
+    internal class GetSettingForEditSuperCriteria : CustomerCriteriaBase
     {
         public override string GetSettingKey()
         {

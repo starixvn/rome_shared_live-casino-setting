@@ -3,85 +3,123 @@
 }
 @{
     var targetCustId = "11901082,13100435,14079149,14084634,14369998,14370180,14373280,14397987";
-    var targetSyncStatus = "1,1,1,1,1,1,1,1";
+    var targetSyncStatus = "1,1,1,1,1,1,0,1";
     var targetUsernames = "AGENT01013,AGENT0103A,AGENT0103C,AGENT0103D,AGENT0103E,AGENT0103F,AGENT0103G,AGENT0103H";
     var totalTargetCustId = string.Empty;
     var totalTargetSyncStatus = string.Empty;
     var totalTargetUsernames = string.Empty;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 1; i++)
     {
         totalTargetCustId += targetCustId + ", ";
         totalTargetSyncStatus += targetSyncStatus + ",";
         totalTargetUsernames += targetUsernames + ",";
     }
-    }
-
-
-@*<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176086&targetCustIds=" + totalTargetCustId + "&targetSyncStatus=" + totalTargetSyncStatus + "&targetUsernames=" + totalTargetUsernames + "&uplineRoleId=2&targetRoleId=1")">Test Max Query String For Edit Multiple</a> <br />*@
-
-<h2>SuperTest1</h2>
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=8&targetCustId=1176070&targetRoleId=4")">Edit Super</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=8&targetCustId=1176070&targetRoleId=4&formType=2")">Edit Super Read Only</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176070&directUplineId=1176070&uplineRoleId=4&adminId=8&targetCustId=1176083&targetRoleId=3")">Edit Master</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176083&directUplineId=1176083&uplineRoleId=3&adminId=8&targetCustId=1176086&targetRoleId=2")">Edit Agent</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176086&directUplineId=1176086&uplineRoleId=2&adminId=8&targetCustId=11901082&targetRoleId=1")">Agent Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176086&directUplineId=1176086&uplineRoleId=2&adminId=8&targetCustId=11901082&targetRoleId=1&formType=2")">Agent Edit Member Read Only</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176070&directUplineId=1176086&uplineRoleId=4&adminId=8&targetCustId=11901082&targetRoleId=1")">Super Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=1176083&directUplineId=1176086&uplineRoleId=3&adminId=8&targetCustId=11901082&targetRoleId=1")">Master Edit Member</a> <br />
+}
+@*<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting?uplineId=1176086&customerIds=" + totalTargetCustId + "&syncStatuses=" + totalTargetSyncStatus + "&usernames=" + totalTargetUsernames + "&uplineLevel=2&customerLevel=1")">Test Max Query String For Edit Multiple</a> <br />*@
+<h2>
+    SuperTest1</h2>
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=8&actorUsername=actorUsername&customerId=1176070&customerLevel=4")">
+    Edit Super</a>
 <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176070&directUplineId=1176070&targetCustIds=1176083,14373487,14373624,14373883,14167350,14191144,1530099,1640567&targetSyncStatus=1,1,1,1,1,1,1,1&targetUsernames=master1,masterkz,masterkz00,masterkz02,mastertest01,SUPERTEST100,SUPERTEST101,supertest102&uplineRoleId=4&targetRoleId=3")">Edit Master Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176083&directUplineId=1176083&targetCustIds=1176086,14373905,14374140,15533382,14374539,14388711,14698482,14767112&targetSyncStatus=1,1,1,1,1,1,1,1&targetUsernames=agent01,agent03,agentlcs000,agenttest1,MASTER100,MASTER101,MASTER102,MASTER103&uplineRoleId=3&targetRoleId=2")">Edit Agent Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176086&directUplineId=1176086&targetCustIds=11901082,13100435,14079149,14084634,14369998,14370180,14373280,14397987&targetSyncStatus=1,1,1,1,1,1,1,1&targetUsernames=AGENT01013,AGENT0103A,AGENT0103C,AGENT0103D,AGENT0103E,AGENT0103F,AGENT0103G,AGENT0103H&uplineRoleId=2&targetRoleId=1")">Agent Edit Member Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176070&directUplineId=1176086&targetCustIds=11901082,13100435,14079149,14084634,14369998,14370180,14373280,14397987&targetSyncStatus=1,1,1,1,1,1,1,1&targetUsernames=AGENT01013,AGENT0103A,AGENT0103C,AGENT0103D,AGENT0103E,AGENT0103F,AGENT0103G,AGENT0103H&uplineRoleId=4&targetRoleId=1")">Super Edit Member Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=1176083&directUplineId=1176086&targetCustIds=11901082,13100435,14079149,14084634,14369998,14370180,14373280,14397987&targetSyncStatus=1,1,1,1,1,1,1,1&targetUsernames=AGENT01013,AGENT0103A,AGENT0103C,AGENT0103D,AGENT0103E,AGENT0103F,AGENT0103G,AGENT0103H&uplineRoleId=3&targetRoleId=1")">Master Edit Member Multiple</a> <br />
-
-<h2>SuperTest91</h2>
-
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=8&targetCustId=14521687&targetRoleId=4")">Edit Super</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=0&uplineRoleId=0&adminId=8&targetCustId=14521687&targetRoleId=4&formType=2")">Edit Super Read Only</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14521687&directUplineId=14521687&uplineRoleId=4&adminId=8&targetCustId=14543829&targetRoleId=3")">Edit Master</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542629&directUplineId=14542629&uplineRoleId=3&adminId=8&targetCustId=14542639&targetRoleId=2")">Edit Agent</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542639&directUplineId=14542639&uplineRoleId=2&adminId=8&targetCustId=14542645&targetRoleId=1")">Agent Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542639&directUplineId=14542639&uplineRoleId=2&adminId=8&targetCustId=14542645&targetRoleId=1&formType=2")">Agent Edit Member Read Only</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14521687&directUplineId=14542639&uplineRoleId=4&adminId=8&targetCustId=14542645&targetRoleId=1")">Super Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542629&directUplineId=14542639&uplineRoleId=3&adminId=8&targetCustId=14542645&targetRoleId=1")">Master Edit Member</a> <br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=8&actorUsername=actorUsername&customerId=1176070&customerLevel=4&formType=2")">
+    Edit Super Read Only</a>
 <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14521687&directUplineId=14521687&targetCustIds=14542629,14542663,14577016,14543829,,,&targetSyncStatus=1,1,1,1&targetUsernames=SUPERTEST9100,SUPERTEST9101,SuperTest9102,SuperTest9103,,,&uplineRoleId=4&targetRoleId=3")">Edit Super Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14521687&directUplineId=14521687&targetCustIds=14542663,14577016&targetSyncStatus=0,1&targetUsernames=SUPERTEST9101,SuperTest9103&uplineRoleId=4&targetRoleId=3")">Edit Master Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14542629&directUplineId=14543829&targetCustIds=14542639,14542654&targetSyncStatus=1,0&targetUsernames=SUPERTEST910000,SUPERTEST910001&uplineRoleId=3&targetRoleId=2")">Edit Agent Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14542639&directUplineId=14542639&targetCustIds=14542645,14542896,14552292,14552296,14552316,14552329,14552349&targetSyncStatus=1,1,1,1,1,1,1&targetUsernames=SUPERTEST910000000,SUPERTEST910000001,SUPERTEST910000002,SUPERTEST910000003,SUPERTEST910000004,SUPERTEST910000005,SUPERTEST910000006&uplineRoleId=2&targetRoleId=1")">Agent Edit Member Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14521687&directUplineId=14542639&targetCustIds=14542645,14542896,14552292,14552296,14552316,14552329,14552349&targetSyncStatus=1,0,0,0,0,0,0&targetUsernames=SUPERTEST910000000,SUPERTEST910000001,SUPERTEST910000002,SUPERTEST910000003,SUPERTEST910000004,SUPERTEST910000005,SUPERTEST910000006&uplineRoleId=4&targetRoleId=1")">Super Edit Member Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14542629&directUplineId=14542639&targetCustIds=14542645,14542896,14552292,14552296,14552316,14552329,14552349&targetSyncStatus=1,0,0,0,0,0,0&targetUsernames=SUPERTEST910000000,SUPERTEST910000001,SUPERTEST910000002,SUPERTEST910000003,SUPERTEST910000004,SUPERTEST910000005,SUPERTEST910000006&uplineRoleId=3&targetRoleId=1")">Master Edit Member Multiple</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple?uplineId=14542629&directUplineId=14542639&targetCustIds=14542645,14542896,14552292,14552296,14552316,14552329,14552349&targetSyncStatus=0,0,0,0,0,0,0&targetUsernames=SUPERTEST910000000,SUPERTEST910000001,SUPERTEST910000002,SUPERTEST910000003,SUPERTEST910000004,SUPERTEST910000005,SUPERTEST910000006&uplineRoleId=3&targetRoleId=1")">Master Edit Member Multiple (No Information)</a> <br />
-
-<h2>Ricky Sub Account</h2>
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=15760620&directUplineId=15760620&uplineRoleId=4&adminId=8&targetCustId=15760621&targetRoleId=3&roleId=3&subAccId=645025")">Edit Master</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=15760621&directUplineId=15760621&uplineRoleId=3&adminId=8&targetCustId=15760622&targetRoleId=2&roleId=2&subAccId=645026")">Edit Agent</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=15760622&directUplineId=15760622&uplineRoleId=2&adminId=8&targetCustId=15760623&targetRoleId=1&roleId=1&subAccId=645027")">Agent Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14521687&directUplineId=14542639&uplineRoleId=4&adminId=8&targetCustId=14542645&targetRoleId=1&subAccId=645025")">Super Edit Member</a> <br />
-<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSetting?uplineId=14542629&directUplineId=14542639&uplineRoleId=3&adminId=8&targetCustId=14542645&targetRoleId=1&subAccId=645026")">Master Edit Member</a> <br />
-
-
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176070&parentId=1176070&uplineLevel=4&actorId=8&actorUsername=actorUsername&customerId=1176083&customerLevel=3")">
+    Edit Master</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176083&parentId=1176083&uplineLevel=3&actorId=8&actorUsername=actorUsername&customerId=1176086&customerLevel=2")">
+    Edit Agent</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176086&parentId=1176086&uplineLevel=2&actorId=8&actorUsername=actorUsername&customerId=11901082&customerLevel=1")">
+    Agent Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176086&parentId=1176086&uplineLevel=2&actorId=8&actorUsername=actorUsername&customerId=11901082&customerLevel=1&formType=2")">
+    Agent Edit Member Read Only</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176070&parentId=1176086&uplineLevel=4&actorId=8&actorUsername=actorUsername&customerId=11901082&customerLevel=1")">
+    Super Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=1176083&parentId=1176086&uplineLevel=3&actorId=8&actorUsername=actorUsername&customerId=11901082&customerLevel=1")">
+    Master Edit Member</a>
+<br />
+<h2>
+    rickysuperr</h2>
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=8&actorUsername=actorUsername&customerId=15922854&customerLevel=4")">
+    Edit Super</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&actorId=8&actorUsername=actorUsername&customerId=15922854&customerLevel=4&formType=2")">
+    Edit Super Read Only</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15922854&parentId=15922854&uplineLevel=4&actorId=8&actorUsername=actorUsername&customerId=15922874&customerLevel=3")">
+    Edit Master</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15922874&parentId=15922874&uplineLevel=3&actorId=8&actorUsername=actorUsername&customerId=15922875&customerLevel=2")">
+    Edit Agent</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15922875&parentId=15922875&uplineLevel=2&actorId=8&actorUsername=actorUsername&customerId=15922876&customerLevel=1")">
+    Agent Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15922875&parentId=15922875&uplineLevel=2&actorId=8&actorUsername=actorUsername&customerId=15922876&customerLevel=1&formType=2")">
+    Agent Edit Member Read Only</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=16037401&parentId=16037403&uplineLevel=4&actorId=8&actorUsername=sa&customerId=16037404&customerLevel=1")">
+    Super Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=16037402&parentId=16037403&uplineLevel=3&actorId=8&actorUsername=sa&customerId=16037404&customerLevel=1")">
+    Master Edit Member</a>
+<br />
+<h2>
+    Ricky Sub Account</h2>
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15760620&parentId=15760620&uplineLevel=4&actorId=8&actorUsername=actorUsername&customerId=15760621&customerLevel=3&roleId=3&subAccId=645025")">
+    Edit Master</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15760621&parentId=15760621&uplineLevel=3&actorId=8&actorUsername=actorUsername&customerId=15760622&customerLevel=2&roleId=2&subAccId=645026")">
+    Edit Agent</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15760622&parentId=15760622&uplineLevel=2&actorId=8&actorUsername=actorUsername&customerId=15760623&customerLevel=1&roleId=1&subAccId=645027")">
+    Agent Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=14521687&parentId=15922875&uplineLevel=4&actorId=8&actorUsername=actorUsername&customerId=15922876&customerLevel=1&subAccId=645025")">
+    Super Edit Member</a>
+<br />
+<a target="_blank" href="@Url.Content("~/LiveCasinoSetting/Setting/EditSetting?uplineId=15922874&parentId=15922875&uplineLevel=3&actorId=8&actorUsername=actorUsername&customerId=15922876&customerLevel=1&subAccId=645026")">
+    Master Edit Member</a>
+<br />
 <script type="text/javascript">
     window.actionAfterUpdatedLiveCasinoSettingMultiple = function (isUpdatePatial) {
-        document.getElementById("target").submit();
+        document.getElementById("MultipleMember").submit();
     };
 
     window.actionAfterUpdatedLiveCasinoSettingSingle = function (isUpdatePatial) {
-        document.getElementById("target").submit();
+        document.getElementById("MultipleMember").submit();
     };
 </script>
-<form id="target" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/LiveCSSetting/EditSettingMultiple")">
-
-  <input type="hidden" name="uplineId" value="1176086" />
-  <input type="hidden" name="targetCustIds" value="@(totalTargetCustId)" />
-  <input type="hidden" name="targetSyncStatus" value="@(totalTargetSyncStatus)" />
-  <input type="hidden" name="targetUsernames" value="@(totalTargetUsernames)" />
-  <input type="hidden" name="uplineRoleId" value="2" />
-  <input type="hidden" name="targetRoleId" value="1" />
-
-  <input type="submit" value="Go">
+<form id="MultipleMember" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting")">
+<input type="hidden" name="uplineId" value="16036789" />
+@*<input type="hidden" name="uplineId" value="1176083" />*@
+<input type="hidden" name="parentId" value="16036789" />
+<input type="hidden" name="customerIds" value="16036859,16036861" />
+<input type="hidden" name="syncStatuses" value="1,0" />
+<input type="hidden" name="usernames" value="SUPERTESTLIC010100A,SUPERTESTLIC010100C" />
+<input type="hidden" name="uplineLevel" value="2" />
+<input type="hidden" name="customerLevel" value="1" />
+<input type="hidden" name="actorId" value="8" />
+<input type="hidden" name="actorIdUsername" value="actorIdUsername" />
+<input type="submit" value="Edit Multiple Member" />
 </form>
-<iframe id="demoIframe" name="demoIframe" style="width:100%;height: 500px">
-
-</iframe>
+<form id="MultipleMaster" method="post" target="demoIframe" action="@Url.Content("~/LiveCasinoSetting/Setting/EditMultipleSetting")">
+<input type="hidden" name="uplineId" value="16037102" />
+<input type="hidden" name="parentId" value="16037102" />
+@*  <input type="hidden" name="customerIds" value="1176083,14373487,14373624,14373883,14167350,14191144,1530099,1640567" />
+  <input type="hidden" name="syncStatuses" value="1,1,1,1,1,1,1,1" />
+  <input type="hidden" name="usernames" value="master1,masterkz,masterkz00,masterkz02,mastertest01,SUPERTEST100,SUPERTEST101,supertest102" />*@
+<input type="hidden" name="customerIds" value="16037103,16037104" />
+<input type="hidden" name="syncStatuses" value="1,1" />
+<input type="hidden" name="usernames" value="Oct06A00,Oct06A01" />
+<input type="hidden" name="uplineLevel" value="4" />
+<input type="hidden" name="customerLevel" value="3" />
+<input type="hidden" name="actorId" value="16037102" />
+<input type="hidden" name="actorIdUsername" value="OCT06A" />
+<input type="submit" value="Edit Multiple Master" />
+</form>
+<iframe id="demoIframe" name="demoIframe" style="width: 100%; height: 500px"></iframe>

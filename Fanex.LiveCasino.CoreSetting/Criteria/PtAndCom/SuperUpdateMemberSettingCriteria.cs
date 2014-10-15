@@ -6,7 +6,7 @@
     /// <summary>
     /// Super Update Member Setting Criteria.
     /// </summary>
-    public class SuperUpdateMemberSettingCriteria : CustomerCriteriaBase
+    internal class SuperUpdateMemberSettingCriteria : CustomerCriteriaBase
     {
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
         public decimal S1 { get; set; }
@@ -18,7 +18,7 @@
         public decimal Us1 { get; set; }
 
         [SpParam(SqlParamName = "V162UpdatePositiontaking_1101")]
-        public bool IsUpdateSuperPt { get; set; }
+        public bool IsUpdateSuperPTOnMember { get; set; }
 
         public bool V162UpdateAutoPositiontaking_1101
         {
@@ -51,13 +51,12 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nS1 = '{2}'\nIs1 = '{3}'\nUs1 = '{4}'\nIsUpdateSuperPt = '{5}'\nSubAccID = '{6}'\nUserId = '{7}'\nIP = '{8}'\nLanguage = '{9}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nS1 = '{2}'\nIs1 = '{3}'\nUs1 = '{4}'\nSubAccID = '{5}'\nActorId = '{6}'\nIP = '{7}'\nLanguage = '{8}'",
                 GetSettingKey(),
                 CustId,
                 S1,
                 Is1,
                 Us1,
-                IsUpdateSuperPt,
                 SubAccID,
                 UserId,
                 IP,

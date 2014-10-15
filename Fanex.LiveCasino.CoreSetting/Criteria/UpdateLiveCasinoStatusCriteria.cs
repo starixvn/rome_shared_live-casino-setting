@@ -5,10 +5,8 @@
     /// <summary>
     /// Update Live Casino Status Criteria.
     /// </summary>
-    public class UpdateLiveCasinoStatusCriteria : CriteriaBase
-    {
-        public int CustId { get; set; }
-
+    internal class UpdateLiveCasinoStatusCriteria : CustomerCriteriaBase
+    {        
         public bool DisabledLiveCS { get; set; }
 
         public bool EnableDownlinesLiveCS { get; set; }
@@ -24,11 +22,6 @@
         public override string GetSettingKey()
         {
             return "Acc_CustomerUpdDisableLiveCS";
-        }
-
-        public override bool IsValid()
-        {
-            return CustId > 0;
         }
 
         /// <summary>

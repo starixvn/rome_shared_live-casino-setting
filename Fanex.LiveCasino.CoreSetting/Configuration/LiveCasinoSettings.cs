@@ -7,11 +7,22 @@
     /// </summary>
     public class LiveCasinoSettings : ConfigurationSection
     {
+        private const string __LIVE_CASINO_SETTINGS = "LiveCasinoSettings";
         private const string __SYSTEM_ID = "SystemId";
         private const string __UN_AUTHORIZED_PATH = "UnAuthorizedPath";
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
         private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
         private const string __LOG_CATEGORY = "LogCategory";
+
+        private static LiveCasinoSettings _settings = ConfigurationManager.GetSection(__LIVE_CASINO_SETTINGS) as LiveCasinoSettings;
+
+        public static LiveCasinoSettings Settings
+        {
+            get
+            {
+                return _settings;
+            }
+        }
 
         [ConfigurationProperty(__SYSTEM_ID, IsRequired = true)]
         public int SystemId

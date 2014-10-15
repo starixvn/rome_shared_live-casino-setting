@@ -7,7 +7,7 @@
     /// Setting key : Acc_CustomerSelSiteByUserName.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
-    public class GetCustomerSiteByUsernameCriteria : CriteriaBase
+    internal class GetCustomerSiteByUsernameCriteria : CriteriaBase
     {
         public string Username { get; set; }
 

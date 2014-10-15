@@ -6,7 +6,7 @@
     /// <summary>
     /// Update Agent Setting Criteria.
     /// </summary>
-    public class UpdateAgentSettingCriteria : CustomerCriteriaBase
+    internal class UpdateAgentSettingCriteria : CustomerCriteriaBase
     {
         public int MRecommend { get; set; }
 
@@ -93,7 +93,7 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nMRecommend = '{2}'\nM2 = '{3}'\nUm2 = '{4}'\nIm2 = '{5}'\nA2 = '{6}'\nN2 = '{7}'\nAgentCommission = '{8}'\nNewMPositionTaking = '{9}'\nSubAccID = '{10}'\nIP = '{11}'\nUserId = '{12}'\nLanguage = '{13}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nMRecommend = '{2}'\nM2 = '{3}'\nUm2 = '{4}'\nIm2 = '{5}'\nA2 = '{6}'\nN2 = '{7}'\nAgentCommission = '{8}'\nNewMPositionTaking = '{9}'\nSubAccID = '{10}'\nIP = '{11}'\nActorId = '{12}'\nLanguage = '{13}'",
                 GetSettingKey(),
                 CustId,
                 MRecommend,

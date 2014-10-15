@@ -42,5 +42,8 @@
   </Function>
   <Function Name="Live Casino - Win Limit">
     <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02.BODBDownlineNet" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet" >
+      <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
+    </Setting>
   </Function>
 </Functions>

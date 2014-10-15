@@ -5,7 +5,7 @@
     /// <summary>
     /// Result criteria.
     /// </summary>
-    public class ResultCriteria : CriteriaBase
+    internal class ResultCriteria : CriteriaBase
     {
         public int? ErrCode { get; set; }
 

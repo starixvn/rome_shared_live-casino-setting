@@ -18,6 +18,11 @@
         /// <summary>
         /// The update game setting fail Error Code = 777777.
         /// </summary>
-        public const int UpdateGameSettingFail = 777777;        
+        public const int UpdateGameSettingFail = 777777;
+
+        /// <summary>
+        /// The invalid maximum win limit Error Code =666666.
+        /// </summary>
+        public const int InvalidMaximumWinLimit = 666666;
     }
 }

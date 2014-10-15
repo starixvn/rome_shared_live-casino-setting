@@ -6,29 +6,56 @@
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
-    using Fanex.LiveCasino.CoreSetting.Criteria.PtAndCom;
+    using Fanex.LiveCasino.CoreSetting.Configuration;
+    using Fanex.LiveCasino.CoreSetting.Criteria.GameSetting;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
+    using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.Resources;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Setting repository class.
     /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
     public class SettingRepository : BaseRepository, ISettingRepository
     {
         /// <summary>
         /// Gets the customer information.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
+        /// <returns>Customer basic information.</returns>
+        /// <exception cref="System.Exception">Invalid criteria exception.</exception>
+        public CustomerInfoDTO GetCustomerInfo(ICriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+                Logger.Log.Error(string.Format("{0}\n{1}", message, criteria.ToString()));
+
+                throw new Exception(message);
+            }
+
+            var uplineCustomerInfo = Get<CustomerInfoDTO>(criteria);
+
+            return uplineCustomerInfo;
+        }
+
+        /// <summary>
+        /// Gets the customer information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
         /// <returns>Customer information.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public CustInfo GetCustomerInfo(ICriteria criteria)
+        public Customer GetCustomerLiveCasinoInfo(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
                 try
                 {
-                    var custInfo = new CustInfo();
+                    var custInfo = new Customer();
                     using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
                     {
                         var parameters = criteria.GetSpParams();
@@ -36,8 +63,9 @@
                         {
                             if (reader.Read())
                             {
+                                custInfo.Id = Converter.To<int>(parameters["custid"]);
+                                custInfo.Username = reader.To<string>("username");
                                 custInfo.CurrencyId = reader.To<byte>("currency");
-                                custInfo.CustId = Converter.To<int>(parameters["custid"]);
                                 custInfo.DisableLiveCasino = reader.To<bool>("DisableLiveCasino");
                                 custInfo.Fax = reader.To<string>("fax");
                                 custInfo.FirstName = reader.To<string>("firstname");
@@ -46,18 +74,49 @@
                                 custInfo.Mobile = reader.To<string>("mobilephone");
                                 custInfo.NickName = reader.To<string>("username2");
                                 custInfo.Phone = reader.To<string>("phone");
-                                custInfo.RoleId = reader.To<byte>("roleid");
-                                custInfo.Site = reader.To<string>("site");
-                                custInfo.UplineDisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino");
-                                custInfo.UserName = reader.To<string>("username");
-                                custInfo.MemberWinLimit = new MemberWinLimit
+
+                                var roleId = reader.To<byte>("roleid");
+
+                                switch (roleId)
                                 {
-                                    IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
-                                    Max = reader.To<float>("MaxWinLiveCasino"),
-                                    Upline = new MemberWinLimit
+                                    case (byte)CustomerLevel.Super:
+                                        custInfo.Level = CustomerLevel.Super;
+                                        break;
+
+                                    case (byte)CustomerLevel.Master:
+                                        custInfo.Level = CustomerLevel.Master;
+                                        break;
+
+                                    case (byte)CustomerLevel.Agent:
+                                        custInfo.Level = CustomerLevel.Agent;
+                                        break;
+
+                                    default:
+                                        custInfo.Level = CustomerLevel.Member;
+                                        break;
+                                }
+
+                                custInfo.Site = reader.To<string>("site");
+
+                                custInfo.LiveCasinoSetting = new LiveCasinoSetting
+                                {
+                                    WinLimit = new WinLimit
                                     {
-                                        IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
-                                        Max = reader.To<float>("UplineMaxWinLiveCasino")
+                                        IsAutoReset = reader.To<bool>("isAutoResetLiveCasino"),
+                                        Max = reader.To<float>("MaxWinLiveCasino")
+                                    }
+                                };
+
+                                custInfo.Parent = new Customer
+                                {
+                                    DisableLiveCasino = reader.To<bool>("UplineDisableLiveCasino"),
+                                    LiveCasinoSetting = new LiveCasinoSetting
+                                    {
+                                        WinLimit = new WinLimit
+                                        {
+                                            IsAutoReset = reader.To<bool>("UplineIsAutoResetLiveCasino"),
+                                            Max = reader.To<float>("UplineMaxWinLiveCasino")
+                                        }
                                     }
                                 };
                             }
@@ -68,12 +127,13 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message, LiveCasinoSettings.Settings.LogCategory);
+
                     throw ex;
                 }
             }
 
-            return new CustInfo();
+            return new Customer();
         }
 
         /// <summary>
@@ -81,11 +141,11 @@
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Current member win limit.</returns>
-        public CurrentMemberWin GetCurrentMemberWin(ICriteria criteria)
+        public CurrentMemberWinLimitDTO GetCurrentMemberWin(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
-                var currentMemberWin = new CurrentMemberWin();
+                var currentMemberWin = new CurrentMemberWinLimitDTO();
 
                 try
                 {
@@ -108,250 +168,52 @@
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
 
                     throw ex;
                 }
             }
 
-            return new CurrentMemberWin();
+            return new CurrentMemberWinLimitDTO();
         }
 
         /// <summary>
-        /// Gets the setting for edit super.
+        /// Gets the game setting by customer identifier.
         /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditSuper(GetSettingForEditSuperCriteria criteria)
+        /// <param name="custId">The customer identifier.</param>
+        /// <returns>Game setting of customer.</returns>
+        public List<GameType> GetGameSetting(int custId)
         {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.Commission = new Commission
-                    {
-                        Value = reader.ToFloat("v162sdiscount_1101"),
-                        Upline = new Commission
-                        {
-                            Value = reader.ToFloat("v162sdicount_1101_max")
-                        }
-                    };
-
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        S4 = reader.To<float>("v162spositiontaking_1101"),
-                        L4 = reader.To<float>("v162spositiontaking_1101_max"),
-                        N4 = reader.To<float>("v162spositiontaking_1101_min")
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the setting for edit master.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditMaster(GetSettingForEditMasterCriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.Commission = new Commission
-                    {
-                        Value = reader.ToFloat("v162discount_1101"),
-                        Upline = new Commission
-                        {
-                            Value = reader.ToFloat("v162discount_1101_max")
-                        }
-                    };
-
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        S4 = reader.To<float>("v162spositiontaking_1101_max"),
-                        N3 = reader.To<float>("v162mpositiontaking_1101_min"),
-                        Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
-                        Us3 = reader.To<float>("auto_v162spostiontaking_1101"),
-                        S3 = reader.To<float>("v162spositiontaking_1101"),
-                        M3 = reader.To<float>("v162mpositiontaking_1101"),
-                        NewPresetOnMember = 0,
-                        UpdateAllMembers = false
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the setting for edit agent.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditAgent(GetSettingForEditAgentCriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.Commission = new Commission
-                    {
-                        Value = reader.ToFloat("v162discount_1101"),
-                        Upline = new Commission
-                        {
-                            Value = reader.ToFloat("v162discount_1101_max")
-                        }
-                    };
-
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
-                        M2 = reader.To<float>("v162mpositiontaking_1101"),
-                        Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
-                        Um2 = reader.To<float>("auto_v162mpositiontaking_1101"),
-                        A2 = reader.To<float>("v162apositiontaking_1101"),
-                        M3 = reader.To<float>("v162mpositiontaking_1101_max"),
-                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
-                        NewPresetOnMember = 0,
-                        UpdateAllMembers = false
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the setting for edit member.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForEditMember(GetSettingForEditMemberCriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.Commission = new Commission
-                    {
-                        Value = reader.ToFloat("v162playerdiscount_1101"),
-                        Upline = new Commission
-                        {
-                            Value = reader.ToFloat("v162playerdiscount_1101_max")
-                        }
-                    };
-
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        A1 = reader.To<float>("v162apositiontaking_1101"),
-                        A2 = reader.To<float>("v162apositiontaking_1101_max"),
-                        N2 = reader.To<float>("v162apositiontaking_1101_min"),
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the setting for super edit member.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForSuperEditMember(GetSettingForSuperEditMemberCriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        S1 = reader.To<float>("v162spositiontaking_1101"),
-                        S1Max = reader.To<float>("v162spositiontaking_1101_max"),
-                        S1Min = reader.To<float>("v162spositiontaking_1101_min"),
-                        M1 = reader.To<float>("v162mpositiontaking_1101"),
-                        A1 = reader.To<float>("v162apositiontaking_1101"),
-                        Us1 = reader.To<float>("auto_v162spositiontaking_1101_mem"),
-                        Is1 = reader.To<bool>("isauto_v162spositiontaking_1101_mem"),
-                        Is3 = reader.To<bool>("isauto_v162spositiontaking_1101"),
-                        S4 = reader.To<float>("auto_v162spositiontaking_1101_max")
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the setting for master edit member.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Position taking and commission model.</returns>
-        public PtAndComSetting GetSettingForMasterEditMember(GetSettingForMasterEditMemberCriteria criteria)
-        {
-            return GetCommonSettingForEdit(
-                criteria,
-                (reader, ptAndComSetting) =>
-                {
-                    ptAndComSetting.PositionTaking = new PositionTaking
-                    {
-                        IsDisableAuto = reader.To<bool>("DisableAutoMPT"),
-                        M1 = reader.To<float>("v162mpositiontaking_1101"),
-                        A1 = reader.To<float>("V162apositiontaking_1101"),
-                        Um1 = reader.To<float>("auto_v162mpositiontaking_1101_mem"),
-                        Im1 = reader.To<bool>("isauto_v162mpositiontaking_1101_mem"),
-                        M1Max = reader.To<float>("v162mpositiontaking_1101_max"),
-                        M1Min = reader.To<float>("v162mpositiontaking_1101_min"),
-                        Im2 = reader.To<bool>("isauto_v162mpositiontaking_1101"),
-                        M3 = reader.To<float>("auto_v162mpositiontaking_1101_max")
-                    };
-                });
-        }
-
-        /// <summary>
-        /// Gets the game setting.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
-        /// <returns>List of game types.</returns>
-        public List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn)
-        {
-            if (criteria.IsValid())
+            var criteria = new GetGameSettingByCustomerIdCriteria
             {
-                try
-                {
-                    var gameTypes = new List<GameType>();
-                    GameType current = null;
+                CustId = custId
+            };
 
-                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
-                        {
-                            while (reader.Read())
-                            {
-                                var itemGameType = new GameType
-                                {
-                                    Id = reader.ToInt("GameTypeID"),
-                                    BetTypeId = reader.ToInt("IBCBetTypeID")
-                                };
+            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: true);
 
-                                var itemStakeLevel = new StakeLevel
-                                {
-                                    Id = reader.ToInt("StakeLevelID"),
-                                    Range = reader.ToString("StakeLevelName"),
-                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : false
-                                };
+            return gameSetting;
+        }
 
-                                if (current == null || current.Id != itemGameType.Id)
-                                {
-                                    gameTypes.Add(itemGameType);
-                                    current = itemGameType;
-                                    current.BettingLimit = new List<StakeLevel>();
-                                }
+        /// <summary>
+        /// Gets the game setting by exchange.
+        /// </summary>
+        /// <param name="exchangeId">The exchange identifier.</param>
+        /// <param name="site">The site name.</param>
+        /// <param name="defaultCheckedValue">If set to <c>true</c> [default checked value].</param>
+        /// <returns>
+        /// Game setting by exchange and site.
+        /// </returns>
+        public List<GameType> GetGameSetting(int exchangeId, string site, bool defaultCheckedValue = false)
+        {
+            var criteria = new GetGameSettingByExchangeCriteria
+            {
+                ExchangeId = exchangeId,
+                Site = site
+            };
 
-                                current.BettingLimit.Add(itemStakeLevel);
-                            }
-                        }
-                    }
+            List<GameType> gameSetting = GetGameSetting(criteria, hasCheckedColumn: false, defaultCheckedValue: defaultCheckedValue);
 
-                    return gameTypes;
-                }
-                catch (Exception ex)
-                {
-                    CommonUtil.LogError(ex.Message);
-                    throw ex;
-                }
-            }
-
-            return new List<GameType>();
+            return gameSetting;
         }
 
         /// <summary>
@@ -361,7 +223,7 @@
         /// <param name="gameTypes">The game types.</param>
         /// <returns>Game setting command result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ICommandResult InsertGameSettingAccount(ICriteria criteria, ref List<GameType> gameTypes)
+        public ICommandResult InsertGameSettingAccount(ICriteria criteria, List<GameType> gameTypes)
         {
             if (criteria.IsValid())
             {
@@ -402,19 +264,80 @@
 
                     if (!result.IsSuccessful)
                     {
-                        CommonUtil.LogInfo(string.Format("{0}\n{1}", result.Message, criteria.ToString()));
+                        Logger.Log.Info(string.Format("{0}\n{1}", result.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
                     }
 
                     return result;
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
                     throw ex;
                 }
             }
 
             return new GameSettingCommandResult();
+        }
+
+        /// <summary>
+        /// Gets the game setting.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="hasCheckedColumn">If set to <c>true</c> [has checked column].</param>
+        /// <param name="defaultCheckedValue">If set to <c>true</c> [default checked value].</param>
+        /// <returns>
+        /// List of game types.
+        /// </returns>
+        private List<GameType> GetGameSetting(ICriteria criteria, bool hasCheckedColumn, bool defaultCheckedValue = false)
+        {
+            if (criteria.IsValid())
+            {
+                try
+                {
+                    var gameTypes = new List<GameType>();
+                    GameType current = null;
+
+                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+                    {
+                        using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                        {
+                            while (reader.Read())
+                            {
+                                var itemGameType = new GameType
+                                {
+                                    Id = reader.ToInt("GameTypeID"),
+                                    BetTypeId = reader.ToInt("IBCBetTypeID")
+                                };
+
+                                var itemStakeLevel = new StakeLevel
+                                {
+                                    Id = reader.ToInt("StakeLevelID"),
+                                    Range = reader.ToString("StakeLevelName"),
+                                    IsChecked = hasCheckedColumn ? reader.ToBool("IsChecked") : defaultCheckedValue
+                                };
+
+                                if (current == null || current.Id != itemGameType.Id)
+                                {
+                                    gameTypes.Add(itemGameType);
+                                    current = itemGameType;
+                                    current.BettingLimit = new List<StakeLevel>();
+                                }
+
+                                current.BettingLimit.Add(itemStakeLevel);
+                            }
+                        }
+                    }
+
+                    return gameTypes;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log.Error(ex.Message);
+                    throw ex;
+                }
+            }
+
+            return new List<GameType>();
         }
     }
 }

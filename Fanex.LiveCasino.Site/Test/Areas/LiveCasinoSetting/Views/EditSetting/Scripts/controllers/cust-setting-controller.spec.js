@@ -1,5 +1,5 @@
 ﻿/* File Created: July 21, 2014 */
-/*global custSetting*/
+/*global settingContext*/
 /// <reference path="../../../../Scripts/core/fanex-live-casino-setting.js" />
 if (fanex.liveCasinoSetting) {
     fanex.liveCasinoSetting.controller('CustomerSettingController',
@@ -28,13 +28,13 @@ if (fanex.liveCasinoSetting) {
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope(),
                     ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
 
-                var custSettingForUpdate = {
-                    settingContext: custSetting.SettingContext,
+                var settingContextForUpdate = {
+                    settingContext: settingContext.SettingContext,
                     custInfo: custInfoScope.getCustInfo(),
                     ptAndComSetting: ptAndComScope.ptAndComSetting
                 };
 
-                customerSettingService.updateAllSetting(custSettingForUpdate, $scope);
+                customerSettingService.updateAllSetting(settingContextForUpdate, $scope);
                 $scope.isUpdateAllSetting = false;
             };
 

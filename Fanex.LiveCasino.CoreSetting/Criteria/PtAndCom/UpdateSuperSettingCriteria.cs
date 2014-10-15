@@ -5,7 +5,7 @@
     /// <summary>
     /// Update Super Setting Criteria.
     /// </summary>
-    public class UpdateSuperSettingCriteria : CustomerCriteriaBase
+    internal class UpdateSuperSettingCriteria : CustomerCriteriaBase
     {
         [SpParam(SqlParamName = "V162spositiontaking_1101")]
         public decimal S4 { get; set; }
@@ -65,7 +65,7 @@
         public override string ToString()
         {
             return string.Format(
-                "SP Name = '{0}'\nCustId = '{1}'\nS4 = '{2}'\nN4 = '{3}'\nSuperCommission = '{4}'\nIP = '{5}'\nUserId = '{6}'\nLanguage = '{7}'",
+                "SP Name = '{0}'\nCustId = '{1}'\nS4 = '{2}'\nN4 = '{3}'\nSuperCommission = '{4}'\nIP = '{5}'\nActorId = '{6}'\nLanguage = '{7}'",
                 GetSettingKey(),
                 CustId,
                 S4,

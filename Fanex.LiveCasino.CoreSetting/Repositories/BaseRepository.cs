@@ -6,35 +6,24 @@
     using Fanex.Data;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.Criteria;
-    using Fanex.LiveCasino.CoreSetting.Models;
-    using Fanex.LiveCasino.CoreSetting.Models.Command;
+    using Fanex.LiveCasino.CoreSetting.DTO;
+    using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
     using Fanex.LiveCasino.CoreSetting.Resources;
-    using Fanex.LiveCasino.CoreSetting.Utilities;
+    using Fanex.Logging;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// The base repository class.
     /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
     public class BaseRepository : DynamicRepository, IBaseRepository
     {
-        protected readonly ICommonUtil CommonUtil;
-
-        public BaseRepository()
-            : this(null)
-        {
-        }
-
-        public BaseRepository(ICommonUtil commonUtil)
-        {
-            commonUtil = commonUtil ?? new CommonUtil();
-        }
-
         /// <summary>
         /// Inserts the or update.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>Command results class.</returns>
-        public ICommandResult InsertOrUpdate(ICriteria criteria)
+        public ICommandResult Save(ICriteria criteria)
         {
             if (criteria.IsValid())
             {
@@ -50,57 +39,22 @@
 
                         var outParameters = objDb.GetOuputParams();
                         result = GetCommandResult(outParameters);
-                    }                    
+                    }
 
                     return result;
                 }
                 catch (Exception ex)
                 {
-                    CommonUtil.LogError(ex.Message);
+                    Logger.Log.Error(ex.Message);
 
                     throw ex;
                 }
             }
 
-            return new CommandResult { Code = ErrCode.InvalidCriteria, Message = LiveCasinoLang.InvalidCriteriaMsg };
-        }
+            var message = string.Format(LiveCasinoLang.InvalidCriteriaMsg, criteria.GetSettingKey());
+            Logger.Log.Error(string.Format("{0}\n{1}", message, criteria.ToString()));
 
-        /// <summary>
-        /// Gets the common setting for edit.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <param name="mapSetting">The map setting.</param>
-        /// <returns>Position taking and commission setting models.</returns>
-        protected PtAndComSetting GetCommonSettingForEdit(ICriteria criteria, Action<IDataReader, PtAndComSetting> mapSetting)
-        {
-            if (criteria.IsValid())
-            {
-                try
-                {
-                    PtAndComSetting positionTakingAndComSetting = new PtAndComSetting();
-
-                    using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        using (IDataReader reader = objectDb.ExecuteReader(criteria.GetSpParams()))
-                        {
-                            while (reader.Read())
-                            {
-                                mapSetting(reader, positionTakingAndComSetting);
-                            }
-                        }
-                    }
-
-                    return positionTakingAndComSetting;
-                }
-                catch (Exception ex)
-                {
-                    CommonUtil.LogError(ex.Message);
-
-                    throw ex;
-                }
-            }
-
-            return null;
+            throw new Exception(message);
         }
 
         /// <summary>

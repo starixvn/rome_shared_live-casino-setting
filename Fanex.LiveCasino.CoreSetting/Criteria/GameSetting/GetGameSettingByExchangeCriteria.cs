@@ -5,7 +5,7 @@
     /// <summary>
     /// Setting key : TP_Admin_StakeLevel_GetGameTypeStakeLevel.
     /// </summary>
-    public class GetGameSettingByExchangeCriteria : CriteriaBase
+    internal class GetGameSettingByExchangeCriteria : CriteriaBase
     {
         public int ExchangeId { get; set; }
 

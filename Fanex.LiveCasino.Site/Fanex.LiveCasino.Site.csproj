@@ -162,7 +162,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Areas\LiveCasinoSetting\Services\LiveCasinoAuthorizationService.cs" />
-    <Compile Include="Areas\LiveCasinoSetting\Services\UnityBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LiveCasinoSetting.xml">
@@ -281,19 +280,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSetting.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.LiveCasino.CoreSetting\Fanex.LiveCasino.CoreSetting.csproj">
       <Project>{724E4A0F-F3B6-48BE-9782-3AA217F93FD5}</Project>
       <Name>Fanex.LiveCasino.CoreSetting</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
@@ -319,8 +312,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LiveCasinoLang.js</LastGenOutput>
     </None>
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\CustomerInfoMultiple.cshtml" />
     <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingSingle.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
+    <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
     <None Include="Test\Chutzpah.json" />
   </ItemGroup>
   <ItemGroup>

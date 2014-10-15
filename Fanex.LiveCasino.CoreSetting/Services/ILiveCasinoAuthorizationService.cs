@@ -8,8 +8,12 @@
     /// </summary>
     public interface ILiveCasinoAuthorizationService
     {
-        bool IsAuthorizedRead(AuthorizationContext authorizationContext, SettingContext settingContext);
+        bool IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext);
 
-        bool IsAuthorizedHost(AuthorizationContext authorizationContext, SettingContext settingContext);
+        bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext);
+
+        bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple);
+
+        bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple);
     }
 }
