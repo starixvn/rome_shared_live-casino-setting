@@ -445,7 +445,7 @@
                     IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
                     WriteLog(new InsertFromExistingAccountLog
-                    {                        
+                    {
                         ToUsername = toUsername,
                         CasinoNo = CasinoNo,
                         SignUpForm = LiveCasinoSettings.Settings.SystemId,
@@ -1207,11 +1207,19 @@
                 case (int)CustomerLevel.Master:
                     settingContext.Customer.Level = CustomerLevel.Master;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.SuperId };
+                    settingContext.Upline = new Customer { Id = customerInfo.SuperId, Level = CustomerLevel.Super };
                     break;
 
                 case (int)CustomerLevel.Agent:
                     settingContext.Customer.Level = CustomerLevel.Agent;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } };
+                    settingContext.Upline = new Customer { Id = customerInfo.MasterId, Level = CustomerLevel.Master };
+                    break;
+
+                case (int)CustomerLevel.Super:
+                    settingContext.Customer.Level = CustomerLevel.Super;
+                    settingContext.Customer.Parent = new Customer();
+                    settingContext.Upline = new Customer();
                     break;
             }
 
