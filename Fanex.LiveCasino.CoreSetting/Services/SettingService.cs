@@ -807,20 +807,15 @@
 
             var criteria = new AutoInsertAccountFromExistingCriteria
             {
-                AgentId = agentId,
                 CasinoNo = CasinoNo,
                 CustId = custId,
-                ExchangeId = settingContext.Customer.CurrencyId,
-                MasterId = masterId,
                 ModifyUsername = actorUsername,
-                RoleId = (int)settingContext.Customer.Level,
                 SignupBy = actorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = ip,
-                SuperId = superId,
-                Username = settingContext.Customer.Username,
                 OldCustId = oldCustId,
-                ToUserName = toUsername
+                ToUserName = toUsername,
+                Level = settingContext.Customer.Level
             };
 
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
