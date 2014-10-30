@@ -440,7 +440,7 @@
                 {
                     ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
 
-                    gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.Parent.Id);
+                    gameTypes = _settingRepository.GetGameSetting(oldCustId);
 
                     IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
