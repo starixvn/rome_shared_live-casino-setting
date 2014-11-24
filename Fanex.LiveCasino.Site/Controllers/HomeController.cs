@@ -19,5 +19,13 @@ namespace Fanex.LiveCasino.Site.Controllers
             return View();
         }
 
+        public ActionResult Super()
+        {
+            Fanex.LiveCasino.CoreSetting.Services.SettingService service = new CoreSetting.Services.SettingService();
+
+            service.AutoInsertAccountFromExisting(16490352, 1176070, "ed-super-c4", 8, "sa", 0, "", "10.19.10.54", "e");
+
+            return View();
+        }
     }
 }

@@ -818,6 +818,25 @@
                 Level = settingContext.Customer.Level
             };
 
+            if (settingContext.Customer.Level == CustomerLevel.Super)
+            {
+                var site = GetCustomerSite(settingContext.Customer.Username);
+
+                criteria = new AutoInsertSuperFromExistingCriteria
+                {
+                    CasinoNo = CasinoNo,
+                    CustId = custId,
+                    ModifyUsername = actorUsername,
+                    SignupBy = actorId,
+                    SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                    SignupIp = ip,
+                    OldCustId = oldCustId,
+                    ToUserName = toUsername,
+                    Level = settingContext.Customer.Level,
+                    CustSite = site
+                };
+            }
+
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
             return result;

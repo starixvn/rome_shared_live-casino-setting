@@ -28,11 +28,6 @@
 
         public override string GetSettingKey()
         {
-            if (Level == CustomerLevel.Super)
-            {
-                return "TP_User_Customer_AutoInsertSuperFromExisting";
-            }
-
             return "TP_User_Customer_AutoInsertAccountFromExisting";
         }
 
