@@ -339,4 +339,19 @@
   <data name="lblSubmit" xml:space="preserve">
     <value>Submit</value>
   </data>
+  <data name="e0001" xml:space="preserve">
+    <value>Invalid user</value>
+  </data>
+  <data name="e0003" xml:space="preserve">
+    <value>Invalid GameTypeID</value>
+  </data>
+  <data name="e0004" xml:space="preserve">
+    <value>This Game Type does not offer any Stake Level</value>
+  </data>
+  <data name="e0005" xml:space="preserve">
+    <value>Invalid Stake Level</value>
+  </data>
+  <data name="e0006" xml:space="preserve">
+    <value>This user's upline does not have Stake Level</value>
+  </data>
 </root>

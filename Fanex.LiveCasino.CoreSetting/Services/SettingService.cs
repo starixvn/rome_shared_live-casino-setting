@@ -445,7 +445,7 @@
                     IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
                     WriteLog(new InsertFromExistingAccountLog
-                    {                        
+                    {
                         ToUsername = toUsername,
                         CasinoNo = CasinoNo,
                         SignUpForm = LiveCasinoSettings.Settings.SystemId,
@@ -946,7 +946,7 @@
             }
             else
             {
-                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, newGameType.Name, LiveCasinoLang.UpdatedUnsuccessfully);
+                gameSettingResult.Message = string.Format("{0} - {1}: {2}", LiveCasinoLang.lblGameSetting, newGameType.Name, gameSettingResult.FriendlyErrorMessage);
                 Logger.Log.Info(string.Format("{0}\n{1}", updateResult.Message, criteria.ToString()), LiveCasinoSettings.Settings.LogCategory);
             }
 
