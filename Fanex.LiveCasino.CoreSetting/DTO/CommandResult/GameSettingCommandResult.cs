@@ -47,7 +47,9 @@
         {
             get
             {
-                return string.IsNullOrWhiteSpace((string)Code);
+                var code = Convert.ToString(Code);
+
+                return string.IsNullOrWhiteSpace(code) || code == "0";
             }
         }
     }
