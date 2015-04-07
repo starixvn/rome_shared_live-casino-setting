@@ -58,6 +58,11 @@
         ManualInsert_Member = 363,
 
         /// <summary>
+        /// The automatic insert existing super.
+        /// </summary>
+        AutoInsertExisting_Super = 383,
+
+        /// <summary>
         /// The automatic insert existing master.
         /// </summary>
         AutoInsertExisting_Master = 367,

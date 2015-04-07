@@ -440,7 +440,7 @@
                 {
                     ICommandResult updateSyncResult = UpdateSyncLiveCasino(oldSettingContext, isSynced: true);
 
-                    gameTypes = _settingRepository.GetGameSetting(oldSettingContext.Customer.Parent.Id);
+                    gameTypes = _settingRepository.GetGameSetting(oldCustId);
 
                     IntegrityGameSetting(oldSettingContext, ref gameTypes);
 
@@ -807,21 +807,35 @@
 
             var criteria = new AutoInsertAccountFromExistingCriteria
             {
-                AgentId = agentId,
                 CasinoNo = CasinoNo,
                 CustId = custId,
-                ExchangeId = settingContext.Customer.CurrencyId,
-                MasterId = masterId,
                 ModifyUsername = actorUsername,
-                RoleId = (int)settingContext.Customer.Level,
                 SignupBy = actorId,
                 SignupFrom = LiveCasinoSettings.Settings.SystemId,
                 SignupIp = ip,
-                SuperId = superId,
-                Username = settingContext.Customer.Username,
                 OldCustId = oldCustId,
-                ToUserName = toUsername
+                ToUserName = toUsername,
+                Level = settingContext.Customer.Level
             };
+
+            if (settingContext.Customer.Level == CustomerLevel.Super)
+            {
+                var site = GetCustomerSite(settingContext.Customer.Username);
+
+                criteria = new AutoInsertSuperFromExistingCriteria
+                {
+                    CasinoNo = CasinoNo,
+                    CustId = custId,
+                    ModifyUsername = actorUsername,
+                    SignupBy = actorId,
+                    SignupFrom = LiveCasinoSettings.Settings.SystemId,
+                    SignupIp = ip,
+                    OldCustId = oldCustId,
+                    ToUserName = toUsername,
+                    Level = settingContext.Customer.Level,
+                    CustSite = site
+                };
+            }
 
             ICommandResult result = _settingRepository.InsertGameSettingAccount(criteria, gameTypes);
 
@@ -1207,11 +1221,19 @@
                 case (int)CustomerLevel.Master:
                     settingContext.Customer.Level = CustomerLevel.Master;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.SuperId };
+                    settingContext.Upline = new Customer { Id = customerInfo.SuperId, Level = CustomerLevel.Super };
                     break;
 
                 case (int)CustomerLevel.Agent:
                     settingContext.Customer.Level = CustomerLevel.Agent;
                     settingContext.Customer.Parent = new Customer { Id = customerInfo.MasterId, Parent = new Customer { Id = customerInfo.SuperId } };
+                    settingContext.Upline = new Customer { Id = customerInfo.MasterId, Level = CustomerLevel.Master };
+                    break;
+
+                case (int)CustomerLevel.Super:
+                    settingContext.Customer.Level = CustomerLevel.Super;
+                    settingContext.Customer.Parent = new Customer();
+                    settingContext.Upline = new Customer();
                     break;
             }
 

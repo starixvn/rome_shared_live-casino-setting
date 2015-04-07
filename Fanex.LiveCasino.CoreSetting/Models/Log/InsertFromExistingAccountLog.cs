@@ -21,6 +21,9 @@
 
                 switch (SettingContext.Customer.Level)
                 {
+                    case CustomerLevel.Super:
+                        logAction = LogActions.AutoInsertExisting_Super;
+                        break;
                     case CustomerLevel.Master:
                         logAction = LogActions.AutoInsertExisting_Master;
                         break;
@@ -40,6 +43,11 @@
         {
             get
             {
+                if (SettingContext.Customer.Level == CustomerLevel.Super)
+                {
+                    return "TP_User_Customer_AutoInsertSuperFromExisting";
+                }
+
                 return "TP_User_Customer_AutoInsertAccountFromExisting";
             }
         }
