@@ -301,4 +301,19 @@
   <data name="WarningUplineUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>没有任何投注限额，因为上线没有设置投注限额，所以影响到下线的设置。因此, 投注限额将默认设置为上线的最低投注限额</value>
   </data>
+  <data name="e0003" xml:space="preserve">
+    <value>游戏类型ID 无效</value>
+  </data>
+  <data name="e0004" xml:space="preserve">
+    <value>这游戏类型不提供任何投注额级别</value>
+  </data>
+  <data name="e0005" xml:space="preserve">
+    <value>投注额级别无效</value>
+  </data>
+  <data name="e0006" xml:space="preserve">
+    <value>此用户的上线没有投注额级别</value>
+  </data>
+  <data name="e0001" xml:space="preserve">
+    <value>账号无效</value>
+  </data>
 </root>

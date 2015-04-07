@@ -301,4 +301,19 @@
   <data name="WarningUplineUncheckAllStakeLevelMsg" xml:space="preserve">
     <value>沒有任何投註限額，因為上線沒有設置投註限額，所以影響到下線的設置。因此, 投註限額將默認設置為上線的最低投註限額</value>
   </data>
+  <data name="e0003" xml:space="preserve">
+    <value>遊戲類型 ID 無效</value>
+  </data>
+  <data name="e0004" xml:space="preserve">
+    <value>这遊戲類型不提供任何投注額級別</value>
+  </data>
+  <data name="e0005" xml:space="preserve">
+    <value>投注額級別無效</value>
+  </data>
+  <data name="e0006" xml:space="preserve">
+    <value>此用戶的上線沒有投注額級別</value>
+  </data>
+  <data name="e0001" xml:space="preserve">
+    <value>帳號無效</value>
+  </data>
 </root>
