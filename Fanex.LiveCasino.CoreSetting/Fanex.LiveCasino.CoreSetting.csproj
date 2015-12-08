@@ -61,9 +61,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Dependencies\Newtonsoft 4.5\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RemotingRef">
       <HintPath>..\packages\RemotingRef.1.0.0.1\lib\net40\RemotingRef.dll</HintPath>
@@ -182,31 +182,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LiveCasinoLang.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\LiveCasinoLang.ja-JP.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.ja-JP.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveCasinoLang.th-TH.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.th-TH.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveCasinoLang.vi-VN.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.vi-VN.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveCasinoLang.zh-CN.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.zh-CN.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\LiveCasinoLang.zh-TW.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LiveCasinoLang.zh-TW.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\ILiveCasinoAuthorizationService.cs" />
     <Compile Include="Services\ISettingService.cs" />
     <Compile Include="Services\PTCom\AgentOnMemberPTComService.cs" />
@@ -237,32 +212,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.ja-JP.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang.ja-JP.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.ja-JP.resx" />
     <EmbeddedResource Include="Resources\LiveCasinoLang.ko-KR.resx" />
     <EmbeddedResource Include="Resources\LiveCasinoLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LiveCasinoLang.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.th-TH.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang.th-TH.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.vi-VN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang.vi-VN.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-CN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang.zh-CN.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-TW.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LiveCasinoLang.zh-TW.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LiveCasinoLang.th-TH.resx" />
+    <EmbeddedResource Include="Resources\LiveCasinoLang.vi-VN.resx" />
+    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\LiveCasinoLang.zh-TW.resx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
