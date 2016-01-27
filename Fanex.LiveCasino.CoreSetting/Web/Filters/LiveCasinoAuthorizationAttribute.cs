@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web;
+    using System.Web.Helpers;
     using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.LiveCasino.CoreSetting.Configuration;
@@ -11,12 +12,15 @@
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Web.Binders;
-
+    using Sunplus.Agent.Utilities;    
+    
     /// <summary>
     /// Live casino authorization filter.
     /// </summary>
     public class LiveCasinoAuthorizationAttribute : AuthorizeAttribute
     {
+        private const string AntiForgeryFormTokenName = "__RequestVerificationToken";
+
         public bool IsHost { get; set; }
 
         public ILiveCasinoAuthorizationService LiveCasinoAuthenticationService { get; set; }
@@ -44,11 +48,49 @@
                     isAuthorized = IsHost ? IsAuthorizedHost(filterContext) : IsAuthorizedRead(filterContext);
                 }
 
+                if (IsHost && isAuthorized)
+                {
+                    isAuthorized = ValidateAntiXSRF();
+                }
+
                 if (!isAuthorized)
                 {
                     UnAuthorizedAction(filterContext);
                 }
             }
+        }
+
+        private bool ValidateAntiXSRF()
+        {
+            try
+            {
+                var request = HttpContext.Current.Request;
+
+                var formToken = request.Headers[AntiForgeryFormTokenName];
+                if (string.IsNullOrWhiteSpace(formToken))
+                {
+                    return false;
+                }
+
+                var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
+                if (cookieValue != null
+                    && !string.IsNullOrWhiteSpace(cookieValue.Value))
+                {
+                    AntiForgery.Validate(cookieValue.Value, formToken);
+                }
+                else
+                {
+                    Logs.WriteWarn(new Exception("Cannot read Request Verification Token from cookie."));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.WriteWarn(ex);
+
+                return false;
+            }
+
+            return true;
         }
 
         private string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
@@ -122,11 +164,11 @@
             while (valueProvider.ContainsPrefix(string.Format(keyFormat, customerIndex)))
             {
                 settingContext.Customers.Add(new Customer
-                    {
-                        Id = Converter.ToInt(GetActionParameterValue(valueProvider, string.Format(customerIdKeyFormat, customerIndex))),
-                        Username = GetActionParameterValue(valueProvider, string.Format(usernameKeyFormat, customerIndex)),
-                        IsSyncLiveCasino = Converter.ToBool(GetActionParameterValue(valueProvider, string.Format(syncKeyFormat, customerIndex))),
-                    });
+                {
+                    Id = Converter.ToInt(GetActionParameterValue(valueProvider, string.Format(customerIdKeyFormat, customerIndex))),
+                    Username = GetActionParameterValue(valueProvider, string.Format(usernameKeyFormat, customerIndex)),
+                    IsSyncLiveCasino = Converter.ToBool(GetActionParameterValue(valueProvider, string.Format(syncKeyFormat, customerIndex))),
+                });
 
                 customerIndex++;
             }
