@@ -52,7 +52,7 @@
                     isAuthorized = ValidateAntiXSRF();
                 }
 
-                if (!isAuthorized)
+                if (!isAuthorized || LiveCasinoSettings.Settings.IsUMTime)
                 {
                     UnAuthorizedAction(filterContext);
                 }
