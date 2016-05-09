@@ -91,12 +91,22 @@
         {
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
-            updateResult.CommandResultsList.Add(_settingService.UpdateCustomerSetting(
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                updateResult.CommandResultsList.Add(_settingService.UpdatePTComSetting(
+                        settingContext,
+                        customer.LiveCasinoSetting.Commission,
+                        customer.LiveCasinoSetting.PositionTaking,
+                        isApplyPositionTakingAllMembers,
+                        positionTakingOnMembers));
+            }
+            else {
+                updateResult.CommandResultsList.Add(_settingService.UpdateCustomerSetting(
                 settingContext,
                 customer,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers));
-
+            }
             return Json(updateResult);
         }
 
@@ -119,13 +129,24 @@
             float positionTakingOnMembers,
             int updateType = (int)UpdateType.AllSetting)
         {
-            IMultipleCommandResults updateResult = _settingService.UpdateMultipleCustomerSetting(
+            IMultipleCommandResults updateResult = new MultipleCommandResults();
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                updateResult = _settingService.UpdateMultiplePTComSetting(
                 settingContext,
-                customer,
-                (UpdateType)updateType,
+                customer.LiveCasinoSetting.Commission,
+                customer.LiveCasinoSetting.PositionTaking,
                 isApplyPositionTakingAllMembers,
                 positionTakingOnMembers);
-
+            }
+            else {
+                updateResult = _settingService.UpdateMultipleCustomerSetting(
+                    settingContext,
+                    customer,
+                    (UpdateType)updateType,
+                    isApplyPositionTakingAllMembers,
+                    positionTakingOnMembers);
+            }
             return Json(updateResult);
         }
 
@@ -315,7 +336,7 @@
                 CommandResultsList = new List<ICommandResults>()
             };
 
-            var result = new CommandResult { Message = SettingTypeName + ": " + LiveCasinoLang.UnauthorizeMsg, Code = "-101" };
+            var result = new CommandResult { Message = SettingTypeName + ": " + LiveCasinoLang.UnauthorizeMsg, Code = -101 };
             var commandResult = new CommandResults
             {
                 Results = new List<ICommandResult> { result }
