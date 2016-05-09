@@ -1,8 +1,5 @@
 ﻿namespace Fanex.LiveCasino.CoreSetting.Controllers
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web.Mvc;
     using Fanex.LiveCasino.CoreSetting.Constant;
     using Fanex.LiveCasino.CoreSetting.DTO;
     using Fanex.LiveCasino.CoreSetting.DTO.CommandResult;
@@ -11,6 +8,11 @@
     using Fanex.LiveCasino.CoreSetting.Services;
     using Fanex.LiveCasino.CoreSetting.Web.Binders;
     using Fanex.LiveCasino.CoreSetting.Web.Filters;
+    using NAP.Framework.Data;
+    using Resources;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Controller handles setting request.
@@ -150,6 +152,11 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimit(LiveCasinoSettingContext settingContext, WinLimit model)
         {
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                return Json(this.UnAuthorizedWinLimitAndGameSetting(LiveCasinoLang.lblMemberWinLimit));
+            }
+
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult.CommandResultsList.Add(_settingService.UpdateWinLimit(settingContext, model));
@@ -166,6 +173,11 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateWinLimitMultiple(LiveCasinoSettingContextMultiple settingContext, WinLimit model)
         {
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                return Json(this.UnAuthorizedWinLimitAndGameSetting(LiveCasinoLang.lblMemberWinLimit));
+            }
+
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult = _settingService.UpdateMultipleWinLimit(settingContext, model);
@@ -189,6 +201,11 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSetting(LiveCasinoSettingContext settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                return Json(this.UnAuthorizedWinLimitAndGameSetting(LiveCasinoLang.lblGameSetting));
+            }
+
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult.CommandResultsList.Add(_settingService.UpdateGameSetting(settingContext, gameSetting, disableLiveCasino));
@@ -208,6 +225,11 @@
         [HttpPost, LiveCasinoAuthorization(IsHost = true)]
         public ActionResult UpdateGameSettingMultiple(LiveCasinoSettingContextMultiple settingContext, List<GameType> gameSetting, bool disableLiveCasino)
         {
+            if (this.IsCrossLevelAtMember(settingContext))
+            {
+                return Json(this.UnAuthorizedWinLimitAndGameSetting(LiveCasinoLang.lblGameSetting));
+            }
+
             IMultipleCommandResults updateResult = new MultipleCommandResults();
 
             updateResult = _settingService.UpdateMultipleGameSetting(settingContext, gameSetting, disableLiveCasino);
@@ -280,5 +302,27 @@
         }
 
         #endregion Pt and Com setting
+
+        private bool IsCrossLevelAtMember(LiveCasinoSettingContext model)
+        {
+            return (model.Upline.Level == CustomerLevel.Super || model.Upline.Level == CustomerLevel.Master) && model.Customer.Level == CustomerLevel.Member;
+        }
+
+        private MultipleCommandResults UnAuthorizedWinLimitAndGameSetting(string SettingTypeName)
+        {
+            var updateResult = new MultipleCommandResults
+            {
+                CommandResultsList = new List<ICommandResults>()
+            };
+
+            var result = new CommandResult { Message = SettingTypeName + ": " + LiveCasinoLang.UnauthorizeMsg, Code = "-101" };
+            var commandResult = new CommandResults
+            {
+                Results = new List<ICommandResult> { result }
+            };
+
+            updateResult.CommandResultsList.Add(commandResult);
+            return updateResult;
+        }
     }
 }

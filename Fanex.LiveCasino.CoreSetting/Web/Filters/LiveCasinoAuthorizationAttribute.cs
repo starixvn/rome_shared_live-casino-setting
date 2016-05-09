@@ -11,8 +11,7 @@
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Resources;
     using Fanex.LiveCasino.CoreSetting.Services;
-    using Fanex.LiveCasino.CoreSetting.Web.Binders;
-    using Sunplus.Agent.Utilities;    
+    using Fanex.LiveCasino.CoreSetting.Web.Binders;  
     
     /// <summary>
     /// Live casino authorization filter.
@@ -78,14 +77,10 @@
                 {
                     AntiForgery.Validate(cookieValue.Value, formToken);
                 }
-                else
-                {
-                    Logs.WriteWarn(new Exception("Cannot read Request Verification Token from cookie."));
-                }
             }
             catch (Exception ex)
             {
-                Logs.WriteWarn(ex);
+                Logging.LogService.Error(ex.ToString(), ex);
 
                 return false;
             }
