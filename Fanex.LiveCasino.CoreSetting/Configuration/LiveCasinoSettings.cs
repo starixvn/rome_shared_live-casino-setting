@@ -13,6 +13,9 @@
         private const string __AUTHORIZATION_SERVICE_TYPE = "AuthorizationServiceType";
         private const string __LANGUAGE_SESSION_KEY = "LanguageSessionKey";
         private const string __LOG_CATEGORY = "LogCategory";
+        private const string __IS_UM_TIME = "IsUMTime";
+        private const string __UM_FROM = "UMFrom";
+        private const string __UM_TO = "UMTo";
 
         private static LiveCasinoSettings _settings = ConfigurationManager.GetSection(__LIVE_CASINO_SETTINGS) as LiveCasinoSettings;
 
@@ -57,6 +60,27 @@
         {
             get { return (string)this[__LOG_CATEGORY]; }
             set { this[__LOG_CATEGORY] = value; }
+        }
+
+        [ConfigurationProperty(__IS_UM_TIME, IsRequired = false, DefaultValue = false)]
+        public bool IsUMTime
+        {
+            get { return (bool)this[__IS_UM_TIME]; }
+            set { this[__IS_UM_TIME] = value; }
+        }
+
+        [ConfigurationProperty(__UM_FROM, IsRequired = false)]
+        public string UMFrom
+        {
+            get { return (string)this[__UM_FROM]; }
+            set { this[__UM_FROM] = value; }
+        }
+
+        [ConfigurationProperty(__UM_TO, IsRequired = false)]
+        public string UMTo
+        {
+            get { return (string)this[__UM_TO]; }
+            set { this[__UM_TO] = value; }
         }
     }
 }
