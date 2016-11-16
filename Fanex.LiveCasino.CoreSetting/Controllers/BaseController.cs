@@ -20,7 +20,8 @@
         /// <param name="filterContext">Current filter context.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var currentLanguageKey = LiveCasinoSettings.Settings.LanguageSessionKey;
+            var currentLanguageKey = Session.SessionID + "_" + LiveCasinoSettings.Settings.LanguageSessionKey;
+
             var currentLanguage = Session[currentLanguageKey] != null ? Session[currentLanguageKey].ToString() : string.Empty;
 
             if (!string.IsNullOrEmpty(currentLanguage))
