@@ -37,7 +37,7 @@
             PTComDTO ptComDTO = PTComRepository.Get(new GetSettingForEditMasterCriteria
             {
                 CustId = settingContext.Customer.Id,
-                SRecommend = settingContext.Upline.Id
+                SRecommend = settingContext.Upline.Id == 0 ? customer.Parent.Id : settingContext.Upline.Id
             });
 
             MapSetting(ptComDTO, customer);
