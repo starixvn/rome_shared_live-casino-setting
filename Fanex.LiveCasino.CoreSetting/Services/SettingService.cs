@@ -322,7 +322,10 @@
             Check.Argument.IsNotEmpty(language, "language");
 
             var gameTypes = new List<GameType>();
-            var settingContext = new LiveCasinoSettingContext();
+            var settingContext = new LiveCasinoSettingContext
+            {
+                IP = ip
+            };
 
             ICommandResult resultInsert = InsertAccount(custId, actorId, actorUsername, subAccountId, subAccountUsername, ip, language, settingContext, gameTypes);
 

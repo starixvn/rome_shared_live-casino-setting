@@ -24,12 +24,15 @@
         {
             get
             {
-                var localIP = "127.0.0.1";
+                if (string.IsNullOrWhiteSpace(_ip))
+                {
+                    var localIP = "127.0.0.1";
 
-                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                ip = ip.Equals("::1") ? localIP : (string.IsNullOrEmpty(ip) ? localIP : ip.Split(',')[0]);
+                    var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    _ip = ip.Equals("::1") ? localIP : (string.IsNullOrEmpty(ip) ? localIP : ip.Split(',')[0]);
+                }
 
-                return string.IsNullOrWhiteSpace(_ip) ? ip : _ip;
+                return _ip;
             }
 
             set
